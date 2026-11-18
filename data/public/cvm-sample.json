@@ -1,0 +1,3064 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2026-11-18T10:22:43+00:00",
+    "asOf": "2025-12-31",
+    "coverage": {
+      "eligibleCompanies": null,
+      "includedCompanies": 3
+    },
+    "source": {
+      "name": "Comissão de Valores Mobiliários (CVM)",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    }
+  },
+  "companies": [
+    {
+      "companyId": "cvm:5410",
+      "cvmCode": 5410,
+      "category": "industry",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "referenceDate": "2021-12-31",
+          "periodStart": "2021-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2022-02-16",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111794",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 23932787000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 15945946000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 2714427000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 7986841000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 23932787000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 7927884000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 1994231000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 14010672000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 23563338000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -16602381000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 6960957000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -2802614000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 4158343000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 171693000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 4330036000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -672556000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 3657480000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 3657480000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "referenceDate": "2022-12-31",
+          "periodStart": "2022-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2023-02-15",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123532",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 28134660000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 19653210000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 4451002000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 8481450000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 28134660000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 10262877000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 2623428000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 15248355000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 29904722000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -21209235000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 8695487000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -3643900000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 5051587000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 64055000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 5115642000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -842770000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 4272872000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 4272872000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "referenceDate": "2023-12-31",
+          "periodStart": "2023-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2024-02-21",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134151",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 31496270000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 21562311000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 6488454000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 9933959000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 31496270000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 11219689000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 2421805000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 17854776000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 32503601000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -21702737000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 10800864000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -4338739000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 6462125000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 128672000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 6590797000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -723182000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 5867615000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 5867615000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "referenceDate": "2024-12-31",
+          "periodStart": "2024-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2025-02-26",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145023",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 41489701000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 27221359000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 7347599000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 14268342000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 41489701000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 15454265000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 2910219000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 23125217000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 37986941000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -25173096000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 12813845000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -5123317000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 7690528000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 217980000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 7908508000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -1589745000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 6318763000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 6318763000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "referenceDate": "2025-12-31",
+          "periodStart": "2025-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2026-02-25",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154872",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 42645030000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 26910845000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 6296498000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 15734185000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 42645030000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 17386401000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 6705265000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 18553364000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 40804110000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -27122477000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 13681633000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -5682892000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 7998741000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 148936000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 8147677000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -1371719000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 6775958000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 6775958000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        }
+      ],
+      "name": "WEG S.A."
+    },
+    {
+      "companyId": "cvm:8133",
+      "cvmCode": 8133,
+      "category": "retail",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "referenceDate": "2021-12-31",
+          "periodStart": "2021-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2022-03-17",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112665",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 21411985000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 13984780000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 5489417000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 7427205000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 21411985000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 7954100000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 3651264000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 9806621000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 10571556000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -4399178000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 6172378000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -5358434000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 813944000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": -174091000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 639853000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -6741000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 633112000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 633112000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "referenceDate": "2022-12-31",
+          "periodStart": "2022-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2023-02-16",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123581",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 21148892000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 13053770000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 2848351000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 8095122000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 21148892000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 7005579000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 4055798000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 10087515000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 13271137000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -5286323000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 7984814000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -6577413000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 1407401000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": -23116000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 1384285000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -92581000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 1291704000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 1291704000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "referenceDate": "2023-12-31",
+          "periodStart": "2023-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2024-03-14",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134755",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 20490638000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 12191644000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 2532187000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 8298994000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 20490638000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 7492553000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 2950864000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 10047221000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 13647849000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -5427247000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 8220602000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -7331525000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 889077000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": -48410000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 840667000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": 135592000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 976259000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 976259000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "referenceDate": "2024-12-31",
+          "periodStart": "2024-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2025-02-20",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=144903",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 20364590000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 12316659000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 1926110000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 8047931000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 20364590000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 7647557000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 1944082000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 10772951000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 14436366000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -5694417000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 8741949000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -7482606000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 1259343000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": 61654000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 1320997000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -124329000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 1196668000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 1196668000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "referenceDate": "2025-12-31",
+          "periodStart": "2025-01-01",
+          "filingVersion": 2,
+          "receiptDate": "2026-03-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155117",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 19626027000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Ativo Circulante",
+              "amountBrl": 11633757000
+            },
+            {
+              "key": "bpa:1.01.01",
+              "statement": "BPA",
+              "code": "1.01.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 978066000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativo Não Circulante",
+              "amountBrl": 7992270000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 19626027000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivo Circulante",
+              "amountBrl": 6866734000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Passivo Não Circulante",
+              "amountBrl": 2303012000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 10456281000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receita de Venda de Bens e/ou Serviços",
+              "amountBrl": 15829460000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Custo dos Bens e/ou Serviços Vendidos",
+              "amountBrl": -6061578000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto",
+              "amountBrl": 9767882000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Despesas/Receitas Operacionais",
+              "amountBrl": -7970722000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+              "amountBrl": 1797160000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Resultado Financeiro",
+              "amountBrl": -82484000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 1714676000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -257110000
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 1457566000
+            },
+            {
+              "key": "dre:3.10",
+              "statement": "DRE",
+              "code": "3.10",
+              "label": "Resultado Líquido de Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.11",
+              "statement": "DRE",
+              "code": "3.11",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 1457566000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        }
+      ],
+      "name": "LOJAS RENNER S.A."
+    },
+    {
+      "companyId": "cvm:19348",
+      "cvmCode": 19348,
+      "category": "bank",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "referenceDate": "2021-12-31",
+          "periodStart": "2021-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2022-02-10",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111702",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 2069206000000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 44512000000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativos Financeiros",
+              "amountBrl": 1915573000000
+            },
+            {
+              "key": "bpa:1.03",
+              "statement": "BPA",
+              "code": "1.03",
+              "label": "Tributos Diferidos",
+              "amountBrl": 58433000000
+            },
+            {
+              "key": "bpa:1.04",
+              "statement": "BPA",
+              "code": "1.04",
+              "label": "Outros Ativos",
+              "amountBrl": 16494000000
+            },
+            {
+              "key": "bpa:1.05",
+              "statement": "BPA",
+              "code": "1.05",
+              "label": "Investimentos",
+              "amountBrl": 6121000000
+            },
+            {
+              "key": "bpa:1.06",
+              "statement": "BPA",
+              "code": "1.06",
+              "label": "Imobilizado",
+              "amountBrl": 6963000000
+            },
+            {
+              "key": "bpa:1.07",
+              "statement": "BPA",
+              "code": "1.07",
+              "label": "Intangível",
+              "amountBrl": 21110000000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 2069206000000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivos Financeiros ao Valor Justo através do Resultado",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Outros Passivos Financeiros Designados ao Valor Justo através do Resultado",
+              "amountBrl": 63479000000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Passivos Financeiros ao Custo Amortizado",
+              "amountBrl": 1553107000000
+            },
+            {
+              "key": "bpp:2.04",
+              "statement": "BPP",
+              "code": "2.04",
+              "label": "Provisões",
+              "amountBrl": 19592000000
+            },
+            {
+              "key": "bpp:2.05",
+              "statement": "BPP",
+              "code": "2.05",
+              "label": "Passivos Fiscais",
+              "amountBrl": 6246000000
+            },
+            {
+              "key": "bpp:2.06",
+              "statement": "BPP",
+              "code": "2.06",
+              "label": "Outros Passivos",
+              "amountBrl": 262306000000
+            },
+            {
+              "key": "bpp:2.07",
+              "statement": "BPP",
+              "code": "2.07",
+              "label": "Passivos sobre Ativos Não Correntes a Venda e Descontinuados",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.08",
+              "statement": "BPP",
+              "code": "2.08",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 164476000000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receitas da Intermediação Financeira",
+              "amountBrl": 195679000000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Despesas da Intermediação Financeira",
+              "amountBrl": -69305000000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto Intermediação Financeira",
+              "amountBrl": 126374000000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Outras Despesas/Receitas Operacionais",
+              "amountBrl": -84143000000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 42231000000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -13847000000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 28384000000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Resultado Líquido das Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 28384000000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "referenceDate": "2022-12-31",
+          "periodStart": "2022-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2023-02-07",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123392",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 2323440000000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 35381000000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativos Financeiros",
+              "amountBrl": 2172726000000
+            },
+            {
+              "key": "bpa:1.03",
+              "statement": "BPA",
+              "code": "1.03",
+              "label": "Tributos Diferidos",
+              "amountBrl": 59480000000
+            },
+            {
+              "key": "bpa:1.04",
+              "statement": "BPA",
+              "code": "1.04",
+              "label": "Outros Ativos",
+              "amountBrl": 17529000000
+            },
+            {
+              "key": "bpa:1.05",
+              "statement": "BPA",
+              "code": "1.05",
+              "label": "Investimentos",
+              "amountBrl": 7443000000
+            },
+            {
+              "key": "bpa:1.06",
+              "statement": "BPA",
+              "code": "1.06",
+              "label": "Imobilizado",
+              "amountBrl": 7767000000
+            },
+            {
+              "key": "bpa:1.07",
+              "statement": "BPA",
+              "code": "1.07",
+              "label": "Intangível",
+              "amountBrl": 23114000000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 2323440000000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivos Financeiros ao Valor Justo através do Resultado",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Outros Passivos Financeiros Designados ao Valor Justo através do Resultado",
+              "amountBrl": 77508000000
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Passivos Financeiros ao Custo Amortizado",
+              "amountBrl": 1755498000000
+            },
+            {
+              "key": "bpp:2.04",
+              "statement": "BPP",
+              "code": "2.04",
+              "label": "Provisões",
+              "amountBrl": 19475000000
+            },
+            {
+              "key": "bpp:2.05",
+              "statement": "BPP",
+              "code": "2.05",
+              "label": "Passivos Fiscais",
+              "amountBrl": 6738000000
+            },
+            {
+              "key": "bpp:2.06",
+              "statement": "BPP",
+              "code": "2.06",
+              "label": "Outros Passivos",
+              "amountBrl": 286878000000
+            },
+            {
+              "key": "bpp:2.07",
+              "statement": "BPP",
+              "code": "2.07",
+              "label": "Passivos sobre Ativos Não Correntes a Venda e Descontinuados",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.08",
+              "statement": "BPP",
+              "code": "2.08",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 177343000000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receitas da Intermediação Financeira",
+              "amountBrl": 283372000000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Despesas da Intermediação Financeira",
+              "amountBrl": -167802000000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto Intermediação Financeira",
+              "amountBrl": 115570000000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Outras Despesas/Receitas Operacionais",
+              "amountBrl": -78037000000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 37533000000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -6796000000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 30737000000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Resultado Líquido das Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 30737000000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "referenceDate": "2023-12-31",
+          "periodStart": "2023-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2024-02-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=133853",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 2543100000000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 32001000000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativos Financeiros",
+              "amountBrl": 2384618000000
+            },
+            {
+              "key": "bpa:1.03",
+              "statement": "BPA",
+              "code": "1.03",
+              "label": "Tributos Diferidos",
+              "amountBrl": 64521000000
+            },
+            {
+              "key": "bpa:1.04",
+              "statement": "BPA",
+              "code": "1.04",
+              "label": "Outros Ativos",
+              "amountBrl": 20168000000
+            },
+            {
+              "key": "bpa:1.05",
+              "statement": "BPA",
+              "code": "1.05",
+              "label": "Investimentos",
+              "amountBrl": 9293000000
+            },
+            {
+              "key": "bpa:1.06",
+              "statement": "BPA",
+              "code": "1.06",
+              "label": "Imobilizado",
+              "amountBrl": 9135000000
+            },
+            {
+              "key": "bpa:1.07",
+              "statement": "BPA",
+              "code": "1.07",
+              "label": "Intangível",
+              "amountBrl": 23364000000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 2543100000000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivos Financeiros ao Valor Justo através do Resultado",
+              "amountBrl": 53331000000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Outros Passivos Financeiros Designados ao Valor Justo através do Resultado",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Passivos Financeiros ao Custo Amortizado",
+              "amountBrl": 1944162000000
+            },
+            {
+              "key": "bpp:2.04",
+              "statement": "BPP",
+              "code": "2.04",
+              "label": "Provisões",
+              "amountBrl": 19744000000
+            },
+            {
+              "key": "bpp:2.05",
+              "statement": "BPP",
+              "code": "2.05",
+              "label": "Passivos Fiscais",
+              "amountBrl": 9202000000
+            },
+            {
+              "key": "bpp:2.06",
+              "statement": "BPP",
+              "code": "2.06",
+              "label": "Outros Passivos",
+              "amountBrl": 317611000000
+            },
+            {
+              "key": "bpp:2.07",
+              "statement": "BPP",
+              "code": "2.07",
+              "label": "Passivos sobre Ativos Não Correntes a Venda e Descontinuados",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.08",
+              "statement": "BPP",
+              "code": "2.08",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 199050000000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receitas da Intermediação Financeira",
+              "amountBrl": 313221000000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Despesas da Intermediação Financeira",
+              "amountBrl": -188695000000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto Intermediação Financeira",
+              "amountBrl": 124526000000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Outras Despesas/Receitas Operacionais",
+              "amountBrl": -84826000000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 39700000000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -5823000000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 33877000000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Resultado Líquido das Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 33877000000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "referenceDate": "2024-12-31",
+          "periodStart": "2024-01-01",
+          "filingVersion": 1,
+          "receiptDate": "2025-02-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=144592",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 2854475000000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 36127000000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativos Financeiros",
+              "amountBrl": 2673301000000
+            },
+            {
+              "key": "bpa:1.03",
+              "statement": "BPA",
+              "code": "1.03",
+              "label": "Tributos Diferidos",
+              "amountBrl": 72653000000
+            },
+            {
+              "key": "bpa:1.04",
+              "statement": "BPA",
+              "code": "1.04",
+              "label": "Outros Ativos",
+              "amountBrl": 29130000000
+            },
+            {
+              "key": "bpa:1.05",
+              "statement": "BPA",
+              "code": "1.05",
+              "label": "Investimentos",
+              "amountBrl": 10074000000
+            },
+            {
+              "key": "bpa:1.06",
+              "statement": "BPA",
+              "code": "1.06",
+              "label": "Imobilizado",
+              "amountBrl": 9193000000
+            },
+            {
+              "key": "bpa:1.07",
+              "statement": "BPA",
+              "code": "1.07",
+              "label": "Intangível",
+              "amountBrl": 23997000000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 2854475000000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivos Financeiros ao Valor Justo através do Resultado",
+              "amountBrl": 86275000000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Outros Passivos Financeiros Designados ao Valor Justo através do Resultado",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Passivos Financeiros ao Custo Amortizado",
+              "amountBrl": 2148776000000
+            },
+            {
+              "key": "bpp:2.04",
+              "statement": "BPP",
+              "code": "2.04",
+              "label": "Provisões",
+              "amountBrl": 19209000000
+            },
+            {
+              "key": "bpp:2.05",
+              "statement": "BPP",
+              "code": "2.05",
+              "label": "Passivos Fiscais",
+              "amountBrl": 11345000000
+            },
+            {
+              "key": "bpp:2.06",
+              "statement": "BPP",
+              "code": "2.06",
+              "label": "Outros Passivos",
+              "amountBrl": 367586000000
+            },
+            {
+              "key": "bpp:2.07",
+              "statement": "BPP",
+              "code": "2.07",
+              "label": "Passivos sobre Ativos Não Correntes a Venda e Descontinuados",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.08",
+              "statement": "BPP",
+              "code": "2.08",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 221284000000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receitas da Intermediação Financeira",
+              "amountBrl": 335328000000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Despesas da Intermediação Financeira",
+              "amountBrl": -199589000000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto Intermediação Financeira",
+              "amountBrl": 135739000000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Outras Despesas/Receitas Operacionais",
+              "amountBrl": -88183000000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 47556000000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -5428000000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 42128000000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Resultado Líquido das Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 42128000000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "referenceDate": "2025-12-31",
+          "periodStart": "2025-01-01",
+          "filingVersion": 2,
+          "receiptDate": "2026-02-12",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154741",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "cvm-dfp-m1.v1",
+            "qualityStatus": "validated"
+          },
+          "accounts": [
+            {
+              "key": "bpa:1",
+              "statement": "BPA",
+              "code": "1",
+              "label": "Ativo Total",
+              "amountBrl": 3066169000000
+            },
+            {
+              "key": "bpa:1.01",
+              "statement": "BPA",
+              "code": "1.01",
+              "label": "Caixa e Equivalentes de Caixa",
+              "amountBrl": 37144000000
+            },
+            {
+              "key": "bpa:1.02",
+              "statement": "BPA",
+              "code": "1.02",
+              "label": "Ativos Financeiros",
+              "amountBrl": 2880511000000
+            },
+            {
+              "key": "bpa:1.03",
+              "statement": "BPA",
+              "code": "1.03",
+              "label": "Tributos Diferidos",
+              "amountBrl": 79103000000
+            },
+            {
+              "key": "bpa:1.04",
+              "statement": "BPA",
+              "code": "1.04",
+              "label": "Outros Ativos",
+              "amountBrl": 21837000000
+            },
+            {
+              "key": "bpa:1.05",
+              "statement": "BPA",
+              "code": "1.05",
+              "label": "Investimentos",
+              "amountBrl": 10840000000
+            },
+            {
+              "key": "bpa:1.06",
+              "statement": "BPA",
+              "code": "1.06",
+              "label": "Imobilizado",
+              "amountBrl": 12635000000
+            },
+            {
+              "key": "bpa:1.07",
+              "statement": "BPA",
+              "code": "1.07",
+              "label": "Intangível",
+              "amountBrl": 24099000000
+            },
+            {
+              "key": "bpp:2",
+              "statement": "BPP",
+              "code": "2",
+              "label": "Passivo Total",
+              "amountBrl": 3066169000000
+            },
+            {
+              "key": "bpp:2.01",
+              "statement": "BPP",
+              "code": "2.01",
+              "label": "Passivos Financeiros ao Valor Justo através do Resultado",
+              "amountBrl": 71427000000
+            },
+            {
+              "key": "bpp:2.02",
+              "statement": "BPP",
+              "code": "2.02",
+              "label": "Outros Passivos Financeiros Designados ao Valor Justo através do Resultado",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.03",
+              "statement": "BPP",
+              "code": "2.03",
+              "label": "Passivos Financeiros ao Custo Amortizado",
+              "amountBrl": 2350901000000
+            },
+            {
+              "key": "bpp:2.04",
+              "statement": "BPP",
+              "code": "2.04",
+              "label": "Provisões",
+              "amountBrl": 17791000000
+            },
+            {
+              "key": "bpp:2.05",
+              "statement": "BPP",
+              "code": "2.05",
+              "label": "Passivos Fiscais",
+              "amountBrl": 11582000000
+            },
+            {
+              "key": "bpp:2.06",
+              "statement": "BPP",
+              "code": "2.06",
+              "label": "Outros Passivos",
+              "amountBrl": 399392000000
+            },
+            {
+              "key": "bpp:2.07",
+              "statement": "BPP",
+              "code": "2.07",
+              "label": "Passivos sobre Ativos Não Correntes a Venda e Descontinuados",
+              "amountBrl": 0
+            },
+            {
+              "key": "bpp:2.08",
+              "statement": "BPP",
+              "code": "2.08",
+              "label": "Patrimônio Líquido Consolidado",
+              "amountBrl": 215076000000
+            },
+            {
+              "key": "dre:3.01",
+              "statement": "DRE",
+              "code": "3.01",
+              "label": "Receitas da Intermediação Financeira",
+              "amountBrl": 387118000000
+            },
+            {
+              "key": "dre:3.02",
+              "statement": "DRE",
+              "code": "3.02",
+              "label": "Despesas da Intermediação Financeira",
+              "amountBrl": -248171000000
+            },
+            {
+              "key": "dre:3.03",
+              "statement": "DRE",
+              "code": "3.03",
+              "label": "Resultado Bruto Intermediação Financeira",
+              "amountBrl": 138947000000
+            },
+            {
+              "key": "dre:3.04",
+              "statement": "DRE",
+              "code": "3.04",
+              "label": "Outras Despesas/Receitas Operacionais",
+              "amountBrl": -88697000000
+            },
+            {
+              "key": "dre:3.05",
+              "statement": "DRE",
+              "code": "3.05",
+              "label": "Resultado Antes dos Tributos sobre o Lucro",
+              "amountBrl": 50250000000
+            },
+            {
+              "key": "dre:3.06",
+              "statement": "DRE",
+              "code": "3.06",
+              "label": "Imposto de Renda e Contribuição Social sobre o Lucro",
+              "amountBrl": -4401000000
+            },
+            {
+              "key": "dre:3.07",
+              "statement": "DRE",
+              "code": "3.07",
+              "label": "Resultado Líquido das Operações Continuadas",
+              "amountBrl": 45849000000
+            },
+            {
+              "key": "dre:3.08",
+              "statement": "DRE",
+              "code": "3.08",
+              "label": "Resultado Líquido das Operações Descontinuadas",
+              "amountBrl": 0
+            },
+            {
+              "key": "dre:3.09",
+              "statement": "DRE",
+              "code": "3.09",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "amountBrl": 45849000000
+            }
+          ],
+          "reconciliations": [
+            {
+              "key": "balance",
+              "label": "Ativo total e passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "assets",
+              "label": "Composição do ativo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "liabilities",
+              "label": "Composição do passivo total",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "gross",
+              "label": "Composição do resultado bruto",
+              "status": "passed",
+              "differenceBrl": 0
+            },
+            {
+              "key": "net",
+              "label": "Composição do resultado consolidado",
+              "status": "passed",
+              "differenceBrl": 0
+            }
+          ]
+        }
+      ],
+      "name": "ITAU UNIBANCO HOLDING S.A."
+    }
+  ],
+  "issues": []
+}

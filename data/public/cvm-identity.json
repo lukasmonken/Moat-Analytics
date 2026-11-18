@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": {
+    "name": "Comissão de Valores Mobiliários (CVM) · FCA",
+    "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca",
+    "license": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FCA/DADOS/fca_cia_aberta_2026.zip",
+  "archiveSha256": "338821f7109fea415bab2e56bc1f04dc47f9c1854355372478eaac2c085ba9d6",
+  "retrievedAt": "2026-11-18T10:16:25+00:00",
+  "companies": [
+    {
+      "companyId": "cvm:5410",
+      "cvmCode": 5410,
+      "filingVersion": 1,
+      "referenceDate": "2026-01-01",
+      "receiptDate": "2026-05-29",
+      "tickers": [
+        {
+          "ticker": "WEGE3",
+          "kind": "ON"
+        }
+      ]
+    },
+    {
+      "companyId": "cvm:8133",
+      "cvmCode": 8133,
+      "filingVersion": 1,
+      "referenceDate": "2026-01-01",
+      "receiptDate": "2026-05-08",
+      "tickers": [
+        {
+          "ticker": "LREN3",
+          "kind": "ON"
+        }
+      ]
+    },
+    {
+      "companyId": "cvm:19348",
+      "cvmCode": 19348,
+      "filingVersion": 2,
+      "referenceDate": "2026-01-01",
+      "receiptDate": "2026-05-08",
+      "tickers": [
+        {
+          "ticker": "ITUB3",
+          "kind": "ON"
+        },
+        {
+          "ticker": "ITUB4",
+          "kind": "PN"
+        }
+      ]
+    }
+  ]
+}

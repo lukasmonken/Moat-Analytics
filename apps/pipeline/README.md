@@ -1,9 +1,26 @@
 # Pipeline de dados
 
-Diretório reservado ao processamento em lote com Python. O M0 registra a fronteira do pipeline. A primeira execução será a prova de conceito com demonstrativos CVM do M1.
+Use Python 3.11 ou superior, com a base de fusos IANA disponível. A coleta online usa `curl` no PATH para aproveitar os certificados de confiança do ambiente. A amostra do M1 usa os DFP anuais consolidados de 2021 a 2025 e os códigos declarados no FCA de 2026 para WEG, Lojas Renner e Itaú Unibanco.
 
-O pipeline terá etapas independentes para coleta, normalização, validação e publicação. A coleta guarda arquivos originais com origem, momento da coleta e hash. A normalização trata tipos, unidades, consolidados, individuais e retificações. As observações preservam a data de referência, a data de publicação e a versão da metodologia.
+## Gerar ou atualizar os snapshots
 
-O processamento interno previsto usa Parquet. O site consumirá snapshots JSON autorizados e versionados, descritos em [contratos de dados](../../packages/data-contracts/README.md). A publicação só promove lotes validados e preserva o último snapshot válido em caso de falha.
+Execute na raiz do clone.
 
-As fontes e os requisitos de publicação estão em [Fontes de dados](../../docs/DATA_SOURCES.md) e na [especificação](../../docs/SPEC.md).
+```bash
+python3 apps/pipeline/run_cvm.py
+python3 apps/pipeline/run_cvm_identity.py
+```
+
+Os scripts usam o cache local em `data/raw/cvm` e baixam da CVM os originais que faltarem. Use `--refresh` para buscar versões atualizadas e `--offline` para exigir cache completo. Ao importar ZIPs coletados separadamente, preserve os nomes, bytes e horário de gravação do original. A hora de gravação do ZIP é registrada como instante de coleta. É possível apontar para outro cache com `--raw-dir`.
+
+O DFP aceita `--start-year` e `--end-year`. O FCA aceita `--year`. Ambos aceitam `--output`. O comando padrão gera `data/public/cvm-sample.json` ou `data/public/cvm-identity.json`. Revise o diff antes de enviar o snapshot e mantenha os ZIPs e os arquivos de trabalho fora do Git. O cache arquiva a versão anterior por SHA-256 quando o conteúdo da fonte muda.
+
+## Validação e promoção
+
+O DFP seleciona a maior versão para o código CVM e o exercício. Usa a coluna `ÚLTIMO` de BPA, BPP e DRE consolidados e confere CNPJ, encerramento e início da DRE. As contas são normalizadas com aritmética decimal, conforme a unidade informada no CSV, e o banco usa o elenco financeiro.
+
+Cada exercício verifica o ativo total contra o passivo total, a composição do ativo e do passivo, o resultado bruto e o resultado consolidado. A tolerância é metade da soma das unidades de arredondamento dos valores envolvidos. Diferenças acima desse limite, contas obrigatórias ausentes e arquivos inválidos impedem a substituição do snapshot. O FCA vincula os valores mobiliários ao documento mais recente pelo CNPJ, data, versão e identificador do envio, e registra separadamente as classes declaradas.
+
+A escrita é atômica. Diante de erro, cada rotina encerra com código diferente de zero e mantém a saída anterior. Uma nova execução com os mesmos dados mantém o snapshot existente. A data de recebimento do formulário é distinta do instante de publicação, que continua desconhecido quando ausente na fonte.
+
+Valide com `python3 -m unittest discover -s tests/pipeline`. Veja [fontes e licenças](../../docs/DATA_SOURCES.md) e [referências de mercado do M1](../../docs/REFERENCE_DATA_M1.md).

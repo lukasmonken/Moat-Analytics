@@ -41,6 +41,8 @@ jobs:
         run: npm run format:check
       - name: Verificar tipos
         run: npm run typecheck
+      - name: Rodar testes do pipeline offline
+        run: python3 -m unittest discover -s tests/pipeline
       - name: Rodar testes de integração
         run: npm test
       - name: Gerar build de produção

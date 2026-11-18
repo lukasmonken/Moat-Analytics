@@ -59,3 +59,5 @@ export interface SnapshotManifest {
   asOf: string;
   coverage: SnapshotCoverage;
 }
+
+export * from './cvm';
