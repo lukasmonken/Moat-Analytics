@@ -12,6 +12,7 @@ from zipfile import ZipFile
 
 REPO = Path(__file__).resolve().parents[2]
 COMMAND = REPO / "apps/pipeline/run_index_universe.py"
+DIRECTORY_COMMAND = REPO / "apps/pipeline/run_company_selection.py"
 ISSUER_A = "12.345.678/0001-90"
 ISSUER_B = "12.345.678/0002-90"
 
@@ -202,6 +203,27 @@ class IndexUniverseTests(unittest.TestCase):
         self.assertEqual(old["identityOverrides"][0]["ticker"], "REVI3")
         self.assertEqual(old["identityOverrides"][0]["companyId"], "cvm:222")
         self.assertEqual(len(old["identityOverridesSha256"]), 64)
+
+    def test_public_directory_uses_only_the_official_company_names(self):
+        path = self.write_csv("IBOV,TEST3,111\nSMLL,TEST4,111\nIDIV,DEMO3,222\n")
+        imported = self.run_import("--input", str(path))
+        self.assertEqual(imported.returncode, 0, imported.stderr)
+        local = json.loads(self.output.read_text(encoding="utf-8"))
+        local["companies"][0]["name"] = "Rótulo do arquivo de entrada"
+        self.output.write_text(json.dumps(local), encoding="utf-8")
+        directory = self.root / "company-directory.json"
+        result = subprocess.run(
+            [
+                sys.executable, str(DIRECTORY_COMMAND), "--selection", str(self.output),
+                "--fca-archive", str(self.fca), "--output", str(directory),
+            ],
+            cwd=REPO, capture_output=True, encoding="utf-8", timeout=15, check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        published = json.loads(directory.read_text(encoding="utf-8"))
+        self.assertEqual(set(published), {"schemaVersion", "asOf", "source", "companies"})
+        self.assertEqual(published["companies"], ["Companhia de teste", "Emissora de teste"])
+        self.assertEqual(published["source"]["license"], "ODbL-1.0")
 
 
 if __name__ == "__main__":

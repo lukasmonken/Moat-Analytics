@@ -17,7 +17,12 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
 
   await page.getByRole('link', { name: 'Explorar screener' }).click();
   await expect(page).toHaveURL(/#\/screener$/);
-  await expect(page.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Diretório de companhias' })).toBeVisible();
+  const directory = page.getByRole('table', { name: 'Companhias selecionadas' });
+  await expect(directory.getByRole('columnheader')).toHaveText(['Companhia']);
+  await expect(page.getByRole('combobox', { name: 'Índice' })).toHaveCount(0);
+  await page.getByRole('searchbox', { name: 'Companhia' }).fill('WEG S.A.');
+  await expect(directory.getByText('WEG S.A.', { exact: true })).toBeVisible();
   await expect(page.getByRole('combobox', { name: 'Linhas por página' })).toHaveValue('10');
 
   await page.getByRole('button', { name: 'Ativar tema escuro' }).click();

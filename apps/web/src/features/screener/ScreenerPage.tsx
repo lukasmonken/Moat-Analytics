@@ -1,25 +1,16 @@
 import { INDEX_CODES, type IndexCode } from '@moat/data-contracts';
 import { useState } from 'react';
-import { Button, ButtonLink, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
+import { Button, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
+import { CompanyDirectory } from './CompanyDirectory';
 import {
   IndexUniverseResults,
   IndexUniverseSource,
   orderCompanies,
   type Sort,
 } from './IndexUniverseResults';
+import { defaultPageSize, normalizeSearch, pageSizes } from './presentation';
 import './screener.css';
 import { useIndexUniverse } from './useIndexUniverse';
-
-const pageSizes = ['5', '10', '20', '30', '40', '50'] as const;
-const defaultPageSize = '10';
-
-function normalizeSearch(text: string) {
-  return text
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .toLocaleLowerCase('pt-BR')
-    .trim();
-}
 
 export function ScreenerPage() {
   const { state, reload } = useIndexUniverse();
@@ -28,6 +19,30 @@ export function ScreenerPage() {
   const [pageSize, setPageSize] = useState<string>(defaultPageSize);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<Sort>({ column: 'name', direction: 'ascending' });
+
+  if (state.status === 'unavailable') {
+    return (
+      <div className="feature-page module-page">
+        <PageHeader
+          title="Screener e Rankings"
+          description="Pesquise as companhias selecionadas pelo nome."
+        />
+        <CompanyDirectory />
+      </div>
+    );
+  }
+
+  if (state.status === 'loading') {
+    return (
+      <div className="feature-page module-page">
+        <PageHeader title="Screener e Rankings" description="Consulte as companhias disponíveis." />
+        <Panel className="screener-loading">
+          <p role="status">Carregando companhias…</p>
+        </Panel>
+      </div>
+    );
+  }
+
   const hasFilters = search !== '' || index !== '' || pageSize !== defaultPageSize;
   const snapshot = state.status === 'ready' ? state.snapshot : undefined;
   const searchKey = normalizeSearch(search);
@@ -113,11 +128,6 @@ export function ScreenerPage() {
         </Button>
       </Panel>
 
-      {state.status === 'loading' && (
-        <Panel className="screener-loading">
-          <p role="status">Carregando composição anual…</p>
-        </Panel>
-      )}
       {state.status === 'error' && (
         <EmptyState
           icon="database"
@@ -125,15 +135,6 @@ export function ScreenerPage() {
           description="Houve um problema ao acessar ou validar o arquivo da composição anual."
         >
           <Button onClick={reload}>Tentar novamente</Button>
-        </EmptyState>
-      )}
-      {state.status === 'unavailable' && (
-        <EmptyState
-          icon="database"
-          title="Universo B3 indisponível"
-          description="A composição anual de IBOV, SMLL e IDIV aguarda uma fonte autorizada. O histórico contábil da amostra já pode ser consultado em Empresas."
-        >
-          <ButtonLink to="/empresas">Consultar a amostra da CVM</ButtonLink>
         </EmptyState>
       )}
       {snapshot && (

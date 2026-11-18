@@ -2,6 +2,8 @@
 
 ## M1 — Amostra CVM
 
+- Diretório público da seleção anual com nomes do cadastro da CVM, data-base e busca pelo nome da companhia.
+
 - Importação manual de um recorte anual de IBOV, SMLL e IDIV, com data-base, histórico por hash, união por companhia e classes verificadas pelo código CVM.
 - O screener local consulta o lote importado com busca, filtros, ordenação e paginação. O build público exige base de redistribuição verificada para incorporar uma composição.
 

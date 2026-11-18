@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -18,7 +19,20 @@ beforeEach(() => {
   window.history.replaceState(null, '', '/');
   localStorage.clear();
   setPreferredTheme('light');
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ status: 404, ok: false }));
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string) => {
+      if (url.includes('cvm-company-selection')) {
+        return {
+          status: 200,
+          ok: true,
+          json: async () =>
+            JSON.parse(readFileSync('data/public/cvm-company-selection.json', 'utf8')),
+        };
+      }
+      return { status: 404, ok: false };
+    }),
+  );
 });
 
 afterEach(() => {
@@ -39,7 +53,7 @@ describe('Moat Analytics', () => {
 
     expect(window.location.hash).toBe('#/screener');
     expect(screen.getByRole('heading', { level: 1, name: 'Screener e Rankings' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: 'Diretório de companhias' })).toBeTruthy();
   });
 
   it('navega entre as páginas e indica a página atual', async () => {
@@ -64,37 +78,29 @@ describe('Moat Analytics', () => {
     }
   });
 
-  it('abre o screener por URL direta e mantém o estado vazio ao ajustar os filtros', async () => {
+  it('filtra a lista pública pelo nome da companhia', async () => {
     window.history.replaceState(null, '', '/#/screener');
     const user = userEvent.setup();
     render(<App />);
 
-    const search = screen.getByRole('searchbox', { name: 'Empresa ou ticker' });
-    const index = screen.getByRole('combobox', { name: 'Índice' });
+    const search = await screen.findByRole('searchbox', { name: 'Companhia' });
     const rows = screen.getByRole('combobox', { name: 'Linhas por página' });
-    expect(index).toHaveProperty('value', '');
     expect(rows).toHaveProperty('value', '10');
     expect(
       within(rows)
         .getAllByRole('option')
         .map((option) => option.textContent),
     ).toEqual(['5', '10', '20', '30', '40', '50']);
-    for (const code of ['IBOV', 'SMLL', 'IDIV']) {
-      expect(within(index).getByRole('option', { name: code })).toBeTruthy();
-    }
+    expect(screen.queryByRole('combobox', { name: 'Índice' })).toBeNull();
 
-    await user.type(search, 'teste');
-    await user.selectOptions(index, 'SMLL');
-    await user.selectOptions(rows, '30');
-    expect(search).toHaveProperty('value', 'teste');
-    expect(index).toHaveProperty('value', 'SMLL');
-    expect(rows).toHaveProperty('value', '30');
-    expect(screen.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeTruthy();
-
-    await user.click(screen.getByRole('button', { name: 'Limpar filtros' }));
-    expect(search).toHaveProperty('value', '');
-    expect(index).toHaveProperty('value', '');
-    expect(rows).toHaveProperty('value', '10');
+    await user.type(search, 'weg s.a.');
+    const table = screen.getByRole('table', { name: 'Companhias selecionadas' });
+    expect(
+      within(table)
+        .getAllByRole('columnheader')
+        .map((column) => column.textContent),
+    ).toEqual(['Companhia']);
+    expect(within(table).getByText('WEG S.A.', { exact: true })).toBeTruthy();
   });
 
   it('mostra indisponibilidade quando o snapshot não existe', async () => {

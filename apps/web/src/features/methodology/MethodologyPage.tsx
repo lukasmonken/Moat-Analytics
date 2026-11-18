@@ -23,9 +23,9 @@ export function MethodologyPage() {
         <Panel className="methodology-panel" aria-labelledby="methodology-universe">
           <h2 id="methodology-universe">Universo de análise</h2>
           <p>
-            O universo reúne as companhias brasileiras presentes em pelo menos um dos três índices
-            na data-base do recorte anual. O screener mantém uma linha por companhia e mostra as
-            classes e afiliações. A escolha do ticker representativo depende de dados de volume.
+            O recorte anual reúne companhias brasileiras presentes em pelo menos um dos três índices
+            na data-base. O diretório público usa os nomes do cadastro da CVM. A consulta local
+            mantém as classes e afiliações, e a escolha do ticker representativo depende de volume.
           </p>
           <ul className="methodology-indexes" aria-label="Índices elegíveis" role="list">
             <li>

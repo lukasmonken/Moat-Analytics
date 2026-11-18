@@ -44,3 +44,11 @@ Para outro ano, use o FCA correspondente em `data/raw/cvm` ou passe `--fca-archi
 Quando o FCA contém um erro cadastral, `--identity-overrides` aceita um CSV UTF-8 com `data_base,ticker,codigo_cvm,cnpj,companhia,tipo,fonte_url,justificativa`. A data deve ser a do lote e a identidade deve corresponder a um emissor doméstico apto no FCA. Cada linha requer evidência primária para a classe ou o código corrigido.
 
 A saída privada padrão fica em `data/processed/index-universe/index-universe.json`. Cada lote válido é arquivado por data-base e hash em `data/processed/index-universe/history`. Uma importação antiga entra no histórico e preserva a saída mais recente. O screener local usa o lote mais recente no `npm run dev`. A saída pública requer `--redistribution-basis` com a autorização verificada.
+
+## Atualizar o diretório público
+
+O diretório público usa os códigos CVM do recorte local para buscar, no FCA aberto, os nomes oficiais das companhias. O JSON público contém apenas a lista de nomes, a data-base e a atribuição à CVM.
+
+```bash
+python3 apps/pipeline/run_company_selection.py --fca-archive data/raw/cvm/fca_cia_aberta_2026.zip
+```

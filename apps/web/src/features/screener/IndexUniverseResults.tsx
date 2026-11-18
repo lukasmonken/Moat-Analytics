@@ -1,5 +1,7 @@
 import type { IndexUniverseCompany, IndexUniverseSnapshot } from '@moat/data-contracts';
-import { Badge, Button, EmptyState, Panel, Table } from '../../shared/ui';
+import { Badge, EmptyState, Panel, Table } from '../../shared/ui';
+import { compareNames, formatCompanyCount, formatDate } from './presentation';
+import { ScreenerToolbar } from './ScreenerToolbar';
 
 const columns = [
   { key: 'name', label: 'Companhia' },
@@ -9,15 +11,6 @@ const columns = [
 
 type SortColumn = (typeof columns)[number]['key'];
 export type Sort = { column: SortColumn; direction: 'ascending' | 'descending' };
-
-const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-const numberFormatter = new Intl.NumberFormat('pt-BR');
-const compare = new Intl.Collator('pt-BR', { sensitivity: 'base', numeric: true }).compare;
 
 function sortValue(company: IndexUniverseCompany, key: SortColumn) {
   switch (key) {
@@ -40,8 +33,8 @@ export function orderCompanies(companies: IndexUniverseCompany[], sort: Sort) {
     .slice()
     .sort(
       (a, b) =>
-        compare(sortValue(a, sort.column), sortValue(b, sort.column)) * direction ||
-        compare(a.name, b.name) ||
+        compareNames(sortValue(a, sort.column), sortValue(b, sort.column)) * direction ||
+        compareNames(a.name, b.name) ||
         a.cvmCode - b.cvmCode,
     );
 }
@@ -59,9 +52,7 @@ export function IndexUniverseSource({ snapshot }: { snapshot: IndexUniverseSnaps
         <div>
           <dt>Data-base</dt>
           <dd>
-            <time dateTime={snapshot.asOf}>
-              {dateFormatter.format(new Date(`${snapshot.asOf}T00:00:00Z`))}
-            </time>
+            <time dateTime={snapshot.asOf}>{formatDate(snapshot.asOf)}</time>
           </dd>
         </div>
         <div>
@@ -101,7 +92,7 @@ export function IndexUniverseResults({
   const totalPages = Math.ceil(companies.length / pageSize);
   const currentPage = Math.min(page, totalPages);
   const first = (currentPage - 1) * pageSize;
-  const count = `${numberFormatter.format(companies.length)} de ${numberFormatter.format(total)} companhias`;
+  const count = formatCompanyCount(companies.length, total);
 
   if (companies.length === 0) {
     return (
@@ -115,23 +106,13 @@ export function IndexUniverseResults({
 
   return (
     <Panel className="screener-results">
-      <div className="screener-results__toolbar">
-        <p role="status">{count}</p>
-        <nav className="screener-pagination" aria-label="Paginação da composição">
-          <Button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
-            Página anterior
-          </Button>
-          <p aria-live="polite">
-            Página {numberFormatter.format(currentPage)} de {numberFormatter.format(totalPages)}
-          </p>
-          <Button
-            disabled={currentPage === totalPages}
-            onClick={() => onPageChange(currentPage + 1)}
-          >
-            Próxima página
-          </Button>
-        </nav>
-      </div>
+      <ScreenerToolbar
+        count={count}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+        paginationLabel="Paginação da composição"
+      />
 
       <div
         className="screener-results__scroll"

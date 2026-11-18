@@ -198,7 +198,7 @@ function isIssue(value: unknown): value is CvmIssue {
   );
 }
 
-function isSource(value: unknown): value is CvmSource {
+export function isCvmSource(value: unknown): value is CvmSource {
   return (
     isObject(value) &&
     isText(value.name) &&
@@ -219,7 +219,7 @@ function isManifest(value: unknown): value is CvmSnapshot['manifest'] {
     typeof value.coverage.includedCompanies === 'number' &&
     Number.isSafeInteger(value.coverage.includedCompanies) &&
     value.coverage.includedCompanies >= 0 &&
-    isSource(value.source)
+    isCvmSource(value.source)
   );
 }
 
@@ -265,7 +265,7 @@ export function parseCvmIdentity(input: unknown): CvmIdentitySnapshot {
   if (
     !isObject(input) ||
     input.schemaVersion !== '1.0.0' ||
-    !isSource(input.source) ||
+    !isCvmSource(input.source) ||
     !isCvmUrl(input.archiveUrl) ||
     !isSha256(input.archiveSha256) ||
     !isTimestamp(input.retrievedAt) ||

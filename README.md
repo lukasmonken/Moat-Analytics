@@ -1,6 +1,6 @@
 # Moat Analytics
 
-Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, consulte a amostra de demonstrativos anuais da CVM com contas, conciliações e documentos de origem. O **Screener** consulta um recorte anual de IBOV, SMLL e IDIV quando há um lote validado.
+Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, consulte a amostra de demonstrativos anuais da CVM com contas, conciliações e documentos de origem. O **Screener** público mostra os nomes da seleção anual, obtidos no cadastro aberto da CVM.
 
 ## Executar localmente
 

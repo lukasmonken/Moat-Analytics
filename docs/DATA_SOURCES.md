@@ -14,6 +14,8 @@ O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc
 
 A composição de 18/11/2026 foi importada dos três CSVs fornecidos pelo usuário para consulta local. O Formulário Cadastral da CVM resolve a identidade de cada companhia. Exceções de ticker ou classe exigem uma fonte primária registrada com a data-base.
 
+O [diretório público](../data/public/cvm-company-selection.json) lista os nomes oficiais da seleção, obtidos no FCA aberto, sob a mesma licença do cadastro. A relação de cada companhia com os índices pertence ao snapshot local.
+
 | Dados                                            | Fonte ou candidata                                                        | Estado                                                     |
 | ------------------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | DFP anual consolidado                            | Catálogo oficial da CVM                                                   | Amostra de três companhias, cinco exercícios por companhia |
