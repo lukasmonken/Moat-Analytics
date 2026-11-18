@@ -60,9 +60,11 @@ Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, qu
 
 ### 3.4 Curva de juros e spread
 
-- Benchmark principal: curva **prefixada brasileira de prazo constante de ~10 anos**, idealmente ETTJ ANBIMA, sujeito à validação de acesso, histórico e condições de uso. Tesouro Direto como apoio; CDI/Selic apenas para contexto ou opção explícita.
+- **Referência provisória corrente.** Usar o CDI anualizado mais recente publicado pelo Banco Central do Brasil (SGS 4389) como única taxa livre de risco corrente. Exibir o percentual ao ano, a data de referência e a fonte em Empresas e em Valuation e Premissas.
+- **Comparação corrente em Empresas.** Subtrair o CDI atual do ROIC ou ROE do exercício mais recente, em pontos percentuais, com as duas referências identificadas. A indisponibilidade de qualquer um dos dados deixa a diferença indisponível.
+- **Referência histórica planejada.** Curva prefixada brasileira de prazo constante de aproximadamente dez anos, idealmente ETTJ ANBIMA. A integração depende de validação de acesso, cobertura e condições de uso. Tesouro Direto é uma fonte de apoio.
 - Para cada ano, comparar o retorno com **taxa da mesma janela histórica**, segundo convenção documentada (p. ex. taxa na data de encerramento do exercício ou média anual); não usar a taxa atual retroativamente.
-- `Spread qualidade (p.p.) = ROIC ou ROE − taxa nominal pública de 10 anos histórica`.
+- `Spread histórico de qualidade (p.p.) = ROIC ou ROE − taxa nominal pública de 10 anos da mesma janela`.
 - `Spread preço (p.p.) = yield implícito de mercado − benchmark público contemporâneo`.
 - Exibir anos de spread positivo, mínimo de cinco consecutivos para o filtro escolhido, média/volatilidade e comparação dos pares. Um spread positivo não é prova de moat.
 
@@ -82,6 +84,7 @@ Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, qu
 | DFP/ITR, DRE, BP, DFC e cadastro | Arquivos públicos oficiais CVM | Conferir novos envios/retificações; anual/trimestral |
 | Composição IBOV/SMLL/IDIV | Carteiras oficiais B3 ou fonte legalmente utilizável | A cada reconstituição/alteração |
 | Fechamento/proventos/ações corporativas | Interface `MarketDataProvider` intercambiável; Yahoo Finance/yfinance apenas candidato experimental sujeito a termos | Diária para fechamento |
+| CDI anualizado corrente | Banco Central do Brasil, SGS 4389 | Última observação publicada |
 | Curva de juros prefixada 10 anos | ETTJ ANBIMA, validando permissão e histórico | Conforme disponibilidade da fonte |
 | Selic e outras séries de referência | Banco Central/Tesouro conforme série | Conforme publicação |
 

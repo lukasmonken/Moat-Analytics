@@ -1,4 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { cdiRateUrl } from '../../apps/web/src/shared/data-client/riskFreeRate';
+
+const cdiFixture = [{ data: '15/12/2025', valor: '13.65' }];
+
+test.beforeEach(async ({ page }) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ json: cdiFixture }));
+});
 
 test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({ page }) => {
   const errors: string[] = [];
@@ -66,13 +73,18 @@ test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'ROIC estimado' })).toBeVisible();
   const series = page.getByRole('table', { name: 'Série de qualidade por exercício' });
   await expect(series.getByText(/27,87\s*%/)).toBeVisible();
+  await expect(
+    page.getByText(/Diferença para o CDI atual.*ROIC estimado de 2025.*\+14,22 p.p./),
+  ).toBeVisible();
   await page.getByText('Contas e cálculo de 2025', { exact: true }).click();
   await expect(page.getByText(/SHA-256/).filter({ visible: true })).toHaveCount(1);
 
   await company.selectOption('cvm:19348');
   await expect(page.getByRole('heading', { name: 'ROE atribuível à controladora' })).toBeVisible();
   await expect(series.getByText(/21,59\s*%/)).toBeVisible();
-  await expect(page.getByText(/^Spread indisponível/)).toBeVisible();
+  await expect(
+    page.getByText(/Diferença para o CDI atual.*ROE de 2025.*\+7,94 p.p./),
+  ).toBeVisible();
   await expect(page.getByText(/^Ranking indisponível/)).toBeVisible();
 });
 
@@ -83,6 +95,12 @@ test('compara ROE de cinco bancos e consulta a conciliação do Santander', asyn
   await expect(table.getByRole('columnheader', { name: '2021' })).toBeVisible();
   await expect(table.getByRole('columnheader', { name: '2025' })).toBeVisible();
   await expect(table.getByRole('row', { name: /SANTANDER/i }).getByText(/10,44\s*%/)).toBeVisible();
+  await expect(
+    table.getByRole('columnheader', { name: 'Diferença para o CDI atual' }),
+  ).toBeVisible();
+  await expect(
+    table.getByRole('row', { name: /SANTANDER/i }).getByText('-3,21 p.p.'),
+  ).toBeVisible();
 
   await page.getByRole('combobox', { name: 'Banco', exact: true }).selectOption('cvm:20532');
   await page.getByRole('combobox', { name: 'Exercício da DFP' }).selectOption('2022');
@@ -90,6 +108,20 @@ test('compara ROE de cinco bancos e consulta a conciliação do Santander', asyn
   await expect(page.getByRole('link', { name: 'Demonstrações IFRS auditadas' })).toBeVisible();
   await expect(page.getByText(/DMPL · 5\.05\.01\.02/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Baixar comparação em JSON' })).toBeVisible();
+});
+
+test('consulta o CDI em Premissas e permite atualizar após falha', async ({ page }) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ status: 503 }), { times: 1 });
+  await page.goto('./#/valuation');
+  const cdi = page.getByRole('region', { name: 'CDI atual' });
+  await expect(cdi.getByText('CDI indisponível no Banco Central.')).toBeVisible();
+  await cdi.getByRole('button', { name: 'Atualizar CDI' }).click();
+  await expect(cdi.getByText(/13,65\s*% a.a./)).toBeVisible();
+  await expect(cdi.locator('time')).toHaveAttribute('datetime', '2025-12-15');
+  await expect(cdi.getByRole('link', { name: /Banco Central do Brasil/ })).toHaveAttribute(
+    'href',
+    cdiRateUrl,
+  );
 });
 
 test.describe('janela móvel', () => {

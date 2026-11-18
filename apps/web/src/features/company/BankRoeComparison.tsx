@@ -1,13 +1,21 @@
 import type { BankRoeSnapshot } from '@moat/data-contracts';
 import { useEffect, useState } from 'react';
+import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { bankRoeSnapshotUrl, loadBankRoeSnapshot } from '../../shared/data-client/bankRoeSnapshot';
+import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import { Button, Icon, Panel, Select, Table } from '../../shared/ui';
 import { formatDate } from './financialPresentation';
-import { formatRate, QualityAudit } from './QualityHistory';
+import { formatPoints, formatRate, QualityAudit } from './QualityHistory';
 
 const percentileFormat = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
 
-function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
+function BankRoeResults({
+  snapshot,
+  riskFreeRate,
+}: {
+  snapshot: BankRoeSnapshot;
+  riskFreeRate: RiskFreeRate | null;
+}) {
   const [selectedBankId, setSelectedBankId] = useState('');
   const [selectedYear, setSelectedYear] = useState<number>();
   const { comparison, companies, excluded, manifest } = snapshot;
@@ -29,6 +37,7 @@ function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
             {startYear}–{endYear} · {banks.length}{' '}
             {banks.length === 1 ? 'banco de varejo selecionado' : 'bancos de varejo selecionados'}
           </p>
+          <p>A diferença é o ROE de {endYear} menos o CDI atual.</p>
           <div
             className="bank-roe-table-scroll"
             role="region"
@@ -46,6 +55,7 @@ function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
                   ))}
                   <th scope="col">Média do período</th>
                   <th scope="col">Percentil da média</th>
+                  <th scope="col">Diferença para o CDI atual</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,6 +64,7 @@ function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
                     company.observations.map((row) => [row.fiscalYear, row.value]),
                   );
                   const percentile = comparison.percentiles?.[company.companyId];
+                  const spread = spreadToRiskFreeRate(annual.get(endYear) ?? null, riskFreeRate);
                   return (
                     <tr key={company.companyId}>
                       <th scope="row">{company.name}</th>
@@ -66,6 +77,7 @@ function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
                           ? 'Indisponível'
                           : percentileFormat.format(percentile)}
                       </td>
+                      <td>{formatPoints(spread, true)}</td>
                     </tr>
                   );
                 })}
@@ -154,7 +166,7 @@ function BankRoeResults({ snapshot }: { snapshot: BankRoeSnapshot }) {
 type BankRoeState =
   { status: 'loading' | 'error' | 'unavailable' } | { status: 'ready'; snapshot: BankRoeSnapshot };
 
-export function BankRoeComparison() {
+export function BankRoeComparison({ riskFreeRate }: { riskFreeRate: RiskFreeRate | null }) {
   const [state, setState] = useState<BankRoeState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
 
@@ -199,7 +211,9 @@ export function BankRoeComparison() {
           </Button>
         </>
       )}
-      {state.status === 'ready' && <BankRoeResults snapshot={state.snapshot} />}
+      {state.status === 'ready' && (
+        <BankRoeResults snapshot={state.snapshot} riskFreeRate={riskFreeRate} />
+      )}
     </Panel>
   );
 }

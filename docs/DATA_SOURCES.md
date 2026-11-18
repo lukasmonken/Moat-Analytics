@@ -14,6 +14,10 @@ O [lote de comparação bancária](../data/public/cvm-bank-roe.json) usa DFP con
 
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
 
+## CDI atual
+
+O navegador consulta a última observação do CDI anualizado em base de 252 dias úteis no serviço público do Banco Central do Brasil (SGS 4389). A interface exibe o valor em percentual ao ano, a data-base da observação e a fonte. Os termos dos serviços digitais do Banco Central permitem reproduzir o conteúdo com atribuição e integridade. Em caso de falha ou ausência de observação válida, a taxa fica indisponível e a consulta pode ser refeita. [Última observação](https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/1?formato=json) · [Metadados da série](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet) · [Termos do Banco Central](https://www.bcb.gov.br/acessoinformacao/politicaprivacidade)
+
 ## Cobertura e pendências
 
 A composição de 18/11/2026 foi importada dos três CSVs fornecidos pelo usuário para consulta local. O Formulário Cadastral da CVM resolve a identidade de cada companhia. Exceções de ticker ou classe exigem uma fonte primária registrada com a data-base.
@@ -27,6 +31,7 @@ O [diretório público](../data/public/cvm-company-selection.json) lista os nome
 | Carteiras IBOV, SMLL e IDIV                      | CSVs fornecidos pelo usuário em formato B3                                | Recorte anual local. Direitos de publicação pendentes      |
 | Classe de maior liquidez                         | Histórico de volume financeiro negociado, por classe, em fonte autorizada | Pendente                                                   |
 | Fechamentos, proventos e eventos corporativos    | Provedor intercambiável após validação de direitos, calendário e ajustes  | Pendente                                                   |
+| CDI anualizado corrente                          | Banco Central do Brasil, SGS 4389                                         | Referência provisória consultada diretamente               |
 | Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA de 2520 dias úteis                                            | Acesso e direitos de publicação pendentes                  |
 | Selic e séries auxiliares                        | Banco Central ou Tesouro, conforme a série                                | Avaliação futura                                           |
 

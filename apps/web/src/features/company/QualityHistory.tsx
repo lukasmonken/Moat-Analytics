@@ -1,6 +1,8 @@
 import type { QualityCompany, QualityObservation, QualitySnapshot } from '@moat/data-contracts';
 import { useEffect, useState } from 'react';
+import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { loadQualitySnapshot, qualitySnapshotUrl } from '../../shared/data-client/qualitySnapshot';
+import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import { Button, Icon, Panel, Table } from '../../shared/ui';
 import { formatCurrency, formatDate, formatInstant } from './financialPresentation';
 import './quality-history.css';
@@ -25,7 +27,7 @@ export function formatRate(value: number | null) {
   return value === null ? 'Indisponível' : percent.format(value);
 }
 
-function formatPoints(value: number | null, signed = false) {
+export function formatPoints(value: number | null, signed = false) {
   if (value === null) return 'Indisponível';
   return (signed ? signedPoints : points).format(value) + ' p.p.';
 }
@@ -177,13 +179,16 @@ export function QualityAudit({
 function QualitySeries({
   snapshot,
   company,
+  riskFreeRate,
 }: {
   snapshot: QualitySnapshot;
   company: QualityCompany;
+  riskFreeRate: RiskFreeRate | null;
 }) {
   const isRoic = company.metric === 'roic';
   const metric = isRoic ? 'ROIC estimado' : 'ROE atribuível à controladora';
   const observations = [...company.observations].sort((a, b) => b.fiscalYear - a.fiscalYear);
+  const latest = observations[0];
 
   return (
     <>
@@ -196,6 +201,13 @@ function QualitySeries({
         </p>
       </div>
       <QualitySummary summary={company.summary} />
+      {latest && (
+        <p>
+          <strong>Diferença para o CDI atual</strong> · {isRoic ? 'ROIC estimado' : 'ROE'} de{' '}
+          {latest.fiscalYear} ·{' '}
+          {formatPoints(spreadToRiskFreeRate(latest.value, riskFreeRate), true)}
+        </p>
+      )}
       <div
         className="company-table-scroll"
         role="region"
@@ -208,7 +220,6 @@ function QualitySeries({
               <th scope="col">Exercício</th>
               <th scope="col">{isRoic ? 'ROIC estimado' : 'ROE'}</th>
               <th scope="col">Variação anual</th>
-              <th scope="col">Spread de 10 anos</th>
             </tr>
           </thead>
           <tbody>
@@ -217,13 +228,11 @@ function QualitySeries({
                 <th scope="row">{observation.fiscalYear}</th>
                 <td>{formatRate(observation.value)}</td>
                 <td>{formatPoints(observation.changePp, true)}</td>
-                <td>{formatPoints(observation.spreadPp, true)}</td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      <p>Spread indisponível. {snapshot.benchmark.reason}</p>
       <p>Ranking indisponível. {snapshot.ranking.reason}</p>
       <div className="quality-audits">
         {observations.map((observation) => (
@@ -256,7 +265,12 @@ function QualitySeries({
 type QualityState =
   { status: 'loading' | 'error' | 'unavailable' } | { status: 'ready'; snapshot: QualitySnapshot };
 
-function QualityContent({ companyId }: { companyId: string }) {
+interface QualityHistoryProps {
+  companyId: string;
+  riskFreeRate: RiskFreeRate | null;
+}
+
+function QualityContent({ companyId, riskFreeRate }: QualityHistoryProps) {
   const [state, setState] = useState<QualityState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
 
@@ -298,14 +312,21 @@ function QualityContent({ companyId }: { companyId: string }) {
     const { snapshot } = state;
     const company = snapshot.companies.find((entry) => entry.companyId === companyId);
     if (company?.observations.length) {
-      return <QualitySeries key={company.companyId} snapshot={snapshot} company={company} />;
+      return (
+        <QualitySeries
+          key={company.companyId}
+          snapshot={snapshot}
+          company={company}
+          riskFreeRate={riskFreeRate}
+        />
+      );
     }
   }
 
   return <p role="status">Série de qualidade indisponível para esta companhia.</p>;
 }
 
-export function QualityHistory({ companyId }: { companyId: string }) {
+export function QualityHistory({ companyId, riskFreeRate }: QualityHistoryProps) {
   const [requested, setRequested] = useState(false);
 
   return (
@@ -325,7 +346,7 @@ export function QualityHistory({ companyId }: { companyId: string }) {
           <Icon className="company-observation-icon" name="chevron-down" size={18} />
         </summary>
         <div className="company-observation-body quality-body">
-          {requested && <QualityContent companyId={companyId} />}
+          {requested && <QualityContent companyId={companyId} riskFreeRate={riskFreeRate} />}
         </div>
       </details>
     </Panel>

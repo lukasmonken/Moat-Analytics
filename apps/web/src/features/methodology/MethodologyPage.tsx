@@ -62,17 +62,18 @@ export function MethodologyPage() {
                 </td>
               </tr>
               <tr>
-                <th scope="row">Spread de qualidade</th>
+                <th scope="row">Diferença para o CDI atual</th>
                 <td>
-                  ROIC ou ROE menos a taxa prefixada de aproximadamente 10 anos da janela histórica
-                  correspondente.
+                  ROIC ou ROE do último exercício menos o CDI anualizado mais recente, em pontos
+                  percentuais.
                 </td>
               </tr>
             </tbody>
           </Table>
           <p>
-            A taxa pública serve como referência de custo de oportunidade. A taxa de desconto do
-            valuation refletirá o risco dos fluxos avaliados.
+            O CDI atual é a taxa livre de risco provisória. A página Empresas informa o exercício
+            contábil e a data da taxa. O ranking composto requer uma série histórica alinhada aos
+            exercícios.
           </p>
           <p>
             A comparação bancária calcula a média de ROE de 2021 a 2025. O percentil descreve a
@@ -83,10 +84,9 @@ export function MethodologyPage() {
         <Panel className="methodology-panel" aria-labelledby="methodology-sources">
           <h2 id="methodology-sources">Fontes e disponibilidade</h2>
           <p>
-            Os demonstrativos da amostra vêm dos dados abertos da CVM. A série prefixada de
-            aproximadamente dez anos aguarda acesso autorizado à curva de prazo constante. As
-            cotações previstas usarão o fechamento do último pregão disponível e informarão a data e
-            o provedor.
+            Os demonstrativos da amostra vêm dos dados abertos da CVM. O Banco Central publica o CDI
+            anualizado na série SGS 4389. As cotações previstas usarão o fechamento do último pregão
+            disponível e informarão a data e o provedor.
           </p>
         </Panel>
       </div>

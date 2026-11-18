@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — CDI atual
+
+- CDI anualizado do Banco Central como taxa livre de risco provisória em Empresas e Valuation e Premissas, com data-base e fonte.
+- Diferença em pontos percentuais entre o ROIC ou ROE do exercício mais recente e o CDI atual.
+
 ## M2 — Comparação bancária
 
 - ROE atribuível à controladora de Banco do Brasil, Banrisul, Bradesco, Itaú Unibanco e Santander de 2021 a 2025, com média e percentil no grupo.
