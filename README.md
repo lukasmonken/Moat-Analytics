@@ -1,6 +1,6 @@
 # Moat Analytics
 
-Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, consulte a amostra de demonstrativos anuais da CVM com contas, conciliações e documentos de origem. O **Screener** público mostra os nomes da seleção anual, obtidos no cadastro aberto da CVM.
+Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, consulte a amostra de demonstrativos anuais da CVM e o **Histórico de qualidade**, com ROIC estimado para WEG e Renner e ROE para Itaú. O **Screener** público mostra os nomes da seleção anual, obtidos no cadastro aberto da CVM.
 
 ## Executar localmente
 

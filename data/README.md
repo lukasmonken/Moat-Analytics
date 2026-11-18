@@ -11,3 +11,5 @@ O arquivo [cvm-identity.json](public/cvm-identity.json) é uma base derivada do 
 Os CSVs de composição recebidos ficam em `raw/indices/`. O screener local usa `processed/index-universe/index-universe.json` e a trilha de lotes fica em `processed/index-universe/history/`. A licença do FCA vale para a fonte cadastral. A composição requer verificação própria dos direitos de redistribuição.
 
 O [diretório de companhias](public/cvm-company-selection.json) contém os nomes oficiais da seleção anual em uma lista única. A grafia vem do [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca), sob [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/).
+
+O [lote de qualidade](public/cvm-quality.json) contém contas e séries anuais de três companhias obtidas dos DFP consolidados. O arquivo inclui a metodologia, as datas, o hash de cada original e a atribuição sob ODbL 1.0.

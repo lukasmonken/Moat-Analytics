@@ -1,5 +1,11 @@
 # Changelog
 
+## M2 — Séries de qualidade da amostra
+
+- Cinco exercícios de ROE atribuível à controladora para Itaú e de ROIC estimado para WEG e Renner, com saldos de abertura do mesmo formulário.
+- Histórico de qualidade em Empresas, com variação anual em p.p., estatísticas, contas-fonte, versão e download do JSON atribuído à CVM.
+- Motor decimal e testes de casos-limite. Spreads e ranking da amostra exibem indisponibilidade.
+
 ## M1 — Amostra CVM
 
 - Diretório público da seleção anual com nomes do cadastro da CVM, data-base e busca pelo nome da companhia.

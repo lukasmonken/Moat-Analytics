@@ -63,3 +63,4 @@ export interface SnapshotManifest {
 export * from './cvm.ts';
 export * from './index-universe.ts';
 export * from './company-directory.ts';
+export * from './quality.ts';

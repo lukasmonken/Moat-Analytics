@@ -58,6 +58,24 @@ test('consulta a amostra oficial no build hospedado em subdiretório', async ({ 
   });
 });
 
+test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
+  await page.goto('./#/empresas');
+  const company = page.getByRole('combobox', { name: 'Companhia' });
+  await company.selectOption('cvm:5410');
+  await page.getByText('Histórico de qualidade', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'ROIC estimado' })).toBeVisible();
+  const series = page.getByRole('table', { name: 'Série de qualidade por exercício' });
+  await expect(series.getByText(/27,87\s*%/)).toBeVisible();
+  await page.getByText('Contas e cálculo de 2025', { exact: true }).click();
+  await expect(page.getByText(/SHA-256/).filter({ visible: true })).toHaveCount(1);
+
+  await company.selectOption('cvm:19348');
+  await expect(page.getByRole('heading', { name: 'ROE atribuível à controladora' })).toBeVisible();
+  await expect(series.getByText(/21,59\s*%/)).toBeVisible();
+  await expect(page.getByText(/^Spread indisponível/)).toBeVisible();
+  await expect(page.getByText(/^Ranking indisponível/)).toBeVisible();
+});
+
 test.describe('janela móvel', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
@@ -90,5 +108,12 @@ test.describe('janela móvel', () => {
     ).toBe(false);
     await page.locator('summary').filter({ hasText: '2025' }).click();
     await expect(page.getByRole('link', { name: 'ZIP original' })).toBeVisible();
+    await page.getByText('Histórico de qualidade', { exact: true }).click();
+    await expect(
+      page.getByRole('table', { name: 'Série de qualidade por exercício' }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+    ).toBe(false);
   });
 });
