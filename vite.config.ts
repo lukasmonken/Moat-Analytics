@@ -1,10 +1,92 @@
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+import { parseIndexUniverse } from './packages/data-contracts/src/index-universe.ts';
 
-export default defineConfig({
-  root: fileURLToPath(new URL('./apps/web', import.meta.url)),
-  base: './',
-  plugins: [react(), tailwindcss()],
+const privateUniverse = new URL(
+  './data/processed/index-universe/index-universe.json',
+  import.meta.url,
+);
+const publicUniverse = new URL('./data/public/index-universe.json', import.meta.url);
+const loopbackAddresses = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
+
+async function readOptionalFile(url: URL) {
+  try {
+    return await readFile(url, 'utf8');
+  } catch (error) {
+    if (typeof error === 'object' && error && 'code' in error && error.code === 'ENOENT') {
+      return null;
+    }
+    throw error;
+  }
+}
+
+function serveLocalUniverse(): Plugin {
+  return {
+    name: 'moat-local-index-universe',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use('/__moat/index-universe.json', (request, response) => {
+        if (
+          request.method !== 'GET' ||
+          !loopbackAddresses.has(request.socket.remoteAddress ?? '')
+        ) {
+          response.statusCode = 404;
+          response.end();
+          return;
+        }
+        void readOptionalFile(privateUniverse).then(
+          (payload) => {
+            if (payload === null) {
+              response.statusCode = 404;
+              response.end();
+              return;
+            }
+            response.setHeader('Content-Type', 'application/json; charset=utf-8');
+            response.setHeader('Cache-Control', 'no-store');
+            response.end(payload);
+          },
+          () => {
+            response.statusCode = 500;
+            response.end();
+          },
+        );
+      });
+    },
+  };
+}
+
+export default defineConfig(async ({ command }) => {
+  if (command === 'build') {
+    const payload = await readOptionalFile(publicUniverse);
+    if (
+      payload !== null &&
+      parseIndexUniverse(JSON.parse(payload)).source.redistributionBasis === null
+    ) {
+      throw new Error(
+        'A composição em data/public requer autorização de redistribuição registrada.',
+      );
+    }
+  }
+
+  return {
+    root: fileURLToPath(new URL('./apps/web', import.meta.url)),
+    base: './',
+    plugins: [react(), tailwindcss(), serveLocalUniverse()],
+    server: {
+      fs: {
+        deny: [
+          '.env',
+          '.env.*',
+          '*.{crt,pem,key,p12,pfx,cer,der}',
+          '.npmrc',
+          '.yarnrc.yml',
+          '**/.git/**',
+          '**/data/{raw,processed}/**',
+        ],
+      },
+    },
+  };
 });

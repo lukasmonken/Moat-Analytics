@@ -1,6 +1,6 @@
 # M1 — Dados de referência
 
-Fontes consultadas em 18/11/2026. O recorte financeiro e cadastral da CVM foi validado para três companhias. O universo dos índices, o ticker representativo e a referência prefixada de dez anos estão indisponíveis.
+Fontes consultadas em 18/11/2026. O recorte financeiro e cadastral da CVM foi validado para três companhias. O screener local usa o recorte anual de IBOV, SMLL e IDIV dessa data. A publicação das composições, a escolha do ticker representativo e a referência prefixada de dez anos estão pendentes.
 
 ## Códigos informados à CVM
 

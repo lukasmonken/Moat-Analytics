@@ -60,4 +60,5 @@ export interface SnapshotManifest {
   coverage: SnapshotCoverage;
 }
 
-export * from './cvm';
+export * from './cvm.ts';
+export * from './index-universe.ts';

@@ -12,11 +12,13 @@ O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc
 
 ## Cobertura e pendências
 
+A composição de 18/11/2026 foi importada dos três CSVs fornecidos pelo usuário para consulta local. O Formulário Cadastral da CVM resolve a identidade de cada companhia. Exceções de ticker ou classe exigem uma fonte primária registrada com a data-base.
+
 | Dados                                            | Fonte ou candidata                                                        | Estado                                                     |
 | ------------------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | DFP anual consolidado                            | Catálogo oficial da CVM                                                   | Amostra de três companhias, cinco exercícios por companhia |
 | ITR, DFC e universo amplo de demonstrações       | Catálogo oficial da CVM                                                   | Cobertura futura                                           |
-| Carteiras IBOV, SMLL e IDIV                      | Composições oficiais via B3 ou distribuidor autorizado                    | Acesso e redistribuição pendentes                          |
+| Carteiras IBOV, SMLL e IDIV                      | CSVs fornecidos pelo usuário em formato B3                                | Recorte anual local. Direitos de publicação pendentes      |
 | Classe de maior liquidez                         | Histórico de volume financeiro negociado, por classe, em fonte autorizada | Pendente                                                   |
 | Fechamentos, proventos e eventos corporativos    | Provedor intercambiável após validação de direitos, calendário e ajustes  | Pendente                                                   |
 | Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA de 2520 dias úteis                                            | Acesso e direitos de publicação pendentes                  |

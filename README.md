@@ -1,6 +1,6 @@
 # Moat Analytics
 
-Aplicativo web para análise fundamentalista de companhias brasileiras. O M1 acrescenta uma amostra de DFP anuais da CVM com contas de indústria, varejo e banco. Em **Empresas**, consulte os exercícios de cada companhia, as conciliações e os documentos de origem. O universo B3 e a referência de juros de dez anos dependem de fontes autorizadas.
+Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, consulte a amostra de demonstrativos anuais da CVM com contas, conciliações e documentos de origem. O **Screener** consulta um recorte anual de IBOV, SMLL e IDIV quando há um lote validado.
 
 ## Executar localmente
 
@@ -41,6 +41,12 @@ python3 apps/pipeline/run_cvm_identity.py --output data/public/cvm-identity.json
 ```
 
 Confira [Pipeline de dados](apps/pipeline/README.md) para as opções da CLI e [Fontes de dados](docs/DATA_SOURCES.md) para licença e cobertura. O CI testa offline. O workflow de publicação usa o snapshot revisado no Git.
+
+## Importar a composição anual
+
+O pipeline aceita um CSV por índice, inclusive os arquivos **Carteira do Dia** fornecidos pelo usuário, ou um CSV consolidado. A união é deduplicada pelo código CVM. O lote preserva a data-base da composição, as classes e todas as afiliações.
+
+O comando padrão grava o snapshot em `data/processed/index-universe/index-universe.json` e arquiva o lote por data e hash. Abra **Screener e Rankings** no `npm run dev` para consultar a composição local. O build do Pages aceita somente um snapshot separado em `data/public/index-universe.json` cuja redistribuição tenha sido verificada. [Comando e critérios de importação](apps/pipeline/README.md#importar-a-composição-anual)
 
 ## Publicar no GitHub Pages
 

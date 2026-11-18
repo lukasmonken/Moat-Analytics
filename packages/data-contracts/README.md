@@ -7,3 +7,5 @@
 A observação mantém `publishedAt: null` quando só se dispõe da data de recebimento do formulário. O manifesto usa `eligibleCompanies: null` enquanto o tamanho do universo B3 for desconhecido. Consulte os [contratos orientativos](../../docs/SPEC.md#11-arquitetura-técnica-e-limites-de-domínio) e a [metodologia](../../docs/METHODOLOGY.md).
 
 `CvmIdentitySnapshot` e `parseCvmIdentity` validam a evidência cadastral do FCA em separado. A associação por código CVM preserva as classes declaradas, a versão e a data do cadastro.
+
+`IndexUniverseSnapshot` e `parseIndexUniverse` validam a composição anual. O contrato preserva a data-base e separa as afiliações das classes da união por companhia. A contagem por índice é calculada por código CVM e o ticker representativo fica indisponível até a validação de volume.

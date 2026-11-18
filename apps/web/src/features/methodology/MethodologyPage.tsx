@@ -23,9 +23,9 @@ export function MethodologyPage() {
         <Panel className="methodology-panel" aria-labelledby="methodology-universe">
           <h2 id="methodology-universe">Universo de análise</h2>
           <p>
-            O universo planejado reúne companhias brasileiras que integram pelo menos um dos três
-            índices. Cada companhia terá uma ficha e será representada pelo ticker de maior
-            liquidez. A composição depende de uma fonte com uso autorizado.
+            O universo reúne as companhias brasileiras presentes em pelo menos um dos três índices
+            na data-base do recorte anual. O screener mantém uma linha por companhia e mostra as
+            classes e afiliações. A escolha do ticker representativo depende de dados de volume.
           </p>
           <ul className="methodology-indexes" aria-label="Índices elegíveis" role="list">
             <li>

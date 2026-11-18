@@ -1,0 +1,139 @@
+.screener-source,
+.screener-loading {
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.screener-source,
+.screener-source dl,
+.screener-results__toolbar,
+.screener-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.screener-source,
+.screener-results__toolbar {
+  justify-content: space-between;
+}
+
+.screener-source h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+}
+
+.screener-source .ui-badge {
+  margin-top: 0.35rem;
+}
+
+.screener-source p,
+.screener-source dl,
+.screener-source dd,
+.screener-loading p,
+.screener-results__toolbar p {
+  margin: 0;
+}
+
+.screener-source p,
+.screener-source dt,
+.screener-loading p,
+.screener-results__toolbar p {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.screener-source p {
+  margin-top: 0.3rem;
+}
+
+.screener-source dd {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.screener-source a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.screener-results__toolbar {
+  padding: 0.75rem 1rem;
+}
+
+.screener-pagination {
+  gap: 0.5rem 0.75rem;
+}
+
+.screener-results__scroll {
+  overflow-x: auto;
+  border-radius: 0 0 0.875rem 0.875rem;
+}
+
+.screener-results__scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.screener-results .ui-table {
+  min-width: 27rem;
+}
+
+.screener-results .ui-table th[scope='row'] {
+  width: 34%;
+}
+
+.screener-results .ui-table tr:last-child > :is(th, td) {
+  border-bottom: 0;
+}
+
+.screener-sort {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.screener-sort:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.screener-tickers,
+.screener-indices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.screener-tickers li {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.screener-tickers strong {
+  color: var(--text);
+}
+
+.screener-tickers span {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 34rem) {
+  .screener-pagination {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .screener-pagination .ui-button {
+    padding-inline: 0.55rem;
+  }
+}
