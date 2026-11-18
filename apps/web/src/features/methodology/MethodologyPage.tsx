@@ -1,4 +1,4 @@
-import { Badge, PageHeader, Panel, Table } from '../../shared/ui';
+import { Badge, ButtonLink, PageHeader, Panel, Table } from '../../shared/ui';
 
 export function MethodologyPage() {
   return (
@@ -8,11 +8,24 @@ export function MethodologyPage() {
         description="Consulte o universo elegível, as métricas propostas e a referência de juros."
       />
       <div className="methodology-sections">
+        <Panel className="methodology-panel" aria-labelledby="methodology-cvm">
+          <h2 id="methodology-cvm">Amostra contábil da CVM</h2>
+          <p>
+            A amostra usa Demonstrações Financeiras Padronizadas consolidadas de uma indústria, um
+            varejista e um banco. Cada exercício informa a versão do envio, a origem e as
+            verificações contábeis. Os valores são apresentados em reais e as lacunas ficam
+            sinalizadas como indisponíveis.
+          </p>
+          <ButtonLink to="/empresas" className="methodology-link">
+            Consultar contas da CVM
+          </ButtonLink>
+        </Panel>
         <Panel className="methodology-panel" aria-labelledby="methodology-universe">
           <h2 id="methodology-universe">Universo de análise</h2>
           <p>
-            O universo reúne companhias brasileiras que integram pelo menos um dos três índices.
-            Cada companhia terá uma ficha e será representada pelo ticker de maior liquidez.
+            O universo planejado reúne companhias brasileiras que integram pelo menos um dos três
+            índices. Cada companhia terá uma ficha e será representada pelo ticker de maior
+            liquidez. A composição depende de uma fonte com uso autorizado.
           </p>
           <ul className="methodology-indexes" aria-label="Índices elegíveis" role="list">
             <li>
@@ -64,11 +77,12 @@ export function MethodologyPage() {
         </Panel>
 
         <Panel className="methodology-panel" aria-labelledby="methodology-sources">
-          <h2 id="methodology-sources">Fontes previstas</h2>
+          <h2 id="methodology-sources">Fontes e disponibilidade</h2>
           <p>
-            Os demonstrativos virão da CVM. A composição dos índices da B3 e a curva prefixada de
-            ANBIMA serão avaliadas quanto ao acesso, histórico e condições de uso. As cotações
-            usarão o fechamento do último pregão disponível, com a data e o provedor identificados.
+            Os demonstrativos da amostra vêm dos dados abertos da CVM. A série prefixada de
+            aproximadamente dez anos aguarda acesso autorizado à curva de prazo constante. As
+            cotações previstas usarão o fechamento do último pregão disponível e informarão a data e
+            o provedor.
           </p>
         </Panel>
       </div>

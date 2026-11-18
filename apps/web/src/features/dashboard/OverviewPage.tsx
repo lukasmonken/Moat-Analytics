@@ -3,8 +3,14 @@ import { ButtonLink, Icon, type IconName } from '../../shared/ui';
 
 const modules = [
   {
+    title: 'Empresas',
+    description: 'Consulte contas consolidadas e o histórico dos envios à CVM.',
+    to: '/empresas',
+    icon: 'company',
+  },
+  {
     title: 'Screener e Rankings',
-    description: 'Compare rentabilidade e consistência entre empresas da B3.',
+    description: 'Acompanhe a formação do universo de companhias elegíveis da B3.',
     to: '/screener',
     icon: 'screener',
   },
@@ -13,12 +19,6 @@ const modules = [
     description: 'Estime o valor intrínseco com premissas que você pode revisar.',
     to: '/valuation',
     icon: 'valuation',
-  },
-  {
-    title: 'Carteiras',
-    description: 'Estruture seleções de ativos e explore combinações de pesos.',
-    to: '/carteiras',
-    icon: 'portfolio',
   },
 ] as const satisfies readonly {
   title: string;
@@ -61,15 +61,15 @@ export function OverviewPage() {
           <p className="overview-hero__subject">Análise fundamentalista da B3</p>
           <h1 id="overview-title">Qualidade, preço e valor.</h1>
           <p className="overview-hero__summary">
-            Explore a qualidade das empresas brasileiras, o preço de mercado e as premissas por trás
-            de uma estimativa de valor.
+            Consulte contas da CVM e conheça a metodologia para analisar a rentabilidade, o preço de
+            mercado e o valor intrínseco das empresas.
           </p>
           <div className="overview-hero__actions">
-            <ButtonLink to="/screener" variant="primary">
-              Explorar screener <Icon name="arrow-right" size={17} />
+            <ButtonLink to="/empresas" variant="primary">
+              Consultar contas da CVM <Icon name="arrow-right" size={17} />
             </ButtonLink>
-            <ButtonLink to="/metodologia" variant="quiet">
-              Ler metodologia
+            <ButtonLink to="/screener" variant="quiet">
+              Explorar screener
             </ButtonLink>
           </div>
         </div>
@@ -79,7 +79,6 @@ export function OverviewPage() {
       <section className="overview-modules" aria-labelledby="overview-modules">
         <div className="overview-modules__heading">
           <h2 id="overview-modules">Explore os módulos</h2>
-          <p>A integração de dados está em desenvolvimento.</p>
         </div>
         <ul className="module-list" role="list">
           {modules.map(({ title, description, to, icon }) => (

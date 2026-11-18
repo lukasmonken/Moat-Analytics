@@ -2,6 +2,7 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../apps/web/src/app/App';
+import { readCvmSample } from './cvm-snapshot';
 
 function setPreferredTheme(theme: 'light' | 'dark') {
   const query = '(prefers-color-scheme: dark)';
@@ -17,6 +18,7 @@ beforeEach(() => {
   window.history.replaceState(null, '', '/');
   localStorage.clear();
   setPreferredTheme('light');
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ status: 404, ok: false }));
 });
 
 afterEach(() => {
@@ -37,7 +39,7 @@ describe('Moat Analytics', () => {
 
     expect(window.location.hash).toBe('#/screener');
     expect(screen.getByRole('heading', { level: 1, name: 'Screener e Rankings' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Dados ainda não integrados' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeTruthy();
   });
 
   it('navega entre as páginas e indica a página atual', async () => {
@@ -87,12 +89,45 @@ describe('Moat Analytics', () => {
     expect(search).toHaveProperty('value', 'teste');
     expect(index).toHaveProperty('value', 'SMLL');
     expect(rows).toHaveProperty('value', '30');
-    expect(screen.getByRole('heading', { name: 'Dados ainda não integrados' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeTruthy();
 
     await user.click(screen.getByRole('button', { name: 'Limpar filtros' }));
     expect(search).toHaveProperty('value', '');
     expect(index).toHaveProperty('value', '');
     expect(rows).toHaveProperty('value', '10');
+  });
+
+  it('mostra indisponibilidade quando o snapshot não existe', async () => {
+    window.history.replaceState(null, '', '/#/empresas');
+    render(<App />);
+
+    expect(screen.getByRole('status').textContent).toMatch(/Carregando a amostra/);
+    expect(await screen.findByRole('heading', { name: 'Amostra indisponível' })).toBeTruthy();
+  });
+
+  it('recupera de erro de validação e troca a companhia da amostra', async () => {
+    window.history.replaceState(null, '', '/#/empresas');
+    const data = readCvmSample();
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce({ status: 200, ok: true, json: async () => ({}) })
+      .mockResolvedValueOnce({ status: 200, ok: true, json: async () => data });
+    vi.stubGlobal('fetch', fetch);
+
+    const user = userEvent.setup();
+    render(<App />);
+    expect(await screen.findByRole('heading', { name: 'Erro ao carregar a amostra' })).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Tentar novamente' }));
+
+    const company = await screen.findByRole('combobox', { name: 'Companhia' });
+    expect(within(company).getAllByRole('option')).toHaveLength(3);
+    await user.selectOptions(company, 'cvm:19348');
+    expect(company).toHaveProperty('value', 'cvm:19348');
+    const history = screen.getByRole('table', { name: 'Contas por exercício' });
+    expect(within(history).getByRole('columnheader', { name: '2025' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Conciliação e proveniência' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Baixar amostra em JSON' })).toBeTruthy();
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   it('segue o tema do sistema até a escolha manual e mantém a escolha após remontar', async () => {

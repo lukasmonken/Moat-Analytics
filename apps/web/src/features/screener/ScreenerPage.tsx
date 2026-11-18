@@ -1,6 +1,6 @@
 import { INDEX_CODES, type IndexCode } from '@moat/data-contracts';
 import { useState } from 'react';
-import { Button, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
+import { Button, ButtonLink, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
 
 const pageSizes = ['5', '10', '20', '30', '40', '50'] as const;
 const defaultPageSize = '10';
@@ -21,7 +21,7 @@ export function ScreenerPage() {
     <div className="feature-page module-page">
       <PageHeader
         title="Screener e Rankings"
-        description="Filtre empresas da B3 por índice e compare rentabilidade, consistência e preço."
+        description="O screener usará as carteiras vigentes do IBOV, SMLL e IDIV para comparar as companhias elegíveis."
       />
       <Panel aria-label="Filtros do screener" className="screener-filters">
         <Input
@@ -63,9 +63,11 @@ export function ScreenerPage() {
       </Panel>
       <EmptyState
         icon="database"
-        title="Dados ainda não integrados"
-        description="O universo do screener será formado pelas empresas presentes no IBOV, SMLL ou IDIV após a validação das composições e dos demonstrativos."
-      />
+        title="Universo B3 indisponível"
+        description="A formação do universo aguarda uma fonte autorizada para as composições dos índices. O histórico contábil da amostra já pode ser consultado em Empresas."
+      >
+        <ButtonLink to="/empresas">Consultar a amostra da CVM</ButtonLink>
+      </EmptyState>
     </div>
   );
 }

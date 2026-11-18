@@ -1,5 +1,14 @@
 # Changelog
 
+## M1 — Amostra CVM
+
+- Ingestão em lote de DFP anuais consolidados oficiais, com normalização de escala, seleção de versão e conciliações.
+- Amostra de WEG, Lojas Renner e Itaú Unibanco de 2021 a 2025 com fonte, data-base, recebimento, coleta, versão e hash de origem.
+- Página Empresas consulta históricos de contas, detalha conciliações e oferece download do snapshot sob ODbL 1.0.
+- Códigos e classes declarados no FCA de 2026, com proveniência e download independentes do snapshot contábil.
+- O screener sinaliza indisponibilidade do universo B3. As pendências de afiliação, liquidez e taxa de referência de dez anos ficam documentadas.
+- Validação de contrato em execução, regressões de pipeline offline e teste no build hospedado em subdiretório.
+
 ## M0 — Fundação
 
 - Visão geral, Screener e Rankings, Empresas, Valuation e Premissas, Carteiras, Simulador e Backtest e Metodologia em rotas independentes.

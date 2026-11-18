@@ -1,6 +1,14 @@
 # Metodologia
 
-O M0 apresenta a metodologia planejada. As métricas e os modelos abaixo serão implementados, validados e publicados nos marcos indicados na [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto).
+## Contas CVM na prova de conceito
+
+A amostra do M1 usa os DFP anuais consolidados de WEG, Lojas Renner e Itaú Unibanco de 2021 a 2025. São três perfis contábeis conhecidos, com seleção pelo código CVM. Os campos do ativo, passivo, patrimônio e resultado provêm das linhas mapeadas de cada formulário. As conciliações confrontam totais com as contas que os compõem, respeitando a escala declarada. A interface mostra o valor em BRL, o formulário e o código de conta de origem.
+
+Os registros usam a versão anual disponível no arquivo coletado. Uma reapresentação pode alterar o resultado para a mesma data-base. A data de recebimento e a versão ficam visíveis. O instante em que o documento se tornou público permanece desconhecido quando a fonte oferece apenas a data de recebimento. O lote serve à revisão de contas. Uma reconstrução histórica exigirá versões anteriores e a verificação do momento de publicação de cada registro.
+
+## Métricas e modelos previstos
+
+Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.
 
 | Domínio             | Método previsto                                                                                                                                                                                                                                                                                        |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

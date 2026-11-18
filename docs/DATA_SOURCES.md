@@ -1,15 +1,25 @@
 # Fontes de dados
 
-O M0 não coleta nem publica dados financeiros. A tabela registra as fontes previstas e o que precisa ser validado antes de usá-las.
+## Amostra do M1
 
-| Dados                                            | Fonte prevista                                                                 | Validação pendente                                                                                            |
-| ------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| DFP, ITR e cadastro de companhias                | Arquivos públicos oficiais da CVM                                              | Cobertura, escala, consolidado e individual, retificações e conciliação das contas                            |
-| Carteiras IBOV, SMLL e IDIV                      | Composições oficiais da B3 ou fonte autorizada                                 | Acesso, direitos de redistribuição, histórico por vigência e correspondência entre companhia e classe de ação |
-| Fechamentos, proventos e eventos corporativos    | Provedor intercambiável. Yahoo Finance e yfinance são candidatos experimentais | Permissão de uso e redistribuição, calendário, cobertura histórica e ajustes de preços                        |
-| Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA como candidata principal e Tesouro Direto como apoio               | Acesso, histórico, convenção de prazo constante e direitos de uso                                             |
-| Selic e séries auxiliares                        | Banco Central ou Tesouro, conforme a série                                     | Definição, periodicidade e disponibilidade                                                                    |
+A página Empresas lê um snapshot das [Demonstrações Financeiras Padronizadas da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp). A amostra reúne WEG, Lojas Renner e Itaú Unibanco para verificar o mapeamento contábil em indústria, varejo e banco. Usa os formulários consolidados anuais do período de 2021 a 2025. Cada exercício informa versão, data de referência, data de recebimento, data da coleta, documento CVM e hash do ZIP de origem.
 
-O pipeline futuro manterá os originais com origem e hash. A publicação usará snapshots JSON versionados com data-base, cobertura e proveniência. Para fechamentos, a rotina prevista coleta o último pregão válido por volta das 12h de Brasília, com data do pregão e momento da coleta. Em caso de falha, a interface deverá manter a última publicação válida e indicar o atraso.
+O [snapshot em JSON](../data/public/cvm-sample.json) deriva do catálogo da CVM e está disponível sob a [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/). O site também oferece download do arquivo completo. Os originais e as etapas internas do pipeline ficam fora dos assets do site.
 
-Para os requisitos de cada fonte e o plano de validação, consulte as seções 2, 4, 5 e 12 da [especificação](SPEC.md).
+Os endereços de cada envio vêm do próprio arquivo DFP. A disponibilidade desses links individuais depende do sistema da CVM. O ZIP anual permanece como fonte direta para conferir os CSVs. [Consulta oficial de documentos](https://www.rad.cvm.gov.br/ENETWEB/frmConsultaExternaCVM.aspx)
+
+O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
+
+## Cobertura e pendências
+
+| Dados                                            | Fonte ou candidata                                                        | Estado                                                     |
+| ------------------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| DFP anual consolidado                            | Catálogo oficial da CVM                                                   | Amostra de três companhias, cinco exercícios por companhia |
+| ITR, DFC e universo amplo de demonstrações       | Catálogo oficial da CVM                                                   | Cobertura futura                                           |
+| Carteiras IBOV, SMLL e IDIV                      | Composições oficiais via B3 ou distribuidor autorizado                    | Acesso e redistribuição pendentes                          |
+| Classe de maior liquidez                         | Histórico de volume financeiro negociado, por classe, em fonte autorizada | Pendente                                                   |
+| Fechamentos, proventos e eventos corporativos    | Provedor intercambiável após validação de direitos, calendário e ajustes  | Pendente                                                   |
+| Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA de 2520 dias úteis                                            | Acesso e direitos de publicação pendentes                  |
+| Selic e séries auxiliares                        | Banco Central ou Tesouro, conforme a série                                | Avaliação futura                                           |
+
+Veja [Referências de mercado no M1](REFERENCE_DATA_M1.md) para os detalhes sobre acesso, licença e comportamento quando a fonte está indisponível. Os requisitos gerais constam nas seções 2, 4, 5 e 12 da [especificação](SPEC.md).

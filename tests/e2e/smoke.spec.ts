@@ -17,7 +17,7 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
 
   await page.getByRole('link', { name: 'Explorar screener' }).click();
   await expect(page).toHaveURL(/#\/screener$/);
-  await expect(page.getByRole('heading', { name: 'Dados ainda não integrados' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Universo B3 indisponível' })).toBeVisible();
   await expect(page.getByRole('combobox', { name: 'Linhas por página' })).toHaveValue('10');
 
   await page.getByRole('button', { name: 'Ativar tema escuro' }).click();
@@ -28,6 +28,29 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
   await expect(page.getByRole('heading', { level: 1, name: 'Screener e Rankings' })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   expect(errors).toEqual([]);
+});
+
+test('consulta a amostra oficial no build hospedado em subdiretório', async ({ page }) => {
+  await page.goto('./#/empresas');
+  await expect(page.getByRole('heading', { name: 'Amostra da CVM' })).toBeVisible();
+  const company = page.getByRole('combobox', { name: 'Companhia' });
+  await expect(company.getByRole('option')).toHaveCount(3);
+  await company.selectOption('cvm:8133');
+  await expect(company).toHaveValue('cvm:8133');
+  const history = page.getByRole('table', { name: 'Contas por exercício' });
+  await expect(history.getByRole('columnheader', { name: '2021' })).toBeVisible();
+  await expect(history.getByRole('columnheader', { name: '2025' })).toBeVisible();
+  await page.getByText('Códigos informados à CVM', { exact: true }).click();
+  await expect(page.getByText('LREN3', { exact: true })).toBeVisible();
+
+  const link = page.getByRole('link', { name: 'Baixar amostra em JSON' });
+  const href = await link.evaluate((node: HTMLAnchorElement) => node.href);
+  const response = await page.request.get(href);
+  expect(response.ok()).toBe(true);
+  expect((await response.json()).manifest.coverage).toEqual({
+    eligibleCompanies: null,
+    includedCompanies: 3,
+  });
 });
 
 test.describe('janela móvel', () => {
@@ -48,5 +71,19 @@ test.describe('janela móvel', () => {
       return scrollWidth > clientWidth;
     });
     expect(hasHorizontalOverflow).toBe(false);
+  });
+
+  test('mantém a rolagem da tabela dentro da página de empresas', async ({ page }) => {
+    await page.goto('./#/empresas');
+    await expect(page.getByRole('table', { name: 'Contas por exercício' })).toBeVisible();
+    const scroll = page.locator('.company-table-scroll');
+    expect(await scroll.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(
+      true,
+    );
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+    ).toBe(false);
+    await page.locator('summary').filter({ hasText: '2025' }).click();
+    await expect(page.getByRole('link', { name: 'ZIP original' })).toBeVisible();
   });
 });
