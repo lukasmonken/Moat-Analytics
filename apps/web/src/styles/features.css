@@ -534,7 +534,8 @@
   color: var(--text);
 }
 
-.company-table-scroll {
+.company-table-scroll,
+.bank-roe-table-scroll {
   max-width: 100%;
   min-width: 0;
   overflow: auto;
@@ -543,6 +544,7 @@
 }
 
 .company-table-scroll:focus-visible,
+.bank-roe-table-scroll:focus-visible,
 .company-observation summary:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;

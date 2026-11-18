@@ -76,6 +76,22 @@ test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
   await expect(page.getByText(/^Ranking indisponível/)).toBeVisible();
 });
 
+test('compara ROE de cinco bancos e consulta a conciliação do Santander', async ({ page }) => {
+  await page.goto('./#/empresas');
+  const table = page.getByRole('table', { name: 'ROE por banco e exercício' });
+  await expect(table.getByRole('row')).toHaveCount(6);
+  await expect(table.getByRole('columnheader', { name: '2021' })).toBeVisible();
+  await expect(table.getByRole('columnheader', { name: '2025' })).toBeVisible();
+  await expect(table.getByRole('row', { name: /SANTANDER/i }).getByText(/10,44\s*%/)).toBeVisible();
+
+  await page.getByRole('combobox', { name: 'Banco', exact: true }).selectOption('cvm:20532');
+  await page.getByRole('combobox', { name: 'Exercício da DFP' }).selectOption('2022');
+  await page.getByText('Contas e cálculo de 2022', { exact: true }).click();
+  await expect(page.getByRole('link', { name: 'Demonstrações IFRS auditadas' })).toBeVisible();
+  await expect(page.getByText(/DMPL · 5\.05\.01\.02/)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Baixar comparação em JSON' })).toBeVisible();
+});
+
 test.describe('janela móvel', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
@@ -98,6 +114,11 @@ test.describe('janela móvel', () => {
 
   test('mantém a rolagem da tabela dentro da página de empresas', async ({ page }) => {
     await page.goto('./#/empresas');
+    const bankTable = page.getByRole('region', { name: 'Resultados anuais por banco' });
+    await expect(bankTable).toBeVisible();
+    expect(await bankTable.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(
+      true,
+    );
     await expect(page.getByRole('table', { name: 'Contas por exercício' })).toBeVisible();
     const scroll = page.locator('.company-table-scroll');
     expect(await scroll.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(

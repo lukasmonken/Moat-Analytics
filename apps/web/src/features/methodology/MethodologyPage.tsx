@@ -74,6 +74,10 @@ export function MethodologyPage() {
             A taxa pública serve como referência de custo de oportunidade. A taxa de desconto do
             valuation refletirá o risco dos fluxos avaliados.
           </p>
+          <p>
+            A comparação bancária calcula a média de ROE de 2021 a 2025. O percentil descreve a
+            posição dessa média no grupo de cinco bancos e usa a posição média em caso de empate.
+          </p>
         </Panel>
 
         <Panel className="methodology-panel" aria-labelledby="methodology-sources">

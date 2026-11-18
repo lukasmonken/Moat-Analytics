@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { parseQualitySnapshot } from '@moat/data-contracts';
+import { parseBankRoeSnapshot, parseQualitySnapshot } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 
 function snapshot() {
@@ -76,5 +76,49 @@ describe('Séries de qualidade da CVM', () => {
       observations: company.observations.map((observation) => ({ ...observation, spreadPp: 0 })),
     }));
     expect(() => parseQualitySnapshot({ ...sample, companies })).toThrow();
+  });
+});
+
+describe('Comparação de ROE entre bancos', () => {
+  it('confere os ROEs de 2025 contra o cálculo independente das DFPs', () => {
+    const sample = parseBankRoeSnapshot(
+      JSON.parse(readFileSync('data/public/cvm-bank-roe.json', 'utf8')),
+    );
+    const expected = {
+      'cvm:906': 0.13651103,
+      'cvm:1023': 0.07427866,
+      'cvm:1210': 0.156688,
+      'cvm:19348': 0.21587089,
+      'cvm:20532': 0.10435513,
+    };
+    expect(sample.comparison.period).toEqual({ startYear: 2021, endYear: 2025 });
+    expect(sample.excluded).toEqual([]);
+    expect(sample.companies).toHaveLength(5);
+
+    const sortedByMean = [...sample.companies].sort(
+      (a, b) => (a.summary.mean ?? 0) - (b.summary.mean ?? 0),
+    );
+    for (const [index, company] of sortedByMean.entries()) {
+      expect(company.observations.find(({ fiscalYear }) => fiscalYear === 2025)?.value).toBeCloseTo(
+        expected[company.companyId as keyof typeof expected],
+        7,
+      );
+      expect(sample.comparison.percentiles?.[company.companyId]).toBe(index * 25);
+    }
+
+    const companies = sample.companies.slice(0, 4);
+    const manifest = {
+      ...sample.manifest,
+      coverage: { eligibleCompanies: null, includedCompanies: 4 },
+    };
+    expect(() => parseBankRoeSnapshot({ ...sample, manifest, companies })).toThrow();
+    expect(
+      parseBankRoeSnapshot({
+        ...sample,
+        manifest,
+        companies,
+        comparison: { ...sample.comparison, percentiles: null },
+      }).comparison.percentiles,
+    ).toBeNull();
   });
 });

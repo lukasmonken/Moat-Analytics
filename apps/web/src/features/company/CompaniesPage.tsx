@@ -1,4 +1,5 @@
 import { Button, ButtonLink, EmptyState, PageHeader, Panel } from '../../shared/ui';
+import { BankRoeComparison } from './BankRoeComparison';
 import { CompanySample } from './CompanySample';
 import { useCvmSample } from './useCvmSample';
 
@@ -11,6 +12,8 @@ export function CompaniesPage() {
         title="Empresas"
         description="Consulte demonstrações financeiras publicadas na CVM e confira a conciliação das contas por exercício."
       />
+
+      <BankRoeComparison />
 
       {state.status === 'loading' && (
         <Panel className="company-panel">

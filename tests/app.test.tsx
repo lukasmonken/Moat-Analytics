@@ -107,18 +107,21 @@ describe('Moat Analytics', () => {
     window.history.replaceState(null, '', '/#/empresas');
     render(<App />);
 
-    expect(screen.getByRole('status').textContent).toMatch(/Carregando a amostra/);
+    expect(screen.getByText(/Carregando a amostra/).getAttribute('role')).toBe('status');
     expect(await screen.findByRole('heading', { name: 'Amostra indisponível' })).toBeTruthy();
+    expect(await screen.findByText('Comparação de ROE indisponível.')).toBeTruthy();
   });
 
   it('recupera de erro de validação e troca a companhia da amostra', async () => {
     window.history.replaceState(null, '', '/#/empresas');
     const data = readCvmSample();
-    const fetch = vi
+    const fetchSample = vi
       .fn()
       .mockResolvedValueOnce({ status: 200, ok: true, json: async () => ({}) })
       .mockResolvedValueOnce({ status: 200, ok: true, json: async () => data });
-    vi.stubGlobal('fetch', fetch);
+    vi.stubGlobal('fetch', (url: string) =>
+      url.includes('cvm-sample') ? fetchSample(url) : Promise.resolve({ status: 404, ok: false }),
+    );
 
     const user = userEvent.setup();
     render(<App />);
@@ -133,7 +136,7 @@ describe('Moat Analytics', () => {
     expect(within(history).getByRole('columnheader', { name: '2025' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Conciliação e proveniência' })).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Baixar amostra em JSON' })).toBeTruthy();
-    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetchSample).toHaveBeenCalledTimes(2);
   });
 
   it('segue o tema do sistema até a escolha manual e mantém a escolha após remontar', async () => {

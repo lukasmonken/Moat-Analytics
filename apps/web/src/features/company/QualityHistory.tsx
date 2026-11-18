@@ -21,7 +21,7 @@ const signedPoints = new Intl.NumberFormat('pt-BR', {
   signDisplay: 'exceptZero',
 });
 
-function formatRate(value: number | null) {
+export function formatRate(value: number | null) {
   return value === null ? 'Indisponível' : percent.format(value);
 }
 
@@ -60,7 +60,7 @@ function QualitySummary({ summary }: { summary: QualityCompany['summary'] }) {
   );
 }
 
-function QualityAudit({
+export function QualityAudit({
   observation,
   metric,
 }: {
@@ -160,6 +160,11 @@ function QualityAudit({
           <a href={observation.archiveUrl} target="_blank" rel="noreferrer">
             ZIP da DFP na CVM <Icon name="arrow-up-right" size={14} />
           </a>
+          {observation.supportingDocumentUrl && (
+            <a href={observation.supportingDocumentUrl} target="_blank" rel="noreferrer">
+              Demonstrações IFRS auditadas <Icon name="arrow-up-right" size={14} />
+            </a>
+          )}
         </p>
         <p className="company-filing-hash">
           SHA-256 do ZIP <code>{observation.archiveSha256}</code>

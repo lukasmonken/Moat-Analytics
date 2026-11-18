@@ -1,5 +1,12 @@
 # Changelog
 
+## M2 — Comparação bancária
+
+- ROE atribuível à controladora de Banco do Brasil, Banrisul, Bradesco, Itaú Unibanco e Santander de 2021 a 2025, com média e percentil no grupo.
+- Comparação em Empresas, com abertura das contas por banco e exercício e download do lote atribuído à CVM.
+- A conciliação do Santander de 2022 documenta a divergência da DRE estruturada e a conferência com a DMPL e o demonstrativo IFRS auditado.
+- Verificação de cobertura da referência de dez anos nos dados abertos do BCB. Spreads e ranking composto permanecem indisponíveis.
+
 ## M2 — Séries de qualidade da amostra
 
 - Cinco exercícios de ROE atribuível à controladora para Itaú e de ROIC estimado para WEG e Renner, com saldos de abertura do mesmo formulário.

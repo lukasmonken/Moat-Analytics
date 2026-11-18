@@ -11,3 +11,5 @@ A observação mantém `publishedAt: null` quando só se dispõe da data de rece
 `IndexUniverseSnapshot` e `parseIndexUniverse` validam a composição anual. O contrato preserva a data-base e separa as afiliações das classes da união por companhia. A contagem por índice é calculada por código CVM e o ticker representativo fica indisponível até a validação de volume.
 
 `QualitySnapshot` e `parseQualitySnapshot` validam as séries e as contas-fonte do M2. ROIC, ROE e estatísticas de nível são frações. Variação, spread e tendência usam pontos percentuais. O estado do benchmark e do ranking fica explícito.
+
+`BankRoeSnapshot` e `parseBankRoeSnapshot` validam a janela comum, as séries bancárias e os percentis de 0 a 100 da média de ROE. Com menos de cinco bancos elegíveis, os percentis são nulos.
