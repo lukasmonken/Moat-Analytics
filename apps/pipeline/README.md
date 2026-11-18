@@ -24,3 +24,23 @@ Cada exercício verifica o ativo total contra o passivo total, a composição do
 A escrita é atômica. Diante de erro, cada rotina encerra com código diferente de zero e mantém a saída anterior. Uma nova execução com os mesmos dados mantém o snapshot existente. A data de recebimento do formulário é distinta do instante de publicação, que continua desconhecido quando ausente na fonte.
 
 Valide com `python3 -m unittest discover -s tests/pipeline`. Veja [fontes e licenças](../../docs/DATA_SOURCES.md) e [referências de mercado do M1](../../docs/REFERENCE_DATA_M1.md).
+
+## Importar a composição anual
+
+Use os três CSVs com a mesma data-base. Os arquivos **Carteira do Dia** da B3 podem ser usados diretamente. O importador verifica o índice e a data do cabeçalho e confere a quantidade teórica das linhas contra o rodapé. Um CSV consolidado aceita as colunas `indice` e `ticker` via `--input`. As colunas `codigo_cvm`, `cnpj` e `tipo` são opcionais nesse formato.
+
+```bash
+python3 apps/pipeline/run_index_universe.py \
+  --ibov data/raw/indices/2026-11-18/IBOVDia_18-11-26.csv \
+  --smll data/raw/indices/2026-11-18/SMLLDia_18-11-26.csv \
+  --idiv data/raw/indices/2026-11-18/IDIVDia_18-11-26.csv \
+  --as-of 2026-11-18 \
+  --source 'Arquivos de composição fornecidos pelo usuário (formato B3)' \
+  --identity-overrides data/raw/indices/2026-11-18/correcoes-fca.csv
+```
+
+Para outro ano, use o FCA correspondente em `data/raw/cvm` ou passe `--fca-archive` para cada ZIP pertinente. O corte usa envios recebidos pela CVM até a data-base. Um ZIP coletado depois pode ter perdido seções de versões antigas e gerar lacunas. Os arquivos originais e as exceções ficam em `data/raw`.
+
+Quando o FCA contém um erro cadastral, `--identity-overrides` aceita um CSV UTF-8 com `data_base,ticker,codigo_cvm,cnpj,companhia,tipo,fonte_url,justificativa`. A data deve ser a do lote e a identidade deve corresponder a um emissor doméstico apto no FCA. Cada linha requer evidência primária para a classe ou o código corrigido.
+
+A saída privada padrão fica em `data/processed/index-universe/index-universe.json`. Cada lote válido é arquivado por data-base e hash em `data/processed/index-universe/history`. Uma importação antiga entra no histórico e preserva a saída mais recente. O screener local usa o lote mais recente no `npm run dev`. A saída pública requer `--redistribution-basis` com a autorização verificada.
