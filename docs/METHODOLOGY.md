@@ -6,6 +6,26 @@ A amostra do M1 usa os DFP anuais consolidados de WEG, Lojas Renner e Itaú Unib
 
 Os registros usam a versão anual disponível no arquivo coletado. Uma reapresentação pode alterar o resultado para a mesma data-base. A data de recebimento e a versão ficam visíveis. O instante em que o documento se tornou público permanece desconhecido quando a fonte oferece apenas a data de recebimento. O lote serve à revisão de contas. Uma reconstrução histórica exigirá versões anteriores e a verificação do momento de publicação de cada registro.
 
+## Séries de qualidade da amostra
+
+O M2 cobre WEG, Lojas Renner e Itaú Unibanco de 2021 a 2025. Usa a versão mais recente disponível da DFP anual consolidada. A abertura vem da coluna comparativa do mesmo formulário. Assim, o exercício de 2021 inclui o balanço de 2020 e o de 2023 do Itaú incorpora a reapresentação de seu saldo comparativo. Cada exercício mantém o hash do ZIP, a versão, a referência e as contas usadas.
+
+- **ROIC estimado de WEG e Renner.** O numerador aplica 34% ao resultado de referência antes do financeiro e dos tributos da DRE (`3.05`). A alíquota é uma premissa padronizada baseada nas alíquotas marginais gerais de IRPJ e CSLL, inclusive o adicional de IRPJ. O EBIT informado pode conter efeitos não recorrentes e equivalência patrimonial. A estimativa usa o PL consolidado, os financiamentos e os arrendamentos declarados fora da conta de financiamentos. Caixa e equivalentes totais aproximam o caixa excedente. O denominador é a média do capital estimado na abertura e no encerramento. [IRPJ](https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/IRPJ) · [CSLL](https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL)
+- **ROE do Itaú.** O numerador é o lucro atribuível à controladora (`3.09.01`). O patrimônio do mesmo grupo corresponde ao saldo consolidado (`2.08`) menos a participação dos não controladores (`2.08.09`), calculado nos dois balanços. A média desses saldos é o denominador.
+- **Série anual.** A variação entre exercícios consecutivos é expressa em pontos percentuais. As estatísticas usam as observações disponíveis e apresentam média, mediana, desvio-padrão populacional, amplitude e tendência linear em p.p. por ano. Ausências permanecem identificadas.
+
+## Comparação de ROE entre bancos
+
+O painel reúne Itaú Unibanco, Banco do Brasil, Banrisul, Bradesco e Santander. Cada banco com cinco exercícios completos de 2021 a 2025 entra com a média aritmética de seu ROE atribuível à controladora. O percentil usa a posição da média em ordem crescente, escalada de 0 a 100 entre os extremos e com posto médio nos empates. Ele exige pelo menos cinco bancos e se refere apenas ao grupo exibido.
+
+Banco do Brasil, Banrisul, Bradesco e Santander informam o lucro da controladora em `3.11.01` e seu patrimônio em `2.07.01`. O Itaú usa o mapeamento acima. A abertura de cada exercício vem do comparativo da mesma versão da DFP. No Santander de 2022, a linha de lucro dos não controladores na DRE estruturada diverge R$ 54 mil da conciliação. O lote preserva os registros e verifica a atribuição do lucro no demonstrativo IFRS auditado e na DMPL da DFP versão 2. O lucro atribuível à controladora coincide nessas fontes. [DFs IFRS de 2022 do Santander](https://cms.santander.com.br/sites/WRI/documentos/url-dfs-ifrs-4T22/23-02-28_185641_dfs%2520ifrs%25204t22.pdf)
+
+## CDI atual
+
+O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de risco provisória. Empresas e Valuation e Premissas exibem a última observação publicada pelo Banco Central (SGS 4389) com sua data-base. A página Empresas mostra a diferença entre o ROIC ou ROE do exercício mais recente e o CDI atual. Em pontos percentuais, a diferença é `(ROIC ou ROE − CDI anualizado) × 100`, com as taxas em fração. O exercício contábil e a data do CDI são identificados separadamente. [Série SGS 4389](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet)
+
+Os spreads históricos e o ranking composto dependem de uma série nominal de prazo constante com datas e direitos de uso verificados. A publicação mensal da SUSEP tem uma mudança de modelo para a curva prefixada em 2022. [Parâmetros SUSEP e ANBIMA de 2016 a 2021](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj-1) · [Metodologia e parâmetros atuais](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj)
+
 ## Métricas e modelos previstos
 
 Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.

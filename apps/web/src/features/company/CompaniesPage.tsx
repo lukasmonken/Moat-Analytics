@@ -1,9 +1,14 @@
+import { useRiskFreeRate } from '../../shared/data-client/useRiskFreeRate';
 import { Button, ButtonLink, EmptyState, PageHeader, Panel } from '../../shared/ui';
+import { RiskFreeRatePanel } from '../../shared/ui/RiskFreeRatePanel';
+import { BankRoeComparison } from './BankRoeComparison';
 import { CompanySample } from './CompanySample';
 import { useCvmSample } from './useCvmSample';
 
 export function CompaniesPage() {
   const { state, reload } = useCvmSample();
+  const { state: rateState, reload: reloadRate } = useRiskFreeRate();
+  const riskFreeRate = rateState.status === 'ready' ? rateState.rate : null;
 
   return (
     <div className="feature-page module-page">
@@ -11,6 +16,9 @@ export function CompaniesPage() {
         title="Empresas"
         description="Consulte demonstrações financeiras publicadas na CVM e confira a conciliação das contas por exercício."
       />
+
+      <RiskFreeRatePanel state={rateState} reload={reloadRate} />
+      <BankRoeComparison riskFreeRate={riskFreeRate} />
 
       {state.status === 'loading' && (
         <Panel className="company-panel">
@@ -40,7 +48,7 @@ export function CompaniesPage() {
       )}
 
       {state.status === 'ready' && state.snapshot.companies.length > 0 && (
-        <CompanySample snapshot={state.snapshot} />
+        <CompanySample snapshot={state.snapshot} riskFreeRate={riskFreeRate} />
       )}
     </div>
   );

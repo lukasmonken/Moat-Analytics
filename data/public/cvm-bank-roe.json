@@ -1,0 +1,3093 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2026-11-18T22:56:04+00:00",
+    "asOf": "2025-12-31",
+    "coverage": {
+      "eligibleCompanies": null,
+      "includedCompanies": 5
+    },
+    "source": {
+      "name": "Comissão de Valores Mobiliários (CVM)",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    }
+  },
+  "methodologyVersion": "bank-roe-dfp-m2.v1",
+  "minimumPeers": 5,
+  "comparison": {
+    "period": {
+      "startYear": 2021,
+      "endYear": 2025
+    },
+    "percentiles": {
+      "cvm:19348": 100,
+      "cvm:1023": 75,
+      "cvm:906": 50,
+      "cvm:20532": 25,
+      "cvm:1210": 0
+    }
+  },
+  "companies": [
+    {
+      "companyId": "cvm:906",
+      "name": "BCO BRADESCO S.A.",
+      "category": "bank",
+      "metric": "roe",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "value": 0.15688932308414516,
+          "changePp": null,
+          "spreadPp": null,
+          "numeratorBrl": 23172322000,
+          "openingCapitalBrl": 145620218000,
+          "closingCapitalBrl": 149776837000,
+          "averageCapitalBrl": 147698527500,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 150228707000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 451870000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 149776837000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 23380804000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 208482000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 146117374000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 497156000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 145620218000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 23172322000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "value": 0.1362390629634359,
+          "changePp": -2.0650260120709265,
+          "spreadPp": null,
+          "numeratorBrl": 20983690000,
+          "openingCapitalBrl": 149776837000,
+          "closingCapitalBrl": 158265358000,
+          "averageCapitalBrl": 154021097500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 158741264000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 475906000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 158265358000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 21217196000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 233506000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 150228707000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 451870000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 149776837000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 20983690000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "value": 0.08746744703839766,
+          "changePp": -4.877161592503824,
+          "spreadPp": null,
+          "numeratorBrl": 14251329000,
+          "openingCapitalBrl": 159534931000,
+          "closingCapitalBrl": 166330965000,
+          "averageCapitalBrl": 162932948000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [
+            "O patrimônio de abertura informado neste DFP difere do encerramento publicado no DFP do exercício anterior."
+          ],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 167014124000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 683159000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 166330965000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 14502765000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 251436000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 160010837000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 475906000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 159534931000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 14251329000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "value": 0.10308220199318625,
+          "changePp": 1.5614754954788599,
+          "spreadPp": null,
+          "numeratorBrl": 17252900000,
+          "openingCapitalBrl": 166330965000,
+          "closingCapitalBrl": 168409653000,
+          "averageCapitalBrl": 167370309000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 168942492000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 532839000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 168409653000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 17542153000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 289253000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 167014124000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 683159000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 166330965000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 17252900000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "value": 0.13651103145142393,
+          "changePp": 3.3428829458237663,
+          "spreadPp": null,
+          "numeratorBrl": 23672706000,
+          "openingCapitalBrl": 168409653000,
+          "closingCapitalBrl": 178415153000,
+          "averageCapitalBrl": 173412403000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 178948630000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 533477000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 178415153000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 23924636000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 251930000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 168942492000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 532839000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 168409653000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 23672706000
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "validYears": 5,
+        "mean": 0.12403781330611778,
+        "median": 0.1362390629634359,
+        "populationStddev": 0.025140416437482868,
+        "amplitude": 0.06942187604574751,
+        "trendPpPerYear": -0.7391344423569214
+      }
+    },
+    {
+      "companyId": "cvm:1023",
+      "name": "BCO BRASIL S.A.",
+      "category": "bank",
+      "metric": "roe",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "value": 0.13697397884872325,
+          "changePp": null,
+          "spreadPp": null,
+          "numeratorBrl": 18344326000,
+          "openingCapitalBrl": 125099772000,
+          "closingCapitalBrl": 142751482000,
+          "averageCapitalBrl": 133925627000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 146110233000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 3358751000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 142751482000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 19722871000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1378545000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 127861284000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 2761512000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 125099772000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 18344326000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "value": 0.1831600217928711,
+          "changePp": 4.618604294414784,
+          "spreadPp": null,
+          "numeratorBrl": 27630407000,
+          "openingCapitalBrl": 142751482000,
+          "closingCapitalBrl": 158956355000,
+          "averageCapitalBrl": 150853918500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 163077123000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 4120768000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 158956355000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 29849335000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 2218928000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 146110233000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 3358751000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 142751482000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 27630407000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "value": 0.18158497047757002,
+          "changePp": -0.15750513153010592,
+          "spreadPp": null,
+          "numeratorBrl": 29860965000,
+          "openingCapitalBrl": 159657194000,
+          "closingCapitalBrl": 169235279000,
+          "averageCapitalBrl": 164446236500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [
+            "O patrimônio de abertura informado neste DFP difere do encerramento publicado no DFP do exercício anterior."
+          ],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 173570326000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 4335047000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 169235279000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 33165591000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 3304626000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 163517752000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 3860558000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 159657194000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 29860965000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "value": 0.15111499555362445,
+          "changePp": -3.0469974923945577,
+          "spreadPp": null,
+          "numeratorBrl": 26358860000,
+          "openingCapitalBrl": 169235279000,
+          "closingCapitalBrl": 179623018000,
+          "averageCapitalBrl": 174429148500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 184236344000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 4613326000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 179623018000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 29171564000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 2812704000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 173570326000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 4335047000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 169235279000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 26358860000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "value": 0.07427865554562185,
+          "changePp": -7.683634000800261,
+          "spreadPp": null,
+          "numeratorBrl": 13698124000,
+          "openingCapitalBrl": 179623018000,
+          "closingCapitalBrl": 189207675000,
+          "averageCapitalBrl": 184415346500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 193567416000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 4359741000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 189207675000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 16781938000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 3083814000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 184236344000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 4613326000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 179623018000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 13698124000
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "validYears": 5,
+        "mean": 0.14542252444368214,
+        "median": 0.15111499555362445,
+        "populationStddev": 0.03974185058883372,
+        "amplitude": 0.10888136624724924,
+        "trendPpPerYear": -1.5743567284544944
+      }
+    },
+    {
+      "companyId": "cvm:1210",
+      "name": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
+      "category": "bank",
+      "metric": "roe",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "value": 0.12508992827025225,
+          "changePp": null,
+          "spreadPp": null,
+          "numeratorBrl": 1084195000,
+          "openingCapitalBrl": 8248417000,
+          "closingCapitalBrl": 9086232000,
+          "averageCapitalBrl": 8667324500,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 9088598000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 2366000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 9086232000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1084465000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 270000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 8250570000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 2153000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 8248417000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1084195000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "value": 0.0905171227308973,
+          "changePp": -3.4572805539354956,
+          "spreadPp": null,
+          "numeratorBrl": 841823000,
+          "openingCapitalBrl": 9086232000,
+          "closingCapitalBrl": 9514072000,
+          "averageCapitalBrl": 9300152000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9520306000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 6234000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9514072000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 842242000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 419000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 9088598000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 2366000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 9086232000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 841823000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "value": 0.10441870719115769,
+          "changePp": 1.390158446026039,
+          "spreadPp": null,
+          "numeratorBrl": 1011454000,
+          "openingCapitalBrl": 9514072000,
+          "closingCapitalBrl": 9858970000,
+          "averageCapitalBrl": 9686521000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9865773000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 6803000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9858970000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 1012434000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 980000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9520306000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 6234000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9514072000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 1011454000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "value": 0.07174236856958342,
+          "changePp": -3.267633862157427,
+          "spreadPp": null,
+          "numeratorBrl": 727253000,
+          "openingCapitalBrl": 9858970000,
+          "closingCapitalBrl": 10415047000,
+          "averageCapitalBrl": 10137008500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10418753000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 3706000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10415047000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 727798000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 545000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9865773000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 6803000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9858970000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 727253000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "value": 0.1566880033109106,
+          "changePp": 8.494563474132718,
+          "spreadPp": null,
+          "numeratorBrl": 1713913000,
+          "openingCapitalBrl": 10415047000,
+          "closingCapitalBrl": 11461714000,
+          "averageCapitalBrl": 10938380500,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 11465151000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 3437000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 11461714000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 1714551000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 638000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10418753000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 3706000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10415047000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 1713913000
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "validYears": 5,
+        "mean": 0.10969122601456026,
+        "median": 0.10441870719115769,
+        "populationStddev": 0.02926218918760894,
+        "amplitude": 0.08494563474132719,
+        "trendPpPerYear": 0.4442139592000282
+      }
+    },
+    {
+      "companyId": "cvm:19348",
+      "name": "ITAU UNIBANCO HOLDING S.A.",
+      "category": "bank",
+      "metric": "roe",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "value": 0.18089820420000202,
+          "changePp": null,
+          "spreadPp": null,
+          "numeratorBrl": 26760000000,
+          "openingCapitalBrl": 142993000000,
+          "closingCapitalBrl": 152864000000,
+          "averageCapitalBrl": 147928500000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 164476000000
+            },
+            {
+              "key": "closingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "closingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1722000000
+            },
+            {
+              "key": "closingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 66161000000
+            },
+            {
+              "key": "closingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2021-12-31",
+              "amountBrl": -5748000000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 11612000000
+            },
+            {
+              "key": "income",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.09",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 28384000000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído a Sócios Não Controladores",
+              "statement": "DRE",
+              "code": "3.09.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1624000000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 154525000000
+            },
+            {
+              "key": "openingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 97148000000
+            },
+            {
+              "key": "openingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 1419000000
+            },
+            {
+              "key": "openingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 47347000000
+            },
+            {
+              "key": "openingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2020-12-31",
+              "amountBrl": -2921000000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 11532000000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído a Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.09.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 26760000000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "value": 0.18516475124447895,
+          "changePp": 0.42665470444769116,
+          "spreadPp": null,
+          "numeratorBrl": 29702000000,
+          "openingCapitalBrl": 152864000000,
+          "closingCapitalBrl": 167953000000,
+          "averageCapitalBrl": 160408500000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 177343000000
+            },
+            {
+              "key": "closingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "closingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 2409000000
+            },
+            {
+              "key": "closingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 86892000000
+            },
+            {
+              "key": "closingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2022-12-31",
+              "amountBrl": -12077000000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9390000000
+            },
+            {
+              "key": "income",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.09",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 30737000000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído a Sócios Não Controladores",
+              "statement": "DRE",
+              "code": "3.09.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 1035000000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 164476000000
+            },
+            {
+              "key": "openingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "openingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 1722000000
+            },
+            {
+              "key": "openingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 66161000000
+            },
+            {
+              "key": "openingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2021-12-31",
+              "amountBrl": -5748000000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 11612000000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído a Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.09.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 29702000000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2023,
+          "value": 0.18499891029187412,
+          "changePp": -0.01658409526048094,
+          "spreadPp": null,
+          "numeratorBrl": 33105000000,
+          "openingCapitalBrl": 167717000000,
+          "closingCapitalBrl": 190177000000,
+          "averageCapitalBrl": 178947000000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [
+            "O patrimônio de abertura informado neste DFP difere do encerramento publicado no DFP do exercício anterior."
+          ],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 199050000000
+            },
+            {
+              "key": "closingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "closingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 2609000000
+            },
+            {
+              "key": "closingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 104465000000
+            },
+            {
+              "key": "closingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2023-12-31",
+              "amountBrl": -7626000000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 8873000000
+            },
+            {
+              "key": "income",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.09",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 33877000000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído a Sócios Não Controladores",
+              "statement": "DRE",
+              "code": "3.09.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 772000000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 177107000000
+            },
+            {
+              "key": "openingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "openingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 2409000000
+            },
+            {
+              "key": "openingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 86209000000
+            },
+            {
+              "key": "openingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2022-12-31",
+              "amountBrl": -11630000000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 9390000000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído a Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.09.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 33105000000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "value": 0.20477637084534736,
+          "changePp": 1.9777460553473232,
+          "spreadPp": null,
+          "numeratorBrl": 41085000000,
+          "openingCapitalBrl": 190177000000,
+          "closingCapitalBrl": 211090000000,
+          "averageCapitalBrl": 200633500000,
+          "filingVersion": 1,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 221284000000
+            },
+            {
+              "key": "closingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "closingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 1823000000
+            },
+            {
+              "key": "closingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 121428000000
+            },
+            {
+              "key": "closingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2024-12-31",
+              "amountBrl": -2890000000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10194000000
+            },
+            {
+              "key": "income",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.09",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 42128000000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído a Sócios Não Controladores",
+              "statement": "DRE",
+              "code": "3.09.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 1043000000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 199050000000
+            },
+            {
+              "key": "openingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "openingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 2609000000
+            },
+            {
+              "key": "openingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 104465000000
+            },
+            {
+              "key": "openingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2023-12-31",
+              "amountBrl": -7626000000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 8873000000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído a Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.09.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 41085000000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "value": 0.2158708922955502,
+          "changePp": 1.109452145020283,
+          "spreadPp": null,
+          "numeratorBrl": 44857000000,
+          "openingCapitalBrl": 211090000000,
+          "closingCapitalBrl": 204501000000,
+          "averageCapitalBrl": 207795500000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 215076000000
+            },
+            {
+              "key": "closingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 136910000000
+            },
+            {
+              "key": "closingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 2863000000
+            },
+            {
+              "key": "closingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 67711000000
+            },
+            {
+              "key": "closingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "closingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2025-12-31",
+              "amountBrl": -2983000000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 10575000000
+            },
+            {
+              "key": "income",
+              "label": "Lucro/Prejuízo Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.09",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 45849000000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído a Sócios Não Controladores",
+              "statement": "DRE",
+              "code": "3.09.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 992000000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.08",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 221284000000
+            },
+            {
+              "key": "openingEquityComponent1",
+              "label": "Capital Social Realizado",
+              "statement": "BPP",
+              "code": "2.08.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 90729000000
+            },
+            {
+              "key": "openingEquityComponent2",
+              "label": "Reservas de Capital",
+              "statement": "BPP",
+              "code": "2.08.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 1823000000
+            },
+            {
+              "key": "openingEquityComponent3",
+              "label": "Reservas de Reavaliação",
+              "statement": "BPP",
+              "code": "2.08.03",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent4",
+              "label": "Reservas de Lucros",
+              "statement": "BPP",
+              "code": "2.08.04",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 121428000000
+            },
+            {
+              "key": "openingEquityComponent5",
+              "label": "Lucros/Prejuízos Acumulados",
+              "statement": "BPP",
+              "code": "2.08.05",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent6",
+              "label": "Ajustes de Avaliação Patrimonial",
+              "statement": "BPP",
+              "code": "2.08.06",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent7",
+              "label": "Ajustes Acumulados de Conversão",
+              "statement": "BPP",
+              "code": "2.08.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 0
+            },
+            {
+              "key": "openingEquityComponent8",
+              "label": "Outros Resultados Abrangentes",
+              "statement": "BPP",
+              "code": "2.08.08",
+              "referenceDate": "2024-12-31",
+              "amountBrl": -2890000000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Participação dos Acionistas Não Controladores",
+              "statement": "BPP",
+              "code": "2.08.09",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 10194000000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído a Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.09.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 44857000000
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "validYears": 5,
+        "mean": 0.19434182577545053,
+        "median": 0.18516475124447895,
+        "populationStddev": 0.01359867761061132,
+        "amplitude": 0.03497268809554816,
+        "trendPpPerYear": 0.8955699579196476
+      }
+    },
+    {
+      "companyId": "cvm:20532",
+      "name": "BCO SANTANDER (BRASIL) S.A.",
+      "category": "bank",
+      "metric": "roe",
+      "observations": [
+        {
+          "fiscalYear": 2021,
+          "value": 0.14689492549310088,
+          "changePp": null,
+          "spreadPp": null,
+          "numeratorBrl": 15528052000,
+          "openingCapitalBrl": 105776987000,
+          "closingCapitalBrl": 105640146000,
+          "averageCapitalBrl": 105708566500,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+          "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2021-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 105974495000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 334349000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 105640146000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 15559323000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 31272000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 106089872000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 312885000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2020-12-31",
+              "amountBrl": 105776987000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 15528052000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2022,
+          "value": 0.13239640190307816,
+          "changePp": -1.449852359002272,
+          "spreadPp": null,
+          "numeratorBrl": 14287093000,
+          "openingCapitalBrl": 105640146000,
+          "closingCapitalBrl": 110182834000,
+          "averageCapitalBrl": 107911490000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+          "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2022-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [
+            "A parcela dos não controladores na DRE estruturada diverge em R$ 54 mil. A conciliação usa R$ 52.382.000, valor confirmado na DMPL do mesmo DFP e no demonstrativo IFRS auditado. O lucro da controladora coincide nos registros.",
+            "Na DMPL estruturada, a conta 5.05.01.02 aparece com o rótulo “Lucro líquido Atribuível à Controladora” e a coluna “Patrimônio Líquido Consolidado”. O demonstrativo auditado identifica o valor como parcela dos não controladores."
+          ],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 110680176000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 497342000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 110182834000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 14339475000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 52328000
+            },
+            {
+              "key": "minorityIncomeDmpl",
+              "label": "Parcela dos não controladores identificada na DMPL",
+              "statement": "DMPL",
+              "code": "5.05.01.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 52382000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 105974495000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 334349000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2021-12-31",
+              "amountBrl": 105640146000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 14287093000
+            }
+          ],
+          "supportingDocumentUrl": "https://cms.santander.com.br/sites/WRI/documentos/url-dfs-ifrs-4T22/23-02-28_185641_dfs%2520ifrs%25204t22.pdf"
+        },
+        {
+          "fiscalYear": 2023,
+          "value": 0.08413005764467556,
+          "changePp": -4.82663442584026,
+          "spreadPp": null,
+          "numeratorBrl": 9449313000,
+          "openingCapitalBrl": 110182834000,
+          "closingCapitalBrl": 114453004000,
+          "averageCapitalBrl": 112317919000,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+          "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2023-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 114856354000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 403350000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 114453004000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9498812000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 49499000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 110680176000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 497342000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2022-12-31",
+              "amountBrl": 110182834000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 9449313000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2024,
+          "value": 0.11426210235531356,
+          "changePp": 3.013204471063801,
+          "spreadPp": null,
+          "numeratorBrl": 13365506000,
+          "openingCapitalBrl": 114453004000,
+          "closingCapitalBrl": 119491685000,
+          "averageCapitalBrl": 116972344500,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+          "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2024-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 119827132000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 335447000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 119491685000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 13413763000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 48257000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 114856354000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 403350000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2023-12-31",
+              "amountBrl": 114453004000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 13365506000
+            }
+          ]
+        },
+        {
+          "fiscalYear": 2025,
+          "value": 0.10435512870107015,
+          "changePp": -0.9906973654243413,
+          "spreadPp": null,
+          "numeratorBrl": 12766035000,
+          "openingCapitalBrl": 119491685000,
+          "closingCapitalBrl": 125173530000,
+          "averageCapitalBrl": 122332607500,
+          "filingVersion": 2,
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "provenance": {
+            "source": "CVM · DFP anual consolidado",
+            "referenceDate": "2025-12-31",
+            "publishedAt": null,
+            "retrievedAt": "2026-11-18T10:11:46+00:00",
+            "methodologyVersion": "bank-roe-dfp-m2.v1",
+            "qualityStatus": "validated"
+          },
+          "reasons": [],
+          "inputs": [
+            {
+              "key": "closingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 126553144000
+            },
+            {
+              "key": "closingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 1379614000
+            },
+            {
+              "key": "closingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 125173530000
+            },
+            {
+              "key": "income",
+              "label": "Lucro ou Prejuízo Líquido Consolidado do Período",
+              "statement": "DRE",
+              "code": "3.11",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 12965123000
+            },
+            {
+              "key": "minorityIncome",
+              "label": "Atribuído aos Sócios não Controladores",
+              "statement": "DRE",
+              "code": "3.11.02",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 199088000
+            },
+            {
+              "key": "openingEquity",
+              "label": "Patrimônio Líquido Consolidado",
+              "statement": "BPP",
+              "code": "2.07",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 119827132000
+            },
+            {
+              "key": "openingMinorityEquity",
+              "label": "Patrimônio Líquido Atribuído aos Não Controladores",
+              "statement": "BPP",
+              "code": "2.07.02",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 335447000
+            },
+            {
+              "key": "openingParentEquity",
+              "label": "Patrimônio Líquido Atribuído ao Controlador",
+              "statement": "BPP",
+              "code": "2.07.01",
+              "referenceDate": "2024-12-31",
+              "amountBrl": 119491685000
+            },
+            {
+              "key": "parentIncome",
+              "label": "Atribuído aos Sócios da Empresa Controladora",
+              "statement": "DRE",
+              "code": "3.11.01",
+              "referenceDate": "2025-12-31",
+              "amountBrl": 12766035000
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "validYears": 5,
+        "mean": 0.11640772321944766,
+        "median": 0.11426210235531356,
+        "populationStddev": 0.021802861128745857,
+        "amplitude": 0.06276486784842533,
+        "trendPpPerYear": -1.0321389313182605
+      }
+    }
+  ],
+  "excluded": []
+}

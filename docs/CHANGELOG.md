@@ -1,5 +1,23 @@
 # Changelog
 
+## M2 — CDI atual
+
+- CDI anualizado do Banco Central como taxa livre de risco provisória em Empresas e Valuation e Premissas, com data-base e fonte.
+- Diferença em pontos percentuais entre o ROIC ou ROE do exercício mais recente e o CDI atual.
+
+## M2 — Comparação bancária
+
+- ROE atribuível à controladora de Banco do Brasil, Banrisul, Bradesco, Itaú Unibanco e Santander de 2021 a 2025, com média e percentil no grupo.
+- Comparação em Empresas, com abertura das contas por banco e exercício e download do lote atribuído à CVM.
+- A conciliação do Santander de 2022 documenta a divergência da DRE estruturada e a conferência com a DMPL e o demonstrativo IFRS auditado.
+- Verificação de cobertura da referência de dez anos nos dados abertos do BCB. Spreads e ranking composto permanecem indisponíveis.
+
+## M2 — Séries de qualidade da amostra
+
+- Cinco exercícios de ROE atribuível à controladora para Itaú e de ROIC estimado para WEG e Renner, com saldos de abertura do mesmo formulário.
+- Histórico de qualidade em Empresas, com variação anual em p.p., estatísticas, contas-fonte, versão e download do JSON atribuído à CVM.
+- Motor decimal e testes de casos-limite. Spreads e ranking da amostra exibem indisponibilidade.
+
 ## M1 — Amostra CVM
 
 - Diretório público da seleção anual com nomes do cadastro da CVM, data-base e busca pelo nome da companhia.

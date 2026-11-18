@@ -1,13 +1,21 @@
 import type { CvmSnapshot } from '@moat/data-contracts';
 import { useState } from 'react';
 import { cvmSnapshotUrl } from '../../shared/data-client/cvmSnapshot';
+import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import { Badge, ButtonLink, Icon, Panel, Select } from '../../shared/ui';
 import { AccountHistory } from './AccountHistory';
 import { CompanyIdentity } from './CompanyIdentity';
 import { categories, formatDate, formatInstant } from './financialPresentation';
 import { ObservationDetails } from './ObservationDetails';
+import { QualityHistory } from './QualityHistory';
 
-export function CompanySample({ snapshot }: { snapshot: CvmSnapshot }) {
+export function CompanySample({
+  snapshot,
+  riskFreeRate,
+}: {
+  snapshot: CvmSnapshot;
+  riskFreeRate: RiskFreeRate | null;
+}) {
   const { companies, manifest, issues } = snapshot;
   const [selectedId, setSelectedId] = useState<string>();
   const company = companies.find(({ companyId }) => companyId === selectedId) ?? companies[0];
@@ -26,7 +34,7 @@ export function CompanySample({ snapshot }: { snapshot: CvmSnapshot }) {
             <h2 id="company-sample">Amostra da CVM</h2>
             <p>
               Demonstrações Financeiras Padronizadas (DFP) de companhias selecionadas para validar o
-              mapeamento contábil. A composição do universo da B3 aguarda uma fonte autorizada.
+              mapeamento contábil e os indicadores de qualidade.
             </p>
           </div>
           <Badge>{manifest.coverage.includedCompanies} companhias</Badge>
@@ -80,6 +88,8 @@ export function CompanySample({ snapshot }: { snapshot: CvmSnapshot }) {
           </ul>
         </Panel>
       )}
+
+      <QualityHistory companyId={company.companyId} riskFreeRate={riskFreeRate} />
 
       {observations.length > 0 ? (
         <>

@@ -1,0 +1,96 @@
+.quality-body {
+  min-width: 0;
+  gap: 0.875rem;
+}
+
+.quality-body h3,
+.bank-roe-panel h3 {
+  margin: 0 0 0.375rem;
+  font-size: 1rem;
+}
+
+.quality-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.quality-summary div {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+}
+
+.quality-summary dt {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.quality-summary dd {
+  margin: 0.375rem 0 0;
+  color: var(--text-strong);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-table th,
+.quality-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: start;
+}
+
+.quality-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-table td:last-child {
+  white-space: nowrap;
+}
+
+.quality-table small {
+  display: block;
+  margin-top: 0.125rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.quality-audits {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.quality-audit .company-observation-body {
+  gap: 0.75rem;
+}
+
+.quality-audit:not([open]) > summary .company-observation-icon {
+  transform: none;
+}
+
+.quality-notes {
+  margin: 0;
+  padding-inline-start: 1.125rem;
+}
+
+.quality-provenance {
+  overflow-wrap: anywhere;
+}
+
+.bank-roe-table tbody th {
+  min-width: 9rem;
+  overflow-wrap: normal;
+}
+
+.bank-roe-table thead th,
+.bank-roe-table td {
+  white-space: nowrap;
+}
+
+.bank-roe-audit-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}

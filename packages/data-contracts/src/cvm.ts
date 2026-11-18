@@ -89,7 +89,7 @@ export interface CvmIdentitySnapshot {
   companies: CvmCompanyIdentity[];
 }
 
-function isCvmUrl(value: unknown): value is string {
+export function isCvmUrl(value: unknown): value is string {
   if (typeof value !== 'string') return false;
 
   try {
@@ -136,7 +136,7 @@ function isReconciliation(value: unknown): value is CvmReconciliation {
   );
 }
 
-function isProvenance(value: unknown): value is DataProvenance {
+export function isProvenance(value: unknown): value is DataProvenance {
   return (
     isObject(value) &&
     isText(value.source) &&
