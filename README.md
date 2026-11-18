@@ -32,9 +32,9 @@ As versões estão fixadas no [manifesto raiz](package.json), no [manifesto web]
 
 ## Publicar no GitHub Pages
 
-Esta cópia local foi inicializada sem um repositório remoto. É preciso ter um repositório no GitHub com permissão de escrita e suporte a Pages. Use `main` como branch padrão.
+O repositório no GitHub precisa de permissão de escrita e suporte a Pages. Use `main` como branch padrão.
 
-1. Associe o remoto com `git remote add origin <URL-do-repositório>` e envie o código com `git push -u origin main`.
+1. Envie a `main` do clone com `git push origin main`. Em uma cópia inicializada localmente, associe o remoto antes do primeiro push.
 2. Em **Settings → Pages → Build and deployment**, selecione **GitHub Actions** como fonte.
 3. Em **Actions → CI e GitHub Pages → Run workflow**, selecione `main` e marque **Publicar no GitHub Pages**. O deploy aguarda a validação do build e dos testes.
 4. Após o job de publicação concluir, abra a URL exibida no ambiente `github-pages`. Abra o screener e recarregue a página para verificar a rota direta.
