@@ -58,6 +58,17 @@ def _midrank_points(
     return points
 
 
+def return_percentiles(values: Mapping[str, Decimal]) -> dict[str, Decimal] | None:
+    """Calcula percentis dos retornos de um grupo já validado como comparável."""
+    if len(values) < MINIMUM_PEERS:
+        return None
+    if any(not value.is_finite() for value in values.values()):
+        raise ValueError("Os retornos do grupo devem ser finitos.")
+    points = _midrank_points(values, higher_is_better=True)
+    total_points = Decimal(2 * (len(values) - 1))
+    return {company_id: Decimal(value) * 100 / total_points for company_id, value in points.items()}
+
+
 def _comparable_metrics(
     history: PeerHistory, dates: tuple[date, ...]
 ) -> tuple[Decimal, Decimal, Decimal] | None:

@@ -18,6 +18,7 @@ from .ranking import (
     PeerObservation,
     PeerRank,
     rank_quality,
+    return_percentiles,
 )
 
 __all__ = (
@@ -33,6 +34,7 @@ __all__ = (
     "calculate_roic",
     "invested_capital",
     "rank_quality",
+    "return_percentiles",
     "spread_to_10y",
     "summarize_quality",
 )

@@ -60,3 +60,11 @@ python3 apps/pipeline/run_quality.py
 ```
 
 A rotina usa os ZIPs DFP locais e gera `data/public/cvm-quality.json`. Aceita `--raw-dir`, `--output`, `--start-year` e `--end-year`. Valida o layout contábil por companhia, os comparativos de abertura e a conciliação dos numeradores. A reexecução sobre os mesmos insumos preserva o arquivo. [Metodologia das séries](../../docs/METHODOLOGY.md#séries-de-qualidade-da-amostra)
+
+### Comparação bancária
+
+```sh
+python3 apps/pipeline/run_bank_roe.py
+```
+
+A rotina usa os mesmos ZIPs e opções. O lote `data/public/cvm-bank-roe.json` inclui os bancos com pelo menos cinco exercícios consecutivos completos e conciliados na janela pedida, os motivos de exclusão e o percentil da média de ROE quando há cinco bancos. [Metodologia bancária](../../docs/METHODOLOGY.md#comparação-de-roe-entre-bancos)

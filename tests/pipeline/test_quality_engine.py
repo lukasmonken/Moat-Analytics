@@ -17,6 +17,7 @@ from moat_finance import (  # noqa: E402
     calculate_roic,
     invested_capital,
     rank_quality,
+    return_percentiles,
     spread_to_10y,
     summarize_quality,
 )
@@ -132,6 +133,15 @@ class QualityEngineTests(unittest.TestCase):
 
 class PeerRankingTests(unittest.TestCase):
     dates = tuple(date(year, 12, 31) for year in range(2021, 2026))
+
+    def test_return_percentiles_require_five_peers_and_average_ties(self):
+        values = {"a": D(21), "b": D(20), "c": D(16), "d": D(16)}
+        self.assertIsNone(return_percentiles(values))
+        values["e"] = D(-2)
+        self.assertEqual(
+            return_percentiles(values),
+            {"a": D(100), "b": D(75), "c": D("37.5"), "d": D("37.5"), "e": D(0)},
+        )
 
     def peer(self, company_id, profits, spread, *, estimated=False, segment="bancos"):
         series = tuple(
