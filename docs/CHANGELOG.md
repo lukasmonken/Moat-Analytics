@@ -1,5 +1,11 @@
 # Changelog
 
+## M3 — Dívida líquida, ações por classe e preço histórico
+
+- Dívida líquida simplificada de WEG e Lojas Renner em 30/09/2026, com empréstimos, arrendamentos, caixa, aplicações financeiras e participação de não controladores discriminados.
+- Posição exata de ações fora da tesouraria na data-base para WEG e Itaú. O ITR de Lojas Renner informa a quantidade em milhares e a contagem exata segue pendente.
+- Capitalização e rendimento implícito retrospectivos do Itaú em 30/09/2026, com valores por classe atribuídos ao demonstrativo do emissor arquivado no EDGAR.
+
 ## M3 — Fundamentos de preço e fechamentos locais
 
 - Resultado dos 12 meses encerrados em 30/09/2026 para WEG, Lojas Renner e Itaú Unibanco, com contas, períodos e formulários de origem.

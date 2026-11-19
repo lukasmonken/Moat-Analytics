@@ -7,6 +7,14 @@ import {
 } from './cvm.ts';
 import type { DataProvenance, SnapshotManifest } from './index.ts';
 import {
+  isHistoricalMarketPoint,
+  isPriceBalance,
+  isPriceShareCounts,
+  type HistoricalMarketPoint,
+  type PriceBalance,
+  type PriceShareCounts,
+} from './price-denominators.ts';
+import {
   isDate,
   isListOf,
   isObject,
@@ -43,6 +51,10 @@ export interface PriceFundamental {
   taxRate: number | null;
   provenance: DataProvenance;
   inputs: PriceFundamentalInput[];
+  balance?: PriceBalance;
+  shares?: PriceShareCounts;
+  denominatorIssues?: { balance?: string; shares?: string };
+  historicalMarketPoint?: HistoricalMarketPoint;
 }
 
 export interface PriceFundamentalsSnapshot {
@@ -84,8 +96,16 @@ function isInput(input: unknown): input is PriceFundamentalInput {
   );
 }
 
-function isFundamental(input: unknown): input is PriceFundamental {
+function isDenominatorIssue(input: unknown) {
   return (
+    isObject(input) &&
+    (input.balance === undefined || isText(input.balance)) &&
+    (input.shares === undefined || isText(input.shares))
+  );
+}
+
+function isFundamental(input: unknown): input is PriceFundamental {
+  if (!(
     isObject(input) &&
     isCompanyId(input.companyId) &&
     isText(input.name) &&
@@ -107,7 +127,44 @@ function isFundamental(input: unknown): input is PriceFundamental {
         input.provenance.qualityStatus === 'estimated')) &&
     isListOf(input.inputs, isInput) &&
     input.inputs.length === 3 &&
-    unique(input.inputs, ({ role }) => role)
+    unique(input.inputs, ({ role }) => role) &&
+    (input.balance === undefined ||
+      (input.category !== 'bank' &&
+        isPriceBalance(input.balance) &&
+        input.balance.provenance.referenceDate === input.periodEnd)) &&
+    (input.shares === undefined ||
+      (isPriceShareCounts(input.shares) && input.shares.referenceDate <= input.periodEnd)) &&
+    (input.denominatorIssues === undefined || isDenominatorIssue(input.denominatorIssues)) &&
+    (input.historicalMarketPoint === undefined ||
+      isHistoricalMarketPoint(input.historicalMarketPoint))
+  )) {
+    return false;
+  }
+  const currentItr = input.inputs.find(({ role }) => role === 'currentYtd');
+  const { historicalMarketPoint, shares } = input;
+  if (
+    historicalMarketPoint !== undefined &&
+    (input.metric !== 'parentNetIncome' ||
+      shares === undefined ||
+      historicalMarketPoint.referenceDate !== input.periodEnd ||
+      historicalMarketPoint.referenceDate !== shares.referenceDate ||
+      historicalMarketPoint.documentUrl !== shares.evidenceUrl ||
+      historicalMarketPoint.classes.length !== shares.classes.length ||
+      historicalMarketPoint.classes.some(
+        ({ ticker }) => !shares.classes.some((row) => row.ticker === ticker),
+      ))
+  ) {
+    return false;
+  }
+  return (
+    currentItr !== undefined &&
+    [input.balance, input.shares].every(
+      (evidence) =>
+        evidence === undefined ||
+        (evidence.filingVersion === currentItr.filingVersion &&
+          evidence.archiveSha256 === currentItr.archiveSha256 &&
+          evidence.documentUrl === currentItr.documentUrl),
+    )
   );
 }
 

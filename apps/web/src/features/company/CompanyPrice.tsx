@@ -1,6 +1,7 @@
 import type {
   CvmIdentitySnapshot,
   MarketCloseSnapshot,
+  PriceFundamental,
   PriceFundamentalsSnapshot,
 } from '@moat/data-contracts';
 import { useEffect, useState } from 'react';
@@ -11,7 +12,8 @@ import {
   loadPriceFundamentals,
 } from '../../shared/data-client/priceSnapshot';
 import { Button, Icon, Panel, Table } from '../../shared/ui';
-import { formatCurrency, formatDate, formatInstant } from './financialPresentation';
+import { formatAmount, formatCurrency, formatDate, formatInstant } from './financialPresentation';
+import { formatRate } from './QualityHistory';
 
 type PriceData = { closes: MarketCloseSnapshot; identity: CvmIdentitySnapshot | null };
 type Loaded<T> = { status: 'loading' | 'error' } | { status: 'ready'; data: T | null };
@@ -25,6 +27,108 @@ const roles = {
   currentYtd: 'Acumulado atual',
   priorYtd: 'Acumulado comparativo',
 } as const;
+
+function CapitalEvidence({ fundamental }: { fundamental: PriceFundamental }) {
+  const { balance, shares, denominatorIssues, category } = fundamental;
+  return (
+    <details className="company-observation">
+      <summary>
+        <span>Capitalização e dívida líquida</span>
+        <Icon className="company-observation-icon" name="chevron-down" size={18} />
+      </summary>
+      <div className="company-observation-body quality-body">
+        {shares ? (
+          <>
+            <h3>Ações por classe</h3>
+            <p>
+              Posição em <DatedValue date={shares.referenceDate} />. A capitalização exige confirmar
+              as quantidades no pregão da cotação.
+            </p>
+            <div
+              className="company-table-scroll"
+              role="region"
+              tabIndex={0}
+              aria-label="Composição do capital"
+            >
+              <Table className="quality-table" aria-label="Ações por classe">
+                <thead>
+                  <tr>
+                    <th scope="col">Classe</th>
+                    <th scope="col">Emitidas</th>
+                    <th scope="col">Tesouraria</th>
+                    <th scope="col">Fora da tesouraria</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shares.classes.map((row) => (
+                    <tr key={row.ticker}>
+                      <th scope="row">
+                        {row.ticker} · {row.kind}
+                      </th>
+                      <td>{formatAmount(row.issued)}</td>
+                      <td>{formatAmount(row.treasury)}</td>
+                      <td>{formatAmount(row.outstanding)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+            <p className="company-source-links">
+              <a href={shares.documentUrl} target="_blank" rel="noreferrer">
+                ITR na CVM · versão {shares.filingVersion} <Icon name="arrow-up-right" size={14} />
+              </a>
+              <a href={shares.evidenceUrl} target="_blank" rel="noreferrer">
+                Documento com as quantidades exatas <Icon name="arrow-up-right" size={14} />
+              </a>
+            </p>
+          </>
+        ) : (
+          <p>{denominatorIssues?.shares ?? 'Ações por classe indisponíveis.'}</p>
+        )}
+        {balance && (
+          <>
+            <h3>Dívida líquida simplificada</h3>
+            <dl className="company-metadata">
+              {(
+                [
+                  ['Empréstimos e financiamentos', balance.borrowingsBrl],
+                  ['Arrendamentos', balance.leaseLiabilitiesBrl],
+                  ['Dívida bruta', balance.grossDebtBrl],
+                  ['Caixa e equivalentes', balance.cashBrl],
+                  ['Dívida líquida', balance.netDebtBrl],
+                  ['Aplicações financeiras circulantes', balance.financialInvestmentsBrl],
+                  ['Patrimônio dos não controladores', balance.nonControllingInterestsBrl],
+                ] as const
+              ).map(([label, value]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{formatCurrency(value)}</dd>
+                </div>
+              ))}
+            </dl>
+            <p>
+              Balanço de <DatedValue date={balance.provenance.referenceDate} /> ·{' '}
+              <a href={balance.documentUrl} target="_blank" rel="noreferrer">
+                ITR na CVM · versão {balance.filingVersion}
+              </a>
+            </p>
+            <ul className="quality-notes">
+              {balance.limitations.map((reason) => (
+                <li key={reason}>{reason}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        {!balance && category !== 'bank' && (
+          <p>
+            {denominatorIssues?.balance ??
+              'Dívida líquida e ajustes do valor da firma indisponíveis.'}
+          </p>
+        )}
+      </div>
+    </details>
+  );
+}
 
 function TrailingResults({
   snapshot,
@@ -113,7 +217,7 @@ function TrailingResults({
             ))}
             {licenseUrl && (
               <a href={licenseUrl} target="_blank" rel="noreferrer">
-                ODbL 1.0 <Icon name="arrow-up-right" size={14} />
+                Licença dos dados CVM · ODbL 1.0 <Icon name="arrow-up-right" size={14} />
               </a>
             )}
             <a href={fundamentalsUrl} download="cvm-price-fundamentals.json">
@@ -122,7 +226,51 @@ function TrailingResults({
           </p>
         </div>
       </details>
+      <CapitalEvidence fundamental={fundamental} />
+      {fundamental.historicalMarketPoint && (
+        <HistoricalYield point={fundamental.historicalMarketPoint} />
+      )}
     </>
+  );
+}
+
+function HistoricalYield({
+  point,
+}: {
+  point: NonNullable<PriceFundamental['historicalMarketPoint']>;
+}) {
+  return (
+    <section aria-labelledby="historical-market-yield">
+      <h3 id="historical-market-yield">Rendimento implícito histórico</h3>
+      <p>
+        Referência de <DatedValue date={point.referenceDate} />. Cálculo retrospectivo com o lucro
+        de 12 meses e os valores por ação informados no demonstrativo divulgado após a data-base.
+      </p>
+      <dl className="company-metadata">
+        <div>
+          <dt>Lucro sobre capitalização</dt>
+          <dd>{formatRate(point.earningsYield)}</dd>
+        </div>
+        <div>
+          <dt>Capitalização de mercado na data-base</dt>
+          <dd>{formatCurrency(point.marketCapBrl)}</dd>
+        </div>
+        {point.classes.map(({ ticker, priceBrl }) => (
+          <div key={ticker}>
+            <dt>{ticker}</dt>
+            <dd>{formatCurrency(priceBrl)}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="company-source-links">
+        <a href={point.documentUrl} target="_blank" rel="noreferrer">
+          {point.sourceName} <Icon name="arrow-up-right" size={14} />
+        </a>
+        <a href={point.reusePolicyUrl} target="_blank" rel="noreferrer">
+          Política de reuso da SEC <Icon name="arrow-up-right" size={14} />
+        </a>
+      </p>
+    </section>
   );
 }
 
@@ -257,8 +405,8 @@ export function CompanyPrice({ companyId }: { companyId: string }) {
         </Button>
       )}
       <p>
-        Rendimento implícito indisponível. O cálculo requer a capitalização de todas as classes e,
-        para empresas não financeiras, os ajustes do valor da firma.
+        Rendimento implícito atual indisponível. O cálculo depende de fechamentos e da confirmação
+        das ações em circulação por classe no mesmo pregão.
       </p>
     </Panel>
   );

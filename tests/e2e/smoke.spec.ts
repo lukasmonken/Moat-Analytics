@@ -73,6 +73,10 @@ test('consulta o resultado de 12 meses e as contas do ITR', async ({ page }) => 
   await expect(pricing.getByText('NOPAT estimado em 12 meses')).toBeVisible();
   await expect(pricing.getByText(/R\$\s*5\.203\.761\.420/)).toBeVisible();
   await expect(pricing.getByText('Fechamento indisponível nesta versão.')).toBeVisible();
+  await pricing.getByText('Capitalização e dívida líquida', { exact: true }).click();
+  const shares = pricing.getByRole('table', { name: 'Ações por classe' });
+  await expect(shares.getByRole('row', { name: /WEGE3/ })).toContainText('4.195.829.691');
+  await expect(pricing.getByText(/937\.479\.000/)).toBeVisible();
   await pricing.getByText('Contas usadas nos últimos 12 meses').click();
   const source = pricing.getByRole('table', { name: 'Insumos dos últimos 12 meses' });
   await expect(source.getByRole('row')).toHaveCount(4);
@@ -80,6 +84,14 @@ test('consulta o resultado de 12 meses e as contas do ITR', async ({ page }) => 
   await company.selectOption('cvm:19348');
   await expect(pricing.getByText('Lucro da controladora em 12 meses')).toBeVisible();
   await expect(pricing.getByText(/R\$\s*47\.749\.000\.000/)).toBeVisible();
+  const historical = pricing.getByRole('region', { name: 'Rendimento implícito histórico' });
+  await expect(historical.getByText(/9,33\s*%/)).toBeVisible();
+  await expect(historical.getByText(/511\.593\.650\.014,19/)).toBeVisible();
+  await expect(historical.getByRole('link', { name: /Nota 19/ })).toBeVisible();
+  await company.selectOption('cvm:8133');
+  await expect(pricing.getByText(/A posição exata na mesma data-base/)).toBeVisible();
+  await expect(pricing.getByText(/2\.074\.041\.000/)).toBeVisible();
+  await expect(historical).toHaveCount(0);
 });
 
 test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
