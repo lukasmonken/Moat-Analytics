@@ -28,6 +28,7 @@ from .ranking import (
     rank_quality,
     return_percentiles,
 )
+from .valuation import ValuationResult, calculate_fcff, value_dcf, value_ddm
 
 __all__ = (
     "MINIMUM_PEERS",
@@ -39,6 +40,8 @@ __all__ = (
     "QualityResult",
     "QualitySummary",
     "ShareClassClose",
+    "ValuationResult",
+    "calculate_fcff",
     "calculate_roe",
     "calculate_roic",
     "earnings_yield",
@@ -51,4 +54,6 @@ __all__ = (
     "spread_to_10y",
     "spread_to_cdi",
     "summarize_quality",
+    "value_dcf",
+    "value_ddm",
 )

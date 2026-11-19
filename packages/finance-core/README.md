@@ -1,6 +1,6 @@
 # Motor financeiro
 
-`moat_finance` calcula em decimal as métricas contábeis e de preço. A coleta e o mapeamento por emissor ficam no pipeline. A interface consome seus resultados pelo contrato JSON.
+`moat_finance` calcula em decimal as métricas contábeis, de preço e os cenários de valuation. A coleta e o mapeamento por emissor ficam no pipeline. Os cenários editáveis no navegador usam a implementação TypeScript com a mesma convenção de cálculo.
 
 - `invested_capital`, `calculate_roic` e `calculate_roe` recebem valores em BRL e taxas como frações. A base média usa saldos comparáveis de abertura e encerramento. Caso falte um dado necessário ou um saldo seja não positivo, o resultado fica indisponível.
 - `spread_to_10y` recebe a referência fiscal e a referência da taxa alinhada e retorna a diferença em pontos percentuais. A integração da fonte histórica depende de validação de acesso e reuso.
