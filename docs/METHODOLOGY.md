@@ -40,6 +40,16 @@ O ponto retrospectivo de Itaú em 30/09/2026 usa os valores unitários de mercad
 
 Os fechamentos importados localmente exibem a data do pregão, a coleta e a fonte. Uma observação anterior ao pregão de referência do lote aparece como defasada. O cálculo do rendimento atual e de sua diferença em pontos percentuais para o CDI requer entradas de mercado verificadas.
 
+## Valuation e premissas
+
+Os cenários usam valores e taxas nominais. O DCF calcula EBIT como receita vezes margem EBIT, aplica a alíquota informada e soma depreciação e amortização ao NOPAT. O CAPEX e o aumento do capital de giro consomem caixa. No DDM, dividendos projetados são o lucro atribuível aos acionistas vezes o payout de cada ano. Previsões de payout e adequação ao capital regulatório ficam a cargo das premissas do usuário.
+
+Os fluxos dos dez anos são descontados a partir do fim de cada ano. A perpetuidade usa o fluxo do último ano multiplicado por (1 + g) e dividido pela diferença entre a taxa de desconto e o crescimento terminal (g). O cálculo exige desconto maior que crescimento, crescimento acima de −100% e fluxo terminal não negativo. O valor do patrimônio no DCF deduz dívida líquida do valor da firma e soma os demais ajustes com o sinal informado. O DDM estima diretamente o patrimônio. A divisão pelo número total de ações produz um valor médio por ação quando existem classes com direitos distintos.
+
+O preço informado permite calcular potencial como valor estimado dividido pelo preço menos um. A margem de segurança é um menos o preço dividido pelo valor estimado e requer valor estimado positivo. Uma matriz varia desconto e crescimento em um ponto percentual de cada lado das premissas. Combinações que violam a condição da perpetuidade ficam indisponíveis.
+
+O desconto parte de WACC ou custo de capital próprio informados. O CDI anualizado, com fonte e data no módulo, pode ser aplicado como cenário alternativo e pode superestimar valor. As referências da CVM de dívida, ajustes e ações são opcionais e datadas. O editor começa com projeções em branco.
+
 ## Métricas e modelos previstos
 
 Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.

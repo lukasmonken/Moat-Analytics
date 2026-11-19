@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 import { cdiRateUrl } from '../../apps/web/src/shared/data-client/riskFreeRate';
 
 const cdiFixture = [{ data: '15/12/2025', valor: '13.65' }];
@@ -153,8 +154,109 @@ test('consulta o CDI em Premissas e permite atualizar após falha', async ({ pag
   );
 });
 
+test('calcula DDM, mostra sensibilidade e salva premissas por modelo e cenário', async ({
+  page,
+}) => {
+  await page.goto('./#/valuation');
+  await page.getByRole('button', { name: 'Aplicar CDI como desconto' }).click();
+  const discount = page.getByLabel('Taxa de desconto (% a.a.)');
+  await expect(discount).toHaveValue('13,65');
+  await page.getByRole('combobox', { name: 'Modelo' }).selectOption('ddm');
+  await expect(discount).toHaveValue('');
+  await discount.fill('10');
+  await page.getByLabel('Crescimento na perpetuidade (% a.a.)').fill('10');
+  await page.getByLabel('Ações em circulação (milhões)').fill('100');
+  await page.getByRole('button', { name: 'Calcular valuation' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: /deve superar/ })).toBeVisible();
+  await page.getByLabel('Crescimento na perpetuidade (% a.a.)').fill('0');
+  await page.getByLabel('Preço de referência (R$/ação, opcional)').fill('8');
+  for (let year = 1; year <= 10; year++) {
+    await page.getByLabel(`Lucro líquido do ano ${year} (R$ mi)`, { exact: true }).fill('200');
+    await page.getByLabel(`Payout do ano ${year} (%)`, { exact: true }).fill('50');
+  }
+  await page.getByRole('button', { name: 'Calcular valuation' }).click();
+  const result = page.getByRole('region', { name: 'Resultado do cenário' });
+  await expect(result.getByText(/20,00\s*%/)).toBeVisible();
+  await expect(result.getByText(/25,00\s*%/)).toBeVisible();
+  await expect(
+    result.getByRole('table', { name: 'Sensibilidade do valor por ação' }).getByRole('row'),
+  ).toHaveCount(4);
+  await page.getByRole('button', { name: 'Salvar no navegador' }).click();
+  await page.reload();
+  await page.getByRole('combobox', { name: 'Modelo' }).selectOption('ddm');
+  await expect(discount).toHaveValue('10');
+  await page.getByRole('combobox', { name: 'Cenário' }).selectOption('otimista');
+  await expect(discount).toHaveValue('');
+});
+
+test('aplica as referências contábeis da WEG às premissas sem preencher as projeções', async ({
+  page,
+}) => {
+  await page.goto('./#/valuation');
+  const reference = page.getByRole('region', { name: 'Referências contábeis' });
+  await reference
+    .getByRole('combobox', { name: 'Companhia de referência' })
+    .selectOption('cvm:5410');
+  await reference.getByRole('button', { name: 'Aplicar referências ao cenário' }).click();
+  await expect(page.getByLabel('Dívida líquida (R$ mi)')).toHaveValue('-937,479');
+  await expect(page.getByLabel('Outros ajustes ao patrimônio (R$ mi)')).toHaveValue('-1410,309');
+  await expect(page.getByLabel('Ações em circulação (milhões)')).toHaveValue('4195,829691');
+  await expect(page.getByLabel('Receita do ano 1 (R$ mi)', { exact: true })).toHaveValue('');
+});
+
+test('calcula DCF após importar premissas e exporta o cenário', async ({ page }) => {
+  await page.goto('./#/valuation');
+  const downloaded = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Exportar premissas' }).click();
+  const download = await downloaded;
+  expect(download.suggestedFilename()).toBe('moat-cenarios-valuation.json');
+  const file = await download.path();
+  if (file === null) throw new Error('Arquivo exportado indisponível.');
+  const payload = JSON.parse(await readFile(file, 'utf8'));
+  const dcf = payload.scenarios.dcf.base;
+  Object.assign(dcf, {
+    discountRate: '10',
+    terminalGrowth: '0',
+    shares: '100',
+    netDebt: '200',
+    equityAdjustments: '-25',
+  });
+  for (const year of dcf.years) {
+    Object.assign(year, {
+      revenue: '500',
+      ebitMargin: '30',
+      taxRate: '20',
+      depreciation: '30',
+      capex: '40',
+      workingCapitalChange: '10',
+    });
+  }
+  await page.getByLabel('Arquivo de premissas').setInputFiles({
+    name: 'cenarios-teste.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(payload)),
+  });
+  await expect(page.getByText('Cenários importados.')).toBeVisible();
+  await page.getByRole('button', { name: 'Calcular valuation' }).click();
+  const result = page.getByRole('region', { name: 'Resultado do cenário' });
+  await expect(result.getByRole('strong')).toHaveText(/R\$\s*7,75/);
+  await expect(result.getByText('Valor da firma (R$ mi)')).toBeVisible();
+});
+
 test.describe('janela móvel', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+
+  test('mantém o editor de valuation dentro da largura da página', async ({ page }) => {
+    await page.goto('./#/valuation');
+    const projections = page.getByRole('region', { name: 'Editor de projeções anuais' });
+    await expect(projections).toBeVisible();
+    expect(await projections.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(
+      true,
+    );
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+    ).toBe(false);
+  });
 
   test('abre o menu e navega sem rolagem horizontal', async ({ page }) => {
     await page.goto('./');

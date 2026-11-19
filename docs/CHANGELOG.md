@@ -1,5 +1,12 @@
 # Changelog
 
+## M4 — Valuation e premissas
+
+- DCF de fluxo de caixa livre para a firma e DDM para bancos, com projeções editáveis de dez anos e perpetuidade.
+- Valor intrínseco por ação, sensibilidade à taxa de desconto e crescimento, potencial e margem de segurança sobre preço informado.
+- Três cenários independentes por modelo, com opção de salvar no navegador e transferir as premissas em JSON.
+- Referências contábeis datadas da CVM e opção explícita de usar o CDI atual como taxa de desconto.
+
 ## M3 — Dívida líquida, ações por classe e preço histórico
 
 - Dívida líquida simplificada de WEG e Lojas Renner em 30/09/2026, com empréstimos, arrendamentos, caixa, aplicações financeiras e participação de não controladores discriminados.
