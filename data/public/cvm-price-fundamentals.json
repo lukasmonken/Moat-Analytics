@@ -1,0 +1,217 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2026-11-18T23:35:28+00:00",
+    "asOf": "2026-09-30",
+    "coverage": {
+      "eligibleCompanies": 3,
+      "includedCompanies": 3
+    },
+    "sources": [
+      {
+        "name": "Comissão de Valores Mobiliários (CVM)",
+        "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+        "license": "ODbL-1.0",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+      },
+      {
+        "name": "Comissão de Valores Mobiliários (CVM)",
+        "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-itr",
+        "license": "ODbL-1.0",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+      }
+    ]
+  },
+  "companies": [
+    {
+      "companyId": "cvm:5410",
+      "name": "WEG S.A.",
+      "category": "industry",
+      "metric": "nopat",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2026-09-30",
+      "amountBrl": 5203761420,
+      "incomeTtmBrl": 7884487000,
+      "taxRate": 0.34,
+      "provenance": {
+        "source": "CVM · DFP anual e ITR consolidados",
+        "referenceDate": "2026-09-30",
+        "publishedAt": null,
+        "retrievedAt": "2026-11-18T23:33:37+00:00",
+        "methodologyVersion": "price-fundamentals.v1",
+        "qualityStatus": "estimated"
+      },
+      "inputs": [
+        {
+          "role": "annual",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-12-31",
+          "amountBrl": 7998741000,
+          "filingVersion": 1,
+          "receiptDate": "2026-02-25",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154872",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "retrievedAt": "2026-11-18T10:11:46+00:00"
+        },
+        {
+          "role": "currentYtd",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2026-01-01",
+          "periodEnd": "2026-09-30",
+          "amountBrl": 5887920000,
+          "filingVersion": 1,
+          "receiptDate": "2026-10-21",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161774",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        },
+        {
+          "role": "priorYtd",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-09-30",
+          "amountBrl": 6002174000,
+          "filingVersion": 1,
+          "receiptDate": "2026-10-21",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161774",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        }
+      ]
+    },
+    {
+      "companyId": "cvm:8133",
+      "name": "LOJAS RENNER S.A.",
+      "category": "retail",
+      "metric": "nopat",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2026-09-30",
+      "amountBrl": 1155939840,
+      "incomeTtmBrl": 1751424000,
+      "taxRate": 0.34,
+      "provenance": {
+        "source": "CVM · DFP anual e ITR consolidados",
+        "referenceDate": "2026-09-30",
+        "publishedAt": null,
+        "retrievedAt": "2026-11-18T23:33:37+00:00",
+        "methodologyVersion": "price-fundamentals.v1",
+        "qualityStatus": "estimated"
+      },
+      "inputs": [
+        {
+          "role": "annual",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-12-31",
+          "amountBrl": 1797160000,
+          "filingVersion": 2,
+          "receiptDate": "2026-03-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155117",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "retrievedAt": "2026-11-18T10:11:46+00:00"
+        },
+        {
+          "role": "currentYtd",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2026-01-01",
+          "periodEnd": "2026-09-30",
+          "amountBrl": 1063874000,
+          "filingVersion": 1,
+          "receiptDate": "2026-11-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=162059",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        },
+        {
+          "role": "priorYtd",
+          "accountCode": "3.05",
+          "accountLabel": "Resultado Antes do Resultado Financeiro e dos Tributos",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-09-30",
+          "amountBrl": 1109610000,
+          "filingVersion": 1,
+          "receiptDate": "2026-11-05",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=162059",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        }
+      ]
+    },
+    {
+      "companyId": "cvm:19348",
+      "name": "ITAU UNIBANCO HOLDING S.A.",
+      "category": "bank",
+      "metric": "parentNetIncome",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2026-09-30",
+      "amountBrl": 47749000000,
+      "incomeTtmBrl": 47749000000,
+      "taxRate": null,
+      "provenance": {
+        "source": "CVM · DFP anual e ITR consolidados",
+        "referenceDate": "2026-09-30",
+        "publishedAt": null,
+        "retrievedAt": "2026-11-18T23:33:37+00:00",
+        "methodologyVersion": "price-fundamentals.v1",
+        "qualityStatus": "validated"
+      },
+      "inputs": [
+        {
+          "role": "annual",
+          "accountCode": "3.09.01",
+          "accountLabel": "Atribuído a Sócios da Empresa Controladora",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-12-31",
+          "amountBrl": 44857000000,
+          "filingVersion": 2,
+          "receiptDate": "2026-02-12",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154741",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+          "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+          "retrievedAt": "2026-11-18T10:11:46+00:00"
+        },
+        {
+          "role": "currentYtd",
+          "accountCode": "3.09.01",
+          "accountLabel": "Atribuído a Sócios da Empresa Controladora",
+          "periodStart": "2026-01-01",
+          "periodEnd": "2026-09-30",
+          "amountBrl": 35842000000,
+          "filingVersion": 1,
+          "receiptDate": "2026-11-03",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161944",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        },
+        {
+          "role": "priorYtd",
+          "accountCode": "3.09.01",
+          "accountLabel": "Atribuído a Sócios da Empresa Controladora",
+          "periodStart": "2025-01-01",
+          "periodEnd": "2025-09-30",
+          "amountBrl": 32950000000,
+          "filingVersion": 1,
+          "receiptDate": "2026-11-03",
+          "documentUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161944",
+          "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+          "archiveSha256": "a578a832671afa859de4e6355d76f4e372814976d6fe61f8d12f14062dfd425f",
+          "retrievedAt": "2026-11-18T23:33:37+00:00"
+        }
+      ]
+    }
+  ],
+  "issues": []
+}
