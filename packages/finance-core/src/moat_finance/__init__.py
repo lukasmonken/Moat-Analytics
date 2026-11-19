@@ -1,5 +1,6 @@
 """API canônica do motor financeiro do Moat Analytics."""
 
+from .backtest import BacktestPoint, BacktestResult, MonthlyTotalReturnPoint, simulate_portfolio
 from .price import (
     ShareClassClose,
     earnings_yield,
@@ -31,8 +32,11 @@ from .ranking import (
 from .valuation import ValuationResult, calculate_fcff, value_dcf, value_ddm
 
 __all__ = (
+    "BacktestPoint",
+    "BacktestResult",
     "MINIMUM_PEERS",
     "MINIMUM_YEARS",
+    "MonthlyTotalReturnPoint",
     "PeerHistory",
     "PeerObservation",
     "PeerRank",
@@ -51,6 +55,7 @@ __all__ = (
     "operating_yield",
     "rank_quality",
     "return_percentiles",
+    "simulate_portfolio",
     "spread_to_10y",
     "spread_to_cdi",
     "summarize_quality",
