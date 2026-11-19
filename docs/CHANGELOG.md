@@ -1,5 +1,11 @@
 # Changelog
 
+## M5 — Carteiras e retrospectiva com dados locais
+
+- Seleção manual pelo nome oficial da companhia, pesos iguais ou personalizados e limite opcional por posição. A carteira é salva no navegador.
+- Retrospectiva mensal da carteira atual a partir de séries de retorno total em reais importadas em JSON, com aportes, custos, rebalanceamento e imposto final parametrizados.
+- Métricas de retorno e risco e comparação opcional com Ibovespa, IDIV e SMAL11 no mesmo período. A cobertura depende do arquivo carregado no navegador.
+
 ## M4 — Valuation e premissas
 
 - DCF de fluxo de caixa livre para a firma e DDM para bancos, com projeções editáveis de dez anos e perpetuidade.

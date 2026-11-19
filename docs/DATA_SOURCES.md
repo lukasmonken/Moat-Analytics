@@ -32,6 +32,16 @@ Uma via contratual para a atualização diária é solicitar fechamento D−1 se
 
 ## Cobertura e pendências
 
+### Séries para a retrospectiva
+
+O simulador lê um JSON fornecido pelo usuário dentro do navegador. O arquivo identifica fonte, instante de coleta e metodologia e declara retorno total em BRL. A comparação requer a mesma convenção de retorno e as mesmas datas em toda a janela solicitada. Séries de preço sem ajuste, proventos reaplicados em duplicidade e níveis preenchidos artificialmente produzem uma base incompatível. A publicação de históricos depende de verificar cobertura, origem e direitos de utilização. [Cotações históricas e condições da B3](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/historico/mercado-a-vista/cotacoes-historicas/) · [Documentos de eventos e divulgações na CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-ipe)
+
+O Ibovespa e o IDIV padrão são índices de retorno total. O IDIV tem uma versão distinta de retorno de preço. O SMAL11 é um ETF da BlackRock que acompanha o índice SMLL. O Informe Diário da CVM oferece valor patrimonial por cota sob ODbL 1.0, sujeito à cobertura. A BlackRock também publica a rentabilidade total do SMAL11 com base patrimonial. O benchmark negociado do ETF exige uma série de cotação em bolsa com eventos reconciliados. [Ibovespa B3](https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/ibovespa-b3.htm) · [IDIV B3](https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-de-segmentos-e-setoriais/indice-dividendos-idiv.htm) · [SMAL11 na BlackRock](https://www.blackrock.com/br/products/251752/) · [Informe Diário da CVM](https://dados.cvm.gov.br/dataset/fi-doc-inf_diario)
+
+O SGS 4391 do Banco Central é candidato ao CDI histórico acumulado no mês. O cálculo de Sharpe depende de verificar a correspondência com os períodos da simulação. A série anualizada corrente usada em Empresas e Valuation descreve uma taxa de outra janela. [SGS 4391](https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do?hdOidSeriesSelecionadas=4391&method=consultarGraficoPorId)
+
+### Universo e fontes de mercado
+
 A composição de 18/11/2026 foi importada dos três CSVs fornecidos pelo usuário para consulta local. O Formulário Cadastral da CVM resolve a identidade de cada companhia. Exceções de ticker ou classe exigem uma fonte primária registrada com a data-base.
 
 O [diretório público](../data/public/cvm-company-selection.json) lista os nomes oficiais da seleção, obtidos no FCA aberto, sob a mesma licença do cadastro. A relação de cada companhia com os índices pertence ao snapshot local.

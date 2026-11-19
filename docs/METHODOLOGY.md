@@ -50,6 +50,35 @@ O preço informado permite calcular potencial como valor estimado dividido pelo 
 
 O desconto parte de WACC ou custo de capital próprio informados. O CDI anualizado, com fonte e data no módulo, pode ser aplicado como cenário alternativo e pode superestimar valor. As referências da CVM de dívida, ajustes e ações são opcionais e datadas. O editor começa com projeções em branco.
 
+## Carteiras e retrospectiva mensal
+
+A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. Limites setoriais e seleção por ranking aguardam dados próprios.
+
+O simulador retrospectivo aplica a seleção atual a séries mensais de retorno total em reais. O arquivo JSON fornecido pelo usuário é lido no navegador. O aplicativo verifica estrutura e cobertura. A identificação da classe, a origem dos níveis e os ajustes para proventos e eventos societários dependem da fonte declarada. Cada posição exige um nível positivo por mês e as datas de pregão precisam coincidir entre todas as posições. A janela precisa ser contínua. O período desde o início do ano usa dezembro do ano anterior como base. As demais opções cobrem dois a sete anos ou um intervalo personalizado de 1 a 600 meses.
+
+### Formato do arquivo local
+
+| Campo                     | Conteúdo                                                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schemaVersion` e `basis` | Literais `"1.0.0"` e `"total-return-brl"`.                                                                                                                                                        |
+| `source`                  | `name`, `retrievedAt` em ISO 8601 com fuso e `methodology` com a descrição da série. O campo `url` HTTPS é opcional.                                                                              |
+| `assets`                  | Cada série contém `company` com o nome oficial exato, `instrument` com o código do ativo e `observations` com objetos `{ date, level }`. A data usa `AAAA-MM-DD` e o nível é numérico e positivo. |
+| `benchmarks`              | Lista opcional de séries com `symbol` igual a `IBOV`, `IDIV` ou `SMAL11` e `observations` no mesmo formato.                                                                                       |
+
+O arquivo tem limite de 2 MiB. A série precisa incluir a observação inicial e todas as observações mensais seguintes da janela. O nível de cada mês representa a evolução de uma série com reinvestimento incorporado. O simulador aplica a razão entre dois níveis consecutivos para atualizar a posição.
+
+### Fluxos, custos e métricas
+
+O capital inicial e cada aporte bruto são alocados segundo os pesos-alvo após o custo de compra informado. Esse custo é a taxa por operação aplicada ao valor bruto que entra. A cada mês, o simulador atualiza as posições pela variação de seus níveis e depois registra o aporte. Com rebalanceamento mensal, calcula a soma das diferenças absolutas entre o valor de cada posição e seu alvo após o aporte. Aplica a taxa de custo a esse giro estimado e redistribui o saldo líquido pelos pesos-alvo. O período final recebe o aporte e seu custo de compra, sem rebalanceamento adicional.
+
+O tributo hipotético é a alíquota informada sobre a parcela positiva do ganho ao final, após os custos de transação. O ganho antes de tributo é o patrimônio final menos o capital inicial e os aportes. O patrimônio e o lucro líquidos descontam esse tributo ao final. As posições remanescentes são avaliadas pelo último nível disponível, sem custo de liquidação.
+
+O retorno ponderado pelo tempo encadeia as variações mensais após custos de transação, retirando o aporte bruto da variação do mês e incorporando o custo de compra inicial. A série mensal e as métricas de retorno e risco são calculadas antes do tributo final. O retorno por ano agrupa os fatores mensais pelo ano de encerramento do período, com o custo inicial no primeiro grupo e indicação de meses cobertos. O CAGR anualiza o retorno pelo número de dias corridos dividido por 365,2425. A volatilidade usa o desvio-padrão amostral dos retornos mensais multiplicado pela raiz de 12 e exige ao menos dois retornos mensais. O drawdown mede a queda em relação ao pico anterior da série mensal de retorno acumulado, com pico inicial antes do custo da primeira compra.
+
+O retorno total e o CAGR de IBOV, IDIV e SMAL11 usam os níveis declarados no arquivo para as mesmas datas da carteira. Custos e tributo parametrizados se aplicam à carteira simulada. O Sharpe aguarda uma série histórica de taxa livre de risco alinhada a cada mês.
+
+A retrospectiva está sujeita ao viés da seleção atual. A modalidade historicamente investível aguarda dados que permitam reconstruir o universo, as empresas deslistadas, o ranking e as informações disponíveis em cada decisão. [Fontes e premissas de cobertura](DATA_SOURCES.md#séries-para-a-retrospectiva)
+
 ## Métricas e modelos previstos
 
 Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.

@@ -1,0 +1,104 @@
+.portfolio-panel {
+  display: grid;
+  min-width: 0;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.portfolio-panel h2,
+.portfolio-panel p {
+  margin: 0;
+}
+
+.portfolio-panel h2 {
+  color: var(--text-strong);
+  font-size: 1.125rem;
+}
+
+.portfolio-panel p,
+.portfolio-errors {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.portfolio-source {
+  font-size: 0.8125rem;
+}
+
+.portfolio-settings,
+.portfolio-add {
+  display: grid;
+  align-items: end;
+  gap: 0.875rem;
+}
+
+.portfolio-settings {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.portfolio-add {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+}
+
+.portfolio-table {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.portfolio-table:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.portfolio-table .ui-table th[scope='row'] {
+  width: 55%;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-table .ui-table td {
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.portfolio-table .ui-table tbody th {
+  vertical-align: middle;
+}
+
+.portfolio-table .ui-field label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.portfolio-weight {
+  min-width: 5.25rem;
+  max-width: 7rem;
+}
+
+.portfolio-table tfoot :is(th, td) {
+  border-bottom: 0;
+}
+
+.portfolio-errors {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding-inline-start: 1.2rem;
+}
+
+.portfolio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (width <= 44rem) {
+  .portfolio-add {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

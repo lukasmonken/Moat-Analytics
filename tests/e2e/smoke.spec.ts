@@ -243,8 +243,89 @@ test('calcula DCF após importar premissas e exporta o cenário', async ({ page 
   await expect(result.getByText('Valor da firma (R$ mi)')).toBeVisible();
 });
 
+test('salva uma carteira e exige meses completos para calcular a retrospectiva', async ({
+  page,
+}) => {
+  await page.goto('./#/carteiras');
+  await expect(page.getByRole('combobox', { name: 'Quantidade de companhias' })).toHaveValue('10');
+  await page.getByRole('combobox', { name: 'Quantidade de companhias' }).selectOption('custom');
+  await page.getByLabel('Quantidade personalizada (1 a 50)').fill('1');
+  await page.getByRole('searchbox', { name: 'Buscar companhia' }).fill('WEG S.A.');
+  await page.getByRole('combobox', { name: 'Companhia para adicionar' }).selectOption('WEG S.A.');
+  await page.getByRole('button', { name: 'Adicionar companhia' }).click();
+  await page.getByRole('combobox', { name: 'Distribuição de pesos' }).selectOption('custom');
+  await page.getByLabel('Peso de WEG S.A. (%)').fill('90');
+  await page.getByLabel('Capital inicial (R$)').fill('1000');
+  await page.getByRole('button', { name: 'Salvar carteira' }).click();
+  await expect(page.getByRole('alert')).toContainText('exatamente 100%');
+  await page.getByLabel('Peso de WEG S.A. (%)').fill('100');
+  await page.getByRole('button', { name: 'Salvar carteira' }).click();
+  await expect(page.getByText('Carteira salva neste navegador.')).toBeVisible();
+  await page.getByRole('link', { name: 'Abrir simulador' }).click();
+
+  const button = page.getByRole('button', { name: 'Calcular retrospectiva' });
+  await expect(button).toBeDisabled();
+  const rows = [
+    { date: '2023-12-28', level: 100 },
+    { date: '2024-01-31', level: 110 },
+    { date: '2024-02-29', level: 120 },
+  ];
+  for (const complete of [false, true]) {
+    const history = {
+      schemaVersion: '1.0.0',
+      basis: 'total-return-brl',
+      source: {
+        name: 'Séries de teste',
+        retrievedAt: '2024-03-01T12:00:00-03:00',
+        methodology: 'Dados fictícios da suíte de testes.',
+      },
+      assets: [
+        {
+          company: 'WEG S.A.',
+          instrument: 'WEGE3',
+          observations: complete ? rows : [rows[0], rows[2]],
+        },
+      ],
+      benchmarks: [{ symbol: 'IBOV', observations: rows }],
+    };
+    await page.getByLabel('Arquivo de séries mensais (JSON)').setInputFiles({
+      name: 'fixture.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(JSON.stringify(history)),
+    });
+    await button.click();
+    if (!complete)
+      await expect(page.getByRole('alert')).toContainText('Falta observação em 2024-01');
+  }
+  const result = page.getByRole('region', { name: 'Resultado da retrospectiva' });
+  await expect(result.getByText('Patrimônio final após tributo')).toBeVisible();
+  await expect(
+    result.getByRole('table', { name: 'Evolução mensal da carteira' }).getByRole('row'),
+  ).toHaveCount(4);
+  await expect(page.getByRole('row', { name: /^IBOV/ })).toContainText('20,00%');
+  await expect(page.getByRole('row', { name: /^SMAL11/ })).toContainText('Indisponível');
+  await result.getByText('Retorno por ano', { exact: true }).click();
+  await expect(result.getByRole('row', { name: /^2024/ })).toContainText('2 de 12');
+  await page.getByRole('button', { name: 'Ativar tema escuro' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(result).toBeVisible();
+});
+
 test.describe('janela móvel', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+
+  test('mantém Carteiras e Simulador dentro da largura da página', async ({ page }) => {
+    await page.goto('./#/carteiras');
+    await expect(page.getByRole('heading', { name: 'Composição da carteira' })).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+    ).toBe(false);
+    await page.getByRole('link', { name: 'Abrir simulador' }).click();
+    await expect(page.getByRole('heading', { name: 'Carteira salva indisponível' })).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+    ).toBe(false);
+  });
 
   test('mantém o editor de valuation dentro da largura da página', async ({ page }) => {
     await page.goto('./#/valuation');

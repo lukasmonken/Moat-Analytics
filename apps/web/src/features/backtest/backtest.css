@@ -1,0 +1,145 @@
+.backtest-panel {
+  display: grid;
+  min-width: 0;
+  gap: 0.875rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.backtest-form code {
+  overflow-wrap: anywhere;
+}
+
+.backtest-panel :is(h2, h3, p) {
+  margin: 0;
+}
+
+.backtest-panel :is(h2, h3) {
+  color: var(--text-strong);
+}
+
+.backtest-panel h2 {
+  font-size: 1.125rem;
+}
+
+.backtest-panel h3 {
+  font-size: 1rem;
+}
+
+.backtest-panel p {
+  color: var(--muted);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.backtest-panel h2 + p {
+  margin-top: 0.25rem;
+}
+
+.backtest-fields,
+.backtest-measures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.75rem;
+}
+
+.backtest-fields {
+  align-items: end;
+}
+
+.backtest-form {
+  display: grid;
+  min-width: 0;
+  gap: 0.875rem;
+}
+
+.backtest-form input[type='file'] {
+  max-width: 100%;
+}
+
+.backtest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.backtest-measures {
+  margin: 0;
+}
+
+.backtest-measures > div {
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.backtest-measures dt {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.backtest-measures dd {
+  margin: 0.25rem 0 0;
+  color: var(--text-strong);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.backtest-table-scroll {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.backtest-table-scroll:focus-visible,
+.backtest-instruments summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.backtest-table-scroll--monthly {
+  max-height: 25rem;
+}
+
+.backtest-table-scroll--monthly thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-subtle);
+}
+
+.backtest-table-scroll :is(th, td) {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.backtest-table-scroll tr:last-child > :is(th, td) {
+  border-bottom: 0;
+}
+
+.backtest-instruments summary {
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.backtest-instruments dl {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+.backtest-instruments dl > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+}
+
+.backtest-instruments dd {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}

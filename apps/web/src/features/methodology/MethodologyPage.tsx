@@ -89,6 +89,18 @@ export function MethodologyPage() {
             disponível e informarão a data e o provedor.
           </p>
         </Panel>
+        <Panel className="methodology-panel" aria-labelledby="methodology-backtest">
+          <h2 id="methodology-backtest">Retrospectiva mensal</h2>
+          <p>
+            O simulador aplica a composição escolhida hoje a séries mensais de retorno total em
+            reais. As posições precisam ter observações no mesmo pregão de cada mês da janela.
+            Aportes entram ao fim do mês. Custos entram nas métricas de retorno e risco, e o tributo
+            informado é aplicado ao ganho positivo no fim da simulação.
+          </p>
+          <ButtonLink to="/simulador" className="methodology-link">
+            Abrir simulador
+          </ButtonLink>
+        </Panel>
       </div>
     </div>
   );
