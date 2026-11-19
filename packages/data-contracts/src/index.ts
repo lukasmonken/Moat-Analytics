@@ -65,3 +65,5 @@ export * from './index-universe.ts';
 export * from './company-directory.ts';
 export * from './quality.ts';
 export * from './risk-free-rate.ts';
+export * from './market-close.ts';
+export * from './price-fundamentals.ts';

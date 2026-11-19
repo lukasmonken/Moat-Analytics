@@ -5,6 +5,7 @@ import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import { Badge, ButtonLink, Icon, Panel, Select } from '../../shared/ui';
 import { AccountHistory } from './AccountHistory';
 import { CompanyIdentity } from './CompanyIdentity';
+import { CompanyPrice } from './CompanyPrice';
 import { categories, formatDate, formatInstant } from './financialPresentation';
 import { ObservationDetails } from './ObservationDetails';
 import { QualityHistory } from './QualityHistory';
@@ -90,6 +91,7 @@ export function CompanySample({
       )}
 
       <QualityHistory companyId={company.companyId} riskFreeRate={riskFreeRate} />
+      <CompanyPrice companyId={company.companyId} />
 
       {observations.length > 0 ? (
         <>

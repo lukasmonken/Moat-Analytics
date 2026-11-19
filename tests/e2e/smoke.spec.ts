@@ -65,6 +65,23 @@ test('consulta a amostra oficial no build hospedado em subdiretório', async ({ 
   });
 });
 
+test('consulta o resultado de 12 meses e as contas do ITR', async ({ page }) => {
+  await page.goto('./#/empresas');
+  const company = page.getByRole('combobox', { name: 'Companhia' });
+  const pricing = page.getByRole('region', { name: 'Preço e rendimento implícito' });
+  await company.selectOption('cvm:5410');
+  await expect(pricing.getByText('NOPAT estimado em 12 meses')).toBeVisible();
+  await expect(pricing.getByText(/R\$\s*5\.203\.761\.420/)).toBeVisible();
+  await expect(pricing.getByText('Fechamento indisponível nesta versão.')).toBeVisible();
+  await pricing.getByText('Contas usadas nos últimos 12 meses').click();
+  const source = pricing.getByRole('table', { name: 'Insumos dos últimos 12 meses' });
+  await expect(source.getByRole('row')).toHaveCount(4);
+  await expect(source.getByRole('link', { name: /Acumulado comparativo · ITR/ })).toBeVisible();
+  await company.selectOption('cvm:19348');
+  await expect(pricing.getByText('Lucro da controladora em 12 meses')).toBeVisible();
+  await expect(pricing.getByText(/R\$\s*47\.749\.000\.000/)).toBeVisible();
+});
+
 test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
   await page.goto('./#/empresas');
   const company = page.getByRole('combobox', { name: 'Companhia' });
@@ -152,7 +169,9 @@ test.describe('janela móvel', () => {
       true,
     );
     await expect(page.getByRole('table', { name: 'Contas por exercício' })).toBeVisible();
-    const scroll = page.locator('.company-table-scroll');
+    const scroll = page
+      .getByRole('region', { name: 'Contas por exercício' })
+      .and(page.locator('.company-table-scroll'));
     expect(await scroll.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(
       true,
     );
@@ -165,6 +184,9 @@ test.describe('janela móvel', () => {
     await expect(
       page.getByRole('table', { name: 'Série de qualidade por exercício' }),
     ).toBeVisible();
+    const price = page.getByRole('region', { name: 'Preço e rendimento implícito' });
+    await price.getByText('Contas usadas nos últimos 12 meses').click();
+    await expect(price.getByRole('table', { name: 'Insumos dos últimos 12 meses' })).toBeVisible();
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
     ).toBe(false);

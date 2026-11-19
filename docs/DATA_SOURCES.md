@@ -18,21 +18,31 @@ O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc
 
 O navegador consulta a última observação do CDI anualizado em base de 252 dias úteis no serviço público do Banco Central do Brasil (SGS 4389). A interface exibe o valor em percentual ao ano, a data-base da observação e a fonte. Os termos dos serviços digitais do Banco Central permitem reproduzir o conteúdo com atribuição e integridade. Em caso de falha ou ausência de observação válida, a taxa fica indisponível e a consulta pode ser refeita. [Última observação](https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/1?formato=json) · [Metadados da série](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet) · [Termos do Banco Central](https://www.bcb.gov.br/acessoinformacao/politicaprivacidade)
 
+## Fundamentos de preço
+
+O lote com os numeradores de 12 meses usa DFP anual de 2025 e ITR consolidado de setembro de 2026 para WEG, Lojas Renner e Itaú Unibanco. As duas fontes têm licença ODbL 1.0. O JSON guarda a versão, o período, o recebimento na CVM, os links e o hash do ZIP por insumo. As quantidades de ações em circulação por classe, a dívida líquida e os ajustes de EV ainda precisam de validação para o cálculo dos denominadores. [Lote em JSON](../data/public/cvm-price-fundamentals.json) · [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp) · [Catálogo ITR](https://dados.cvm.gov.br/dataset/cia_aberta-doc-itr)
+
+## Fechamentos de mercado
+
+O importador recebe preços de fechamento por ação em um CSV local. A página de cotações históricas da B3 documenta os fechamentos sem ajustes e restringe o conteúdo à consulta informativa. A regra de distribuição D−1 da B3 se aplica a distribuidores e redistribuidores que obtêm os dados pelas plataformas Market Data. Os termos da brapi também restringem redistribuição. A fonte para publicação no Moat Analytics segue pendente. [Cotações históricas da B3](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/historico/mercado-a-vista/cotacoes-historicas/) · [Perguntas frequentes de Market Data B3](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/distribuidores/perguntas-frequentes/) · [Termos da brapi](https://brapi.dev/legal/terms-of-use)
+
 ## Cobertura e pendências
 
 A composição de 18/11/2026 foi importada dos três CSVs fornecidos pelo usuário para consulta local. O Formulário Cadastral da CVM resolve a identidade de cada companhia. Exceções de ticker ou classe exigem uma fonte primária registrada com a data-base.
 
 O [diretório público](../data/public/cvm-company-selection.json) lista os nomes oficiais da seleção, obtidos no FCA aberto, sob a mesma licença do cadastro. A relação de cada companhia com os índices pertence ao snapshot local.
 
-| Dados                                            | Fonte ou candidata                                                        | Estado                                                     |
-| ------------------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| DFP anual consolidado                            | Catálogo oficial da CVM                                                   | Amostra de três companhias, cinco exercícios por companhia |
-| ITR, DFC e universo amplo de demonstrações       | Catálogo oficial da CVM                                                   | Cobertura futura                                           |
-| Carteiras IBOV, SMLL e IDIV                      | CSVs fornecidos pelo usuário em formato B3                                | Recorte anual local. Direitos de publicação pendentes      |
-| Classe de maior liquidez                         | Histórico de volume financeiro negociado, por classe, em fonte autorizada | Pendente                                                   |
-| Fechamentos, proventos e eventos corporativos    | Provedor intercambiável após validação de direitos, calendário e ajustes  | Pendente                                                   |
-| CDI anualizado corrente                          | Banco Central do Brasil, SGS 4389                                         | Referência provisória consultada diretamente               |
-| Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA de 2520 dias úteis                                            | Acesso e direitos de publicação pendentes                  |
-| Selic e séries auxiliares                        | Banco Central ou Tesouro, conforme a série                                | Avaliação futura                                           |
+| Dados                                            | Fonte ou candidata                                                        | Estado                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------- | ----------------------------------------------------- |
+| DFP anual consolidado                            | Catálogo oficial da CVM                                                   | Amostras contábeis de 2021 a 2025                     |
+| ITR consolidado                                  | Catálogo oficial da CVM                                                   | DRE de três companhias para o resultado de 12 meses   |
+| DFC e cobertura ampla de demonstrações           | Catálogo oficial da CVM                                                   | Cobertura futura                                      |
+| Carteiras IBOV, SMLL e IDIV                      | CSVs fornecidos pelo usuário em formato B3                                | Recorte anual local. Direitos de publicação pendentes |
+| Classe de maior liquidez                         | Histórico de volume financeiro negociado, por classe, em fonte autorizada | Pendente                                              |
+| Fechamentos                                      | CSV local e futuro provedor com direitos verificados                      | Importação local. Publicação pendente                 |
+| Proventos e eventos corporativos                 | Provedor após validação de direitos                                       | Pendente                                              |
+| CDI anualizado corrente                          | Banco Central do Brasil, SGS 4389                                         | Referência provisória consultada diretamente          |
+| Referência prefixada de aproximadamente dez anos | ETTJ ANBIMA de 2520 dias úteis                                            | Acesso e direitos de publicação pendentes             |
+| Selic e séries auxiliares                        | Banco Central ou Tesouro, conforme a série                                | Avaliação futura                                      |
 
 Veja [Referências de mercado no M1](REFERENCE_DATA_M1.md) para os detalhes sobre acesso, licença e comportamento quando a fonte está indisponível. Os requisitos gerais constam nas seções 2, 4, 5 e 12 da [especificação](SPEC.md).

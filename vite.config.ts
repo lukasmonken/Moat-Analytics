@@ -4,12 +4,15 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, type Plugin } from 'vite';
 import { parseIndexUniverse } from './packages/data-contracts/src/index-universe.ts';
+import { parseMarketCloseSnapshot } from './packages/data-contracts/src/market-close.ts';
 
 const privateUniverse = new URL(
   './data/processed/index-universe/index-universe.json',
   import.meta.url,
 );
 const publicUniverse = new URL('./data/public/index-universe.json', import.meta.url);
+const privateCloses = new URL('./data/processed/market-closes/market-closes.json', import.meta.url);
+const publicCloses = new URL('./data/public/market-closes.json', import.meta.url);
 const loopbackAddresses = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
 
 async function readOptionalFile(url: URL) {
@@ -23,12 +26,12 @@ async function readOptionalFile(url: URL) {
   }
 }
 
-function serveLocalUniverse(): Plugin {
+function serveLocalSnapshot(name: string, file: URL): Plugin {
   return {
-    name: 'moat-local-index-universe',
+    name: 'moat-local-' + name,
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use('/__moat/index-universe.json', (request, response) => {
+      server.middlewares.use('/__moat/' + name + '.json', (request, response) => {
         if (
           request.method !== 'GET' ||
           !loopbackAddresses.has(request.socket.remoteAddress ?? '')
@@ -37,7 +40,7 @@ function serveLocalUniverse(): Plugin {
           response.end();
           return;
         }
-        void readOptionalFile(privateUniverse).then(
+        void readOptionalFile(file).then(
           (payload) => {
             if (payload === null) {
               response.statusCode = 404;
@@ -60,7 +63,10 @@ function serveLocalUniverse(): Plugin {
 
 export default defineConfig(async ({ command }) => {
   if (command === 'build') {
-    const payload = await readOptionalFile(publicUniverse);
+    const [payload, closes] = await Promise.all([
+      readOptionalFile(publicUniverse),
+      readOptionalFile(publicCloses),
+    ]);
     if (
       payload !== null &&
       parseIndexUniverse(JSON.parse(payload)).source.redistributionBasis === null
@@ -69,12 +75,25 @@ export default defineConfig(async ({ command }) => {
         'A composição em data/public requer autorização de redistribuição registrada.',
       );
     }
+    if (
+      closes !== null &&
+      parseMarketCloseSnapshot(JSON.parse(closes)).source.redistributionBasis === null
+    ) {
+      throw new Error(
+        'Os fechamentos em data/public requerem autorização de redistribuição registrada.',
+      );
+    }
   }
 
   return {
     root: fileURLToPath(new URL('./apps/web', import.meta.url)),
     base: './',
-    plugins: [react(), tailwindcss(), serveLocalUniverse()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      serveLocalSnapshot('index-universe', privateUniverse),
+      serveLocalSnapshot('market-closes', privateCloses),
+    ],
     server: {
       fs: {
         deny: [

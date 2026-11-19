@@ -26,6 +26,14 @@ O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de ris
 
 Os spreads históricos e o ranking composto dependem de uma série nominal de prazo constante com datas e direitos de uso verificados. A publicação mensal da SUSEP tem uma mudança de modelo para a curva prefixada em 2022. [Parâmetros SUSEP e ANBIMA de 2016 a 2021](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj-1) · [Metodologia e parâmetros atuais](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj)
 
+## Resultados dos últimos 12 meses e preço
+
+A amostra encerra os 12 meses em 30/09/2026. O cálculo soma o resultado de todo o exercício de 2025 ao acumulado de janeiro a setembro de 2026 e subtrai o acumulado equivalente de 2025. Os dois períodos de nove meses vêm da mesma versão do ITR consolidado de 2026. O cálculo usa contas conciliadas e preserva datas, versões e fontes. [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp) · [Catálogo ITR](https://dados.cvm.gov.br/dataset/cia_aberta-doc-itr)
+
+Para WEG e Lojas Renner, o NOPAT estimado usa o resultado antes do financeiro e dos tributos da DRE (`3.05`) e aplica alíquota padronizada de 34%. Para Itaú Unibanco, o resultado de 12 meses é o lucro líquido atribuível à controladora (`3.09.01`).
+
+O rendimento implícito de mercado usa NOPAT dividido pelo EV nas não financeiras e lucro dos últimos 12 meses dividido pela capitalização nos bancos. A capitalização soma o fechamento sem ajustes de cada classe multiplicado pelas suas ações fora da tesouraria válidas naquele pregão. O EV soma à capitalização a dívida líquida e os ajustes pertinentes. A diferença para o CDI atual usa pontos percentuais. Os rendimentos ficam indisponíveis enquanto faltarem fechamentos, quantidades de ações ou demais entradas verificadas. Os fechamentos importados localmente exibem a data do pregão, a coleta e a fonte. Uma observação anterior ao pregão de referência do lote aparece como defasada.
+
 ## Métricas e modelos previstos
 
 Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.

@@ -1,5 +1,11 @@
 # Changelog
 
+## M3 — Fundamentos de preço e fechamentos locais
+
+- Resultado dos 12 meses encerrados em 30/09/2026 para WEG, Lojas Renner e Itaú Unibanco, com contas, períodos e formulários de origem.
+- Importação local de fechamentos por ticker, com data do pregão, fonte, coleta e preservação do último valor válido.
+- Motor decimal para capitalização por classe, valor da firma, rendimentos implícitos e diferença para o CDI. A exibição dessas métricas depende da validação dos dados de mercado e dos denominadores.
+
 ## M2 — CDI atual
 
 - CDI anualizado do Banco Central como taxa livre de risco provisória em Empresas e Valuation e Premissas, com data-base e fonte.
