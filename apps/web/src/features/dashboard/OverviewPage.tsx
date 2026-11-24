@@ -42,7 +42,7 @@ function AnalysisDiagram() {
         </div>
         <div>
           <dt>Custo de oportunidade</dt>
-          <dd>Juros de 10 anos</dd>
+          <dd>CDI atual</dd>
         </div>
         <div>
           <dt>Valor intrínseco</dt>

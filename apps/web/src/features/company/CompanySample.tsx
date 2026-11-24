@@ -2,9 +2,12 @@ import type { CvmSnapshot } from '@moat/data-contracts';
 import { useState } from 'react';
 import { cvmSnapshotUrl } from '../../shared/data-client/cvmSnapshot';
 import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Badge, ButtonLink, Icon, Panel, Select } from '../../shared/ui';
 import { AccountHistory } from './AccountHistory';
 import { CompanyIdentity } from './CompanyIdentity';
+import { CompanyPrice } from './CompanyPrice';
+import { companyAccountsReport, companyWorkbookFilename } from './companyReports';
 import { categories, formatDate, formatInstant } from './financialPresentation';
 import { ObservationDetails } from './ObservationDetails';
 import { QualityHistory } from './QualityHistory';
@@ -74,6 +77,15 @@ export function CompanySample({
           </div>
         </dl>
         <CompanyIdentity companyId={company.companyId} />
+        {observations.length > 0 && (
+          <div className="company-inline-action">
+            <ExportWorkbookButton
+              filename={companyWorkbookFilename('contas', company.companyId)}
+              build={() => companyAccountsReport(company, snapshot)}
+              label="Exportar contas em Excel"
+            />
+          </div>
+        )}
       </Panel>
 
       {companyIssues.length > 0 && (
@@ -90,6 +102,7 @@ export function CompanySample({
       )}
 
       <QualityHistory companyId={company.companyId} riskFreeRate={riskFreeRate} />
+      <CompanyPrice companyId={company.companyId} />
 
       {observations.length > 0 ? (
         <>

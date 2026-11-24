@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { bankRoeSnapshotUrl, loadBankRoeSnapshot } from '../../shared/data-client/bankRoeSnapshot';
 import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, Icon, Panel, Select, Table } from '../../shared/ui';
+import { bankRoeReport } from './companyReports';
 import { formatDate } from './financialPresentation';
 import { formatPoints, formatRate, QualityAudit } from './QualityHistory';
 
@@ -159,6 +161,13 @@ function BankRoeResults({
           Baixar comparação em JSON
         </a>
       </p>
+      <div className="company-inline-action">
+        <ExportWorkbookButton
+          filename="moat-roe-bancos.xlsx"
+          build={() => bankRoeReport(banks, periodYears, snapshot, riskFreeRate)}
+          label="Exportar comparação em Excel"
+        />
+      </div>
     </>
   );
 }

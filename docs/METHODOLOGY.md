@@ -26,6 +26,59 @@ O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de ris
 
 Os spreads históricos e o ranking composto dependem de uma série nominal de prazo constante com datas e direitos de uso verificados. A publicação mensal da SUSEP tem uma mudança de modelo para a curva prefixada em 2022. [Parâmetros SUSEP e ANBIMA de 2016 a 2021](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj-1) · [Metodologia e parâmetros atuais](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj)
 
+## Resultados dos últimos 12 meses e preço
+
+A amostra encerra os 12 meses em 30/09/2026. O cálculo soma o resultado de todo o exercício de 2025 ao acumulado de janeiro a setembro de 2026 e subtrai o acumulado equivalente de 2025. Os dois períodos de nove meses vêm da mesma versão do ITR consolidado de 2026. O cálculo usa contas conciliadas e preserva datas, versões e fontes. [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp) · [Catálogo ITR](https://dados.cvm.gov.br/dataset/cia_aberta-doc-itr)
+
+Para WEG e Lojas Renner, o NOPAT estimado usa o resultado antes do financeiro e dos tributos da DRE (`3.05`) e aplica alíquota padronizada de 34%. Para Itaú Unibanco, o resultado de 12 meses é o lucro líquido atribuível à controladora (`3.09.01`).
+
+O rendimento implícito de mercado usa NOPAT dividido pelo valor da firma (EV) nas não financeiras e lucro da controladora de 12 meses dividido pela capitalização nos bancos. A capitalização soma o valor de cada classe multiplicado pelas suas ações fora da tesouraria válidas na mesma data. O EV soma à capitalização a dívida líquida e os ajustes pertinentes. A WEG tinha 4.195.829.691 ações ordinárias fora da tesouraria em 30/09/2026. A contagem exata de Lojas Renner permanece indisponível porque o ITR registra a quantidade em milhares. [ITR da WEG](https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161774) · [ITR de Lojas Renner](https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=162059)
+
+Em 30/09/2026, a dívida líquida simplificada era de −R$ 937.479.000 na WEG e de R$ 2.074.041.000 em Lojas Renner. O cálculo soma financiamentos e arrendamentos IFRS 16 registrados separadamente e deduz caixa e equivalentes. As aplicações financeiras circulantes são apresentadas à parte. Aplicações não circulantes, derivativos e participações societárias ficam fora dos ajustes. O patrimônio contábil dos não controladores serve como aproximação para o EV. O balanço consolidado de Lojas Renner inclui a Realize, braço de serviços financeiros do grupo. [ITR da WEG](https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161774) · [ITR de Lojas Renner](https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=162059)
+
+O ponto retrospectivo de Itaú em 30/09/2026 usa os valores unitários de mercado do último dia da data-base e as quantidades da Nota 19 do demonstrativo IFRS. O cálculo soma 5.617.742.977 ações ordinárias a R$ 48,47 e 5.404.282.925 preferenciais a R$ 44,28, ambas líquidas de tesouraria, para chegar a R$ 511.593.650.014,19 de capitalização. O lucro de 12 meses atribuível à controladora de R$ 47.749.000.000 gera um rendimento implícito de 9,33%. As demonstrações foram divulgadas depois da data-base. Este ponto isolado serve à leitura retrospectiva e fica fora do rendimento corrente, da diferença para o CDI atual e das simulações históricas de investimento. [Nota 19 do Itaú no EDGAR](https://www.sec.gov/Archives/edgar/data/1132597/000113259726000279/condensedconsolidatedfin.htm) · [ITR do Itaú na CVM](https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161944)
+
+Os fechamentos importados localmente exibem a data do pregão, a coleta e a fonte. Uma observação anterior ao pregão de referência do lote aparece como defasada. O cálculo do rendimento atual e de sua diferença em pontos percentuais para o CDI requer entradas de mercado verificadas.
+
+## Valuation e premissas
+
+Os cenários usam valores e taxas nominais. O DCF calcula EBIT como receita vezes margem EBIT, aplica a alíquota informada e soma depreciação e amortização ao NOPAT. O CAPEX e o aumento do capital de giro consomem caixa. No DDM, dividendos projetados são o lucro atribuível aos acionistas vezes o payout de cada ano. Previsões de payout e adequação ao capital regulatório ficam a cargo das premissas do usuário.
+
+Os fluxos dos dez anos são descontados a partir do fim de cada ano. A perpetuidade usa o fluxo do último ano multiplicado por (1 + g) e dividido pela diferença entre a taxa de desconto e o crescimento terminal (g). O cálculo exige desconto maior que crescimento, crescimento acima de −100% e fluxo terminal não negativo. O valor do patrimônio no DCF deduz dívida líquida do valor da firma e soma os demais ajustes com o sinal informado. O DDM estima diretamente o patrimônio. A divisão pelo número total de ações produz um valor médio por ação quando existem classes com direitos distintos.
+
+O preço informado permite calcular potencial como valor estimado dividido pelo preço menos um. A margem de segurança é um menos o preço dividido pelo valor estimado e requer valor estimado positivo. Uma matriz varia desconto e crescimento em um ponto percentual de cada lado das premissas. Combinações que violam a condição da perpetuidade ficam indisponíveis.
+
+O desconto parte de WACC ou custo de capital próprio informados. O CDI anualizado, com fonte e data no módulo, pode ser aplicado como cenário alternativo e pode superestimar valor. As referências da CVM de dívida, ajustes e ações são opcionais e datadas. O editor começa com projeções em branco.
+
+## Carteiras e retrospectiva mensal
+
+A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. Limites setoriais e seleção por ranking aguardam dados próprios.
+
+O simulador retrospectivo aplica a seleção atual a séries mensais de retorno total em reais. O arquivo JSON fornecido pelo usuário é lido no navegador. O aplicativo verifica estrutura e cobertura. A identificação da classe, a origem dos níveis e os ajustes para proventos e eventos societários dependem da fonte declarada. Cada posição exige um nível positivo por mês e as datas de pregão precisam coincidir entre todas as posições. A janela precisa ser contínua. O período desde o início do ano usa dezembro do ano anterior como base. As demais opções cobrem dois a sete anos ou um intervalo personalizado de 1 a 600 meses.
+
+### Formato do arquivo local
+
+| Campo                     | Conteúdo                                                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schemaVersion` e `basis` | Literais `"1.0.0"` e `"total-return-brl"`.                                                                                                                                                        |
+| `source`                  | `name`, `retrievedAt` em ISO 8601 com fuso e `methodology` com a descrição da série. O campo `url` HTTPS é opcional.                                                                              |
+| `assets`                  | Cada série contém `company` com o nome oficial exato, `instrument` com o código do ativo e `observations` com objetos `{ date, level }`. A data usa `AAAA-MM-DD` e o nível é numérico e positivo. |
+| `benchmarks`              | Lista opcional de séries com `symbol` igual a `IBOV`, `IDIV` ou `SMAL11` e `observations` no mesmo formato.                                                                                       |
+
+O arquivo tem limite de 2 MiB. A série precisa incluir a observação inicial e todas as observações mensais seguintes da janela. O nível de cada mês representa a evolução de uma série com reinvestimento incorporado. O simulador aplica a razão entre dois níveis consecutivos para atualizar a posição.
+
+### Fluxos, custos e métricas
+
+O capital inicial e cada aporte bruto são alocados segundo os pesos-alvo após o custo de compra informado. Esse custo é a taxa por operação aplicada ao valor bruto que entra. A cada mês, o simulador atualiza as posições pela variação de seus níveis e depois registra o aporte. Com rebalanceamento mensal, calcula a soma das diferenças absolutas entre o valor de cada posição e seu alvo após o aporte. Aplica a taxa de custo a esse giro estimado e redistribui o saldo líquido pelos pesos-alvo. O período final recebe o aporte e seu custo de compra, sem rebalanceamento adicional.
+
+O tributo hipotético é a alíquota informada sobre a parcela positiva do ganho ao final, após os custos de transação. O ganho antes de tributo é o patrimônio final menos o capital inicial e os aportes. O patrimônio e o lucro líquidos descontam esse tributo ao final. As posições remanescentes são avaliadas pelo último nível disponível, sem custo de liquidação.
+
+O retorno ponderado pelo tempo encadeia as variações mensais após custos de transação, retirando o aporte bruto da variação do mês e incorporando o custo de compra inicial. A série mensal e as métricas de retorno e risco são calculadas antes do tributo final. O retorno por ano agrupa os fatores mensais pelo ano de encerramento do período, com o custo inicial no primeiro grupo e indicação de meses cobertos. O CAGR anualiza o retorno pelo número de dias corridos dividido por 365,2425. A volatilidade usa o desvio-padrão amostral dos retornos mensais multiplicado pela raiz de 12 e exige ao menos dois retornos mensais. O drawdown mede a queda em relação ao pico anterior da série mensal de retorno acumulado, com pico inicial antes do custo da primeira compra.
+
+O retorno total e o CAGR de IBOV, IDIV e SMAL11 usam os níveis declarados no arquivo para as mesmas datas da carteira. Custos e tributo parametrizados se aplicam à carteira simulada. O Sharpe aguarda uma série histórica de taxa livre de risco alinhada a cada mês.
+
+A retrospectiva está sujeita ao viés da seleção atual. A modalidade historicamente investível aguarda dados que permitam reconstruir o universo, as empresas deslistadas, o ranking e as informações disponíveis em cada decisão. [Fontes e premissas de cobertura](DATA_SOURCES.md#séries-para-a-retrospectiva)
+
 ## Métricas e modelos previstos
 
 Os próximos marcos da [especificação](SPEC.md#13-plano-por-marcos-e-definição-de-pronto) detalham as métricas e os modelos abaixo.

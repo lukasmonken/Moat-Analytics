@@ -1,0 +1,114 @@
+import {
+  backtestBenchmarks,
+  type BacktestHistory,
+  type TotalReturnObservation,
+} from '@moat/data-contracts';
+import { simulatePortfolio } from '../../shared/analytics/backtest';
+import { totalWeightUnits, type SavedPortfolio } from '../portfolio/portfolio';
+
+export const horizons = ['ytd', '2', '3', '4', '5', '6', '7', 'custom'] as const;
+export type Horizon = (typeof horizons)[number];
+
+function month(date: string) {
+  return date.slice(0, 7);
+}
+
+function monthIndex(value: string) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(value)) return NaN;
+  return Number(value.slice(0, 4)) * 12 + Number(value.slice(5, 7)) - 1;
+}
+
+function monthAt(index: number) {
+  return `${String(Math.floor(index / 12)).padStart(4, '0')}-${String((index % 12) + 1).padStart(2, '0')}`;
+}
+
+function byMonth(observations: TotalReturnObservation[]) {
+  return new Map(observations.map((entry) => [month(entry.date), entry]));
+}
+
+export function prepareBacktest(
+  portfolio: SavedPortfolio,
+  history: BacktestHistory,
+  horizon: Horizon,
+  startMonth: string,
+  endMonth: string,
+) {
+  const assets = new Map(history.assets.map((asset) => [asset.company, asset]));
+  const missing = portfolio.positions.filter(({ name }) => !assets.has(name));
+  if (missing.length) {
+    throw new Error(`Faltam séries para ${missing.map(({ name }) => name).join(', ')}.`);
+  }
+  const selected = portfolio.positions.flatMap(({ name }) => {
+    const asset = assets.get(name);
+    return asset ? [asset] : [];
+  });
+  const indexed = selected.map(({ observations }) => byMonth(observations));
+  const latestMonths = indexed.flatMap((entries) => [...entries.keys()]).sort();
+  const latest = latestMonths.at(-1) ?? '';
+  const end = monthIndex(horizon === 'custom' ? endMonth : latest);
+  const start =
+    horizon === 'custom'
+      ? monthIndex(startMonth)
+      : horizon === 'ytd'
+        ? Math.floor(end / 12) * 12 - 1
+        : end - Number(horizon) * 12;
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start >= end || end - start > 600) {
+    throw new Error('Informe uma janela de 1 a 600 meses com o mês inicial anterior ao final.');
+  }
+
+  const months = Array.from({ length: end - start + 1 }, (_, index) => {
+    const wanted = monthAt(start + index);
+    const points = indexed.map((entries, assetIndex) => {
+      const observation = entries.get(wanted);
+      if (!observation) {
+        throw new Error(
+          `Falta observação em ${wanted} para ${selected[assetIndex]?.company ?? 'uma companhia'}.`,
+        );
+      }
+      return observation;
+    });
+    const date = points[0]?.date;
+    if (!date || points.some((entry) => entry.date !== date)) {
+      throw new Error(`As companhias têm pregões diferentes em ${wanted}.`);
+    }
+    return { date, levels: points.map(({ level }) => level) };
+  });
+  const { capital, contribution, rebalance, costRate, gainTaxRate } = portfolio;
+  const result = simulatePortfolio(months, {
+    weights: portfolio.positions.map(({ weightUnits }) => weightUnits / totalWeightUnits),
+    capital,
+    contribution,
+    rebalance,
+    costRate,
+    gainTaxRate,
+  });
+  if (!result) throw new Error('O cálculo ficou inviável com os dados e os custos informados.');
+
+  const comparisons = backtestBenchmarks.map((symbol) => {
+    const benchmark = history.benchmarks?.find((entry) => entry.symbol === symbol);
+    if (!benchmark) return { symbol, totalReturn: null, cagr: null };
+    const levels = byMonth(benchmark.observations);
+    const observations = months.flatMap(({ date }) => {
+      const observation = levels.get(month(date));
+      return observation?.date === date ? [{ date, levels: [observation.level] }] : [];
+    });
+    const comparison =
+      observations.length === months.length
+        ? simulatePortfolio(observations, {
+            weights: [1],
+            capital: 1,
+            contribution: 0,
+            rebalance: 'hold',
+            costRate: 0,
+            gainTaxRate: 0,
+          })
+        : null;
+    return { symbol, totalReturn: comparison?.totalReturn ?? null, cagr: comparison?.cagr ?? null };
+  });
+
+  return {
+    result,
+    comparisons,
+    instruments: selected.map(({ company, instrument }) => ({ company, instrument })),
+  };
+}

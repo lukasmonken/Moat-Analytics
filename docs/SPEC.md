@@ -29,7 +29,7 @@ A metodologia é **inspirada** em temas associados a Buffett/Munger, não uma f�
 - Incluir **somente companhias brasileiras listadas na B3** que pertençam à carteira vigente de **ao menos um** destes índices: **Ibovespa (IBOV)**, **Índice Small Cap (SMLL)** ou **Índice Dividendos (IDIV)**.
 - Universo = **união** dos componentes dos três índices; nunca exigir participação simultânea. Se uma empresa estiver em vários, mostrar todas as afiliações.
 - Não acrescentar filtro externo de liquidez: a presença em um índice é o critério de entrada acordado. Podem existir filtros manuais na interface, mas desligados por padrão.
-- Excluir FIIs, ETFs, BDRs, instrumentos estrangeiros e veículos que não sejam companhias brasileiras elegíveis. **SMALL11 não é componente do universo:** é ETF para comparação no backtest.
+- Excluir FIIs, ETFs, BDRs, instrumentos estrangeiros e veículos que não sejam companhias brasileiras elegíveis. **SMAL11 não é componente do universo:** é ETF para comparação no backtest.
 - Cada **companhia** ocupa **uma linha**: deduplicar por identificador estável (p. ex. código CVM/CNPJ). ON, PN e UNIT da mesma companhia não viram empresas distintas.
 - Selecionar como **ticker representativo de preço a classe com maior liquidez**, com definição documentada (proposta: média do volume financeiro negociado nos últimos 60 pregões). UNIT só prevalece se for a mais líquida. Manter mapeamento completo e exceções auditáveis.
 - Versão histórica da carteira dos índices e do ticker representativo deve ser arquivada para backtests; usar a composição atual no passado introduz viés de sobrevivência/seleção. Se o histórico não existir, a modalidade historicamente investível deve ficar indisponível ou explicitamente limitada.
@@ -126,7 +126,7 @@ Carteira de **10 ativos por padrão**, opção 15, 20 ou N, seleção manual ou 
 
 Horizontes YTD e 2, 3, 4, 5, 6, 7 anos e customizado quando dados disponíveis. Patrimônio/capital inicial e final, aportes, lucro, retorno total, CAGR, retornos anuais, dividendos/JCP (com e sem reinvestimento), fluxo de caixa, volatilidade anualizada, drawdown máximo e série de drawdown, Sharpe com benchmark explícito, contribuição por ativo, concentração e correlação.
 
-Benchmarks: Ibovespa, IDIV e **SMALL11 (ETF, não índice)**; metodologia equivalente de total return, ajustando adequadamente dividendos, splits, custos, datas e impostos e informando diferenças.
+Benchmarks: Ibovespa, IDIV e **SMAL11 (ETF, não índice)**; metodologia equivalente de total return, ajustando adequadamente dividendos, splits, custos, datas e impostos e informando diferenças.
 
 ### Dois tipos de backtest, sem confundir
 

@@ -6,10 +6,13 @@ import {
   IndexUniverseResults,
   IndexUniverseSource,
   orderCompanies,
+  sortDescription,
   type Sort,
 } from './IndexUniverseResults';
 import { defaultPageSize, normalizeSearch, pageSizes } from './presentation';
 import './screener.css';
+import { ScreenerExport } from './ScreenerExport';
+import { compositionReport } from './screenerReport';
 import { useIndexUniverse } from './useIndexUniverse';
 
 export function ScreenerPage() {
@@ -126,6 +129,22 @@ export function ScreenerPage() {
         <Button disabled={!hasFilters} onClick={clearFilters} variant="quiet">
           Limpar filtros
         </Button>
+        {snapshot && (
+          <ScreenerExport
+            filename="moat-composicao-anual.xlsx"
+            filteredCount={sorted.length}
+            build={(scope) =>
+              compositionReport(
+                snapshot,
+                scope === 'filtered' ? sorted : orderCompanies(snapshot.companies, sort),
+                scope,
+                search,
+                index,
+                sortDescription(sort),
+              )
+            }
+          />
+        )}
       </Panel>
 
       {state.status === 'error' && (

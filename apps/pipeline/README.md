@@ -68,3 +68,27 @@ python3 apps/pipeline/run_bank_roe.py
 ```
 
 A rotina usa os mesmos ZIPs e opções. O lote `data/public/cvm-bank-roe.json` inclui os bancos com pelo menos cinco exercícios consecutivos completos e conciliados na janela pedida, os motivos de exclusão e o percentil da média de ROE quando há cinco bancos. [Metodologia bancária](../../docs/METHODOLOGY.md#comparação-de-roe-entre-bancos)
+
+## Gerar os fundamentos de preço
+
+Coloque os arquivos oficiais `dfp_cia_aberta_2025.zip` e `itr_cia_aberta_2026.zip` em `data/raw/cvm`, com o horário de gravação preservado, e execute na raiz do clone.
+
+```bash
+python3 apps/pipeline/run_price_fundamentals.py --reference-date 2026-09-30
+```
+
+A rotina usa o DFP do ano anterior e os acumulados comparáveis da mesma versão do ITR. O parâmetro `--reference-date` aceita o encerramento de um dos três primeiros trimestres do ano. Use `--raw-dir` para indicar outro diretório com os ZIPs e `--output` para alterar a saída padrão `data/public/cvm-price-fundamentals.json`. [Metodologia dos resultados de 12 meses](../../docs/METHODOLOGY.md#resultados-dos-últimos-12-meses-e-preço)
+
+## Importar fechamentos locais
+
+Use um CSV UTF-8 de uma fonte que permita o uso pretendido e com o cabeçalho `ticker,tradeDate,closeBrl`. A data usa `AAAA-MM-DD` e o preço usa ponto decimal, em reais por ação, conforme negociado no fechamento. Informe a data esperada do último pregão conforme o calendário da bolsa e preserve o horário de gravação do arquivo, pois ele registra a coleta.
+
+```bash
+python3 apps/pipeline/run_market_closes.py \
+  --input "$ARQUIVO_FECHAMENTOS" \
+  --source-name "$NOME_PROVEDOR" \
+  --source-url "$URL_PROVEDOR" \
+  --expected-trade-date "$DATA_ULTIMO_PREGAO"
+```
+
+A saída padrão `data/processed/market-closes/market-closes.json` é ignorada pelo Git e lida via loopback em `npm run dev`. O importador preserva o último fechamento válido de cada ticker em lotes parciais. Uma linha inválida ou uma data esperada anterior à do lote existente impede a atualização. [Fontes de fechamentos](../../docs/DATA_SOURCES.md#fechamentos-de-mercado)

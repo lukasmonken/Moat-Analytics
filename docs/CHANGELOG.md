@@ -1,5 +1,35 @@
 # Changelog
 
+## M6 — Exportação Excel
+
+- Exportação do screener filtrado ou completo, das contas e indicadores de Empresas, das premissas e resultados de Valuation, da carteira e da retrospectiva calculada.
+- As planilhas preservam números e datas, cabeçalhos congelados, autofiltros e a aba Metodologia e fontes.
+
+## M5 — Carteiras e retrospectiva com dados locais
+
+- Seleção manual pelo nome oficial da companhia, pesos iguais ou personalizados e limite opcional por posição. A carteira é salva no navegador.
+- Retrospectiva mensal da carteira atual a partir de séries de retorno total em reais importadas em JSON, com aportes, custos, rebalanceamento e imposto final parametrizados.
+- Métricas de retorno e risco e comparação opcional com Ibovespa, IDIV e SMAL11 no mesmo período. A cobertura depende do arquivo carregado no navegador.
+
+## M4 — Valuation e premissas
+
+- DCF de fluxo de caixa livre para a firma e DDM para bancos, com projeções editáveis de dez anos e perpetuidade.
+- Valor intrínseco por ação, sensibilidade à taxa de desconto e crescimento, potencial e margem de segurança sobre preço informado.
+- Três cenários independentes por modelo, com opção de salvar no navegador e transferir as premissas em JSON.
+- Referências contábeis datadas da CVM e opção explícita de usar o CDI atual como taxa de desconto.
+
+## M3 — Dívida líquida, ações por classe e preço histórico
+
+- Dívida líquida simplificada de WEG e Lojas Renner em 30/09/2026, com empréstimos, arrendamentos, caixa, aplicações financeiras e participação de não controladores discriminados.
+- Posição exata de ações fora da tesouraria na data-base para WEG e Itaú. O ITR de Lojas Renner informa a quantidade em milhares e a contagem exata segue pendente.
+- Capitalização e rendimento implícito retrospectivos do Itaú em 30/09/2026, com valores por classe atribuídos ao demonstrativo do emissor arquivado no EDGAR.
+
+## M3 — Fundamentos de preço e fechamentos locais
+
+- Resultado dos 12 meses encerrados em 30/09/2026 para WEG, Lojas Renner e Itaú Unibanco, com contas, períodos e formulários de origem.
+- Importação local de fechamentos por ticker, com data do pregão, fonte, coleta e preservação do último valor válido.
+- Motor decimal para capitalização por classe, valor da firma, rendimentos implícitos e diferença para o CDI. A exibição dessas métricas depende da validação dos dados de mercado e dos denominadores.
+
 ## M2 — CDI atual
 
 - CDI anualizado do Banco Central como taxa livre de risco provisória em Empresas e Valuation e Premissas, com data-base e fonte.

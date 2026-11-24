@@ -1,0 +1,153 @@
+.valuation-inputs {
+  display: grid;
+  min-width: 0;
+  gap: 0.875rem;
+}
+
+.valuation-premises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  align-items: end;
+  gap: 0.875rem;
+}
+
+.valuation-projection-head {
+  margin-top: 0.375rem;
+}
+
+.valuation-projection-head h3 {
+  margin: 0 0 0.25rem;
+  color: var(--text-strong);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.valuation-projections-scroll {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.valuation-projections-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.valuation-projections th,
+.valuation-projections td {
+  padding: 0.5rem 0.625rem;
+}
+
+.valuation-projections th:first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  width: 1%;
+  min-width: 4.25rem;
+  border-inline-end: 1px solid var(--border);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.valuation-projections thead th:first-child {
+  background: var(--surface-subtle);
+}
+
+.valuation-projections td {
+  min-width: 7.25rem;
+}
+
+.valuation-projections th small {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.valuation-projections tr:last-child > :is(th, td) {
+  border-bottom: 0;
+}
+
+.valuation-projections .ui-input {
+  scroll-margin-inline-start: 5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.valuation-projections .ui-field label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.valuation-panel {
+  display: grid;
+  min-width: 0;
+  gap: 0.875rem;
+}
+
+.valuation-panel h2,
+.valuation-panel h3,
+.valuation-panel p {
+  margin: 0;
+}
+
+.valuation-panel h2 {
+  color: var(--text-strong);
+  font-size: 1.15rem;
+}
+
+.valuation-panel h3 {
+  color: var(--text-strong);
+  font-size: 1rem;
+}
+
+.valuation-panel p {
+  color: var(--muted);
+}
+
+.valuation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.valuation-measures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.valuation-measures div {
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.valuation-measures dt {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.valuation-measures dd {
+  margin: 0.25rem 0 0;
+  color: var(--text-strong);
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.valuation-table-scroll {
+  min-width: 0;
+  overflow: auto;
+}
+
+.valuation-table-scroll :is(th, td) {
+  padding: 0.625rem;
+  white-space: nowrap;
+}
