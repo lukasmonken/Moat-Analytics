@@ -1,12 +1,14 @@
 import type { CompanyDirectorySnapshot } from '@moat/data-contracts';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { loadCompanyDirectory } from '../../shared/data-client/companyDirectory';
 import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, ButtonLink, Input, PageHeader, Panel, Select, Table } from '../../shared/ui';
 import { compareNames, formatDate, normalizeSearch } from '../screener/presentation';
 import {
   equalWeightUnits,
+  parsePortfolio,
   portfolioTargetSize,
+  serializePortfolio,
   totalWeightUnits,
   useSavedPortfolio,
   validatePortfolio,
@@ -194,11 +196,16 @@ const settingFields = [
   ['gainTax', 'Tributo sobre ganho ao final (%), hipótese'],
   ['maxWeight', 'Limite por companhia (%, opcional)'],
 ] as const;
+const maxBackupSize = 128 * 1024;
 
 export function PortfoliosPage() {
   const { draft, setDraft, save } = useSavedPortfolio();
   const [attemptedSave, setAttemptedSave] = useState(false);
   const [status, setStatus] = useState('');
+  const [fileError, setFileError] = useState('');
+  const [reading, setReading] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const fileRevision = useRef(0);
   const [directory, setDirectory] = useState<DirectoryState>({ status: 'loading' });
   const [directoryAttempt, setDirectoryAttempt] = useState(0);
   const { portfolio, errors, weightUnits } = validatePortfolio(draft);
@@ -219,8 +226,57 @@ export function PortfoliosPage() {
   }, [directoryAttempt]);
 
   function changeDraft(next: PortfolioDraft) {
+    fileRevision.current += 1;
+    setReading(false);
+    setFileError('');
     setDraft(next);
     setStatus('');
+  }
+
+  async function importFile(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+    event.currentTarget.value = '';
+    if (!file || directory.status !== 'ready') return;
+    const revision = ++fileRevision.current;
+    setReading(true);
+    setStatus('');
+    setFileError('');
+    try {
+      if (file.size > maxBackupSize) throw new Error('O arquivo de carteira deve ter até 128 KiB.');
+      const imported = parsePortfolio(await file.text());
+      if (revision !== fileRevision.current) return;
+      const known = new Set(directory.snapshot.companies);
+      const unknown = imported.positions.filter(({ name }) => !known.has(name));
+      if (unknown.length > 0) {
+        throw new Error(
+          `Companhias fora do diretório atual da CVM: ${unknown.map(({ name }) => name).join(', ')}.`,
+        );
+      }
+      setDraft(imported);
+      setAttemptedSave(false);
+      setStatus('Carteira importada. Confira os parâmetros e salve para usar no simulador.');
+    } catch (error) {
+      if (revision === fileRevision.current) {
+        setFileError(error instanceof Error ? error.message : 'Falha ao importar a carteira.');
+      }
+    } finally {
+      if (revision === fileRevision.current) setReading(false);
+    }
+  }
+
+  function exportFile() {
+    setFileError('');
+    try {
+      const contents = serializePortfolio(draft);
+      const url = URL.createObjectURL(new Blob([contents], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'moat-carteira.json';
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch {
+      setFileError('Falha ao exportar a carteira em JSON.');
+    }
   }
 
   function savePortfolio() {
@@ -360,7 +416,7 @@ export function PortfoliosPage() {
           </ul>
         )}
         <div className="portfolio-actions">
-          <Button variant="primary" onClick={savePortfolio}>
+          <Button variant="primary" disabled={reading} onClick={savePortfolio}>
             Salvar carteira
           </Button>
           {portfolio && (
@@ -376,8 +432,32 @@ export function PortfoliosPage() {
               }
             />
           )}
+          <Button variant="quiet" disabled={!portfolio || reading} onClick={exportFile}>
+            Exportar carteira em JSON
+          </Button>
+          <Button
+            variant="quiet"
+            disabled={directory.status !== 'ready'}
+            onClick={() => fileInput.current?.click()}
+          >
+            Importar carteira em JSON
+          </Button>
+          <input
+            ref={fileInput}
+            aria-label="Arquivo de carteira (JSON)"
+            type="file"
+            accept=".json,application/json"
+            hidden
+            onChange={(event) => void importFile(event)}
+          />
           <ButtonLink to="/simulador">Abrir simulador</ButtonLink>
         </div>
+        {reading && <p role="status">Lendo arquivo de carteira…</p>}
+        {fileError && (
+          <p className="portfolio-file-error" role="alert">
+            {fileError}
+          </p>
+        )}
         {status && <p role="status">{status}</p>}
       </Panel>
     </div>
