@@ -1,6 +1,6 @@
 import type { BacktestHistory } from '@moat/data-contracts';
-import type { WorkbookReport } from '../../shared/export/report';
-import { totalWeightUnits, type SavedPortfolio } from '../portfolio/portfolio';
+import type { ReportSheet, WorkbookReport } from '../../shared/export/report';
+import type { SavedPortfolio } from '../portfolio/portfolio';
 import { portfolioParameterSheet } from '../portfolio/portfolioReport';
 import type { prepareBacktest } from './history';
 
@@ -20,6 +20,10 @@ export function backtestMeasures(result: ReturnType<typeof prepareBacktest>['res
       ['Retorno anualizado (CAGR)', result.cagr],
       ['Volatilidade anualizada', result.annualizedVolatility],
       ['Queda máxima desde o pico', result.maxDrawdown],
+      [
+        'Maior peso no fim do período',
+        Math.max(...result.positions.map(({ finalWeight }) => finalWeight)),
+      ],
       ['Índice de Sharpe', null],
     ],
   } as const;
@@ -30,11 +34,27 @@ export function buildBacktestReport(
   portfolio: SavedPortfolio,
   source: BacktestHistory['source'],
 ): WorkbookReport {
-  const { result, comparisons, instruments } = evaluation;
+  const { result, comparisons, positions, correlations } = evaluation;
   const stats = backtestMeasures(result);
   const first = result.points[0];
   const last = result.points.at(-1);
-  const weights = new Map(portfolio.positions.map(({ name, weightUnits }) => [name, weightUnits]));
+  const correlationSheet: ReportSheet = {
+    name: 'Correlações',
+    columns: [
+      { label: 'Ativo 1', width: 19 },
+      { label: 'Ativo 2', width: 19 },
+      { label: 'Correlação de Pearson', format: 'number', width: 25 },
+    ],
+    rows: positions.flatMap(({ instrument }, index) =>
+      positions
+        .slice(index + 1)
+        .map(({ instrument: pair }, offset) => [
+          instrument,
+          pair,
+          correlations[index]?.[index + 1 + offset] ?? null,
+        ]),
+    ),
+  };
   return {
     sheets: [
       {
@@ -96,12 +116,24 @@ export function buildBacktestReport(
           { label: 'Companhia', width: 52 },
           { label: 'Instrumento', width: 18 },
           { label: 'Peso-alvo', format: 'percent', width: 16 },
+          { label: 'Peso final', format: 'percent', width: 16 },
+          { label: 'Ganho de mercado (BRL)', format: 'currency', width: 25 },
+          { label: 'Custos (BRL)', format: 'currency', width: 17 },
+          { label: 'Contribuição antes do tributo (BRL)', format: 'currency', width: 32 },
         ],
-        rows: instruments.map(({ company, instrument }) => {
-          const units = weights.get(company);
-          return [company, instrument, units === undefined ? null : units / totalWeightUnits];
-        }),
+        rows: positions.map(
+          ({ company, instrument, targetWeight, finalWeight, marketGain, costs, contribution }) => [
+            company,
+            instrument,
+            targetWeight,
+            finalWeight,
+            marketGain,
+            costs,
+            contribution,
+          ],
+        ),
       },
+      ...(correlationSheet.rows.length ? [correlationSheet] : []),
       portfolioParameterSheet(portfolio),
     ],
     notes: [
@@ -117,6 +149,15 @@ export function buildBacktestReport(
       [
         'Custos e tributo',
         'Os custos afetam retorno e risco. O tributo é deduzido do ganho positivo no fim da janela.',
+      ],
+      [
+        'Contribuição por ativo',
+        'Ganho de mercado menos os custos atribuídos ao ativo. O tributo é calculado para a carteira inteira.',
+      ],
+      ['Peso final', 'Parcela do patrimônio da carteira antes do tributo final.'],
+      [
+        'Correlação mensal',
+        'Pearson usa pelo menos três retornos mensais alinhados e variação nos retornos dos dois ativos. Células vazias indicam indisponibilidade.',
       ],
       [
         'Referências de mercado',

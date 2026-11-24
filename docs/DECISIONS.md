@@ -50,6 +50,7 @@
 - **Retrospectiva mensal.** O simulador usa a seleção de hoje e um arquivo privado com níveis mensais de retorno total em BRL. A fonte, a coleta e a metodologia da série são declaradas no arquivo. O navegador confere estrutura, cobertura, datas e associação pelos nomes oficiais, enquanto a validação da origem dos dados cabe a quem fornece o arquivo.
 - **Parâmetros de simulação.** Capital inicial, aportes, custos e imposto final são entradas do usuário. Os aportes entram ao fim de cada período, seguindo os pesos-alvo. O rebalanceamento pode ser mensal ou desativado. O imposto final incide, pela alíquota informada, apenas sobre o ganho positivo após custos e é apresentado separadamente.
 - **Disponibilidade.** Comparações exigem observações alinhadas para todo o intervalo. A modalidade historicamente investível requer universos, ativos deslistados, ranking e dados válidos na data das decisões. O Sharpe aguarda uma série histórica de taxa livre de risco alinhada. [Metodologia](METHODOLOGY.md#carteiras-e-retrospectiva-mensal)
+- **Atribuição e correlação por ativo.** A contribuição soma o ganho de mercado em reais e deduz os custos atribuídos à posição na compra inicial, nos aportes e no rebalanceamento. A soma das contribuições concilia com o ganho pré-tributo. O peso final usa o patrimônio antes do tributo. A correlação de Pearson usa retornos mensais dos ativos na janela calculada, com mínimo de três retornos e variância positiva em cada série. [Metodologia](METHODOLOGY.md#fluxos-custos-e-métricas)
 
 ## M6
 

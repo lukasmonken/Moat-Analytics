@@ -304,6 +304,8 @@ test('salva uma carteira e exige meses completos para calcular a retrospectiva',
   ).toHaveCount(4);
   await expect(page.getByRole('row', { name: /^IBOV/ })).toContainText('20,00%');
   await expect(page.getByRole('row', { name: /^SMAL11/ })).toContainText('Indisponível');
+  await page.getByText('Correlação dos retornos mensais', { exact: true }).click();
+  await expect(page.getByText('Indisponível para as séries nesta janela.')).toBeVisible();
   await result.getByText('Retorno por ano', { exact: true }).click();
   await expect(result.getByRole('row', { name: /^2024/ })).toContainText('2 de 12');
   await page.getByRole('button', { name: 'Ativar tema escuro' }).click();
