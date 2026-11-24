@@ -3,7 +3,7 @@ import {
   type BacktestHistory,
   type TotalReturnObservation,
 } from '@moat/data-contracts';
-import { simulatePortfolio } from '../../shared/analytics/backtest';
+import { simulatePortfolio, type MonthlyLevels } from '../../shared/analytics/backtest';
 import { totalWeightUnits, type SavedPortfolio } from '../portfolio/portfolio';
 
 export const horizons = ['ytd', '2', '3', '4', '5', '6', '7', 'custom'] as const;
@@ -24,6 +24,39 @@ function monthAt(index: number) {
 
 function byMonth(observations: TotalReturnObservation[]) {
   return new Map(observations.map((entry) => [month(entry.date), entry]));
+}
+
+function normalizedReturns(months: readonly MonthlyLevels[], position: number) {
+  const returns = months.slice(1).map(({ levels }, index) => {
+    const previous = months[index]?.levels[position] ?? NaN;
+    return (levels[position] ?? NaN) / previous - 1;
+  });
+  const scale = Math.max(...returns.map(Math.abs));
+  if (!Number.isFinite(scale) || scale === 0) return null;
+
+  // A escala preserva a correlação e evita quadrados de retornos extremos.
+  const scaled = returns.map((value) => value / scale);
+  const mean = scaled.reduce((sum, value) => sum + value, 0) / scaled.length;
+  const centered = scaled.map((value) => value - mean);
+  const magnitude = Math.hypot(...centered);
+  return magnitude > 0 ? centered.map((value) => value / magnitude) : null;
+}
+
+function monthlyReturnCorrelations(months: readonly MonthlyLevels[], positions: number) {
+  const series = Array.from({ length: positions }, (_, position) =>
+    months.length >= 4 ? normalizedReturns(months, position) : null,
+  );
+  return series.map((left, row) =>
+    series.map((right, column) => {
+      if (!left || !right) return null;
+      if (row === column) return 1;
+      const coefficient = left.reduce(
+        (total, value, index) => total + value * (right[index] ?? NaN),
+        0,
+      );
+      return Number.isFinite(coefficient) ? Math.max(-1, Math.min(1, coefficient)) : null;
+    }),
+  );
 }
 
 export function prepareBacktest(
@@ -74,8 +107,9 @@ export function prepareBacktest(
     return { date, levels: points.map(({ level }) => level) };
   });
   const { capital, contribution, rebalance, costRate, gainTaxRate } = portfolio;
+  const weights = portfolio.positions.map(({ weightUnits }) => weightUnits / totalWeightUnits);
   const result = simulatePortfolio(months, {
-    weights: portfolio.positions.map(({ weightUnits }) => weightUnits / totalWeightUnits),
+    weights,
     capital,
     contribution,
     rebalance,
@@ -83,6 +117,16 @@ export function prepareBacktest(
     gainTaxRate,
   });
   if (!result) throw new Error('O cálculo ficou inviável com os dados e os custos informados.');
+
+  const positions = selected.map(({ company, instrument }, index) => {
+    const targetWeight = weights[index];
+    const attribution = result.positions[index];
+    if (targetWeight === undefined || !attribution) {
+      throw new Error('Não foi possível conciliar as posições da retrospectiva.');
+    }
+    const { marketGain, costs, contribution, finalWeight } = attribution;
+    return { company, instrument, targetWeight, marketGain, costs, contribution, finalWeight };
+  });
 
   const comparisons = backtestBenchmarks.map((symbol) => {
     const benchmark = history.benchmarks?.find((entry) => entry.symbol === symbol);
@@ -109,6 +153,7 @@ export function prepareBacktest(
   return {
     result,
     comparisons,
-    instruments: selected.map(({ company, instrument }) => ({ company, instrument })),
+    positions,
+    correlations: monthlyReturnCorrelations(months, positions.length),
   };
 }

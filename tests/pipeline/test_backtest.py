@@ -59,6 +59,40 @@ class BacktestTests(unittest.TestCase):
         self.assertEqual(result.profit_brl, D("-13.98"))
         self.assertEqual(result.tax_brl, D(0))
         self.assertEqual(result.final_value_brl, result.terminal_value_brl)
+        self.assertEqual(
+            [position.final_weight for position in result.positions],
+            [D("647.361") / D("1186.02"), D("538.659") / D("1186.02")],
+        )
+
+    def test_position_attribution_reconciles_before_tax_and_allocates_actual_turnover(self):
+        history = (
+            observation("2024-01-31", A=100, B=100, C=100),
+            observation("2024-02-29", A=120, B=80, C=100),
+            observation("2024-03-28", A=120, B=80, C=100),
+        )
+        result = self.simulate(
+            history,
+            weights={"A": D(".5"), "B": D(".25"), "C": D(".25")},
+            rebalance="monthly",
+            transaction_cost_rate=D(".01"),
+            terminal_tax_rate=D(".20"),
+        )
+        self.assertIsNotNone(result)
+        self.assertEqual([position.asset for position in result.positions], ["A", "B", "C"])
+        self.assertEqual(
+            [position.market_gain_brl for position in result.positions],
+            [D(99), D("-49.5"), D(0)],
+        )
+        self.assertEqual(
+            [position.costs_brl for position in result.positions],
+            [D("6.7425"), D("3.61875"), D("3.12375")],
+        )
+        self.assertEqual(sum(position.costs_brl for position in result.positions), result.costs_brl)
+        self.assertEqual(
+            sum(position.contribution_brl for position in result.positions),
+            result.profit_brl + result.tax_brl,
+        )
+        self.assertGreater(result.tax_brl, D(0))
 
     def test_terminal_tax_reduces_net_gain_and_not_unitized_metrics(self):
         gross = self.simulate()

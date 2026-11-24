@@ -62,6 +62,11 @@ export function simulatePortfolio(months: readonly MonthlyLevels[], params: Back
   let costs = capital * costRate;
   let value = capital - costs;
   let holdings = allocation.map((weight) => weight * value);
+  const attribution = allocation.map((weight) => ({
+    weight,
+    marketGain: 0,
+    costs: costs * weight,
+  }));
   let returnIndex = value / capital;
   let peak = 1;
   let maxDrawdown = 1 - returnIndex;
@@ -79,21 +84,26 @@ export function simulatePortfolio(months: readonly MonthlyLevels[], params: Back
   const returns: number[] = [];
   let prior = first;
   const contributionCost = contribution * costRate;
+  const netContribution = contribution - contributionCost;
 
   for (const month of months.slice(1)) {
-    const current = holdings.map(
-      (holding, index) => holding * ((month.levels[index] ?? NaN) / (prior.levels[index] ?? NaN)),
-    );
-    holdings = current.map(
-      (holding, index) => holding + (contribution - contributionCost) * (allocation[index] ?? NaN),
-    );
+    holdings = attribution.map((position, index) => {
+      const opening = holdings[index] ?? NaN;
+      const afterReturn = opening * ((month.levels[index] ?? NaN) / (prior.levels[index] ?? NaN));
+      position.marketGain += afterReturn - opening;
+      position.costs += contributionCost * position.weight;
+      return afterReturn + netContribution * position.weight;
+    });
     contributions += contribution;
     costs += contributionCost;
     let closing = sum(holdings);
     if (rebalance === 'monthly' && month !== last) {
-      const target = allocation.map((weight) => weight * closing);
       const turnover = sum(
-        holdings.map((holding, index) => Math.abs(holding - (target[index] ?? NaN))),
+        attribution.map((position, index) => {
+          const traded = Math.abs((holdings[index] ?? NaN) - position.weight * closing);
+          position.costs += traded * costRate;
+          return traded;
+        }),
       );
       const rebalanceCost = turnover * costRate;
       costs += rebalanceCost;
@@ -135,11 +145,18 @@ export function simulatePortfolio(months: readonly MonthlyLevels[], params: Back
     returns.length < 2
       ? null
       : Math.sqrt((12 * sum(returns.map((entry) => (entry - mean) ** 2))) / (returns.length - 1));
+  const positions = attribution.map(({ marketGain, costs }, index) => ({
+    marketGain,
+    costs,
+    contribution: marketGain - costs,
+    finalWeight: (holdings[index] ?? NaN) / value,
+  }));
   if (
     elapsedDays <= 0 ||
     ![costs, tax, value, gains, returnIndex, cagr, maxDrawdown].every(Number.isFinite) ||
     returnIndex <= 0 ||
-    (annualizedVolatility !== null && !Number.isFinite(annualizedVolatility))
+    (annualizedVolatility !== null && !Number.isFinite(annualizedVolatility)) ||
+    positions.some((position) => !Object.values(position).every(Number.isFinite))
   )
     return null;
 
@@ -156,6 +173,7 @@ export function simulatePortfolio(months: readonly MonthlyLevels[], params: Back
     annualizedVolatility,
     maxDrawdown,
     points,
+    positions,
     calendarReturns: [...calendarReturns].map(([year, entry]) => ({
       year,
       months: entry.months,
