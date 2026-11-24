@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { valueScenario, type ValuationInput } from '../../shared/analytics/valuation';
 import { Panel, Table } from '../../shared/ui';
+import { valuationPriceMetrics, valuationSensitivity } from './scenario';
 
 const cash = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -14,10 +15,9 @@ const percentage = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 2,
 });
 type Result = NonNullable<ReturnType<typeof valueScenario>>;
-const adjustments = [-0.01, 0, 0.01] as const;
 
 function Sensitivity({ input }: { input: ValuationInput }) {
-  const growths = adjustments.map((step) => input.growth + step);
+  const { growths, rows } = valuationSensitivity(input);
   return (
     <div
       className="valuation-table-scroll"
@@ -37,22 +37,17 @@ function Sensitivity({ input }: { input: ValuationInput }) {
           </tr>
         </thead>
         <tbody>
-          {adjustments.map((step) => {
-            const discount = input.discount + step;
-            return (
-              <tr key={step}>
-                <th scope="row">{percentage.format(discount)}</th>
-                {growths.map((growth) => {
-                  const variant = valueScenario({ ...input, growth, discount });
-                  return (
-                    <td key={growth}>
-                      {variant === null ? 'Indisponível' : cash.format(variant.perShare)}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+          {rows.map(({ discount, results }) => (
+            <tr key={discount}>
+              <th scope="row">{percentage.format(discount)}</th>
+              {growths.map((growth, index) => {
+                const perShare = results[index] ?? null;
+                return (
+                  <td key={growth}>{perShare === null ? 'Indisponível' : cash.format(perShare)}</td>
+                );
+              })}
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
@@ -69,9 +64,7 @@ export function ValuationResults({
   referencePrice: number | null;
 }) {
   const heading = useId();
-  const upside = referencePrice === null ? null : result.perShare / referencePrice - 1;
-  const safety =
-    referencePrice === null || result.perShare <= 0 ? null : 1 - referencePrice / result.perShare;
+  const { potential, safety } = valuationPriceMetrics(result.perShare, referencePrice);
   return (
     <Panel className="valuation-panel" aria-labelledby={heading}>
       <h2 id={heading}>Resultado do cenário</h2>
@@ -88,20 +81,16 @@ export function ValuationResults({
             <dd>{cash.format(referencePrice)}</dd>
           </div>
         )}
-        {upside !== null && Number.isFinite(upside) && (
+        {potential !== null && (
           <div>
             <dt>Potencial sobre o preço</dt>
-            <dd>{percentage.format(upside)}</dd>
+            <dd>{percentage.format(potential)}</dd>
           </div>
         )}
         {referencePrice !== null && (
           <div>
             <dt>Margem de segurança</dt>
-            <dd>
-              {safety !== null && Number.isFinite(safety)
-                ? percentage.format(safety)
-                : 'Indisponível'}
-            </dd>
+            <dd>{safety === null ? 'Indisponível' : percentage.format(safety)}</dd>
           </div>
         )}
         {result.enterpriseValue !== null && (

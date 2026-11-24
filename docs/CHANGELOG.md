@@ -1,5 +1,10 @@
 # Changelog
 
+## M6 — Exportação Excel
+
+- Exportação do screener filtrado ou completo, das contas e indicadores de Empresas, das premissas e resultados de Valuation, da carteira e da retrospectiva calculada.
+- As planilhas preservam números e datas, cabeçalhos congelados, autofiltros e a aba Metodologia e fontes.
+
 ## M5 — Carteiras e retrospectiva com dados locais
 
 - Seleção manual pelo nome oficial da companhia, pesos iguais ou personalizados e limite opcional por posição. A carteira é salva no navegador.

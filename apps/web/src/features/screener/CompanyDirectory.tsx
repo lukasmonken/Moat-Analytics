@@ -13,6 +13,8 @@ import {
   normalizeSearch,
   pageSizes,
 } from './presentation';
+import { ScreenerExport } from './ScreenerExport';
+import { directoryReport } from './screenerReport';
 import { ScreenerToolbar } from './ScreenerToolbar';
 
 type DirectoryState =
@@ -111,6 +113,18 @@ function DirectoryTable({ snapshot }: { snapshot: CompanyDirectorySnapshot }) {
         >
           Limpar filtros
         </Button>
+        <ScreenerExport
+          filename="moat-companhias.xlsx"
+          filteredCount={matches.length}
+          build={(scope) =>
+            directoryReport(
+              snapshot,
+              scope === 'filtered' ? matches : [...snapshot.companies].sort(compareNames),
+              scope,
+              search,
+            )
+          }
+        />
       </Panel>
       {matches.length === 0 ? (
         <EmptyState

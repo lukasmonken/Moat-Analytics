@@ -1,8 +1,10 @@
 import { parseBacktestHistory, type BacktestHistory } from '@moat/data-contracts';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, ButtonLink, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
 import { readSavedPortfolio } from '../portfolio/portfolio';
 import { BacktestResults } from './BacktestResults';
+import { buildBacktestReport } from './backtestReport';
 import { horizons, prepareBacktest, type Horizon } from './history';
 import './backtest.css';
 
@@ -220,7 +222,18 @@ export function BacktestPage() {
           </form>
         </Panel>
       )}
-      {evaluation && <BacktestResults {...evaluation} />}
+      {evaluation && portfolio && history && (
+        <BacktestResults
+          {...evaluation}
+          actions={
+            <ExportWorkbookButton
+              label="Exportar retrospectiva em Excel"
+              filename="moat-retrospectiva.xlsx"
+              build={() => buildBacktestReport(evaluation, portfolio, history.source)}
+            />
+          }
+        />
+      )}
       <Panel className="backtest-panel" aria-labelledby="backtest-point-in-time">
         <h2 id="backtest-point-in-time">Estratégia historicamente investível</h2>
         <p>

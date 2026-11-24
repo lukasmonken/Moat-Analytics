@@ -2,7 +2,7 @@ import type { PriceFundamentalsSnapshot } from '@moat/data-contracts';
 import { useEffect, useId, useState } from 'react';
 import { loadPriceFundamentals } from '../../shared/data-client/priceSnapshot';
 import { Button, Panel, Select } from '../../shared/ui';
-import type { ValuationDraft, ValuationModel } from './scenario';
+import type { ValuationDraft, ValuationModel, ValuationSources } from './scenario';
 
 const currency = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -22,6 +22,7 @@ export function ValuationReferences({
   model: ValuationModel;
   onApply: (
     fields: Partial<Pick<ValuationDraft, 'shares' | 'netDebt' | 'equityAdjustments'>>,
+    sources: ValuationSources,
   ) => void;
 }) {
   const heading = useId();
@@ -51,6 +52,25 @@ export function ValuationReferences({
 
   function apply() {
     const counts = { shares: shareCount === undefined ? '' : millions(shareCount) };
+    const sources: ValuationSources = {};
+    if (shares) {
+      sources.shares = {
+        source: 'Posição de ações fora da tesouraria',
+        url: shares.evidenceUrl,
+        referenceDate: shares.referenceDate,
+        retrievedAt: shares.retrievedAt,
+      };
+    }
+    if (model === 'dcf' && balance) {
+      const balanceSource = {
+        source: balance.provenance.source,
+        url: balance.documentUrl,
+        referenceDate: balance.provenance.referenceDate,
+        retrievedAt: balance.provenance.retrievedAt,
+      };
+      sources.netDebt = balanceSource;
+      sources.equityAdjustments = balanceSource;
+    }
     onApply(
       model === 'ddm'
         ? counts
@@ -59,6 +79,7 @@ export function ValuationReferences({
             netDebt: balance ? millions(balance.netDebtBrl) : '',
             equityAdjustments: balance ? millions(-balance.nonControllingInterestsBrl) : '',
           },
+      sources,
     );
   }
 

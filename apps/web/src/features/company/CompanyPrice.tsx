@@ -11,7 +11,13 @@ import {
   loadMarketCloses,
   loadPriceFundamentals,
 } from '../../shared/data-client/priceSnapshot';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, Icon, Panel, Table } from '../../shared/ui';
+import {
+  companyFundamentalsReport,
+  companyWorkbookFilename,
+  fundamentalRoles,
+} from './companyReports';
 import { formatAmount, formatCurrency, formatDate, formatInstant } from './financialPresentation';
 import { formatRate } from './QualityHistory';
 
@@ -21,12 +27,6 @@ type Loaded<T> = { status: 'loading' | 'error' } | { status: 'ready'; data: T | 
 function DatedValue({ date }: { date: string }) {
   return <time dateTime={date}>{formatDate(date)}</time>;
 }
-
-const roles = {
-  annual: 'Exercício anterior',
-  currentYtd: 'Acumulado atual',
-  priorYtd: 'Acumulado comparativo',
-} as const;
 
 function CapitalEvidence({ fundamental }: { fundamental: PriceFundamental }) {
   const { balance, shares, denominatorIssues, category } = fundamental;
@@ -191,7 +191,7 @@ function TrailingResults({
                   <tr key={input.role}>
                     <th scope="row">
                       <a href={input.documentUrl} target="_blank" rel="noreferrer">
-                        {roles[input.role]} · {input.role === 'annual' ? 'DFP' : 'ITR'} v
+                        {fundamentalRoles[input.role]} · {input.role === 'annual' ? 'DFP' : 'ITR'} v
                         {input.filingVersion}
                       </a>
                       <small>
@@ -230,6 +230,13 @@ function TrailingResults({
       {fundamental.historicalMarketPoint && (
         <HistoricalYield point={fundamental.historicalMarketPoint} />
       )}
+      <div className="company-inline-action">
+        <ExportWorkbookButton
+          filename={companyWorkbookFilename('fundamentos', companyId)}
+          build={() => companyFundamentalsReport(fundamental, snapshot)}
+          label="Exportar fundamentos em Excel"
+        />
+      </div>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import type { CompanyDirectorySnapshot } from '@moat/data-contracts';
 import { useEffect, useState } from 'react';
 import { loadCompanyDirectory } from '../../shared/data-client/companyDirectory';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, ButtonLink, Input, PageHeader, Panel, Select, Table } from '../../shared/ui';
 import { compareNames, formatDate, normalizeSearch } from '../screener/presentation';
 import {
@@ -11,6 +12,7 @@ import {
   validatePortfolio,
   type PortfolioDraft,
 } from './portfolio';
+import { buildPortfolioReport } from './portfolioReport';
 import './portfolio.css';
 
 type DirectoryState =
@@ -28,29 +30,17 @@ function PortfolioSelection({
   draft,
   onChange,
   target,
+  state,
+  retry,
 }: {
   draft: PortfolioDraft;
   onChange: (draft: PortfolioDraft) => void;
   target: number | null;
+  state: DirectoryState;
+  retry: () => void;
 }) {
-  const [state, setState] = useState<DirectoryState>({ status: 'loading' });
-  const [attempt, setAttempt] = useState(0);
   const [search, setSearch] = useState('');
   const [selection, setSelection] = useState('');
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
-    void loadCompanyDirectory(signal).then(
-      (snapshot) => {
-        if (!signal.aborted) setState({ status: 'ready', snapshot });
-      },
-      () => {
-        if (!signal.aborted) setState({ status: 'error' });
-      },
-    );
-    return () => controller.abort();
-  }, [attempt]);
 
   if (state.status === 'loading') return <p role="status">Carregando companhias…</p>;
 
@@ -58,14 +48,7 @@ function PortfolioSelection({
     return (
       <div className="portfolio-actions">
         <p role="status">Falha ao carregar o diretório da CVM.</p>
-        <Button
-          onClick={() => {
-            setState({ status: 'loading' });
-            setAttempt((current) => current + 1);
-          }}
-        >
-          Recarregar diretório
-        </Button>
+        <Button onClick={retry}>Recarregar diretório</Button>
       </div>
     );
   }
@@ -216,8 +199,24 @@ export function PortfoliosPage() {
   const { draft, setDraft, save } = useSavedPortfolio();
   const [attemptedSave, setAttemptedSave] = useState(false);
   const [status, setStatus] = useState('');
+  const [directory, setDirectory] = useState<DirectoryState>({ status: 'loading' });
+  const [directoryAttempt, setDirectoryAttempt] = useState(0);
   const { portfolio, errors, weightUnits } = validatePortfolio(draft);
   const target = portfolioTargetSize(draft);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    void loadCompanyDirectory(signal).then(
+      (snapshot) => {
+        if (!signal.aborted) setDirectory({ status: 'ready', snapshot });
+      },
+      () => {
+        if (!signal.aborted) setDirectory({ status: 'error' });
+      },
+    );
+    return () => controller.abort();
+  }, [directoryAttempt]);
 
   function changeDraft(next: PortfolioDraft) {
     setDraft(next);
@@ -289,7 +288,16 @@ export function PortfoliosPage() {
             <option value="custom">Personalizados</option>
           </Select>
         </div>
-        <PortfolioSelection draft={draft} onChange={changeDraft} target={target} />
+        <PortfolioSelection
+          draft={draft}
+          onChange={changeDraft}
+          target={target}
+          state={directory}
+          retry={() => {
+            setDirectory({ status: 'loading' });
+            setDirectoryAttempt((current) => current + 1);
+          }}
+        />
         <p role="status">
           {target === null
             ? 'Informe uma quantidade de 1 a 50 para adicionar companhias.'
@@ -355,6 +363,19 @@ export function PortfoliosPage() {
           <Button variant="primary" onClick={savePortfolio}>
             Salvar carteira
           </Button>
+          {portfolio && (
+            <ExportWorkbookButton
+              label="Exportar carteira em Excel"
+              filename="moat-carteira.xlsx"
+              build={() =>
+                buildPortfolioReport(
+                  portfolio,
+                  draft,
+                  directory.status === 'ready' ? directory.snapshot : null,
+                )
+              }
+            />
+          )}
           <ButtonLink to="/simulador">Abrir simulador</ButtonLink>
         </div>
         {status && <p role="status">{status}</p>}

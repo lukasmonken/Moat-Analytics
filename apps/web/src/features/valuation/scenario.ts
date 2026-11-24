@@ -1,4 +1,4 @@
-import { projectFcff, type ValuationInput } from '../../shared/analytics/valuation';
+import { projectFcff, valueScenario, type ValuationInput } from '../../shared/analytics/valuation';
 
 export type ValuationModel = 'dcf' | 'ddm';
 
@@ -13,6 +13,18 @@ export interface ValuationYear {
   payout: string;
 }
 
+const sourcedFields = ['discountRate', 'shares', 'netDebt', 'equityAdjustments'] as const;
+export type SourcedField = (typeof sourcedFields)[number];
+
+interface PremiseSource {
+  source: string;
+  url: string;
+  referenceDate: string;
+  retrievedAt: string;
+}
+
+export type ValuationSources = Partial<Record<SourcedField, PremiseSource>>;
+
 export interface ValuationDraft {
   discountRate: string;
   terminalGrowth: string;
@@ -21,6 +33,7 @@ export interface ValuationDraft {
   equityAdjustments: string;
   referencePrice: string;
   years: ValuationYear[];
+  sources?: ValuationSources;
 }
 
 export const valuationHorizon = 10;
@@ -88,16 +101,63 @@ function isFieldText(value: unknown): value is string {
   return typeof value === 'string' && value.length <= 48;
 }
 
+function isPremiseSource(value: unknown) {
+  if (
+    !isObject(value) ||
+    typeof value.source !== 'string' ||
+    !value.source.trim() ||
+    value.source.length > 160 ||
+    typeof value.url !== 'string' ||
+    value.url.length > 512 ||
+    typeof value.referenceDate !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(value.referenceDate) ||
+    !Number.isFinite(Date.parse(value.referenceDate)) ||
+    new Date(value.referenceDate).toISOString().slice(0, 10) !== value.referenceDate ||
+    typeof value.retrievedAt !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(
+      value.retrievedAt,
+    ) ||
+    !Number.isFinite(Date.parse(value.retrievedAt))
+  ) {
+    return false;
+  }
+  try {
+    const url = new URL(value.url);
+    return url.protocol === 'https:' && !url.username && !url.password;
+  } catch {
+    return false;
+  }
+}
+
+function isValuationSources(value: unknown) {
+  return (
+    isObject(value) &&
+    sourcedFields.every((field) => value[field] === undefined || isPremiseSource(value[field]))
+  );
+}
+
 function isDraft(value: unknown): value is ValuationDraft {
   return (
     isObject(value) &&
     draftKeys.every((key) => isFieldText(value[key])) &&
+    (value.sources === undefined || isValuationSources(value.sources)) &&
     Array.isArray(value.years) &&
     value.years.length === valuationHorizon &&
     value.years.every(
       (row: unknown) => isObject(row) && yearKeys.every((key) => isFieldText(row[key])),
     )
   );
+}
+
+export function preserveUntouchedSources(
+  previous: ValuationDraft,
+  draft: ValuationDraft,
+): ValuationDraft {
+  const sources = { ...previous.sources };
+  for (const field of sourcedFields) {
+    if (previous[field] !== draft[field]) delete sources[field];
+  }
+  return { ...draft, sources };
 }
 
 export function parseScenarios(text: string): Scenarios {
@@ -219,4 +279,38 @@ export function scenarioInput(
           equityAdjustments: required(draft.equityAdjustments, 'ajustes ao patrimônio'),
         };
   return { input, referencePrice };
+}
+
+export function evaluateValuation(model: ValuationModel, draft: ValuationDraft) {
+  const { input, referencePrice } = scenarioInput(model, draft);
+  const result = valueScenario(input);
+  if (!result) throw new Error('O cálculo exige valores finitos e premissas válidas.');
+  return { input, result, referencePrice };
+}
+
+const sensitivitySteps = [-0.01, 0, 0.01] as const;
+
+export function valuationSensitivity(input: ValuationInput) {
+  const growths = sensitivitySteps.map((step) => input.growth + step);
+  return {
+    growths,
+    rows: sensitivitySteps.map((step) => {
+      const discount = input.discount + step;
+      return {
+        discount,
+        results: growths.map(
+          (growth) => valueScenario({ ...input, growth, discount })?.perShare ?? null,
+        ),
+      };
+    }),
+  };
+}
+
+export function valuationPriceMetrics(perShare: number, referencePrice: number | null) {
+  const potential = referencePrice === null ? null : perShare / referencePrice - 1;
+  const safety = referencePrice === null || perShare <= 0 ? null : 1 - referencePrice / perShare;
+  return {
+    potential: Number.isFinite(potential) ? potential : null,
+    safety: Number.isFinite(safety) ? safety : null,
+  };
 }

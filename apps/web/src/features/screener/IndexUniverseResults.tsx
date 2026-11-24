@@ -12,6 +12,11 @@ const columns = [
 type SortColumn = (typeof columns)[number]['key'];
 export type Sort = { column: SortColumn; direction: 'ascending' | 'descending' };
 
+export function sortDescription(sort: Sort) {
+  const label = columns.find(({ key }) => key === sort.column)?.label ?? sort.column;
+  return `${label} · ${sort.direction === 'ascending' ? 'crescente' : 'decrescente'}`;
+}
+
 function sortValue(company: IndexUniverseCompany, key: SortColumn) {
   switch (key) {
     case 'name':

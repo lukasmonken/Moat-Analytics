@@ -1,16 +1,18 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { valueScenario } from '../../shared/analytics/valuation';
+import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
 import { useRiskFreeRate } from '../../shared/data-client/useRiskFreeRate';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, PageHeader, Panel, Select } from '../../shared/ui';
 import { RiskFreeRatePanel } from '../../shared/ui/RiskFreeRatePanel';
 import {
   caseLabels,
   cases,
   createDraft,
+  evaluateValuation,
   parseScenarios,
+  preserveUntouchedSources,
   readStoredScenarios,
   saveScenarios,
-  scenarioInput,
   serializeScenarios,
   type ValuationCase,
   type ValuationDraft,
@@ -19,6 +21,7 @@ import {
 import { ValuationInputs } from './ValuationInputs';
 import { ValuationReferences } from './ValuationReferences';
 import { ValuationResults } from './ValuationResults';
+import { buildValuationReport } from './valuationReport';
 
 export function ValuationPage() {
   const { state, reload } = useRiskFreeRate();
@@ -52,10 +55,7 @@ export function ValuationPage() {
   let error = '';
   if (showResult) {
     try {
-      const { input, referencePrice } = scenarioInput(model, activeDraft);
-      const result = valueScenario(input);
-      if (!result) throw new Error('O cálculo exige valores finitos e premissas válidas.');
-      evaluation = { input, result, referencePrice };
+      evaluation = evaluateValuation(model, activeDraft);
     } catch (failure) {
       error = failure instanceof Error ? failure.message : 'Não foi possível calcular o cenário.';
     }
@@ -144,14 +144,33 @@ export function ValuationPage() {
           <Button
             disabled={!cdi}
             variant="quiet"
-            onClick={() => changeDraft({ ...activeDraft, discountRate: cdiPercentage })}
+            onClick={() => {
+              if (!cdi) return;
+              changeDraft({
+                ...activeDraft,
+                discountRate: cdiPercentage,
+                sources: {
+                  ...activeDraft.sources,
+                  discountRate: {
+                    source: cdi.provenance.source,
+                    url: cdiRateUrl,
+                    referenceDate: cdi.provenance.referenceDate,
+                    retrievedAt: cdi.provenance.retrievedAt,
+                  },
+                },
+              });
+            }}
           >
             Aplicar CDI como desconto
           </Button>
           <p>Usar apenas a taxa livre de risco no desconto pode superestimar o valor.</p>
         </div>
         <form className="valuation-inputs" onSubmit={calculate} noValidate>
-          <ValuationInputs model={model} draft={activeDraft} onChange={changeDraft} />
+          <ValuationInputs
+            model={model}
+            draft={activeDraft}
+            onChange={(draft) => changeDraft(preserveUntouchedSources(activeDraft, draft))}
+          />
           <div className="valuation-actions">
             <Button variant="primary" type="submit">
               Calcular valuation
@@ -165,6 +184,11 @@ export function ValuationPage() {
             <Button variant="quiet" onClick={exportFile}>
               Exportar premissas
             </Button>
+            <ExportWorkbookButton
+              label="Exportar valuation em Excel"
+              filename={`moat-valuation-${model}-${activeCase}.xlsx`}
+              build={() => buildValuationReport(model, activeCase, activeDraft, cdi)}
+            />
             <Button variant="quiet" onClick={() => importField.current?.click()}>
               Importar premissas
             </Button>
@@ -184,7 +208,18 @@ export function ValuationPage() {
       {evaluation && <ValuationResults {...evaluation} />}
       <ValuationReferences
         model={model}
-        onApply={(fields) => changeDraft({ ...activeDraft, ...fields })}
+        onApply={(fields, sources) =>
+          changeDraft({
+            ...activeDraft,
+            ...fields,
+            sources: {
+              ...(activeDraft.sources?.discountRate && {
+                discountRate: activeDraft.sources.discountRate,
+              }),
+              ...sources,
+            },
+          })
+        }
       />
     </div>
   );

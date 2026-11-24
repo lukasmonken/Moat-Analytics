@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
 import type { simulatePortfolio } from '../../shared/analytics/backtest';
 import { Panel, Table } from '../../shared/ui';
+import { backtestMeasures } from './backtestReport';
 import './backtest.css';
 
 type Result = NonNullable<ReturnType<typeof simulatePortfolio>>;
@@ -104,27 +106,20 @@ export function BacktestResults({
   result,
   comparisons,
   instruments,
+  actions,
 }: {
   result: Result;
   comparisons: BenchmarkComparison[];
   instruments: Instrument[];
+  actions?: ReactNode;
 }) {
   const first = result.points[0];
   const last = result.points.at(-1);
+  const stats = backtestMeasures(result);
   const measures = [
-    ['Patrimônio final após tributo', cash.format(result.finalValue)],
-    ['Ganho ou perda líquida', cash.format(result.profit)],
-    ['Capital inicial', cash.format(result.capital)],
-    ['Aportes totais', cash.format(result.contributions)],
-    ['Patrimônio antes do tributo final', cash.format(result.terminalValue)],
-    ['Custos de negociação', cash.format(result.costs)],
-    ['Tributo final simulado', cash.format(result.tax)],
-    ['Retorno acumulado (TWR)', formatRate(result.totalReturn)],
-    ['Retorno anualizado (CAGR)', formatRate(result.cagr)],
-    ['Volatilidade anualizada', formatRate(result.annualizedVolatility)],
-    ['Queda máxima desde o pico', formatRate(result.maxDrawdown)],
-    ['Índice de Sharpe', 'Indisponível'],
-  ];
+    ...stats.currency.map(([label, value]) => [label, cash.format(value)]),
+    ...stats.rates.map(([label, value]) => [label, formatRate(value)]),
+  ] as const;
 
   return (
     <>
@@ -137,6 +132,7 @@ export function BacktestResults({
             </p>
           )}
         </div>
+        {actions && <div className="backtest-actions">{actions}</div>}
         <dl className="backtest-measures">
           {measures.map(([label, value]) => (
             <div key={label}>

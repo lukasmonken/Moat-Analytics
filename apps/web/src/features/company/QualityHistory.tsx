@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { loadQualitySnapshot, qualitySnapshotUrl } from '../../shared/data-client/qualitySnapshot';
 import type { RiskFreeRate } from '../../shared/data-client/riskFreeRate';
+import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, Icon, Panel, Table } from '../../shared/ui';
+import { companyQualityReport, companyWorkbookFilename } from './companyReports';
 import { formatCurrency, formatDate, formatInstant } from './financialPresentation';
 import './quality-history.css';
 
@@ -258,6 +260,13 @@ function QualitySeries({
           Baixar séries em JSON
         </a>
       </p>
+      <div className="company-inline-action">
+        <ExportWorkbookButton
+          filename={companyWorkbookFilename('qualidade', company.companyId)}
+          build={() => companyQualityReport(company, snapshot, riskFreeRate)}
+          label="Exportar série em Excel"
+        />
+      </div>
     </>
   );
 }
