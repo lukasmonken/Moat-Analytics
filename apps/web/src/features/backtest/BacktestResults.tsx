@@ -1,21 +1,10 @@
 import type { ReactNode } from 'react';
-import type { simulatePortfolio } from '../../shared/analytics/backtest';
 import { Panel, Table } from '../../shared/ui';
 import { backtestMeasures } from './backtestReport';
+import type { prepareBacktest } from './history';
 import './backtest.css';
 
-type Result = NonNullable<ReturnType<typeof simulatePortfolio>>;
-
-interface BenchmarkComparison {
-  symbol: string;
-  totalReturn: number | null;
-  cagr: number | null;
-}
-
-interface Instrument {
-  company: string;
-  instrument: string;
-}
+type Evaluation = ReturnType<typeof prepareBacktest>;
 
 const cash = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const percentage = new Intl.NumberFormat('pt-BR', {
@@ -24,6 +13,10 @@ const percentage = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 2,
 });
 const dateFormat = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC' });
+const correlationFormat = new Intl.NumberFormat('pt-BR', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 function formatRate(value: number | null) {
   return value === null ? 'Indisponível' : percentage.format(value === 0 ? 0 : value);
@@ -33,7 +26,7 @@ function DateStamp({ date }: { date: string }) {
   return <time dateTime={date}>{dateFormat.format(new Date(date))}</time>;
 }
 
-function MonthlyResults({ points }: { points: Result['points'] }) {
+function MonthlyResults({ points }: { points: Evaluation['result']['points'] }) {
   return (
     <div
       className="backtest-table-scroll backtest-table-scroll--monthly"
@@ -73,7 +66,7 @@ function MonthlyResults({ points }: { points: Result['points'] }) {
   );
 }
 
-function BenchmarkResults({ comparisons }: { comparisons: BenchmarkComparison[] }) {
+function BenchmarkResults({ comparisons }: Pick<Evaluation, 'comparisons'>) {
   return (
     <Panel className="backtest-panel" aria-labelledby="backtest-benchmarks">
       <h2 id="backtest-benchmarks">Referências de mercado</h2>
@@ -102,17 +95,111 @@ function BenchmarkResults({ comparisons }: { comparisons: BenchmarkComparison[] 
   );
 }
 
+function PositionResults({
+  positions,
+  correlations,
+}: Pick<Evaluation, 'positions' | 'correlations'>) {
+  const hasPair = correlations.some((row, index) =>
+    row.some((value, column) => column > index && value !== null),
+  );
+  return (
+    <Panel className="backtest-panel" aria-labelledby="backtest-positions">
+      <h2 id="backtest-positions">Contribuição e concentração</h2>
+      <p>
+        A contribuição de cada ativo desconta os custos atribuídos a ele. O tributo é calculado
+        sobre o ganho da carteira. O peso final usa o patrimônio antes do tributo.
+      </p>
+      <div
+        className="backtest-table-scroll"
+        role="region"
+        tabIndex={0}
+        aria-label="Posições da carteira"
+      >
+        <Table aria-label="Contribuição e pesos por ativo">
+          <thead>
+            <tr>
+              <th scope="col">Companhia</th>
+              <th scope="col">Ativo</th>
+              <th scope="col">Peso-alvo</th>
+              <th scope="col">Peso final</th>
+              <th scope="col">Ganho de mercado</th>
+              <th scope="col">Custos</th>
+              <th scope="col">Contribuição antes do tributo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {positions.map((position) => (
+              <tr key={position.company}>
+                <th scope="row">{position.company}</th>
+                <td>{position.instrument}</td>
+                <td>{formatRate(position.targetWeight)}</td>
+                <td>{formatRate(position.finalWeight)}</td>
+                <td>{cash.format(position.marketGain)}</td>
+                <td>{cash.format(position.costs)}</td>
+                <td>{cash.format(position.contribution)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <details className="backtest-instruments">
+        <summary>Correlação dos retornos mensais</summary>
+        <div className="backtest-correlations">
+          <p>
+            A correlação de Pearson vai de −1 a +1 e requer pelo menos três retornos mensais
+            alinhados e variação nos retornos dos dois ativos.
+          </p>
+          {hasPair ? (
+            <div
+              className="backtest-table-scroll"
+              role="region"
+              tabIndex={0}
+              aria-label="Correlações da carteira"
+            >
+              <Table aria-label="Matriz de correlação">
+                <thead>
+                  <tr>
+                    <th scope="col">Ativo</th>
+                    {positions.map(({ instrument }) => (
+                      <th scope="col" key={instrument}>
+                        {instrument}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {positions.map(({ instrument }, index) => (
+                    <tr key={instrument}>
+                      <th scope="row">{instrument}</th>
+                      {positions.map(({ instrument: column }, columnIndex) => {
+                        const value = correlations[index]?.[columnIndex] ?? null;
+                        return (
+                          <td key={column}>
+                            {value === null ? 'Indisponível' : correlationFormat.format(value)}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          ) : (
+            <p>Indisponível para as séries nesta janela.</p>
+          )}
+        </div>
+      </details>
+    </Panel>
+  );
+}
+
 export function BacktestResults({
   result,
   comparisons,
-  instruments,
+  positions,
+  correlations,
   actions,
-}: {
-  result: Result;
-  comparisons: BenchmarkComparison[];
-  instruments: Instrument[];
-  actions?: ReactNode;
-}) {
+}: Evaluation & { actions?: ReactNode }) {
   const first = result.points[0];
   const last = result.points.at(-1);
   const stats = backtestMeasures(result);
@@ -145,17 +232,6 @@ export function BacktestResults({
           O retorno acumulado desconta o efeito dos aportes. As métricas de retorno e risco incluem
           custos de negociação e são calculadas antes do tributo final.
         </p>
-        <details className="backtest-instruments">
-          <summary>Instrumentos usados na simulação</summary>
-          <dl>
-            {instruments.map(({ company, instrument }) => (
-              <div key={company}>
-                <dt>{company}</dt>
-                <dd>{instrument}</dd>
-              </div>
-            ))}
-          </dl>
-        </details>
         <h3>Evolução mensal</h3>
         <MonthlyResults points={result.points} />
         <details className="backtest-instruments">
@@ -187,6 +263,7 @@ export function BacktestResults({
           </div>
         </details>
       </Panel>
+      <PositionResults positions={positions} correlations={correlations} />
       <BenchmarkResults comparisons={comparisons} />
     </>
   );

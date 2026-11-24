@@ -101,9 +101,11 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
   expect(sheetNames(valuation)).toContain('Premissas');
   await page.goto('./#/carteiras');
   await page.getByRole('combobox', { name: 'Quantidade de companhias' }).selectOption('custom');
-  await page.getByLabel('Quantidade personalizada (1 a 50)').fill('1');
-  await page.getByRole('combobox', { name: 'Companhia para adicionar' }).selectOption('WEG S.A.');
-  await page.getByRole('button', { name: 'Adicionar companhia' }).click();
+  await page.getByLabel('Quantidade personalizada (1 a 50)').fill('2');
+  for (const company of ['WEG S.A.', 'LOJAS RENNER S.A.']) {
+    await page.getByRole('combobox', { name: 'Companhia para adicionar' }).selectOption(company);
+    await page.getByRole('button', { name: 'Adicionar companhia' }).click();
+  }
   await page.getByLabel('Capital inicial (R$)').fill('1000');
   const portfolio = await workbookDownload(
     page,
@@ -122,7 +124,7 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
         basis: 'total-return-brl',
         source: {
           name: '=1+1',
-          retrievedAt: '2024-02-01T12:00:00-03:00',
+          retrievedAt: '2024-04-01T12:00:00-03:00',
           methodology: 'Dados de teste.',
         },
         assets: [
@@ -131,7 +133,19 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
             instrument: 'WEGE3',
             observations: [
               { date: '2023-12-28', level: 100 },
-              { date: '2024-01-31', level: 110 },
+              { date: '2024-01-31', level: 125 },
+              { date: '2024-02-29', level: 187.5 },
+              { date: '2024-03-28', level: 93.75 },
+            ],
+          },
+          {
+            company: 'LOJAS RENNER S.A.',
+            instrument: 'LREN3',
+            observations: [
+              { date: '2023-12-28', level: 100 },
+              { date: '2024-01-31', level: 75 },
+              { date: '2024-02-29', level: 37.5 },
+              { date: '2024-03-28', level: 56.25 },
             ],
           },
         ],
@@ -139,6 +153,13 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
     ),
   });
   await page.getByRole('button', { name: 'Calcular retrospectiva' }).click();
+  const positions = page.getByRole('table', { name: 'Contribuição e pesos por ativo' });
+  await expect(positions.getByRole('row', { name: /^WEG S\.A\./ })).toContainText('62,50%');
+  await page.getByText('Correlação dos retornos mensais', { exact: true }).click();
+  const matrix = page.getByRole('table', { name: 'Matriz de correlação' });
+  await expect(matrix.getByRole('row', { name: /^WEGE3/ })).toContainText('-1,00');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   const backtest = await workbookDownload(
     page,
     'Exportar retrospectiva em Excel',
@@ -146,7 +167,12 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
   );
   expect(sheetNames(backtest)).toContain('Histórico mensal');
   const notes = getSheet(backtest, 'Metodologia e fontes');
-  if (!notes) throw new Error('Aba ausente.');
+  const allocation = getSheet(backtest, 'Composição');
+  const correlations = getSheet(backtest, 'Correlações');
+  if (!notes || !allocation || !correlations) throw new Error('Aba ausente.');
+  expect(getCell(allocation, 2, 4)?.value).toBe(0.625);
+  expect(getCell(allocation, 2, 7)?.value).toBe(-31.25);
+  expect(getCell(correlations, 2, 3)?.value).toBeCloseTo(-1);
   expect(Array.from({ length: 25 }, (_, index) => getCell(notes, index + 2, 2)?.value)).toContain(
     '=1+1',
   );

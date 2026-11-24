@@ -32,6 +32,15 @@ class BacktestPoint:
 
 
 @dataclass(frozen=True, slots=True)
+class BacktestPosition:
+    asset: str
+    market_gain_brl: Decimal
+    costs_brl: Decimal
+    contribution_brl: Decimal
+    final_weight: Decimal
+
+
+@dataclass(frozen=True, slots=True)
 class BacktestResult:
     initial_brl: Decimal
     contributions_brl: Decimal
@@ -45,6 +54,7 @@ class BacktestResult:
     annualized_volatility: Decimal | None
     max_drawdown: Decimal
     points: tuple[BacktestPoint, ...]
+    positions: tuple[BacktestPosition, ...] = ()
 
 
 def _finite(value: object) -> TypeGuard[Decimal]:
@@ -94,6 +104,8 @@ def simulate_portfolio(
     somente nos meses intermediários. Seu custo usa o giro bruto pré-custo.
     TWR, CAGR e risco incluem custos de negociação. Um imposto ilustrativo
     sobre o ganho positivo é deduzido apenas do patrimônio final e do lucro.
+    A contribuição de cada ativo deduz seus custos dos ganhos de mercado.
+    O peso final e as contribuições são apurados antes do tributo coletivo.
     """
     if (
         not _finite(initial_brl) or initial_brl <= ZERO
@@ -113,6 +125,8 @@ def simulate_portfolio(
         costs = initial_brl * transaction_cost_rate
         value = initial_brl - costs
         holdings = {key: value * weight for key, weight in target.items()}
+        market_gains = dict.fromkeys(target, ZERO)
+        position_costs = {key: costs * weight for key, weight in target.items()}
         unit_value = value / initial_brl
         peak = ONE
         contributions = ZERO
@@ -123,15 +137,20 @@ def simulate_portfolio(
 
         for index, (previous, current) in enumerate(zip(history, history[1:]), start=1):
             previous_value = value
-            holdings = {
-                key: position * current.levels[key] / previous.levels[key] + net_deposit * target[key]
-                for key, position in holdings.items()
-            }
+            for key, opening in holdings.items():
+                after_return = opening * current.levels[key] / previous.levels[key]
+                market_gains[key] += after_return - opening
+                position_costs[key] += deposit_cost * target[key]
+                holdings[key] = after_return + net_deposit * target[key]
             value = sum(holdings.values(), ZERO)
             contributions += monthly_contribution_brl
             costs += deposit_cost
             if rebalance == "monthly" and index < len(history) - 1:
-                turnover = sum(abs(position - value * target[key]) for key, position in holdings.items())
+                turnover = ZERO
+                for key, position in holdings.items():
+                    traded = abs(position - value * target[key])
+                    turnover += traded
+                    position_costs[key] += traded * transaction_cost_rate
                 rebalance_cost = turnover * transaction_cost_rate
                 value -= rebalance_cost
                 costs += rebalance_cost
@@ -167,6 +186,16 @@ def simulate_portfolio(
             annualized_volatility=stdev(periods) * Decimal(12).sqrt() if len(periods) >= 2 else None,
             max_drawdown=max(point.drawdown for point in output),
             points=tuple(output),
+            positions=tuple(
+                BacktestPosition(
+                    asset=key,
+                    market_gain_brl=market_gains[key],
+                    costs_brl=position_costs[key],
+                    contribution_brl=market_gains[key] - position_costs[key],
+                    final_weight=position / value,
+                )
+                for key, position in holdings.items()
+            ),
         )
     except DecimalException:
         return None

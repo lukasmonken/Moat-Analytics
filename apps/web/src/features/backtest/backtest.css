@@ -125,21 +125,9 @@
   font-weight: 600;
 }
 
-.backtest-instruments dl {
+.backtest-correlations {
   display: grid;
   gap: 0.5rem;
-  margin: 0.5rem 0 0;
-  font-size: 0.875rem;
-}
-
-.backtest-instruments dl > div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem 0.75rem;
-}
-
-.backtest-instruments dd {
-  margin: 0;
-  color: var(--muted);
-  overflow-wrap: anywhere;
+  min-width: 0;
+  margin-top: 0.5rem;
 }

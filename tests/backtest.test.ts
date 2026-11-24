@@ -54,11 +54,69 @@ describe('Backtest e carteira', () => {
     expect(output.result.contributions).toBe(200);
     expect(output.result.costs).toBeCloseTo(13.98);
     expect(output.result.profit).toBeCloseTo(-13.98);
+    expect(output.positions.reduce((total, position) => total + position.costs, 0)).toBeCloseTo(
+      output.result.costs,
+    );
+    expect(
+      output.positions.reduce((total, position) => total + position.contribution, 0),
+    ).toBeCloseTo(output.result.profit + output.result.tax);
+    expect(output.positions[0]?.finalWeight).toBeCloseTo(647.361 / 1186.02);
     expect(output.result.calendarReturns).toHaveLength(1);
     expect(output.result.calendarReturns[0]).toMatchObject({ year: 2024, months: 2 });
     expect(output.result.calendarReturns[0]?.totalReturn).toBe(output.result.totalReturn);
     expect(output.comparisons[0]?.totalReturn).toBeCloseTo(0.1);
     expect(output.comparisons[1]?.totalReturn).toBeNull();
+    expect(output.correlations).toEqual([
+      [null, null],
+      [null, null],
+    ]);
+  });
+
+  it('calcula correlações mensais com a ordem da carteira e a janela avaliada', () => {
+    const correlationDates = [...dates, '2024-04-30', '2024-05-31'];
+    const asset = (company: string, instrument: string, levels: number[]) => ({
+      company,
+      instrument,
+      observations: correlationDates.map((date, index) => ({ date, level: levels[index] })),
+    });
+    const { portfolio } = validatePortfolio({
+      ...draft,
+      customTarget: '4',
+      positions: [...draft.positions, { name: 'C', weight: '' }, { name: 'D', weight: '' }],
+    });
+    if (!portfolio) throw new Error('Carteira de teste inválida.');
+    const imported = parseBacktestHistory({
+      ...history,
+      source: { ...history.source, retrievedAt: '2024-06-01T09:00:00-03:00' },
+      assets: [
+        asset('D', 'CONS3', [5, 10, 20, 40, 102]),
+        asset('B', 'OUTR3', [80, 80, 120, 90, 100]),
+        asset('C', 'INVE3', [8, 8, 4, 5, 99]),
+        asset('A', 'ACAO3', [4e307, 4e307, 6e307, 4.5e307, 4e307]),
+      ],
+    });
+    const { positions, correlations } = prepareBacktest(
+      portfolio,
+      imported,
+      'custom',
+      '2024-01',
+      '2024-04',
+    );
+    expect(
+      positions.map(({ company, instrument, targetWeight }) => [company, instrument, targetWeight]),
+    ).toEqual([
+      ['A', 'ACAO3', 0.25],
+      ['B', 'OUTR3', 0.25],
+      ['C', 'INVE3', 0.25],
+      ['D', 'CONS3', 0.25],
+    ]);
+    expect(correlations[0]?.[0]).toBe(1);
+    expect(correlations[0]?.[1]).toBeCloseTo(1, 12);
+    expect(correlations[1]?.[0]).toBe(correlations[0]?.[1]);
+    expect(correlations[0]?.[2]).toBeCloseTo(-1, 12);
+    expect(correlations[1]?.[2]).toBeCloseTo(-1, 12);
+    expect(correlations.map((row) => row[3])).toEqual([null, null, null, null]);
+    expect(correlations[3]).toEqual([null, null, null, null]);
   });
 
   it('rejeita mês ausente e pregões diferentes no mesmo mês', () => {

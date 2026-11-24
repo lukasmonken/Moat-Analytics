@@ -1,5 +1,10 @@
 # Changelog
 
+## M5 — Análise por ativo na retrospectiva
+
+- Ganho de mercado, custos, contribuição antes do tributo e peso final de cada posição, com o maior peso da carteira no resumo.
+- Correlação de Pearson dos retornos mensais alinhados, com pelo menos três retornos e variação em ambas as séries. Composição e correlações também estão no Excel.
+
 ## M6 — Exportação Excel
 
 - Exportação do screener filtrado ou completo, das contas e indicadores de Empresas, das premissas e resultados de Valuation, da carteira e da retrospectiva calculada.
