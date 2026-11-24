@@ -54,6 +54,8 @@ O desconto parte de WACC ou custo de capital próprio informados. O CDI anualiza
 
 A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. Limites setoriais e seleção por ranking aguardam dados próprios.
 
+Em Carteiras, **Exportar carteira em JSON** cria uma cópia editável da composição, dos pesos e dos parâmetros válidos no formulário. **Importar carteira em JSON** lê o arquivo local e exige os nomes exatos da seleção atual da CVM. Revise os campos importados e use **Salvar carteira** para aplicar a composição ao simulador. As séries de retorno total são carregadas em separado no Simulador.
+
 O simulador retrospectivo aplica a seleção atual a séries mensais de retorno total em reais. O arquivo JSON fornecido pelo usuário é lido no navegador. O aplicativo verifica estrutura e cobertura. A identificação da classe, a origem dos níveis e os ajustes para proventos e eventos societários dependem da fonte declarada. Cada posição exige um nível positivo por mês e as datas de pregão precisam coincidir entre todas as posições. A janela precisa ser contínua. O período desde o início do ano usa dezembro do ano anterior como base. As demais opções cobrem dois a sete anos ou um intervalo personalizado de 1 a 600 meses.
 
 ### Formato do arquivo local

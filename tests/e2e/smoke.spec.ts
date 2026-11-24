@@ -313,6 +313,120 @@ test('salva uma carteira e exige meses completos para calcular a retrospectiva',
   await expect(result).toBeVisible();
 });
 
+test('exporta e restaura uma carteira em JSON sem substituir a carteira salva até confirmar', async ({
+  page,
+}) => {
+  await page.goto('./#/carteiras');
+  const quantity = page.getByLabel('Quantidade personalizada (1 a 50)');
+  const distribution = page.getByRole('combobox', { name: 'Distribuição de pesos' });
+  const company = page.getByRole('combobox', { name: 'Companhia para adicionar' });
+  const add = page.getByRole('button', { name: 'Adicionar companhia' });
+  const save = page.getByRole('button', { name: 'Salvar carteira' });
+  const capital = page.getByLabel('Capital inicial (R$)', { exact: true });
+  const amountFields = [
+    ['Aporte mensal (R$)', '100,21'],
+    ['Custo por operação (%)', '0,15'],
+    ['Tributo sobre ganho ao final (%), hipótese', '17,5'],
+    ['Limite por companhia (%, opcional)', '60'],
+  ] as const;
+  const wegWeight = page.getByLabel('Peso de WEG S.A. (%)');
+  const rennerWeight = page.getByLabel('Peso de LOJAS RENNER S.A. (%)');
+  const rebalance = page.getByRole('combobox', { name: 'Rebalanceamento' });
+  const attachment = page.getByLabel('Arquivo de carteira (JSON)');
+  const importFile = (content: string | Buffer) => ({
+    name: 'carteira-teste.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(content),
+  });
+
+  await page.getByRole('combobox', { name: 'Quantidade de companhias' }).selectOption('custom');
+  await quantity.fill('1');
+  await company.selectOption('WEG S.A.');
+  await add.click();
+  await capital.fill('1000');
+  await save.click();
+  await expect(page.getByText('Carteira salva neste navegador.')).toBeVisible();
+
+  await quantity.fill('2');
+  await company.selectOption('LOJAS RENNER S.A.');
+  await add.click();
+  await distribution.selectOption('custom');
+  await wegWeight.fill('57,1250');
+  await rennerWeight.fill('42,8750');
+  await capital.fill('2500,50');
+  for (const [label, value] of amountFields) await page.getByLabel(label).fill(value);
+  await rebalance.selectOption('monthly');
+  const pendingDownload = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Exportar carteira em JSON' }).click();
+  const download = await pendingDownload;
+  expect(download.suggestedFilename()).toMatch(/\.json$/);
+  const path = await download.path();
+  if (path === null) throw new Error('O navegador não salvou o arquivo de carteira.');
+  const backup = await readFile(path);
+  const payload = {
+    schemaVersion: '1.0.0',
+    draft: {
+      target: 'custom',
+      customTarget: '2',
+      method: 'custom',
+      positions: [
+        { name: 'WEG S.A.', weight: '57,1250' },
+        { name: 'LOJAS RENNER S.A.', weight: '42,8750' },
+      ],
+      capital: '2500,50',
+      contribution: '100,21',
+      cost: '0,15',
+      gainTax: '17,5',
+      maxWeight: '60',
+      rebalance: 'monthly',
+    },
+  };
+  expect(JSON.parse(backup.toString('utf8'))).toEqual(payload);
+
+  await capital.fill('3333');
+  await attachment.setInputFiles(importFile('{'));
+  await expect(page.getByRole('alert')).toBeVisible();
+  await expect(capital).toHaveValue('3333');
+  payload.draft.positions[1] = {
+    name: 'COMPANHIA FICTÍCIA DE TESTE',
+    weight: '42,8750',
+  };
+  await attachment.setInputFiles(importFile(JSON.stringify(payload)));
+  await expect(page.getByRole('alert')).toContainText('COMPANHIA FICTÍCIA DE TESTE');
+  await expect(capital).toHaveValue('3333');
+  await expect(rennerWeight).toHaveValue('42,8750');
+
+  await page.getByRole('link', { name: 'Abrir simulador' }).click();
+  await expect(page.getByText('1 companhia na carteira salva')).toBeVisible();
+  await page.getByRole('link', { name: 'Editar carteira' }).click();
+  await expect(capital).toHaveValue('1000');
+
+  const pendingFile = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: 'Importar carteira em JSON' }).click();
+  await (await pendingFile).setFiles(importFile(backup));
+  await expect(
+    page.getByText('Carteira importada. Confira os parâmetros e salve para usar no simulador.'),
+  ).toBeVisible();
+  await expect(quantity).toHaveValue('2');
+  await expect(distribution).toHaveValue('custom');
+  await expect(wegWeight).toHaveValue('57,1250');
+  await expect(rennerWeight).toHaveValue('42,8750');
+  await expect(capital).toHaveValue('2500,50');
+  for (const [label, value] of amountFields)
+    await expect(page.getByLabel(label)).toHaveValue(value);
+  await expect(rebalance).toHaveValue('monthly');
+
+  await page.getByRole('link', { name: 'Abrir simulador' }).click();
+  await expect(page.getByText('1 companhia na carteira salva')).toBeVisible();
+  await page.getByRole('link', { name: 'Editar carteira' }).click();
+  await expect(page.getByRole('button', { name: 'Importar carteira em JSON' })).toBeEnabled();
+  await attachment.setInputFiles(importFile(backup));
+  await expect(capital).toHaveValue('2500,50');
+  await save.click();
+  await page.getByRole('link', { name: 'Abrir simulador' }).click();
+  await expect(page.getByText('2 companhias na carteira salva')).toBeVisible();
+});
+
 test.describe('janela móvel', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
