@@ -1,5 +1,10 @@
 # Changelog
 
+## M5 — Cópia de carteira em JSON
+
+- Exportação e restauração da composição, dos pesos e dos parâmetros em Carteiras. A importação carrega os valores para revisão antes de salvar neste navegador.
+- A restauração verifica a versão, os parâmetros e os nomes no diretório atual da CVM.
+
 ## M5 — Análise por ativo na retrospectiva
 
 - Ganho de mercado, custos, contribuição antes do tributo e peso final de cada posição, com o maior peso da carteira no resumo.

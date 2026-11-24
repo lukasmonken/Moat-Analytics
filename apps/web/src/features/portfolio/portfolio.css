@@ -97,6 +97,10 @@
   gap: 0.75rem;
 }
 
+.portfolio-file-error {
+  overflow-wrap: anywhere;
+}
+
 @media (width <= 44rem) {
   .portfolio-add {
     grid-template-columns: minmax(0, 1fr);
