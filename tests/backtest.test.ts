@@ -2,6 +2,8 @@ import { parseBacktestHistory } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 import { prepareBacktest } from '../apps/web/src/features/backtest/history';
 import {
+  parsePortfolio,
+  serializePortfolio,
   validatePortfolio,
   type PortfolioDraft,
 } from '../apps/web/src/features/portfolio/portfolio';
@@ -40,6 +42,44 @@ const history = {
 };
 
 describe('Backtest e carteira', () => {
+  it('preserva os parâmetros no JSON v1 e descarta campos fora do formato', () => {
+    const savedDraft: PortfolioDraft = {
+      ...draft,
+      method: 'custom',
+      positions: [
+        { name: 'A', weight: '30,0001' },
+        { name: 'B', weight: '69,9999' },
+      ],
+      maxWeight: '70',
+    };
+    const file = serializePortfolio(savedDraft);
+    expect(file).toBe(JSON.stringify({ schemaVersion: '1.0.0', draft: savedDraft }));
+    const legacy = JSON.stringify({
+      schemaVersion: '1.0.0',
+      unrelated: 'campo extra',
+      draft: {
+        ...savedDraft,
+        unrelated: 'campo extra',
+        positions: savedDraft.positions.map((position) => ({ ...position, extra: 'valor' })),
+      },
+    });
+    expect(parsePortfolio(file)).toEqual(savedDraft);
+    expect(parsePortfolio(legacy)).toEqual(savedDraft);
+  });
+
+  it('rejeita arquivos malformados, versões incompatíveis e carteiras inválidas', () => {
+    expect(() => parsePortfolio('{')).toThrow('JSON válido');
+    expect(() => parsePortfolio('null')).toThrow('formato de carteira');
+    expect(() => parsePortfolio(JSON.stringify({ schemaVersion: '2.0.0', draft }))).toThrow(
+      'versão do arquivo',
+    );
+    const invalid = { ...draft, capital: '0' };
+    expect(() => serializePortfolio(invalid)).toThrow('capital inicial positivo');
+    expect(() =>
+      parsePortfolio(JSON.stringify({ schemaVersion: '1.0.0', draft: invalid })),
+    ).toThrow('capital inicial positivo');
+  });
+
   it('mantém a paridade com a retrospectiva de custos e rebalanceamento em Decimal', () => {
     const { portfolio } = validatePortfolio(draft);
     if (!portfolio) throw new Error('Carteira de teste inválida.');

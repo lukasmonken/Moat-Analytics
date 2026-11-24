@@ -26,6 +26,7 @@ export interface SavedPortfolio {
 
 export const totalWeightUnits = 1_000_000;
 const storageKey = 'moat-portfolio-v1';
+const schemaVersion = '1.0.0';
 const defaultDraft: PortfolioDraft = {
   target: '10',
   customTarget: '',
@@ -151,16 +152,61 @@ function isDraft(value: unknown): value is PortfolioDraft {
   );
 }
 
+function portfolioFields(draft: PortfolioDraft): PortfolioDraft {
+  return {
+    target: draft.target,
+    customTarget: draft.customTarget,
+    method: draft.method,
+    positions: draft.positions.map(({ name, weight }) => ({ name, weight })),
+    capital: draft.capital,
+    contribution: draft.contribution,
+    rebalance: draft.rebalance,
+    cost: draft.cost,
+    gainTax: draft.gainTax,
+    maxWeight: draft.maxWeight,
+  };
+}
+
+function decodePortfolio(text: string): PortfolioDraft {
+  let stored: unknown;
+  try {
+    stored = JSON.parse(text);
+  } catch {
+    throw new Error('O arquivo não contém um JSON válido.');
+  }
+  if (!isObject(stored) || !isDraft(stored.draft)) {
+    throw new Error('O arquivo não tem o formato de carteira do Moat.');
+  }
+  if (stored.schemaVersion !== schemaVersion) {
+    throw new Error('A versão do arquivo de carteira é incompatível.');
+  }
+  return portfolioFields(stored.draft);
+}
+
+function requireValidPortfolio(draft: PortfolioDraft) {
+  const { portfolio, errors } = validatePortfolio(draft);
+  if (portfolio === null) throw new Error(errors[0] ?? 'Revise os parâmetros da carteira.');
+}
+
+export function parsePortfolio(text: string): PortfolioDraft {
+  const draft = decodePortfolio(text);
+  requireValidPortfolio(draft);
+  return draft;
+}
+
+export function serializePortfolio(draft: PortfolioDraft): string {
+  if (!isDraft(draft)) throw new Error('A carteira não tem o formato esperado.');
+  requireValidPortfolio(draft);
+  return JSON.stringify({ schemaVersion, draft: portfolioFields(draft) });
+}
+
 function readDraft(): PortfolioDraft | null {
   try {
-    const stored: unknown = JSON.parse(window.localStorage.getItem(storageKey) ?? 'null');
-    if (isObject(stored) && stored.schemaVersion === '1.0.0' && isDraft(stored.draft)) {
-      return stored.draft;
-    }
+    const stored = window.localStorage.getItem(storageKey);
+    return stored === null ? null : decodePortfolio(stored);
   } catch {
-    // O acesso ao armazenamento depende do navegador.
+    return null;
   }
-  return null;
 }
 
 export function readSavedPortfolio() {
@@ -171,9 +217,8 @@ export function readSavedPortfolio() {
 export function useSavedPortfolio() {
   const [draft, setDraft] = useState(() => readDraft() ?? { ...defaultDraft, positions: [] });
   function save() {
-    if (validatePortfolio(draft).portfolio === null) return false;
     try {
-      window.localStorage.setItem(storageKey, JSON.stringify({ schemaVersion: '1.0.0', draft }));
+      window.localStorage.setItem(storageKey, serializePortfolio(draft));
       return true;
     } catch {
       return false;
