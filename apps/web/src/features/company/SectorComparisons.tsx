@@ -1,5 +1,7 @@
-import type { SectorComparisonSnapshot } from '@moat/data-contracts';
+import type { RiskFreeRate, SectorComparisonSnapshot } from '@moat/data-contracts';
 import { useEffect, useMemo, useRef, useState, type Ref } from 'react';
+import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
+import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
 import {
   loadSectorComparison,
   sectorComparisonUrl,
@@ -14,7 +16,7 @@ import {
   normalizeSearch,
   pageSizes,
 } from '../screener/presentation';
-import { formatRate } from './QualityHistory';
+import { formatPoints, formatRate } from './QualityHistory';
 import { formatCurrency, formatDate, formatInstant } from './financialPresentation';
 import { sectorComparisonReport } from './sectorComparisonReport';
 import {
@@ -120,7 +122,13 @@ function AccountDetails({
   );
 }
 
-function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot }) {
+function ComparisonResults({
+  snapshot,
+  riskFreeRate,
+}: {
+  snapshot: SectorComparisonSnapshot;
+  riskFreeRate: RiskFreeRate | null;
+}) {
   const { manifest } = snapshot;
   const latestYear = manifest.years[manifest.years.length - 1] ?? 0;
   const [year, setYear] = useState(latestYear);
@@ -157,6 +165,7 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
   const audited = visibleRows.find(({ company }) => company.name === selection);
   const covered = rows.filter(({ current }) => current !== null && current.roe !== null).length;
   const years = `${manifest.years[0]}–${latestYear}`;
+  const showCdi = year === latestYear;
 
   useEffect(() => {
     if (selection) focusRef.current?.focus();
@@ -174,6 +183,26 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
         completos ({years}). O percentil exige ao menos {minimumSectorPeers} companhias com média
         disponível no mesmo setor cadastral.
       </p>
+      {showCdi && (
+        <p>
+          A diferença usa o ROE de {year} e o CDI atual anualizado do{' '}
+          <a href={cdiRateUrl} target="_blank" rel="noreferrer">
+            Banco Central do Brasil (SGS 4389)
+          </a>
+          {riskFreeRate ? (
+            <>
+              {' · '}
+              {formatRate(riskFreeRate.value)} a.a. em{' '}
+              <time dateTime={riskFreeRate.provenance.referenceDate}>
+                {formatDate(riskFreeRate.provenance.referenceDate)}
+              </time>
+              .
+            </>
+          ) : (
+            ' · taxa indisponível.'
+          )}
+        </p>
+      )}
       <div className="sector-comparison-filters">
         <Input
           id="sector-comparison-search"
@@ -260,6 +289,7 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
               search,
               sector,
               sortLabels[sort],
+              riskFreeRate,
             )
           }
         />
@@ -287,6 +317,7 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
                 <tr>
                   <th scope="col">Companhia</th>
                   <th scope="col">ROE de {year}</th>
+                  {showCdi && <th scope="col">Diferença para o CDI atual</th>}
                   <th scope="col">Média de ROE em {years}</th>
                   <th scope="col">Percentil no setor</th>
                   <th scope="col">Contas</th>
@@ -303,6 +334,14 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
                         <small>{company.sector}</small>
                       </th>
                       <td>{formatRate(current?.roe ?? null)}</td>
+                      {showCdi && (
+                        <td>
+                          {formatPoints(
+                            spreadToRiskFreeRate(current?.roe ?? null, riskFreeRate),
+                            true,
+                          )}
+                        </td>
+                      )}
                       <td>
                         {formatRate(mean)}
                         <small>
@@ -364,7 +403,7 @@ function ComparisonResults({ snapshot }: { snapshot: SectorComparisonSnapshot })
 type ComparisonState =
   { status: 'loading' | 'error' } | { status: 'ready'; snapshot: SectorComparisonSnapshot };
 
-export function SectorComparisons() {
+export function SectorComparisons({ riskFreeRate }: { riskFreeRate: RiskFreeRate | null }) {
   const [state, setState] = useState<ComparisonState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
 
@@ -409,7 +448,9 @@ export function SectorComparisons() {
           </Button>
         </>
       )}
-      {state.status === 'ready' && <ComparisonResults snapshot={state.snapshot} />}
+      {state.status === 'ready' && (
+        <ComparisonResults snapshot={state.snapshot} riskFreeRate={riskFreeRate} />
+      )}
     </Panel>
   );
 }

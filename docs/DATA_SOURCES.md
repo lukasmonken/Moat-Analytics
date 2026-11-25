@@ -14,6 +14,8 @@ O [lote de comparação bancária](../data/public/cvm-bank-roe.json) usa DFP con
 
 Os comparativos setoriais cruzam as 144 companhias da seleção de 18/11/2026 com o setor declarado no FCA de 2026 e os exercícios consolidados de 2021 a 2025. O arquivo registra a coleta, o hash dos ZIPs, a versão e o recebimento dos formulários. Os nomes, setores e indicadores derivados da CVM são distribuídos sob ODbL 1.0. [Comparativo setorial em JSON](../data/public/cvm-sector-comparison.json) · [Catálogo FCA](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) · [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
 
+O lote de ROIC estimado aplica a mesma janela aos setores de Metalurgia e Siderurgia e Extração Mineral. O recorte inicial tem 14 observações conciliadas em 40 e duas séries completas. As contas e os saldos vêm da CVM. Quando a classificação de um passivo depende das notas do emissor, a observação aponta também as demonstrações de apoio. [ROIC setorial em JSON](../data/public/cvm-sector-roic.json) · [Metodologia do ROIC](METHODOLOGY.md#roic-estimado-em-siderurgia-e-mineração)
+
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
 
 ## CDI atual

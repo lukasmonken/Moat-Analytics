@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — ROIC de siderurgia e mineração
+
+- Comparativo de ROIC estimado para as oito companhias dos setores Metalurgia e Siderurgia e Extração Mineral. A tela e o Excel mostram as contas conciliadas, os formulários e as lacunas por exercício.
+- Os comparativos de ROE e ROIC mostram a diferença para o CDI atual no exercício mais recente da janela, com a data da taxa em separado.
+
 ## M2 — Comparativos setoriais da seleção anual
 
 - As 144 companhias da seleção são consultáveis em Empresas por nome, setor declarado à CVM e exercício.
