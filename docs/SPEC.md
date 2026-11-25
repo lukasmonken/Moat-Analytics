@@ -41,18 +41,21 @@ Pesquisa por empresa/ticker; filtros por índice (IBOV/SMLL/IDIV), setor e categ
 
 ## 3. Métricas contábeis e de qualidade
 
-### 3.1 Empresas não financeiras
+A página Empresas reúne todas as companhias da seleção anual em uma lista com setor, exercício, indicador e valor. Os detalhes de cada companhia mostram as principais contas usadas no cálculo, a fonte ou o motivo da indisponibilidade do indicador. A comparação de históricos reúne duas companhias com o mesmo indicador.
+
+### 3.1 ROIC para as demais companhias
 
 - `NOPAT = EBIT operacional ajustado × (1 − alíquota tributária apropriada)`; o EBIT pode demandar conciliação/normalização a partir do resultado antes do financeiro e tributos da CVM. Não somar impostos ao EBIT como se fossem lucro.
 - `ROIC = NOPAT anual ou TTM / capital investido médio`.
 - CI financeiro simplificado: `PL ajustado + dívida onerosa − caixa excedente`; documentar ajustes para arrendamentos, minoritários, ativos/passivos não operacionais e equivalentes. Preferir reconciliação operacional e financeira quando houver dados.
 - Capital investido é contábil/operacional ajustado, **não** enterprise value de mercado. Usar média dos saldos de abertura e fechamento do período.
-- Considerar valores negativos, denominadores zerados, aquisições, períodos fiscais atípicos, empresas de baixa capitalização contábil e extraordinários; sinalizar observações inadequadas para classificação.
+- Considerar valores negativos, denominadores zerados, aquisições, períodos fiscais atípicos, empresas de baixa capitalização contábil e extraordinários. Sinalizar observações inadequadas para classificação.
+- Preservar a companhia e o exercício na lista quando o ROIC estimado estiver indisponível. A observação informa a lacuna nas contas ou na conciliação.
 
-### 3.2 Bancos e financeiras
+### 3.2 ROE para bancos e seguradoras
 
 - `ROE = lucro líquido atribuível aos acionistas / patrimônio líquido médio correspondente`.
-- Comparar bancos com pares financeiros e interpretar alavancagem/capital regulatório; não aplicar mecanicamente fórmula industrial de ROIC.
+- Usar ROE como indicador de qualidade de bancos e seguradoras, considerando a atividade dos grupos bancários e de seguros. Comparar pares adequados e interpretar alavancagem e capital regulatório.
 
 ### 3.3 Série e qualidade
 

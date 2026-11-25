@@ -231,10 +231,15 @@ function isRoicInputs(value: unknown): value is RoicInputs {
 function isRoicSupportingDocumentUrl(value: unknown): value is string {
   return (
     value === 'https://vale.com/documents/d/guest/form-20-f-2025-en' ||
+    value ===
+      'https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/fcad7df5-9607-78ed-3455-ffa6e0470211?origin=2' ||
     (typeof value === 'string' &&
-      /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(917851|1073404)\/\d{18}\/[\w.-]+\.html?$/.test(
+      (/^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(909327|917851|1073404)\/\d{18}\/[\w.-]+\.html?$/.test(
         value,
-      ))
+      ) ||
+        /^https:\/\/api\.mziq\.com\/mzfilemanager\/v2\/d\/13154776-9416-4fce-8c46-3e54d45b03a3\/[a-f0-9-]{36}\?origin=[12]$/.test(
+          value,
+        )))
   );
 }
 

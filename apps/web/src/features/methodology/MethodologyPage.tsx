@@ -5,16 +5,15 @@ export function MethodologyPage() {
     <div className="feature-page module-page">
       <PageHeader
         title="Metodologia"
-        description="Consulte o universo elegível, as métricas propostas e a referência de juros."
+        description="Consulte o universo elegível, os cálculos e a referência de juros."
       />
       <div className="methodology-sections">
         <Panel className="methodology-panel" aria-labelledby="methodology-cvm">
-          <h2 id="methodology-cvm">Amostra contábil da CVM</h2>
+          <h2 id="methodology-cvm">Dados contábeis da CVM</h2>
           <p>
-            A amostra usa Demonstrações Financeiras Padronizadas consolidadas de uma indústria, um
-            varejista e um banco. Cada exercício informa a versão do envio, a origem e as
-            verificações contábeis. Os valores são apresentados em reais e as lacunas ficam
-            sinalizadas como indisponíveis.
+            A página Empresas reúne a seleção anual e consulta as demonstrações consolidadas da CVM.
+            Os detalhes de cada exercício mostram as contas do cálculo e o formulário de origem
+            quando disponíveis. As lacunas informam o motivo.
           </p>
           <ButtonLink to="/empresas" className="methodology-link">
             Consultar contas da CVM
@@ -51,14 +50,17 @@ export function MethodologyPage() {
             </thead>
             <tbody>
               <tr>
-                <th scope="row">ROIC</th>
-                <td>Lucro operacional após impostos dividido pelo capital investido médio.</td>
+                <th scope="row">ROE de bancos e seguradoras</th>
+                <td>
+                  Lucro líquido atribuível à controladora dividido pelo patrimônio líquido médio da
+                  controladora.
+                </td>
               </tr>
               <tr>
-                <th scope="row">ROE de bancos</th>
+                <th scope="row">ROIC estimado</th>
                 <td>
-                  Lucro líquido atribuível aos acionistas dividido pelo patrimônio líquido médio
-                  correspondente.
+                  Para as demais companhias, EBIT conciliado após a alíquota padronizada de 34%,
+                  dividido pelo capital investido médio.
                 </td>
               </tr>
               <tr>
@@ -76,17 +78,17 @@ export function MethodologyPage() {
             exercícios.
           </p>
           <p>
-            A comparação bancária calcula a média de ROE de 2021 a 2025. O percentil descreve a
-            posição dessa média no grupo de cinco bancos e usa a posição média em caso de empate.
+            Em Empresas, <strong>Comparar histórico</strong> reúne duas companhias com o mesmo
+            indicador.
           </p>
         </Panel>
 
         <Panel className="methodology-panel" aria-labelledby="methodology-sources">
           <h2 id="methodology-sources">Fontes e disponibilidade</h2>
           <p>
-            Os demonstrativos da amostra vêm dos dados abertos da CVM. O Banco Central publica o CDI
-            anualizado na série SGS 4389. As cotações previstas usarão o fechamento do último pregão
-            disponível e informarão a data e o provedor.
+            Os demonstrativos vêm dos dados abertos da CVM. O Banco Central publica o CDI anualizado
+            na série SGS 4389. As cotações previstas usarão o fechamento do último pregão disponível
+            e informarão a data e o provedor.
           </p>
         </Panel>
         <Panel className="methodology-panel" aria-labelledby="methodology-backtest">

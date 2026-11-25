@@ -75,13 +75,13 @@ A rotina usa os mesmos ZIPs e opções. O lote `data/public/cvm-bank-roe.json` i
 python3 apps/pipeline/run_sector_comparison.py
 ```
 
-A rotina local usa o recorte anual, o diretório público, o FCA da data-base da seleção e os ZIPs DFP de 2021 a 2025 em `data/raw/cvm`. O arquivo de saída é `data/public/cvm-sector-comparison.json`. Use `--raw-dir`, `--selection`, `--directory`, `--fca-archive` ou `--output` para indicar outros arquivos. A geração preserva lacunas justificadas por exercício, e uma falha de entrada mantém o último lote válido. [Metodologia dos comparativos](../../docs/METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
+A rotina local usa o recorte anual, o diretório público, o FCA da data-base da seleção e os ZIPs DFP de 2021 a 2025 em `data/raw/cvm`. O arquivo `data/public/cvm-sector-comparison.json` reúne o ROE de bancos e seguradoras. Use `--raw-dir`, `--selection`, `--directory`, `--fca-archive` ou `--output` para indicar outros arquivos. A geração preserva lacunas justificadas por exercício, e uma falha de entrada mantém o último lote válido. [Metodologia dos comparativos](../../docs/METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
 
 ```bash
 python3 apps/pipeline/run_sector_roic.py
 ```
 
-A rotina de ROIC usa os mesmos insumos locais e grava `data/public/cvm-sector-roic.json` para os dois setores revisados. As observações sem contas conciliadas registram o motivo. [Metodologia do ROIC](../../docs/METHODOLOGY.md#roic-estimado-em-siderurgia-e-mineração)
+A rotina de ROIC usa os mesmos insumos locais e grava `data/public/cvm-sector-roic.json` para as demais companhias. As observações sem contas conciliadas registram o motivo. [Metodologia do ROIC](../../docs/METHODOLOGY.md#roic-estimado-da-seleção-anual)
 
 ## Gerar os fundamentos de preço
 

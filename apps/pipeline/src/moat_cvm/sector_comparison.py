@@ -19,13 +19,13 @@ from .bank_roe import (
     same_filing,
     santander_income_evidence,
 )
-from .comparison_identity import comparison_identities
+from .comparison_identity import comparison_identities, uses_roe
 from .dfp import ORIGIN, SOURCE, CsvRow, amount
 from .fca import SOURCE as SECTOR_SOURCE
 
 METHODOLOGY = "roe-dfp-comparisons.v1"
 YEARS = tuple(range(2021, 2026))
-INCOME_LAYOUTS = ("3.11", "3.09")
+INCOME_LAYOUTS = ("3.11", "3.09", "3.13")
 EQUITY_LAYOUTS = ("2.03", "2.07", "2.08")
 INCOME_LABELS = (
     "Lucro/Prejuízo Consolidado do Período", "Lucro ou Prejuízo Líquido Consolidado do Período",
@@ -334,7 +334,9 @@ def create_sector_comparison(
     if tuple(sorted(dfp_archives)) != YEARS:
         raise ValueError("A janela de comparação exige os cinco ZIPs da CVM de 2021 a 2025.")
     by_code, archives = comparison_identities(selection, directory, fca_archives)
-    identities = {f"{code:06d}": identity for code, identity in by_code.items()}
+    identities = {
+        f"{code:06d}": identity for code, identity in by_code.items() if uses_roe(code, identity)
+    }
     companies = {
         code: {**{key: identity[key] for key in ("name", "sector", "classification")}, "observations": []}
         for code, identity in identities.items()

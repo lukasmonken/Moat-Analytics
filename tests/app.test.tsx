@@ -107,7 +107,9 @@ describe('Moat Analytics', () => {
     window.history.replaceState(null, '', '/#/empresas');
     render(<App />);
 
-    expect(screen.getByText(/Carregando a amostra/).getAttribute('role')).toBe('status');
+    expect(screen.getByText(/Carregando indicadores/).getAttribute('role')).toBe('status');
+    expect(await screen.findByRole('heading', { name: 'Indicadores indisponíveis' })).toBeTruthy();
+    await userEvent.setup().click(screen.getByText('Dados complementares', { exact: true }));
     expect(await screen.findByRole('heading', { name: 'Amostra indisponível' })).toBeTruthy();
     expect(await screen.findByText('Comparação de ROE indisponível.')).toBeTruthy();
   });
@@ -125,6 +127,7 @@ describe('Moat Analytics', () => {
 
     const user = userEvent.setup();
     render(<App />);
+    await user.click(screen.getByText('Dados complementares', { exact: true }));
     expect(await screen.findByRole('heading', { name: 'Erro ao carregar a amostra' })).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Tentar novamente' }));
 

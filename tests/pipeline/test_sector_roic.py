@@ -5,6 +5,7 @@ import unittest
 from test_sector_comparison import account_rows, filing
 
 from apps.pipeline.src.moat_cvm.sector_roic import balance_capital, observe_roic
+from apps.pipeline.src.moat_cvm.sector_roic_notes import ReviewedAccount
 
 
 def by_code(document, accounts):
@@ -117,3 +118,33 @@ class SectorRoicTest(unittest.TestCase):
         capital, evidence = balance_capital("003980", "closing", statements, 7_000)
         self.assertEqual(capital, 180_000)
         self.assertIn("closingOperatingSupplier", [row["key"] for row in evidence])
+
+    def test_only_includes_separate_financing_verified_for_the_balance_date(self):
+        document = filing("000111")
+        statements = balance(document)
+        statements["BPA"]["1"]["VL_CONTA"] = 217
+        statements["BPA"]["1.02"]["VL_CONTA"] = 117
+        statements["BPP"]["2"]["VL_CONTA"] = 217
+        statements["BPP"]["2.01"]["VL_CONTA"] = 47
+        statements["BPP"].update(by_code(document, [
+            ("2.01.05", "Outras Obrigações", 7),
+            ("2.01.05.02", "Outros", 7),
+            ("2.01.05.02.06", "Cessão de direitos creditórios", 5),
+            ("2.01.05.02.07", "Contas a pagar por aquisições", 2),
+        ]))
+        funding = ReviewedAccount("2.01.05.02.06", "Cessão de direitos creditórios", 4_000, 5_000)
+        operational = ReviewedAccount("2.01.05.02.07", "Contas a pagar por aquisições", 2_000, 2_000, False)
+
+        with self.assertRaisesRegex(ValueError, "Cessão de direitos creditórios"):
+            balance_capital("000111", "closing", statements)
+        with self.assertRaisesRegex(ValueError, "Contas a pagar por aquisições"):
+            balance_capital("000111", "closing", statements, reviewed_accounts=(funding,))
+        with self.assertRaisesRegex(ValueError, "diverge da nota auditada"):
+            balance_capital("000111", "opening", statements, reviewed_accounts=(funding, operational))
+
+        capital, evidence = balance_capital(
+            "000111", "closing", statements, reviewed_accounts=(funding, operational),
+        )
+        self.assertEqual(capital, 185_000)
+        self.assertIn("closingSeparateDebt1", [row["key"] for row in evidence])
+        self.assertIn("closingOperatingSupplier1", [row["key"] for row in evidence])

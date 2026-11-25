@@ -1,4 +1,4 @@
-"""Gera o comparativo setorial de ROE da seleção anual usando os ZIPs locais da CVM."""
+"""Gera o comparativo de ROE de bancos e seguradoras usando os ZIPs locais da CVM."""
 
 import argparse
 import json

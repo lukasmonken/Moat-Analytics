@@ -1,5 +1,11 @@
 # Changelog
 
+## M2 — Comparativo unificado de Empresas
+
+- Uma lista reúne as 144 companhias da seleção anual. ROE é o indicador de 14 bancos e seguradoras, e ROIC estimado é o indicador das outras 130 companhias.
+- Os detalhes mostram as principais contas, a DFP de origem e o motivo das lacunas por exercício. O CDI atual continua associado ao exercício mais recente.
+- A opção **Comparar histórico** mostra os exercícios de duas companhias com o mesmo indicador. O Excel exporta os valores do exercício e as contas de origem para as companhias filtradas ou para toda a seleção.
+
 ## M2 — ROE lado a lado
 
 - Comparação anual de ROE de até quatro companhias da seleção, com média dos cinco exercícios, variação em pontos percentuais, mediana do setor, cobertura e links para as DFPs.
