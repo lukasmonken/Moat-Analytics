@@ -1,13 +1,18 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { fromArrayBuffer, loadWorkbook } from '@office-kit/xlsx/io';
 import { getSheet, sheetNames } from '@office-kit/xlsx/workbook';
 import { getAutoFilter, getCell } from '@office-kit/xlsx/worksheet';
 import { readFile } from 'node:fs/promises';
 import { cdiRateUrl } from '../../apps/web/src/shared/data-client/riskFreeRate';
 
-async function workbookDownload(page: Page, label: string, filename: string) {
+async function workbookDownload(
+  page: Page,
+  label: string,
+  filename: string,
+  scope: Page | Locator = page,
+) {
   const result = page.waitForEvent('download');
-  await page.getByRole('button', { name: label, exact: true }).click();
+  await scope.getByRole('button', { name: label, exact: true }).click();
   const download = await result;
   expect(download.suggestedFilename()).toBe(filename);
   const path = await download.path();
@@ -49,6 +54,37 @@ test('exporta as quatro consultas contábeis de Empresas', async ({ page }) => {
   for (const [label, name, sheet] of reports) {
     expect(sheetNames(await workbookDownload(page, label, name))).toContain(sheet);
   }
+});
+
+test('compara e exporta a seleção setorial com contas e cobertura', async ({ page }) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
+  await page.goto('./#/empresas');
+  const region = page.getByRole('region', { name: 'Comparativos por setor' });
+  const comparison = region.getByRole('table', { name: 'Comparativo de ROE por setor' });
+  const search = region.getByLabel('Buscar companhia no comparativo');
+  await region.getByLabel('Setor de atividade').selectOption({ label: 'Bancos' });
+  await search.fill('ITAU UNIBANCO');
+  const bank = comparison.getByRole('row', { name: /ITAU UNIBANCO HOLDING/ });
+  await expect(bank).toContainText(/21,59\s*%/);
+  await bank.getByRole('button', { name: 'Conferir contas de ITAU UNIBANCO HOLDING S.A.' }).click();
+  const details = region.getByRole('region', { name: 'ITAU UNIBANCO HOLDING S.A. · 2025' });
+  await expect(details.getByRole('link', { name: 'DFP consolidada na CVM' })).toBeVisible();
+  const exportComparison = () =>
+    workbookDownload(page, 'Exportar Excel', 'moat-comparativo-setorial.xlsx', region);
+  const workbook = await exportComparison();
+  const rows = getSheet(workbook, 'Comparativo setorial');
+  const sources = getSheet(workbook, 'Contas e formulários');
+  if (!rows || !sources) throw new Error('Aba ausente.');
+  expect(getAutoFilter(rows)?.ref).toBe('A1:H2');
+  expect(getAutoFilter(sources)?.ref).toBe('A1:N6');
+  expect(getCell(rows, 2, 1)?.value).toBe('ITAU UNIBANCO HOLDING S.A.');
+  expect(getCell(rows, 2, 3)?.value).toBeCloseTo(0.215870892296, 9);
+  await region.getByLabel('Linhas para exportar').selectOption('all');
+  const all = getSheet(await exportComparison(), 'Comparativo setorial');
+  if (!all) throw new Error('Aba ausente.');
+  expect(getAutoFilter(all)?.ref).toBe('A1:H145');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
 
 test('exporta resultados de valuation e mantém a origem da taxa aplicada enquanto ela é usada', async ({

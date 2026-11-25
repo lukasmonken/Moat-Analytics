@@ -1,0 +1,61 @@
+.sector-comparison-panel,
+.sector-comparison-audit {
+  min-width: 0;
+}
+
+.sector-comparison-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0.75rem;
+}
+
+.sector-comparison-panel .screener-results__toolbar {
+  padding: 0;
+}
+
+.sector-comparison-table {
+  min-width: 41rem;
+}
+
+.sector-comparison-table th[scope='row'] {
+  width: 35%;
+  max-width: 20rem;
+  overflow-wrap: anywhere;
+}
+
+.sector-comparison-table small {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.sector-comparison-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.sector-comparison-audit {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+  scroll-margin-top: 4rem;
+}
+
+.sector-comparison-audit:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.sector-comparison-audit h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+@media (max-width: 34rem) {
+  .sector-comparison-table th[scope='row'] {
+    width: 27%;
+    max-width: 12rem;
+  }
+}

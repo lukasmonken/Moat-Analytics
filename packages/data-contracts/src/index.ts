@@ -68,3 +68,4 @@ export * from './risk-free-rate.ts';
 export * from './market-close.ts';
 export * from './price-fundamentals.ts';
 export * from './backtest-history.ts';
+export * from './sector-comparison.ts';

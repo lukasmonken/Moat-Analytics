@@ -151,7 +151,7 @@ function isObservation(input: unknown): input is QualityObservation {
   );
 }
 
-function isSupportingDocumentUrl(input: unknown): input is string {
+export function isSupportingDocumentUrl(input: unknown): input is string {
   if (typeof input !== 'string') return false;
   try {
     const url = new URL(input);

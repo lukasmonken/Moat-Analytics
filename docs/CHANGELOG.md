@@ -1,5 +1,11 @@
 # Changelog
 
+## M2 — Comparativos setoriais da seleção anual
+
+- As 144 companhias da seleção são consultáveis em Empresas por nome, setor declarado à CVM e exercício.
+- ROE atribuível à controladora de 2021 a 2025 com contas, versão e DFP de origem. A tela exibe lacunas por exercício e calcula percentis nos setores com pelo menos cinco séries completas.
+- Exportação em Excel do recorte ou da seleção completa, com contas, formulários e arquivos de origem.
+
 ## M5 — Cópia de carteira em JSON
 
 - Exportação e restauração da composição, dos pesos e dos parâmetros em Carteiras. A importação carrega os valores para revisão antes de salvar neste navegador.
