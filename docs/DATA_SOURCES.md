@@ -16,7 +16,7 @@ O comparativo de Empresas cruza as 144 companhias da seleção de 18/11/2026 com
 
 O lote de ROE reúne 14 bancos e seguradoras. O lote de ROIC estimado reúne as outras 130 companhias. Cada arquivo guarda os formulários de origem, as contas disponíveis e os motivos das lacunas. Quando a classificação de um passivo depende das notas do emissor, a observação aponta também as demonstrações de apoio. [ROE em JSON](../data/public/cvm-sector-comparison.json) · [ROIC em JSON](../data/public/cvm-sector-roic.json) · [Metodologia](METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
 
-Neste lote, 2025 tem 13 ROEs e 38 ROICs estimados disponíveis. De 2021 a 2025, são 64 observações de ROE em 70 e 194 de ROIC em 650.
+Neste lote, 2025 tem 13 ROEs e 58 ROICs estimados disponíveis. De 2021 a 2025, são 64 observações de ROE em 70 e 253 de ROIC em 650.
 
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
 

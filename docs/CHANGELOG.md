@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — Cobertura de ROIC de 2025
+
+- O ROIC estimado de 2025 passou de 38 para 58 companhias com cálculo disponível. O lote incorpora novas descrições de arrendamento e passivos cuja classificação foi conferida nas notas dos emissores.
+- Empresas e o Excel identificam os valores de arrendamento que a Ambev, a B3 e a Tupy já incluem nos financiamentos.
+
 ## M2 — Ordenação de Empresas por retorno
 
 - Filtro por ROE ou ROIC e ordenação pelo maior retorno do exercício dentro do indicador escolhido. Lacunas ficam no fim da tabela ordenada.

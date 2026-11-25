@@ -103,6 +103,20 @@ test('compara ROE e ROIC na mesma lista e exporta toda a seleção', async ({ pa
   if (!roicReport) throw new Error('Aba ausente.');
   expect(getCell(roicReport, 2, 5)?.value).toBeCloseTo(0.075759868297, 9);
 
+  await search.fill('AMBEV S.A.');
+  const ambev = table.getByRole('row', { name: /^AMBEV S\.A\./ });
+  await expect(ambev).toContainText(/20,90\s*%/);
+  await ambev.getByRole('button', { name: 'Ver cálculo de AMBEV S.A.' }).click();
+  const ambevDetails = region.getByRole('region', { name: 'AMBEV S.A. · 2025' });
+  const leaseNote = ambevDetails.getByRole('row', {
+    name: /Arrendamentos incluídos nos financiamentos.*Nota 23/s,
+  });
+  await expect(leaseNote).toContainText(/2\.965\.100\.000.*2\.975\.700\.000/s);
+  const ambevAccounts = getSheet(await exportComparison(), 'Contas e saldos');
+  if (!ambevAccounts) throw new Error('Aba ausente.');
+  expect(getCell(ambevAccounts, 5, 4)?.value).toBe('Nota 23');
+  expect(getCell(ambevAccounts, 5, 6)?.value).toBe(2_965_100_000);
+
   await region.getByLabel('Exercício').selectOption('2024');
   await expect(table.getByRole('columnheader', { name: 'Diferença para o CDI atual' })).toHaveCount(
     0,

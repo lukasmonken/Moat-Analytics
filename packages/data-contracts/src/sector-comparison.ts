@@ -72,6 +72,7 @@ interface RoicInputs {
   openingCapitalBrl: number;
   closingCapitalBrl: number;
   accounts: QualityInput[];
+  embeddedLeases?: { note: string; openingBrl: number; closingBrl: number };
 }
 
 export interface SectorRoicObservation {
@@ -213,6 +214,18 @@ function isObservation(value: unknown): value is SectorComparisonObservation {
   return numbersAgree(value.roe, expected);
 }
 
+function isEmbeddedLeases(value: unknown): value is NonNullable<RoicInputs['embeddedLeases']> {
+  return (
+    isObject(value) &&
+    typeof value.note === 'string' &&
+    /^\d+(?:\.\d+)*$/.test(value.note) &&
+    isMoney(value.openingBrl) &&
+    value.openingBrl > 0 &&
+    isMoney(value.closingBrl) &&
+    value.closingBrl > 0
+  );
+}
+
 function isRoicInputs(value: unknown): value is RoicInputs {
   return (
     isObject(value) &&
@@ -224,22 +237,35 @@ function isRoicInputs(value: unknown): value is RoicInputs {
     value.closingCapitalBrl > 0 &&
     isListOf(value.accounts, isQualityInput) &&
     value.accounts.length > 0 &&
-    unique(value.accounts, ({ key, referenceDate }) => `${key}/${referenceDate}`)
+    unique(value.accounts, ({ key, referenceDate }) => `${key}/${referenceDate}`) &&
+    (value.embeddedLeases === undefined || isEmbeddedLeases(value.embeddedLeases))
   );
 }
 
+const roicSupportingDocuments = new Set([
+  'https://vale.com/documents/d/guest/form-20-f-2025-en',
+  'https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/fcad7df5-9607-78ed-3455-ffa6e0470211?origin=2',
+  'https://api.mziq.com/mzfilemanager/v2/d/24165f81-24d6-4648-bf9f-66712905d5a2/197836af-54b5-cff0-af1e-de97ad340f36?origin=2',
+  'https://api.mziq.com/mzfilemanager/v2/d/330c258b-6212-45ce-8c13-557ea46cc23a/ec0bffc6-8050-2a0b-1e23-5a3890c7c7d5?origin=2',
+  'https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/0cfe19b8-158f-39a5-8750-42ffc2c71a54?origin=2',
+  'https://api.mziq.com/mzfilemanager/v2/d/6b90b8ef-4914-4021-8296-c5aca7b388eb/332513a1-ba6f-da78-df8f-6c5de67a33d1?origin=2',
+  'https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/297cd69b-7cfb-d469-55f1-3d8418bf4b76?origin=2',
+  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/p/P/HKWA55Sxyc8CKT7gPtWg/tupy1588252920032026.pdf',
+  'https://vipfiles.valor.com.br/BDEmpresas/bfc245c3-7342-4b02-a2ff-96206f033415.pdf',
+  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155072',
+  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155361',
+]);
+
 function isRoicSupportingDocumentUrl(value: unknown): value is string {
   return (
-    value === 'https://vale.com/documents/d/guest/form-20-f-2025-en' ||
-    value ===
-      'https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/fcad7df5-9607-78ed-3455-ffa6e0470211?origin=2' ||
-    (typeof value === 'string' &&
-      (/^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(909327|917851|1073404)\/\d{18}\/[\w.-]+\.html?$/.test(
+    typeof value === 'string' &&
+    (roicSupportingDocuments.has(value) ||
+      /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(909327|917851|1073404|1355444|1565025)\/\d{18}\/[\w.-]+\.html?$/.test(
         value,
       ) ||
-        /^https:\/\/api\.mziq\.com\/mzfilemanager\/v2\/d\/13154776-9416-4fce-8c46-3e54d45b03a3\/[a-f0-9-]{36}\?origin=[12]$/.test(
-          value,
-        )))
+      /^https:\/\/api\.mziq\.com\/mzfilemanager\/v2\/d\/13154776-9416-4fce-8c46-3e54d45b03a3\/[a-f0-9-]{36}\?origin=[12]$/.test(
+        value,
+      ))
   );
 }
 
@@ -265,11 +291,13 @@ function isRoicObservation(value: unknown): value is SectorRoicObservation {
   )
     return false;
 
-  const { ebitBrl, nopatBrl, openingCapitalBrl, closingCapitalBrl, accounts } = value.inputs;
+  const { ebitBrl, nopatBrl, openingCapitalBrl, closingCapitalBrl, accounts, embeddedLeases } =
+    value.inputs;
   const ebit = accounts.find(({ statement, code }) => statement === 'DRE' && code === '3.05');
   return (
     ebit?.amountBrl === ebitBrl &&
     ebit.referenceDate === value.filing.referenceDate &&
+    (embeddedLeases === undefined || value.filing.supportingDocumentUrl !== undefined) &&
     numbersAgree(nopatBrl, ebitBrl * 0.66) &&
     numbersAgree(value.roic, nopatBrl / ((openingCapitalBrl + closingCapitalBrl) / 2))
   );
