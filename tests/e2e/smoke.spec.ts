@@ -45,6 +45,7 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
 
 test('consulta a amostra oficial no build hospedado em subdiretório', async ({ page }) => {
   await page.goto('./#/empresas');
+  await page.getByText('Dados complementares', { exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Amostra da CVM' })).toBeVisible();
   const company = page.getByRole('combobox', { name: 'Companhia' });
   await expect(company.getByRole('option')).toHaveCount(3);
@@ -68,6 +69,7 @@ test('consulta a amostra oficial no build hospedado em subdiretório', async ({ 
 
 test('consulta o resultado de 12 meses e as contas do ITR', async ({ page }) => {
   await page.goto('./#/empresas');
+  await page.getByText('Dados complementares', { exact: true }).click();
   const company = page.getByRole('combobox', { name: 'Companhia' });
   const pricing = page.getByRole('region', { name: 'Preço e rendimento implícito' });
   await company.selectOption('cvm:5410');
@@ -97,6 +99,7 @@ test('consulta o resultado de 12 meses e as contas do ITR', async ({ page }) => 
 
 test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
   await page.goto('./#/empresas');
+  await page.getByText('Dados complementares', { exact: true }).click();
   const company = page.getByRole('combobox', { name: 'Companhia' });
   await company.selectOption('cvm:5410');
   await page.getByText('Histórico de qualidade', { exact: true }).click();
@@ -120,6 +123,7 @@ test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
 
 test('compara ROE de cinco bancos e consulta a conciliação do Santander', async ({ page }) => {
   await page.goto('./#/empresas');
+  await page.getByText('Dados complementares', { exact: true }).click();
   const table = page.getByRole('table', { name: 'ROE por banco e exercício' });
   await expect(table.getByRole('row')).toHaveCount(6);
   await expect(table.getByRole('columnheader', { name: '2021' })).toBeVisible();
@@ -474,6 +478,7 @@ test.describe('janela móvel', () => {
 
   test('mantém a rolagem da tabela dentro da página de empresas', async ({ page }) => {
     await page.goto('./#/empresas');
+    await page.getByText('Dados complementares', { exact: true }).click();
     const bankTable = page.getByRole('region', { name: 'Resultados anuais por banco' });
     await expect(bankTable).toBeVisible();
     expect(await bankTable.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(

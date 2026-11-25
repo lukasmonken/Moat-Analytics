@@ -1,6 +1,6 @@
 # Moat Analytics
 
-Aplicativo web para análise fundamentalista de companhias brasileiras. Em **Empresas**, compare o ROE das companhias da seleção anual por setor declarado à CVM e consulte as contas de origem. O **Histórico de qualidade** inclui ROIC estimado para WEG e Renner e ROE para Itaú. O **Screener** público mostra os nomes oficiais da seleção anual.
+Aplicativo web para análise fundamentalista de companhias brasileiras. **Empresas** reúne toda a seleção anual em uma lista pesquisável, com ROE para bancos e seguradoras e ROIC estimado para as demais companhias. Consulte as contas de origem e os motivos das lacunas por exercício. O **Screener** público mostra os nomes oficiais da seleção anual.
 
 ## Executar localmente
 

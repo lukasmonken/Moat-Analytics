@@ -53,68 +53,6 @@
   font-size: 1rem;
 }
 
-.side-by-side-roe {
-  display: grid;
-  gap: 0.65rem;
-  min-width: 0;
-  padding: 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 0.55rem;
-}
-
-.side-by-side-roe-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.side-by-side-roe h3,
-.side-by-side-roe p {
-  margin: 0;
-}
-
-.side-by-side-roe-companies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.side-by-side-roe-companies li {
-  min-width: 0;
-  max-width: 100%;
-}
-
-.side-by-side-roe-companies .ui-button {
-  border-color: var(--border);
-  text-align: start;
-  overflow-wrap: anywhere;
-}
-
-.side-by-side-roe .company-history-table th:first-child {
-  min-width: 7rem;
-}
-
-.side-by-side-roe thead th:not(:first-child) {
-  min-width: 13rem;
-  white-space: normal;
-}
-
-.side-by-side-roe thead small {
-  display: block;
-  margin-top: 0.2rem;
-  font-weight: 500;
-}
-
-.side-by-side-roe td a {
-  display: inline-block;
-  margin-top: 0.2rem;
-}
-
 @media (max-width: 34rem) {
   .sector-comparison-table th[scope='row'] {
     width: 27%;

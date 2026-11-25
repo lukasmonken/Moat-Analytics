@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { parseSectorComparison, parseSectorRoicComparison } from '@moat/data-contracts';
+import { parseSectorRoicComparison } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 
 function readSnapshot() {
@@ -9,25 +9,26 @@ function readSnapshot() {
 }
 
 describe('ROIC setorial estimado da CVM', () => {
-  it('mantém os oito nomes e setores do FCA, sem misturar bancos ou holdings na amostra', () => {
+  it('inclui todas as 130 companhias que devem usar ROIC, inclusive quando faltam contas', () => {
     const snapshot = readSnapshot();
-    const roe = parseSectorComparison(
-      JSON.parse(readFileSync('data/public/cvm-sector-comparison.json', 'utf8')),
-    );
-    const sectors = new Set(['Extração Mineral', 'Metalurgia e Siderurgia']);
-    expect(snapshot.manifest.asOf).toBe(roe.manifest.asOf);
-    expect(snapshot.companies).toHaveLength(8);
-    expect(snapshot.companies.map(({ name, sector }) => [name, sector])).toEqual(
-      roe.companies
-        .filter(({ sector }) => sectors.has(sector))
-        .map(({ name, sector }) => [name, sector]),
-    );
+    expect(snapshot.companies).toHaveLength(130);
     expect(snapshot.companies.every(({ observations }) => observations.length === 5)).toBe(true);
+    const camil = snapshot.companies.find(({ name }) => name === 'CAMIL ALIMENTOS S.A.');
+    expect(camil?.observations.at(-1)).toMatchObject({
+      roic: null,
+      reason: expect.stringMatching(/31\/12/),
+    });
+    const qualicorp = snapshot.companies.find(({ name }) => name.startsWith('QUALICORP'));
+    expect(qualicorp?.observations.at(-1)?.reason).toBeTruthy();
   });
 
   it.each([
     ['VALE S.A.', 0.07575986829703543, 31_969_000_000, 292_788_000_000, 264_223_000_000],
     ['GERDAU S.A.', 0.03833042678305822, 3_739_068_000, 65_323_126_000, 63_440_631_000],
+    ['SER EDUCACIONAL S.A.', 0.11438815801653988, 444_661_000, 2_586_576_000, 2_544_659_000],
+    ['TEGMA GESTAO LOGISTICA S.A.', 0.23740197861171464, 326_884_000, 857_147_000, 960_390_000],
+    ['SUZANO S.A.', 0.05354438651537135, 10_649_009_000, 131_925_693_000, 130_598_407_000],
+    ['LOJAS RENNER S.A.', 0.09570417277243985, 1_797_160_000, 12_423_752_000, 12_363_581_000],
   ])('confere 2025 da companhia %s com a DFP consolidada', (name, roic, ebit, opening, closing) => {
     const company = readSnapshot().companies.find((candidate) => candidate.name === name);
     const observation = company?.observations.at(-1);
@@ -38,6 +39,31 @@ describe('ROIC setorial estimado da CVM', () => {
       openingCapitalBrl: opening,
       closingCapitalBrl: closing,
     });
+  });
+
+  it('mostra as fontes para passivos revisados e preserva lacunas entre exercícios válidos', () => {
+    const { companies } = readSnapshot();
+    const suzano = companies.find(({ name }) => name === 'SUZANO S.A.');
+    expect(suzano?.observations.map(({ roic }) => roic !== null)).toEqual([
+      true,
+      false,
+      false,
+      true,
+      true,
+    ]);
+    expect(suzano?.observations[1]?.reason).toContain('Compromissos com Aquisição de Ativos');
+    expect(suzano?.observations.at(-1)?.filing?.supportingDocumentUrl).toContain('sec.gov');
+
+    const klabin = companies.find(({ name }) => name === 'KLABIN S.A.')?.observations.at(-1);
+    expect(klabin?.roic).toBeCloseTo(0.06690518047130901, 12);
+    expect(klabin?.filing?.supportingDocumentUrl).toContain('api.mziq.com');
+    expect(klabin?.inputs?.accounts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ key: 'closingOperatingSupplier1', amountBrl: 658_466_000 }),
+        expect.objectContaining({ key: 'closingSeparateDebt1', amountBrl: 1_118_187_000 }),
+        expect.objectContaining({ key: 'closingSeparateDebt2', amountBrl: 233_784_000 }),
+      ]),
+    );
   });
 
   it('rejeita estimativa fora da metodologia declarada', () => {

@@ -43,6 +43,7 @@ test('exporta as quatro consultas contábeis de Empresas', async ({ page }) => {
     route.fulfill({ json: [{ data: '15/12/2025', valor: '13.65' }] }),
   );
   await page.goto('./#/empresas');
+  await page.getByText('Dados complementares', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Companhia' }).selectOption('cvm:5410');
   await page.getByText('Histórico de qualidade', { exact: true }).click();
   const reports = [
@@ -56,145 +57,113 @@ test('exporta as quatro consultas contábeis de Empresas', async ({ page }) => {
   }
 });
 
-test('compara e exporta a seleção setorial com contas e cobertura', async ({ page }) => {
+test('compara ROE e ROIC na mesma lista e exporta toda a seleção', async ({ page }) => {
   await page.route(cdiRateUrl, (route) =>
     route.fulfill({ json: [{ data: '15/12/2025', valor: '13.65' }] }),
   );
   await page.goto('./#/empresas');
-  const region = page.getByRole('region', { name: 'Comparativos por setor' });
-  const comparison = region.getByRole('table', { name: 'Comparativo de ROE por setor' });
-  const search = region.getByLabel('Buscar companhia no comparativo');
-  await region.getByLabel('Setor de atividade').selectOption({ label: 'Bancos' });
+  const region = page.getByRole('region', { name: 'Comparar empresas' });
+  const table = region.getByRole('table', { name: 'Indicadores das empresas' });
+  const search = region.getByLabel('Buscar empresa');
+  await expect(region.getByText('144 de 144 companhias')).toBeVisible();
   await search.fill('ITAU UNIBANCO');
-  const bank = comparison.getByRole('row', { name: /ITAU UNIBANCO HOLDING/ });
+  const bank = table.getByRole('row', { name: /ITAU UNIBANCO HOLDING/ });
+  await expect(bank.getByRole('cell', { name: 'ROE', exact: true })).toBeVisible();
   await expect(bank).toContainText(/21,59\s*%/);
   await expect(bank).toContainText(/\+7,94\s*p\.p\./);
-  await bank.getByRole('button', { name: 'Conferir contas de ITAU UNIBANCO HOLDING S.A.' }).click();
+  await bank.getByRole('button', { name: 'Ver cálculo de ITAU UNIBANCO HOLDING S.A.' }).click();
   const details = region.getByRole('region', { name: 'ITAU UNIBANCO HOLDING S.A. · 2025' });
-  await expect(details.getByRole('link', { name: 'DFP consolidada na CVM' })).toBeVisible();
-  const exportComparison = () =>
-    workbookDownload(page, 'Exportar Excel', 'moat-comparativo-setorial.xlsx', region);
-  const workbook = await exportComparison();
-  const rows = getSheet(workbook, 'Comparativo setorial');
-  const sources = getSheet(workbook, 'Contas e formulários');
-  const cdi = getSheet(workbook, 'CDI atual');
-  if (!rows || !sources || !cdi) throw new Error('Aba ausente.');
-  expect(getAutoFilter(rows)?.ref).toBe('A1:H2');
-  expect(getAutoFilter(sources)?.ref).toBe('A1:N6');
-  expect(getCell(rows, 2, 1)?.value).toBe('ITAU UNIBANCO HOLDING S.A.');
-  expect(getCell(rows, 2, 3)?.value).toBeCloseTo(0.215870892296, 9);
-  expect(getCell(cdi, 2, 5)?.value).toBe(0.1365);
-  expect(getCell(cdi, 2, 6)?.value).toBeCloseTo(7.9370892296, 9);
-  await region.getByLabel('Exercício comparado').selectOption('2024');
   await expect(
-    comparison.getByRole('columnheader', { name: 'Diferença para o CDI atual' }),
-  ).toHaveCount(0);
-  expect(sheetNames(await exportComparison())).not.toContain('CDI atual');
-  await region.getByLabel('Exercício comparado').selectOption('2025');
-  await region.getByLabel('Linhas para exportar').selectOption('all');
-  const all = getSheet(await exportComparison(), 'Comparativo setorial');
-  if (!all) throw new Error('Aba ausente.');
-  expect(getAutoFilter(all)?.ref).toBe('A1:H145');
-  await page.setViewportSize({ width: 390, height: 844 });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
-});
-
-test('compara o histórico de ROE de companhias selecionadas em buscas diferentes', async ({
-  page,
-}) => {
-  await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
-  await page.goto('./#/empresas');
-  const region = page.getByRole('region', { name: 'Comparativos por setor' });
-  const search = region.getByLabel('Buscar companhia no comparativo');
-  const comparison = region.getByRole('region', { name: 'ROE lado a lado' });
-  const itau = 'ITAU UNIBANCO HOLDING S.A.';
-  const bradespar = 'BRADESPAR S.A.';
-  const compare = (company: string) =>
-    region.getByRole('button', { name: `Comparar ${company}`, exact: true });
-
-  await search.fill(itau);
-  await compare(itau).click();
-  await expect(comparison).toBeVisible();
-  await search.fill(bradespar);
-  await compare(bradespar).click();
-
-  const history = comparison.getByRole('table');
-  await expect(history.getByRole('columnheader', { name: /ITAU UNIBANCO/ })).toBeVisible();
-  await expect(history.getByRole('columnheader', { name: /BRADESPAR/ })).toBeVisible();
-  for (const year of ['2021', '2022', '2023', '2024', '2025']) {
-    await expect(history.getByRole('rowheader', { name: year, exact: true })).toBeVisible();
-  }
-  const latest = history.getByRole('row').filter({
-    has: page.getByRole('rowheader', { name: '2025', exact: true }),
-  });
-  await expect(latest).toContainText(/21,59\s*%/);
-  await expect(latest).toContainText(/\+1,11\s*p\.p\./);
-  await expect(latest).toContainText(/14,66\s*%/);
-  await expect(latest).toContainText('8 companhias');
-  await expect(latest.getByRole('cell').filter({ hasText: /indisponível/i })).toHaveCount(1);
-  await expect(
-    latest.getByRole('link', { name: `DFP 2025 de ${itau}`, exact: true }),
+    details.getByText('Patrimônio médio da controladora', { exact: true }),
   ).toBeVisible();
+  await expect(details.getByRole('link', { name: 'Formulário DFP na CVM' })).toBeVisible();
 
-  const workbook = await workbookDownload(
-    page,
-    'Exportar comparação em Excel',
-    'moat-roe-lado-a-lado.xlsx',
-    comparison,
-  );
-  const annual = getSheet(workbook, 'ROE lado a lado');
-  if (!annual) throw new Error('Aba ausente.');
-  expect(getCell(annual, 6, 1)?.value).toBe(itau);
-  expect(getCell(annual, 6, 3)?.value).toBe(2025);
-  expect(getCell(annual, 6, 4)?.value).toBeCloseTo(0.2158708923, 9);
-  expect(getCell(annual, 6, 5)?.value).toBeCloseTo(1.109452145, 8);
-  expect(getCell(annual, 6, 7)?.value).toBe(8);
-  expect(getCell(annual, 11, 1)?.value).toBe(bradespar);
-  expect(getCell(annual, 11, 4)?.value).toBeUndefined();
-  expect(getCell(annual, 11, 6)?.value).toBeUndefined();
+  const exportComparison = () =>
+    workbookDownload(page, 'Exportar Excel', 'moat-comparativo-empresas.xlsx', region);
+  const workbook = await exportComparison();
+  const rows = getSheet(workbook, 'Comparativo');
+  const accounts = getSheet(workbook, 'Contas e saldos');
+  if (!rows || !accounts) throw new Error('Aba ausente.');
+  expect(getCell(rows, 2, 1)?.value).toBe('ITAU UNIBANCO HOLDING S.A.');
+  expect(getCell(rows, 2, 3)?.value).toBe('ROE');
+  expect(getCell(rows, 2, 5)?.value).toBeCloseTo(0.215870892296, 9);
+  expect(getCell(rows, 2, 6)?.value).toBeCloseTo(7.9370892296, 9);
+  expect(getCell(accounts, 2, 6)?.value).toBe(44_857_000_000);
 
-  for (const company of ['WEG S.A.', 'LOJAS RENNER S.A.']) {
-    await search.fill(company);
-    await compare(company).click();
-  }
   await search.fill('VALE S.A.');
-  await expect(compare('VALE S.A.')).toBeDisabled();
+  const miner = table.getByRole('row', { name: /^VALE S\.A\./ });
+  await expect(miner.getByRole('cell', { name: /ROIC/ })).toBeVisible();
+  await expect(miner).toContainText(/7,58\s*%/);
+  await miner.getByRole('button', { name: 'Ver cálculo de VALE S.A.' }).click();
+  const roic = region.getByRole('region', { name: 'VALE S.A. · 2025' });
+  await expect(roic.getByText(/31\.969\.000\.000/)).toBeVisible();
+  await expect(roic.getByRole('row', { name: /Caixa e equivalentes/ })).toBeVisible();
+  await expect(roic.getByRole('link', { name: 'Demonstrações de apoio' })).toBeVisible();
+  const roicReport = getSheet(await exportComparison(), 'Comparativo');
+  if (!roicReport) throw new Error('Aba ausente.');
+  expect(getCell(roicReport, 2, 5)?.value).toBeCloseTo(0.075759868297, 9);
+
+  await region.getByLabel('Exercício').selectOption('2024');
+  await expect(table.getByRole('columnheader', { name: 'Diferença para o CDI atual' })).toHaveCount(
+    0,
+  );
+  await region.getByLabel('Linhas para exportar').selectOption('all');
+  const all = getSheet(await exportComparison(), 'Comparativo');
+  if (!all) throw new Error('Aba ausente.');
+  expect(getAutoFilter(all)?.ref?.split(':')[1]).toMatch(/^[A-Z]+145$/);
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
-  await comparison.getByRole('button', { name: `Remover ${bradespar}` }).click();
-  await expect(compare('VALE S.A.')).toBeEnabled();
-
-  await comparison.getByRole('button', { name: 'Limpar seleção' }).click();
-  await expect(comparison).toHaveCount(0);
-  await search.fill(itau);
-  await expect(compare(itau)).toHaveAttribute('aria-pressed', 'false');
 });
 
-test('consulta o ROIC estimado da Vale e exporta os insumos da DFP', async ({ page }) => {
+test('mantém empresas sem ROIC na lista e pagina o setor inteiro', async ({ page }) => {
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/empresas');
-  const region = page.getByRole('region', { name: 'Comparativo de ROIC estimado' });
-  await region.getByLabel('Setor do ROIC').selectOption({ label: 'Extração Mineral' });
-  await region.getByLabel('Buscar companhia no ROIC').fill('VALE');
-  const row = region
-    .getByRole('table', { name: 'ROIC estimado por setor' })
-    .getByRole('row', { name: /VALE S\.A\./ });
-  await expect(row).toContainText(/7,58\s*%/);
-  await row.getByRole('button', { name: 'Conferir contas de VALE S.A.' }).click();
-  const details = region.getByRole('region', { name: 'VALE S.A. · 2025' });
-  await expect(details.getByText('31.969.000.000', { exact: false }).first()).toBeVisible();
-  await expect(details.getByRole('link', { name: 'Demonstrações de apoio' })).toBeVisible();
+  const region = page.getByRole('region', { name: 'Comparar empresas' });
+  const rows = region.getByRole('table', { name: 'Indicadores das empresas' }).getByRole('row');
+  await region
+    .getByLabel('Setor', { exact: true })
+    .selectOption({ label: 'Serviços Transporte e Logística' });
+  await region.getByLabel('Linhas por página').selectOption('5');
+  await expect(rows).toHaveCount(6);
+  const pagination = region.getByRole('navigation', { name: 'Paginação das empresas' });
+  await pagination.getByRole('button', { name: 'Próxima página' }).click();
+  await expect(pagination).toContainText('Página 2 de 2');
+  await expect(rows).toHaveCount(6);
   const workbook = await workbookDownload(
     page,
     'Exportar Excel',
-    'moat-roic-setorial.xlsx',
+    'moat-comparativo-empresas.xlsx',
     region,
   );
-  expect(sheetNames(workbook)).toContain('Contas e saldos');
-  const rows = getSheet(workbook, 'Comparativo de ROIC');
-  if (!rows) throw new Error('Aba ausente.');
-  expect(getCell(rows, 2, 1)?.value).toBe('VALE S.A.');
-  expect(getCell(rows, 2, 3)?.value).toBeCloseTo(0.07575986829703543, 9);
+  const report = getSheet(workbook, 'Comparativo');
+  if (!report) throw new Error('Aba ausente.');
+  expect(getCell(report, 11, 2)?.value).toBe('Serviços Transporte e Logística');
+  expect(getCell(report, 12, 1)?.value).toBeUndefined();
+
+  await region.getByLabel('Setor', { exact: true }).selectOption({ label: 'Papel e Celulose' });
+  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*6,69\s*%/s);
+  await expect(rows.nth(2)).toContainText(/SUZANO S\.A\..*5,35\s*%/s);
+  await region.getByLabel('Exercício').selectOption('2024');
+  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*Indisponível/s);
+});
+test('compara cinco exercícios de duas empresas com o mesmo indicador', async ({ page }) => {
+  await page.goto('./#/empresas');
+  const region = page.getByRole('region', { name: 'Comparar empresas' });
+  await region.getByText('Comparar histórico', { exact: true }).click();
+  const first = region.getByLabel('Primeira empresa');
+  const second = region.getByLabel('Segunda empresa');
+  await first.selectOption('KLABIN S.A.');
+  await expect(second.getByRole('option', { name: /ITAU UNIBANCO/ })).toHaveCount(0);
+  await second.selectOption('SUZANO S.A.');
+  const history = region.getByRole('table', { name: 'Histórico de ROIC' });
+  await expect(history.getByRole('row')).toHaveCount(6);
+  await expect(history.getByRole('row', { name: /2024/ })).toContainText('Indisponível');
+  await expect(history.getByRole('row', { name: /2025/ })).toContainText(/6,69\s*%.*5,35\s*%/s);
+
+  await first.selectOption('ITAU UNIBANCO HOLDING S.A.');
+  await expect(second).toHaveValue('');
+  await second.selectOption('BB SEGURIDADE PARTICIPAÇÕES S.A.');
+  await expect(region.getByRole('table', { name: 'Histórico de ROE' })).toBeVisible();
 });
 
 test('exporta resultados de valuation e mantém a origem da taxa aplicada enquanto ela é usada', async ({

@@ -1,4 +1,4 @@
-"""Estima ROIC nos setores de metalurgia e extração mineral com DFP consolidada."""
+"""Estima ROIC em setores revisados com DFP consolidada."""
 
 from collections import defaultdict
 from datetime import UTC, datetime
@@ -10,45 +10,36 @@ from moat_finance import calculate_roic, invested_capital
 
 from .archives import csv_rows, read_archive
 from .bank_roe import Record, reconciled, record, same_filing
-from .comparison_identity import comparison_identities
+from .comparison_identity import comparison_identities, uses_roe
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
 from .fca import SOURCE as SECTOR_SOURCE
 from .quality import ROIC_TAX
+from .quality import ACCOUNTS as QUALITY_ACCOUNTS
 from .sector_comparison import YEARS, selected_filings
+from .sector_roic_notes import REVIEWS, ReviewedAccount
 
 METHODOLOGY = "roic-dfp-comparisons.v1"
-ROIC_SECTORS = frozenset(("Metalurgia e Siderurgia", "Extração Mineral"))
 INCOME_ACCOUNTS = (
     ("grossIncome", "3.03", "Resultado Bruto"),
     ("operatingIncomeAndExpenses", "3.04", "Despesas/Receitas Operacionais"),
     ("ebit", "3.05", "Resultado Antes do Resultado Financeiro e dos Tributos"),
 )
 LEASES_OUTSIDE_DEBT = {
-    "003069": {
-        "2.01.05.02.07": "Arrendamento a pagar",
-        "2.02.02.02.07": "Arrendamento a pagar",
-    },
-    "003980": {
-        "2.01.05.02.05": "Arrendamento mercantil a pagar",
-        "2.02.02.02.04": "Arrendamento mercantil a pagar",
-    },
-    "004030": {
-        "2.01.05.02.07": "Passivos de Arrendamento",
-        "2.01.05.02.10": "Passivos de Arrendamento",
-        "2.02.02.02.04": "Passivos de Arrendamento",
-        "2.02.02.02.07": "Passivos de Arrendamento",
-    },
-    "014320": {
-        "2.01.05.02.10": "Passivos de Arrendamento",
-        "2.02.02.02.06": "Passivos de Arrendamento",
-    },
-    # O erro de grafia aparece nas contas específicas em todos os DFPs do lote.
+    # A grafia da CSN Mineração aparece nas contas específicas do lote da CVM.
     "025585": {
-        "2.01.05.02.04": "Passivos de arredamentos",
-        "2.02.02.02.03": "Passivos de arredamentos",
+        "2.01.05.02.04": ("Passivos de arredamentos",),
+        "2.02.02.02.03": ("Passivos de arredamentos",),
     },
 }
 LEASE_LABEL_TERMS = ("arrend", "arredamento", "direito de uso", "leasing", "alugue", "aluguel", "locação")
+SEPARATE_LEASE_LABELS = frozenset((
+    "arrendamento a pagar", "arrendamentos a pagar", "passivo de arrendamento",
+    "passivos de arrendamento", "passivo de arrendamentos", "passivos de arrendamentos",
+    "passivo por arrendamento", "obrigações de arrendamento", "obrigações de arrendamento mercantil",
+    "arrendamento mercantil a pagar", "passivo de arrendamento por direito de uso",
+    "arrendamento por direito de uso", "arrendamento mercantil - direito de uso",
+    "contas a pagar de arrendamento", "contas a pagar com operações com arrendamento",
+))
 SEPARATE_DEBT = {
     "004170": {"2.02.04.02.12": "Debentures participativas"},
 }
@@ -78,6 +69,12 @@ DEBT_LABEL_TERMS = (
     "risco sacado", "forfaiting", "factoring", "confirming", "financiament",
     "empréstim", "emprestim", "debêntur", "debentur", "dívida", "divida",
     "mútuo", "mutuo", "bonds", "nota promiss", "notas promiss",
+    "cessão de direitos creditór", "cessao de direitos creditor",
+    "cessão de recebíveis", "cessao de recebiveis", "aquisição de empres",
+    "aquisição de controlad", "aquisição de participa", "combinação de negócios",
+    "contraprestação contingente", "compromissos com aquisição de ativos",
+    "contas a pagar - aquisi", "contas a pagar por aquisi", "contas a pagar pela aquisi",
+    "obrigações a pagar por aquisi",
 )
 NEWEST, PRIOR = "ÚLTIMO", "PENÚLTIMO"
 STATEMENTS = ("DRE", "BPA", "BPP")
@@ -148,16 +145,13 @@ def affected_rollups(code: str, accounts: Accounts) -> set[str]:
 
 def separate_financing(
     issuer: str, stage: str, liabilities: Accounts, operating_supplier_balance: int | None,
+    reviewed_accounts: tuple[ReviewedAccount, ...],
 ) -> tuple[list[Record], set[str], list[Record]]:
     debt = [
         labeled_record(liabilities, f"{stage}SeparateDebt{index}", "BPP", code, label)
         for index, (code, label) in enumerate(SEPARATE_DEBT.get(issuer, {}).items(), 1)
     ]
-    if any(item[1] < 0 for item in debt):
-        raise ValueError("Saldo de financiamento separado incompatível.")
-    outside_codes = {item[0]["code"] for item in debt}
-    parents = set().union(*(affected_rollups(code, liabilities) for code in outside_codes))
-    operational = []
+    operational: list[Record] = []
     if operating_supplier_balance is not None:
         supplier = labeled_record(
             liabilities, f"{stage}OperatingSupplier", "BPP", GERDAU_SUPPLIER_CODE,
@@ -166,8 +160,22 @@ def separate_financing(
         if supplier[1] != operating_supplier_balance:
             raise ValueError("O saldo de fornecedores diverge da nota auditada.")
         operational.append(supplier)
-        outside_codes.add(GERDAU_SUPPLIER_CODE)
-        parents.update(affected_rollups(GERDAU_SUPPLIER_CODE, liabilities))
+
+    for review in reviewed_accounts:
+        destination = debt if review.financing else operational
+        kind = "SeparateDebt" if review.financing else "OperatingSupplier"
+        account = labeled_record(
+            liabilities, f"{stage}{kind}{len(destination) + 1}", "BPP", review.code, review.label,
+        )
+        expected = review.opening_brl if stage == "opening" else review.closing_brl
+        if account[1] != expected:
+            raise ValueError(f"O saldo em BPP {review.code} diverge da nota auditada.")
+        destination.append(account)
+
+    if any(item[1] < 0 for item in debt):
+        raise ValueError("Saldo de financiamento separado incompatível.")
+    outside_codes = {item[0]["code"] for item in (*debt, *operational)}
+    parents = set().union(*(affected_rollups(code, liabilities) for code in outside_codes))
 
     for code, row in liabilities.items():
         label = row["DS_CONTA"].strip().casefold()
@@ -180,13 +188,17 @@ def separate_financing(
             and any(term in label for term in DEBT_LABEL_TERMS)
             and normalize(row)[0] != 0
         ):
-            raise ValueError(f"Financiamento fora das contas revisadas de dívida em BPP {code}.")
+            raise ValueError(
+                f"Financiamento fora das contas revisadas de dívida em BPP {code}: "
+                f"{row['DS_CONTA'].strip()}."
+            )
     return debt, parents, operational
 
 
 def balance_capital(
     issuer: str, stage: str, balance: dict[str, Accounts],
     operating_supplier_balance: int | None = None,
+    reviewed_accounts: tuple[ReviewedAccount, ...] = (),
 ) -> tuple[Decimal, list[dict]]:
     assets, liabilities = balance["BPA"], balance["BPP"]
     equity = labeled_record(
@@ -194,11 +206,15 @@ def balance_capital(
     )
     cash = labeled_record(assets, f"{stage}Cash", "BPA", "1.01.01", "Caixa e Equivalentes de Caixa")
     separately_reported, extra_rollups, operating = separate_financing(
-        issuer, stage, liabilities, operating_supplier_balance,
+        issuer, stage, liabilities, operating_supplier_balance, reviewed_accounts,
     )
     evidence = [equity, cash, *separately_reported, *operating]
     debt = sum((item[1] for item in separately_reported), Decimal(0))
-    allowed = LEASES_OUTSIDE_DEBT.get(issuer, {})
+    allowed = {
+        **{entry.code: entry.labels for entry in QUALITY_ACCOUNTS.get(issuer, ())
+           if entry.key in ("shortLease", "longLease")},
+        **LEASES_OUTSIDE_DEBT.get(issuer, {}),
+    }
     for loan_root, tenure in (("2.01.04", "Short"), ("2.02.01", "Long")):
         liability_root = loan_root[:4]
         borrowings = labeled_record(
@@ -213,7 +229,13 @@ def balance_capital(
             label = row["DS_CONTA"].strip().casefold()
             if not code.startswith(liability_root + ".") or code.startswith(loan_root + "."):
                 continue
-            if code in allowed and label == allowed[code].casefold():
+            clearly_reported_lease = (
+                code.startswith(("2.01.05.02.", "2.02.02.02."))
+                and label in SEPARATE_LEASE_LABELS
+            )
+            if clearly_reported_lease or any(
+                label == approved.casefold() for approved in allowed.get(code, ())
+            ):
                 outside.append(record(f"{stage}{tenure}SeparateLease", "BPP", row))
             elif any(term in label for term in LEASE_LABEL_TERMS) and normalize(row)[0] != 0:
                 raise ValueError("Arrendamento fora de financiamentos com conta não revisada.")
@@ -254,9 +276,12 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         return unavailable(year, "Conta duplicada na mesma versão da DFP.", source)
     if any(not accounts for statements in rows.values() for accounts in statements.values()):
         return unavailable(year, "DFP consolidada ou balanço de abertura indisponível na janela civil.", source)
-    supplier = GERDAU_NOTES.get((
+    filing_key = (
         filing["DT_REFER"], filing.get("ID_DOC", ""), str(filing["VERSAO"]),
-    )) if issuer == "003980" else None
+    )
+    supplier = GERDAU_NOTES.get(filing_key) if issuer == "003980" else None
+    review = REVIEWS.get((issuer, *filing_key))
+    reviewed_accounts = review.accounts if review else ()
     try:
         gross_income, operating, ebit = (
             labeled_record(rows["income"]["DRE"], key, "DRE", code, label)
@@ -265,10 +290,10 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         if not reconciled(ebit, gross_income, operating):
             raise ValueError("O resultado antes do financeiro e dos tributos diverge dos subtotais da DRE.")
         opening, opening_accounts = balance_capital(
-            issuer, "opening", rows["opening"], supplier[0] if supplier else None,
+            issuer, "opening", rows["opening"], supplier[0] if supplier else None, reviewed_accounts,
         )
         closing, closing_accounts = balance_capital(
-            issuer, "closing", rows["closing"], supplier[1] if supplier else None,
+            issuer, "closing", rows["closing"], supplier[1] if supplier else None, reviewed_accounts,
         )
         result = calculate_roic(
             ebit=ebit[1], tax_rate=ROIC_TAX, capital_open=opening, capital_close=closing, estimated=True,
@@ -282,6 +307,8 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
 
     if supplier:
         source["supportingDocumentUrl"] = supplier[2]
+    if review:
+        source["supportingDocumentUrl"] = review.url
     if issuer == "004170":
         source["supportingDocumentUrl"] = VALE_NOTES
     return {
@@ -305,10 +332,10 @@ def create_sector_roic(
     identities, archives = comparison_identities(selection, directory, fca_archives)
     selected = {
         f"{code:06}": identity for code, identity in identities.items()
-        if identity["sector"] in ROIC_SECTORS
+        if not uses_roe(code, identity)
     }
     if not selected or tuple(sorted(dfp_archives)) != YEARS:
-        raise ValueError("Seleção setorial vazia ou ZIPs anuais incompletos para o ROIC.")
+        raise ValueError("Seleção de ROIC vazia ou ZIPs anuais incompletos.")
     companies = {
         code: {"name": item["name"], "sector": item["sector"], "observations": []}
         for code, item in selected.items()
