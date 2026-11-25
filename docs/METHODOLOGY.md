@@ -30,6 +30,8 @@ Quando a atribuição de lucro na DRE diverge do total consolidado, a rotina pod
 
 A média usa os cinco exercícios de 2021 a 2025. O percentil é a posição da média entre as companhias com os cinco exercícios válidos no mesmo setor exato do FCA. São necessárias pelo menos cinco companhias completas no grupo. A menor média ocupa o percentil zero, a maior ocupa cem, e empates usam a posição média. A busca e a paginação preservam o grupo de referência.
 
+Na comparação lado a lado, a variação anual é o ROE do exercício menos o ROE do exercício imediatamente anterior, em pontos percentuais, com as duas observações disponíveis. A mediana de cada exercício usa todas as companhias da seleção com ROE válido no setor exato do FCA, inclusive as selecionadas para comparar. Ela exige pelo menos cinco valores válidos no exercício e usa a média dos dois valores centrais quando o tamanho do grupo é par. A tela e o Excel exibem a cobertura anual da mediana. Os filtros da tabela preservam a seleção e o grupo de referência.
+
 Cada lacuna informa o motivo, como período diferente de 31/12, falta de consolidado ou ausência de conciliação. ROIC continua disponível nos estudos com mapeamento validado. A comparação usa dados contábeis e a seleção anual atual. O ranking composto, preços correntes e spreads históricos dependem das fontes descritas nesta metodologia.
 
 ## ROIC estimado em siderurgia e mineração
