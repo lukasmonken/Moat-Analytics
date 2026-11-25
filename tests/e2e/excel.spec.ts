@@ -99,6 +99,77 @@ test('compara e exporta a seleção setorial com contas e cobertura', async ({ p
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
 
+test('compara o histórico de ROE de companhias selecionadas em buscas diferentes', async ({
+  page,
+}) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
+  await page.goto('./#/empresas');
+  const region = page.getByRole('region', { name: 'Comparativos por setor' });
+  const search = region.getByLabel('Buscar companhia no comparativo');
+  const comparison = region.getByRole('region', { name: 'ROE lado a lado' });
+  const itau = 'ITAU UNIBANCO HOLDING S.A.';
+  const bradespar = 'BRADESPAR S.A.';
+  const compare = (company: string) =>
+    region.getByRole('button', { name: `Comparar ${company}`, exact: true });
+
+  await search.fill(itau);
+  await compare(itau).click();
+  await expect(comparison).toBeVisible();
+  await search.fill(bradespar);
+  await compare(bradespar).click();
+
+  const history = comparison.getByRole('table');
+  await expect(history.getByRole('columnheader', { name: /ITAU UNIBANCO/ })).toBeVisible();
+  await expect(history.getByRole('columnheader', { name: /BRADESPAR/ })).toBeVisible();
+  for (const year of ['2021', '2022', '2023', '2024', '2025']) {
+    await expect(history.getByRole('rowheader', { name: year, exact: true })).toBeVisible();
+  }
+  const latest = history.getByRole('row').filter({
+    has: page.getByRole('rowheader', { name: '2025', exact: true }),
+  });
+  await expect(latest).toContainText(/21,59\s*%/);
+  await expect(latest).toContainText(/\+1,11\s*p\.p\./);
+  await expect(latest).toContainText(/14,66\s*%/);
+  await expect(latest).toContainText('8 companhias');
+  await expect(latest.getByRole('cell').filter({ hasText: /indisponível/i })).toHaveCount(1);
+  await expect(
+    latest.getByRole('link', { name: `DFP 2025 de ${itau}`, exact: true }),
+  ).toBeVisible();
+
+  const workbook = await workbookDownload(
+    page,
+    'Exportar comparação em Excel',
+    'moat-roe-lado-a-lado.xlsx',
+    comparison,
+  );
+  const annual = getSheet(workbook, 'ROE lado a lado');
+  if (!annual) throw new Error('Aba ausente.');
+  expect(getCell(annual, 6, 1)?.value).toBe(itau);
+  expect(getCell(annual, 6, 3)?.value).toBe(2025);
+  expect(getCell(annual, 6, 4)?.value).toBeCloseTo(0.2158708923, 9);
+  expect(getCell(annual, 6, 5)?.value).toBeCloseTo(1.109452145, 8);
+  expect(getCell(annual, 6, 7)?.value).toBe(8);
+  expect(getCell(annual, 11, 1)?.value).toBe(bradespar);
+  expect(getCell(annual, 11, 4)?.value).toBeUndefined();
+  expect(getCell(annual, 11, 6)?.value).toBeUndefined();
+
+  for (const company of ['WEG S.A.', 'LOJAS RENNER S.A.']) {
+    await search.fill(company);
+    await compare(company).click();
+  }
+  await search.fill('VALE S.A.');
+  await expect(compare('VALE S.A.')).toBeDisabled();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await comparison.getByRole('button', { name: `Remover ${bradespar}` }).click();
+  await expect(compare('VALE S.A.')).toBeEnabled();
+
+  await comparison.getByRole('button', { name: 'Limpar seleção' }).click();
+  await expect(comparison).toHaveCount(0);
+  await search.fill(itau);
+  await expect(compare(itau)).toHaveAttribute('aria-pressed', 'false');
+});
+
 test('consulta o ROIC estimado da Vale e exporta os insumos da DFP', async ({ page }) => {
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/empresas');

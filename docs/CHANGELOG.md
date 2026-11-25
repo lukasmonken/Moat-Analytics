@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — ROE lado a lado
+
+- Comparação anual de ROE de até quatro companhias da seleção, com média dos cinco exercícios, variação em pontos percentuais, mediana do setor, cobertura e links para as DFPs.
+- Exportação da comparação em Excel. A seleção das companhias se mantém ao trocar a busca, o setor, o exercício ou a página do comparativo.
+
 ## M2 — ROIC de siderurgia e mineração
 
 - Comparativo de ROIC estimado para as oito companhias dos setores Metalurgia e Siderurgia e Extração Mineral. A tela e o Excel mostram as contas conciliadas, os formulários e as lacunas por exercício.
