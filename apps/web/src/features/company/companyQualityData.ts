@@ -45,3 +45,17 @@ export function annualRate(
   if (!observation) return null;
   return 'roe' in observation ? observation.roe : observation.roic;
 }
+
+export function orderByAnnualReturn(companies: Company[], year: number): Company[] {
+  const annualReturns = companies.map((company) => ({
+    company,
+    value: annualRate(annualObservation(company, year)),
+  }));
+  annualReturns.sort((left, right) => {
+    if (left.value === right.value) return compareNames(left.company.name, right.company.name);
+    if (left.value === null) return 1;
+    if (right.value === null) return -1;
+    return right.value - left.value;
+  });
+  return annualReturns.map(({ company }) => company);
+}

@@ -19,6 +19,7 @@ import {
   annualObservation,
   annualRate,
   combineSnapshots,
+  orderByAnnualReturn,
   type Company,
   type ComparisonData,
 } from './companyQualityData';
@@ -155,6 +156,8 @@ function ComparisonResults({
   const [year, setYear] = useState(latestYear);
   const [search, setSearch] = useState('');
   const [sector, setSector] = useState('');
+  const [metric, setMetric] = useState<Company['metric'] | ''>('');
+  const [order, setOrder] = useState<'name' | 'return'>('name');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<string>(defaultPageSize);
   const [selectedName, setSelectedName] = useState('');
@@ -164,11 +167,15 @@ function ComparisonResults({
   );
   const rate = rateState.status === 'ready' ? rateState.rate : null;
   const showCdi = year === latestYear;
+  const orderByReturn = metric !== '' && order === 'return';
   const searchKey = normalizeSearch(search);
-  const matches = companies.filter(
+  const filtered = companies.filter(
     (company) =>
-      (!sector || company.sector === sector) && normalizeSearch(company.name).includes(searchKey),
+      (!sector || company.sector === sector) &&
+      (!metric || company.metric === metric) &&
+      normalizeSearch(company.name).includes(searchKey),
   );
+  const matches = orderByReturn ? orderByAnnualReturn(filtered, year) : filtered;
   const rowsPerPage = Number(pageSize);
   const offset = (page - 1) * rowsPerPage;
   const visible = matches.slice(offset, offset + rowsPerPage);
@@ -211,16 +218,49 @@ function ComparisonResults({
           ))}
         </Select>
         <Select
+          id="company-quality-metric"
+          label="Indicador"
+          value={metric}
+          onChange={(event) => {
+            const value = event.currentTarget.value;
+            const nextMetric = value === 'ROE' || value === 'ROIC' ? value : '';
+            setMetric(nextMetric);
+            if (!nextMetric) setOrder('name');
+            showPage(1);
+          }}
+        >
+          <option value="">ROE e ROIC</option>
+          <option value="ROE">ROE</option>
+          <option value="ROIC">ROIC</option>
+        </Select>
+        <Select
           id="company-quality-year"
           label="Exercício"
           value={year}
-          onChange={(event) => setYear(Number(event.currentTarget.value))}
+          onChange={(event) => {
+            setYear(Number(event.currentTarget.value));
+            if (orderByReturn) showPage(1);
+          }}
         >
           {[...roe.years].reverse().map((entry) => (
             <option key={entry} value={entry}>
               {entry}
             </option>
           ))}
+        </Select>
+        <Select
+          id="company-quality-order"
+          label="Ordenação"
+          value={order}
+          onChange={(event) => {
+            setOrder(event.currentTarget.value === 'return' ? 'return' : 'name');
+            showPage(1);
+          }}
+        >
+          <option value="name">Nome (A–Z)</option>
+          <option value="return" disabled={!metric}>
+            {metric ? 'Maior retorno' : 'Maior retorno (selecione ROE ou ROIC)'}
+          </option>
         </Select>
         <Select
           id="company-quality-page-size"
@@ -247,6 +287,10 @@ function ComparisonResults({
               year,
               latestYear,
               rate,
+              {
+                metric: scope === 'filtered' ? metric : '',
+                order: scope === 'filtered' && orderByReturn ? 'return' : 'name',
+              },
             )
           }
         />
@@ -255,7 +299,7 @@ function ComparisonResults({
         <EmptyState
           icon="search"
           title="Nenhuma empresa encontrada"
-          description="Ajuste a busca ou o setor."
+          description="Ajuste a busca ou os filtros."
         />
       ) : (
         <>
@@ -278,9 +322,13 @@ function ComparisonResults({
             >
               <thead>
                 <tr>
-                  <th scope="col">Empresa</th>
+                  <th scope="col" aria-sort={orderByReturn ? undefined : 'ascending'}>
+                    Empresa
+                  </th>
                   <th scope="col">Indicador</th>
-                  <th scope="col">Retorno em {year}</th>
+                  <th scope="col" aria-sort={orderByReturn ? 'descending' : undefined}>
+                    Retorno em {year}
+                  </th>
                   {showCdi && <th scope="col">Diferença para o CDI atual</th>}
                   <th scope="col">Cálculo</th>
                 </tr>
