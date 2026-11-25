@@ -21,9 +21,12 @@ import { formatCurrency, formatDate, formatInstant } from './financialPresentati
 import { sectorComparisonReport } from './sectorComparisonReport';
 import {
   buildSectorRows,
+  buildSideBySideRoe,
+  maximumSideBySideCompanies,
   minimumSectorPeers,
   type SectorComparisonRow,
 } from './sectorComparisonRows';
+import { SideBySideRoe } from './SideBySideRoe';
 import './sector-comparison.css';
 
 const percentileFormat = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
@@ -138,7 +141,12 @@ function ComparisonResults({
   const [pageSize, setPageSize] = useState<string>(defaultPageSize);
   const [sort, setSort] = useState<SortOrder>('name');
   const [selection, setSelection] = useState('');
+  const [comparisonNames, setComparisonNames] = useState<string[]>([]);
   const focusRef = useRef<HTMLElement>(null);
+  const comparison = useMemo(
+    () => buildSideBySideRoe(snapshot, comparisonNames),
+    [snapshot, comparisonNames],
+  );
   const rows = useMemo(() => {
     const results = buildSectorRows(snapshot, year);
     if (sort === 'name') return results;
@@ -174,6 +182,14 @@ function ComparisonResults({
   function showPage(nextPage: number) {
     setPage(nextPage);
     setSelection('');
+  }
+
+  function toggleComparison(name: string) {
+    setComparisonNames((names) => {
+      if (names.includes(name)) return names.filter((entry) => entry !== name);
+      if (names.length >= maximumSideBySideCompanies) return names;
+      return [...names, name];
+    });
   }
 
   return (
@@ -294,6 +310,14 @@ function ComparisonResults({
           }
         />
       </div>
+      {comparison.companies.length > 0 && (
+        <SideBySideRoe
+          snapshot={snapshot}
+          comparison={comparison}
+          onRemove={toggleComparison}
+          onClear={() => setComparisonNames([])}
+        />
+      )}
       {matches.length > 0 ? (
         <>
           <ScreenerToolbar
@@ -321,12 +345,14 @@ function ComparisonResults({
                   <th scope="col">Média de ROE em {years}</th>
                   <th scope="col">Percentil no setor</th>
                   <th scope="col">Contas</th>
+                  <th scope="col">Comparação</th>
                 </tr>
               </thead>
               <tbody>
                 {visibleRows.map((row) => {
                   const { company, current, mean, percentile, peers, validYears } = row;
                   const expanded = selection === company.name;
+                  const compared = comparisonNames.includes(company.name);
                   return (
                     <tr key={company.name}>
                       <th scope="row">
@@ -361,6 +387,19 @@ function ComparisonResults({
                           onClick={() => setSelection(expanded ? '' : company.name)}
                         >
                           {expanded ? 'Ocultar' : 'Conferir'}
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          variant={compared ? 'secondary' : 'quiet'}
+                          aria-label={`Comparar ${company.name}`}
+                          aria-pressed={compared}
+                          disabled={
+                            !compared && comparisonNames.length >= maximumSideBySideCompanies
+                          }
+                          onClick={() => toggleComparison(company.name)}
+                        >
+                          {compared && <span aria-hidden="true">✓</span>} Comparar
                         </Button>
                       </td>
                     </tr>

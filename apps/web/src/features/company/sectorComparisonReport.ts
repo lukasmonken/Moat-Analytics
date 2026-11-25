@@ -4,7 +4,11 @@ import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
 import type { ReportSheet, WorkbookReport } from '../../shared/export/report';
 import type { ScreenerExportScope } from '../screener/ScreenerExport';
 import { cdiNotes } from './companyReports';
-import { minimumSectorPeers, type SectorComparisonRow } from './sectorComparisonRows';
+import {
+  minimumSectorPeers,
+  type SectorComparisonRow,
+  type SideBySideRoe,
+} from './sectorComparisonRows';
 
 function optionalDate(value: string | undefined) {
   return value ? new Date(value) : null;
@@ -181,6 +185,97 @@ export function sectorComparisonReport(
       ['Ordenação', order],
       ['Companhias exportadas', rows.length],
       ['Companhias na seleção', snapshot.companies.length],
+    ],
+  };
+}
+
+export function sideBySideRoeReport(
+  snapshot: SectorComparisonSnapshot,
+  comparison: SideBySideRoe,
+): WorkbookReport {
+  const { manifest } = snapshot;
+  return {
+    sheets: [
+      {
+        name: 'ROE lado a lado',
+        columns: [
+          { label: 'Companhia', width: 52 },
+          { label: 'Setor declarado no FCA', width: 52 },
+          { label: 'Exercício', format: 'integer', width: 12 },
+          { label: 'ROE', format: 'percent', width: 16 },
+          { label: 'Variação anual (p.p.)', format: 'number', width: 24 },
+          { label: 'Mediana do setor', format: 'percent', width: 22 },
+          { label: 'Companhias com ROE no setor', format: 'integer', width: 31 },
+          { label: 'Data-base da DFP', format: 'date', width: 20 },
+          { label: 'Recebimento da DFP', format: 'date', width: 23 },
+          { label: 'Versão da DFP', format: 'integer', width: 17 },
+          { label: 'Formulário DFP na CVM', width: 55 },
+          { label: 'Documento de apoio', width: 55 },
+          { label: 'Motivo da lacuna', width: 58 },
+        ],
+        rows: comparison.companies.flatMap(({ company, observations }) =>
+          observations.map(({ year, observation, deltaPp, sectorMedian, sectorPeers }) => [
+            company.name,
+            company.sector,
+            year,
+            observation?.roe ?? null,
+            deltaPp,
+            sectorMedian,
+            sectorPeers,
+            optionalDate(observation?.filing?.referenceDate),
+            optionalDate(observation?.filing?.receivedAt),
+            observation?.filing?.version ?? null,
+            observation?.filing?.filingUrl ?? null,
+            observation?.filing?.supportingDocumentUrl ?? null,
+            observation?.reason ?? null,
+          ]),
+        ),
+      },
+      {
+        name: 'Média no período',
+        columns: [
+          { label: 'Companhia', width: 52 },
+          { label: 'Setor declarado no FCA', width: 52 },
+          { label: 'Média de ROE', format: 'percent', width: 19 },
+          { label: 'Exercícios com ROE', format: 'integer', width: 24 },
+          { label: 'Data-base do FCA', format: 'date', width: 20 },
+          { label: 'Formulário FCA na CVM', width: 55 },
+        ],
+        rows: comparison.companies.map(({ company, mean, validYears }) => [
+          company.name,
+          company.sector,
+          mean,
+          validYears,
+          new Date(company.classification.referenceDate),
+          company.classification.filingUrl,
+        ]),
+      },
+    ],
+    notes: [
+      ['Método', manifest.methodologyVersion],
+      [
+        'ROE',
+        'Lucro líquido da controladora dividido pelo patrimônio médio da controladora na DFP consolidada.',
+      ],
+      ['Exercícios comparados', comparison.years.join(', ')],
+      [
+        'Média no período',
+        'Média aritmética dos cinco exercícios quando todos têm ROE disponível.',
+      ],
+      [
+        'Variação anual',
+        'Diferença em pontos percentuais entre dois exercícios consecutivos com ROE disponível.',
+      ],
+      [
+        'Mediana do setor',
+        `Considera todas as companhias com ROE no mesmo exercício e no mesmo setor do FCA na seleção anual. A mediana exige ao menos ${minimumSectorPeers} companhias com ROE disponível.`,
+      ],
+      ['Data-base da seleção', new Date(manifest.asOf)],
+      ['Lote gerado em (UTC)', new Date(manifest.generatedAt)],
+      ['Fonte DFP', manifest.source.datasetUrl],
+      ['Fonte FCA', manifest.sectorSource.datasetUrl],
+      ['Licença', manifest.source.license],
+      ['Termos da licença', manifest.source.licenseUrl],
     ],
   };
 }
