@@ -110,7 +110,7 @@ function isOptionalNumber(input: unknown): input is number | null {
   return input === null || isFiniteNumber(input);
 }
 
-function isInput(input: unknown): input is QualityInput {
+export function isQualityInput(input: unknown): input is QualityInput {
   return (
     isObject(input) &&
     isText(input.key) &&
@@ -146,7 +146,7 @@ function isObservation(input: unknown): input is QualityObservation {
     Number(input.provenance.referenceDate.slice(0, 4)) === input.fiscalYear &&
     (input.provenance.qualityStatus === 'unavailable') === (input.value === null) &&
     isListOf(input.reasons, isText) &&
-    isListOf(input.inputs, isInput) &&
+    isListOf(input.inputs, isQualityInput) &&
     unique(input.inputs, ({ key, referenceDate }) => key + '/' + referenceDate)
   );
 }

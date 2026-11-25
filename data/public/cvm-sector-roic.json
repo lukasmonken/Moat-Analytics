@@ -1,0 +1,2876 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "methodologyVersion": "roic-dfp-comparisons.v1",
+    "asOf": "2026-11-18",
+    "generatedAt": "2026-11-25T11:59:57+00:00",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "source": {
+      "name": "Comissão de Valores Mobiliários (CVM)",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    },
+    "sectorSource": {
+      "name": "Comissão de Valores Mobiliários (CVM) · FCA",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    },
+    "archives": [
+      {
+        "kind": "dfp",
+        "year": 2021,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
+        "sha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
+        "retrievedAt": "2026-11-18T10:11:46+00:00"
+      },
+      {
+        "kind": "dfp",
+        "year": 2022,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
+        "sha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
+        "retrievedAt": "2026-11-18T10:11:46+00:00"
+      },
+      {
+        "kind": "dfp",
+        "year": 2023,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
+        "sha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
+        "retrievedAt": "2026-11-18T10:11:46+00:00"
+      },
+      {
+        "kind": "dfp",
+        "year": 2024,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+        "sha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
+        "retrievedAt": "2026-11-18T10:11:46+00:00"
+      },
+      {
+        "kind": "dfp",
+        "year": 2025,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+        "sha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+        "retrievedAt": "2026-11-18T10:11:46+00:00"
+      },
+      {
+        "kind": "fca",
+        "year": 2026,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FCA/DADOS/fca_cia_aberta_2026.zip",
+        "sha256": "338821f7109fea415bab2e56bc1f04dc47f9c1854355372478eaac2c085ba9d6",
+        "retrievedAt": "2026-11-18T10:16:25+00:00"
+      }
+    ],
+    "taxRate": 0.34
+  },
+  "companies": [
+    {
+      "name": "CIA FERRO LIGAS DA BAHIA - FERBASA",
+      "sector": "Metalurgia e Siderurgia",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": 0.21860702653406872,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-03-04",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112233"
+          },
+          "inputs": {
+            "ebitBrl": 800842000,
+            "nopatBrl": 528555720,
+            "openingCapitalBrl": 2251129000,
+            "closingCapitalBrl": 2584541000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 1033452000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": -232610000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 800842000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 1771825000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 90497000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 132729000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 21188000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 395930000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 19954000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 2370279000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 216512000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 75234000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12616000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 330085000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12839000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2022,
+          "roic": 0.2766509844486627,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-06",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123898"
+          },
+          "inputs": {
+            "ebitBrl": 1160969000,
+            "nopatBrl": 766239540,
+            "openingCapitalBrl": 2584541000,
+            "closingCapitalBrl": 2954854000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 1452929000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": -291960000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 1160969000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 2370279000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 216512000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 75234000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12616000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 330085000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12839000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 3040887000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 474102000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 69829000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 27417000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 268163000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 22660000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2023,
+          "roic": 0.06522259466977928,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-03-06",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134476"
+          },
+          "inputs": {
+            "ebitBrl": 303731000,
+            "nopatBrl": 200462460,
+            "openingCapitalBrl": 2954854000,
+            "closingCapitalBrl": 3192171000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 605657000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": -301926000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 303731000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 3040887000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 474102000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 69829000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 27417000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 268163000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 22660000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 3191487000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 341787000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 72221000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 44634000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 199164000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 26452000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2024,
+          "roic": 0.034635818128374546,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-03-07",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145226"
+          },
+          "inputs": {
+            "ebitBrl": 171929000,
+            "nopatBrl": 113473140,
+            "openingCapitalBrl": 3192171000,
+            "closingCapitalBrl": 3360187000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 471204000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": -299275000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 171929000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 3191487000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 341787000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 72221000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 44634000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 199164000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 26452000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 3340773000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 464086000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 260788000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 43401000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 159768000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 19543000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2025,
+          "roic": 0.009297806176261301,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-06",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155153"
+          },
+          "inputs": {
+            "ebitBrl": 47089000,
+            "nopatBrl": 31078740,
+            "openingCapitalBrl": 3360187000,
+            "closingCapitalBrl": 3324990000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 411146000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": -364057000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 47089000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 3340773000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 464086000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 260788000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 43401000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 159768000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 19543000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 3286040000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 372724000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 31632000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.07",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 29186000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 332621000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.07",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 18235000
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "CIA SIDERURGICA NACIONAL",
+      "sector": "Metalurgia e Siderurgia",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.06.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-03-09",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112377"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.06.",
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-16",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124211"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2023,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-03-06",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134513"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2024,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-03-12",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145354"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2025,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-11",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155288"
+          },
+          "inputs": null
+        }
+      ]
+    },
+    {
+      "name": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+      "sector": "Extração Mineral",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.05.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-03-16",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112592"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.05.",
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-09",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124039"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2023,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.05.",
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-03-07",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134541"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2024,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.05.",
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-03-10",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145251"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2025,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.05.",
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-04",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155063"
+          },
+          "inputs": null
+        }
+      ]
+    },
+    {
+      "name": "CSN MINERAÇÃO S.A.",
+      "sector": "Extração Mineral",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "A conta BPP 2.01.04 diverge de seus subtotais.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-03-09",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112369"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": null,
+          "reason": "A conta BPP 2.01.04 diverge de seus subtotais.",
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-08",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123991"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2023,
+          "roic": null,
+          "reason": "A conta BPP 2.01.04 diverge de seus subtotais.",
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-03-06",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134514"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2024,
+          "roic": null,
+          "reason": "A conta BPP 2.01.04 diverge de seus subtotais.",
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-04-01",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=146102"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2025,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.08.",
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-12",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155318"
+          },
+          "inputs": null
+        }
+      ]
+    },
+    {
+      "name": "GERDAU S.A.",
+      "sector": "Metalurgia e Siderurgia",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": 0.2818646637106131,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-02-23",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111961"
+          },
+          "inputs": {
+            "ebitBrl": 21023022000,
+            "nopatBrl": 13875194520,
+            "openingCapitalBrl": 44839831000,
+            "closingCapitalBrl": 53613053000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 20817360000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 205662000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 21023022000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 31085210000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 4617204000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 1431506000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 231703000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 16083845000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2020-12-31",
+                "amountBrl": 624771000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 42815649000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 4160654000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 1766493000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 275086000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12273200000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 643279000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2022,
+          "roic": 0.21095883068906424,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-01",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123775",
+            "supportingDocumentUrl": "https://www.sec.gov/Archives/edgar/data/1073404/000110465923040166/R20.htm"
+          },
+          "inputs": {
+            "ebitBrl": 17751453000,
+            "nopatBrl": 11715958980,
+            "openingCapitalBrl": 53613053000,
+            "closingCapitalBrl": 57460363000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 18751054000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": -999601000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 17751453000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 42815649000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 4160654000
+              },
+              {
+                "key": "openingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 807915000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 1766493000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 275086000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 12273200000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 643279000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 46298193000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 2475863000
+              },
+              {
+                "key": "closingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 653085000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 3121148000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 275934000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 9486242000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 754709000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2023,
+          "roic": 0.11908393607839696,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-02-20",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134146",
+            "supportingDocumentUrl": "https://www.sec.gov/Archives/edgar/data/1073404/000110465924040516/R20.htm"
+          },
+          "inputs": {
+            "ebitBrl": 10452727000,
+            "nopatBrl": 6898799820,
+            "openingCapitalBrl": 57460363000,
+            "closingCapitalBrl": 58404128000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 11332455000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": -879728000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 10452727000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 46298193000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 2475863000
+              },
+              {
+                "key": "openingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 653085000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 3121148000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 275934000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 9486242000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 754709000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 49238863000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 3005645000
+              },
+              {
+                "key": "closingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 584320000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 1797622000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 373151000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 9095686000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 904451000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2024,
+          "roic": 0.07987817009177299,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-02-24",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=144975",
+            "supportingDocumentUrl": "https://www.sec.gov/Archives/edgar/data/1073404/000141057825000353/R20.htm"
+          },
+          "inputs": {
+            "ebitBrl": 7487202000,
+            "nopatBrl": 4941553320,
+            "openingCapitalBrl": 58404128000,
+            "closingCapitalBrl": 65323126000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 9203240000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": -1716038000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 7487202000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 49238863000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 3005645000
+              },
+              {
+                "key": "openingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 584320000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 1797622000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 373151000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 9095686000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 904451000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 58173786000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 7767813000
+              },
+              {
+                "key": "closingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 459899000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 735037000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 430727000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 12901447000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 849942000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2025,
+          "roic": 0.038330426783058216,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-02-23",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154830",
+            "supportingDocumentUrl": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926027678/ggb-20251231x20f.htm"
+          },
+          "inputs": {
+            "ebitBrl": 3739068000,
+            "nopatBrl": 2467784880,
+            "openingCapitalBrl": 65323126000,
+            "closingCapitalBrl": 63440631000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 7967493000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": -4228425000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 3739068000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 58173786000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 7767813000
+              },
+              {
+                "key": "openingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 459899000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 735037000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 430727000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 12901447000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "openingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 849942000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 53798489000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 5929170000
+              },
+              {
+                "key": "closingOperatingSupplier",
+                "label": "Fornecedores risco sacado",
+                "statement": "BPP",
+                "code": "2.01.02.01.02",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 381415000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 941904000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingShortSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.01.05.02.05",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 386472000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 13240247000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 0
+              },
+              {
+                "key": "closingLongSeparateLease",
+                "label": "Arrendamento mercantil a pagar",
+                "statement": "BPP",
+                "code": "2.02.02.02.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 1002689000
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TUPY S.A.",
+      "sector": "Metalurgia e Siderurgia",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "Arrendamentos não identificados nas contas estruturadas da DFP.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-03-29",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=113166"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": null,
+          "reason": "Arrendamentos não identificados nas contas estruturadas da DFP.",
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-27",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=124648"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2023,
+          "roic": null,
+          "reason": "Arrendamentos não identificados nas contas estruturadas da DFP.",
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-03-20",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134909"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2024,
+          "roic": null,
+          "reason": "Arrendamentos não identificados nas contas estruturadas da DFP.",
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-03-27",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145865"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2025,
+          "roic": null,
+          "reason": "Arrendamentos não identificados nas contas estruturadas da DFP.",
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-19",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155493"
+          },
+          "inputs": null
+        }
+      ]
+    },
+    {
+      "name": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+      "sector": "Metalurgia e Siderurgia",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-02-11",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111713"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-02-10",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123467"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2023,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2025-01-16",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=144312"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2024,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-02-14",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=144777"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2025,
+          "roic": null,
+          "reason": "Financiamento fora das contas revisadas de dívida em BPP 2.01.05.02.09.",
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-02-13",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154757"
+          },
+          "inputs": null
+        }
+      ]
+    },
+    {
+      "name": "VALE S.A.",
+      "sector": "Extração Mineral",
+      "observations": [
+        {
+          "year": 2021,
+          "roic": null,
+          "reason": "A conta BPA 1 diverge de seus subtotais.",
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-02-24",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=112054"
+          },
+          "inputs": null
+        },
+        {
+          "year": 2022,
+          "roic": 0.2492444503905997,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-02-16",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123591",
+            "supportingDocumentUrl": "https://vale.com/documents/d/guest/form-20-f-2025-en"
+          },
+          "inputs": {
+            "ebitBrl": 90326000000,
+            "nopatBrl": 59615160000,
+            "openingCapitalBrl": 227636000000,
+            "closingCapitalBrl": 250731000000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 102313000000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": -11987000000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 90326000000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 197058000000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 65409000000
+              },
+              {
+                "key": "openingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 19078000000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 6720000000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 955000000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 70189000000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2021-12-31",
+                "amountBrl": 7985000000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 194894000000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 24711000000
+              },
+              {
+                "key": "closingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 14218000000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 2552000000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 949000000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 63778000000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 7040000000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2023,
+          "roic": 0.1679847455049542,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-02-22",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134200",
+            "supportingDocumentUrl": "https://vale.com/documents/d/guest/form-20-f-2025-en"
+          },
+          "inputs": {
+            "ebitBrl": 65272000000,
+            "nopatBrl": 43079520000,
+            "openingCapitalBrl": 250731000000,
+            "closingCapitalBrl": 262167000000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 88050000000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": -22778000000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 65272000000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 194894000000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 24711000000
+              },
+              {
+                "key": "openingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 14218000000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 2552000000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 948000000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 63778000000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2022-12-31",
+                "amountBrl": 7041000000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 198325000000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 17474000000
+              },
+              {
+                "key": "closingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 13912000000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 4940000000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 954000000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 62464000000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 6075000000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2024,
+          "roic": 0.13191318214990405,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-03-17",
+            "publishedAt": null,
+            "version": 3,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145455",
+            "supportingDocumentUrl": "https://vale.com/documents/d/guest/form-20-f-2025-en"
+          },
+          "inputs": {
+            "ebitBrl": 55459000000,
+            "nopatBrl": 36602940000,
+            "openingCapitalBrl": 262167000000,
+            "closingCapitalBrl": 292788000000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 74687000000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": -19228000000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 55459000000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 198325000000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 17474000000
+              },
+              {
+                "key": "openingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 13912000000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 4940000000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 954000000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 62464000000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2023-12-31",
+                "amountBrl": 6075000000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 213720000000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 30671000000
+              },
+              {
+                "key": "closingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 13727000000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 7223000000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 907000000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 88789000000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 3507000000
+              }
+            ]
+          }
+        },
+        {
+          "year": 2025,
+          "roic": 0.07575986829703543,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-03-12",
+            "publishedAt": null,
+            "version": 2,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155313",
+            "supportingDocumentUrl": "https://vale.com/documents/d/guest/form-20-f-2025-en"
+          },
+          "inputs": {
+            "ebitBrl": 31969000000,
+            "nopatBrl": 21099540000,
+            "openingCapitalBrl": 292788000000,
+            "closingCapitalBrl": 264223000000,
+            "accounts": [
+              {
+                "key": "grossIncome",
+                "label": "Resultado Bruto",
+                "statement": "DRE",
+                "code": "3.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 74708000000
+              },
+              {
+                "key": "operatingIncomeAndExpenses",
+                "label": "Despesas/Receitas Operacionais",
+                "statement": "DRE",
+                "code": "3.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": -42739000000
+              },
+              {
+                "key": "ebit",
+                "label": "Resultado Antes do Resultado Financeiro e dos Tributos",
+                "statement": "DRE",
+                "code": "3.05",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 31969000000
+              },
+              {
+                "key": "openingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 213720000000
+              },
+              {
+                "key": "openingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 30671000000
+              },
+              {
+                "key": "openingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 13727000000
+              },
+              {
+                "key": "openingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 7223000000
+              },
+              {
+                "key": "openingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 907000000
+              },
+              {
+                "key": "openingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 88789000000
+              },
+              {
+                "key": "openingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2024-12-31",
+                "amountBrl": 3507000000
+              },
+              {
+                "key": "closingEquity",
+                "label": "Patrimônio Líquido Consolidado",
+                "statement": "BPP",
+                "code": "2.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 188926000000
+              },
+              {
+                "key": "closingCash",
+                "label": "Caixa e Equivalentes de Caixa",
+                "statement": "BPA",
+                "code": "1.01.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 40563000000
+              },
+              {
+                "key": "closingSeparateDebt1",
+                "label": "Debentures participativas",
+                "statement": "BPP",
+                "code": "2.02.04.02.12",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 12403000000
+              },
+              {
+                "key": "closingShortBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.01.04",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 3731000000
+              },
+              {
+                "key": "closingShortLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.01.04.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 884000000
+              },
+              {
+                "key": "closingLongBorrowings",
+                "label": "Empréstimos e Financiamentos",
+                "statement": "BPP",
+                "code": "2.02.01",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 99726000000
+              },
+              {
+                "key": "closingLongLeaseIncluded",
+                "label": "Financiamento por Arrendamento",
+                "statement": "BPP",
+                "code": "2.02.01.03",
+                "referenceDate": "2025-12-31",
+                "amountBrl": 2794000000
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

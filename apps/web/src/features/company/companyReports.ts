@@ -47,7 +47,7 @@ function sources(source: CvmSource): Note[] {
   ];
 }
 
-function cdiNotes(rate: RiskFreeRate | null): Note[] {
+export function cdiNotes(rate: RiskFreeRate | null): Note[] {
   return rate
     ? [
         ['Fonte do CDI atual', rate.provenance.source],

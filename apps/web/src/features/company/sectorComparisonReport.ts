@@ -1,6 +1,9 @@
-import type { SectorComparisonSnapshot } from '@moat/data-contracts';
-import type { WorkbookReport } from '../../shared/export/report';
+import type { RiskFreeRate, SectorComparisonSnapshot } from '@moat/data-contracts';
+import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
+import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
+import type { ReportSheet, WorkbookReport } from '../../shared/export/report';
 import type { ScreenerExportScope } from '../screener/ScreenerExport';
+import { cdiNotes } from './companyReports';
 import { minimumSectorPeers, type SectorComparisonRow } from './sectorComparisonRows';
 
 function optionalDate(value: string | undefined) {
@@ -15,8 +18,31 @@ export function sectorComparisonReport(
   search: string,
   sector: string,
   order: string,
+  riskFreeRate: RiskFreeRate | null = null,
 ): WorkbookReport {
   const { manifest } = snapshot;
+  const showCdi = year === manifest.years.at(-1);
+  const cdiSheet: ReportSheet = {
+    name: 'CDI atual',
+    columns: [
+      { label: 'Companhia', width: 52 },
+      { label: 'Exercício', format: 'integer', width: 13 },
+      { label: 'ROE', format: 'percent', width: 18 },
+      { label: 'Data-base do CDI', format: 'date', width: 19 },
+      { label: 'CDI atual (a.a.)', format: 'percent', width: 20 },
+      { label: 'Diferença (p.p.)', format: 'number', width: 21 },
+    ],
+    rows: showCdi
+      ? rows.map(({ company, current }) => [
+          company.name,
+          year,
+          current?.roe ?? null,
+          optionalDate(riskFreeRate?.provenance.referenceDate),
+          riskFreeRate?.value ?? null,
+          spreadToRiskFreeRate(current?.roe ?? null, riskFreeRate),
+        ])
+      : [],
+  };
   return {
     sheets: [
       {
@@ -117,6 +143,7 @@ export function sectorComparisonReport(
           sha256,
         ]),
       },
+      ...(showCdi ? [cdiSheet] : []),
     ],
     notes: [
       ['Método', manifest.methodologyVersion],
@@ -127,6 +154,16 @@ export function sectorComparisonReport(
       ['Exercício do comparativo', year],
       ['Exercícios da média', manifest.years.join(', ')],
       ['Critério da média', 'Cinco exercícios consecutivos com ROE disponível.'],
+      ...(showCdi
+        ? [
+            [
+              'Diferença para o CDI atual',
+              `ROE do exercício de ${year} menos o CDI atual anualizado, em pontos percentuais. A data-base do CDI é indicada separadamente.`,
+            ] as const,
+            ...cdiNotes(riskFreeRate),
+            ...(!riskFreeRate ? [['Série SGS 4389', cdiRateUrl] as const] : []),
+          ]
+        : []),
       [
         'Percentil no setor',
         `Posição pela média de ROE com pelo menos ${minimumSectorPeers} companhias completas no setor exato do FCA. Empates usam a posição média.`,

@@ -32,9 +32,21 @@ A média usa os cinco exercícios de 2021 a 2025. O percentil é a posição da 
 
 Cada lacuna informa o motivo, como período diferente de 31/12, falta de consolidado ou ausência de conciliação. ROIC continua disponível nos estudos com mapeamento validado. A comparação usa dados contábeis e a seleção anual atual. O ranking composto, preços correntes e spreads históricos dependem das fontes descritas nesta metodologia.
 
+## ROIC estimado em siderurgia e mineração
+
+O comparativo começa pelas oito companhias nos setores **Metalurgia e Siderurgia** e **Extração Mineral** declarados no FCA. O cálculo usa DFPs consolidadas de janeiro a dezembro de 2021 a 2025, com saldos de abertura e fechamento da mesma versão. Cada observação válida mostra as contas e o formulário, e as lacunas informam seu motivo. [Catálogo DFP da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp) · [Catálogo FCA da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca)
+
+O NOPAT estimado aplica uma alíquota padronizada de 34% ao resultado contábil antes do resultado financeiro e dos tributos, depois de conciliá-lo com os subtotais do resultado bruto e operacional. O capital de abertura e o de encerramento usam patrimônio consolidado, financiamentos e arrendamentos identificados, menos caixa e equivalentes como aproximação de caixa excedente. A razão divide o NOPAT estimado pela média dos dois capitais positivos. [CPC 06 (R2) sobre arrendamentos](https://conteudo.cvm.gov.br/legislacao/resolucoes/resol095.html)
+
+Um arrendamento incluído em empréstimos e financiamentos entra uma vez. Uma conta de arrendamento apresentada à parte entra quando sua classificação e seus subtotais foram conferidos. Obrigações de financiamento a fornecedores em rubricas separadas exigem evidência do emissor. Os valores revistos de risco sacado da Gerdau ficam como fornecedores operacionais, com prazos originais e custo financeiro do fornecedor. As debêntures participativas identificadas no passivo da Vale entram no capital investido. Os saldos de concessões ferroviárias da Vale se referem aos direitos de operação. [Notas anuais da Gerdau](https://www.sec.gov/Archives/edgar/data/1073404/000110465926027678/ggb-20251231x20f.htm) · [Notas anuais da Vale](https://www.sec.gov/Archives/edgar/data/917851/000129281426001844/valeform20f_2025.htm)
+
+A média requer cinco exercícios calculáveis. O percentil usa essa média e requer cinco companhias completas no mesmo setor declarado. Os resultados usam a aproximação contábil descrita, com custo tributário e caixa padronizados.
+
 ## CDI atual
 
 O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de risco provisória. Empresas e Valuation e Premissas exibem a última observação publicada pelo Banco Central (SGS 4389) com sua data-base. A página Empresas mostra a diferença entre o ROIC ou ROE do exercício mais recente e o CDI atual. Em pontos percentuais, a diferença é `(ROIC ou ROE − CDI anualizado) × 100`, com as taxas em fração. O exercício contábil e a data do CDI são identificados separadamente. [Série SGS 4389](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet)
+
+Os comparativos setoriais exibem essa diferença apenas no último exercício comum da seleção. Quando o retorno ou o CDI está indisponível, a diferença também fica indisponível. A planilha leva a taxa, sua data de referência e a diferença numérica em pontos percentuais.
 
 Os spreads históricos e o ranking composto dependem de uma série nominal de prazo constante com datas e direitos de uso verificados. A publicação mensal da SUSEP tem uma mudança de modelo para a curva prefixada em 2022. [Parâmetros SUSEP e ANBIMA de 2016 a 2021](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj-1) · [Metodologia e parâmetros atuais](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj)
 
