@@ -69,6 +69,14 @@ python3 apps/pipeline/run_bank_roe.py
 
 A rotina usa os mesmos ZIPs e opções. O lote `data/public/cvm-bank-roe.json` inclui os bancos com pelo menos cinco exercícios consecutivos completos e conciliados na janela pedida, os motivos de exclusão e o percentil da média de ROE quando há cinco bancos. [Metodologia bancária](../../docs/METHODOLOGY.md#comparação-de-roe-entre-bancos)
 
+### Comparativos setoriais
+
+```bash
+python3 apps/pipeline/run_sector_comparison.py
+```
+
+A rotina local usa o recorte anual, o diretório público, o FCA da data-base da seleção e os ZIPs DFP de 2021 a 2025 em `data/raw/cvm`. O arquivo de saída é `data/public/cvm-sector-comparison.json`. Use `--raw-dir`, `--selection`, `--directory`, `--fca-archive` ou `--output` para indicar outros arquivos. A geração preserva lacunas justificadas por exercício, e uma falha de entrada mantém o último lote válido. [Metodologia dos comparativos](../../docs/METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
+
 ## Gerar os fundamentos de preço
 
 Coloque os arquivos oficiais `dfp_cia_aberta_2025.zip` e `itr_cia_aberta_2026.zip` em `data/raw/cvm`, com o horário de gravação preservado, e execute na raiz do clone.
