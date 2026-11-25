@@ -3,6 +3,7 @@ import { Button, ButtonLink, EmptyState, PageHeader, Panel } from '../../shared/
 import { RiskFreeRatePanel } from '../../shared/ui/RiskFreeRatePanel';
 import { BankRoeComparison } from './BankRoeComparison';
 import { CompanySample } from './CompanySample';
+import { SectorComparisons } from './SectorComparisons';
 import { useCvmSample } from './useCvmSample';
 
 export function CompaniesPage() {
@@ -18,6 +19,7 @@ export function CompaniesPage() {
       />
 
       <RiskFreeRatePanel state={rateState} reload={reloadRate} />
+      <SectorComparisons />
       <BankRoeComparison riskFreeRate={riskFreeRate} />
 
       {state.status === 'loading' && (

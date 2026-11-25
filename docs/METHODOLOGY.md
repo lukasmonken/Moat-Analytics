@@ -20,6 +20,18 @@ O painel reúne Itaú Unibanco, Banco do Brasil, Banrisul, Bradesco e Santander.
 
 Banco do Brasil, Banrisul, Bradesco e Santander informam o lucro da controladora em `3.11.01` e seu patrimônio em `2.07.01`. O Itaú usa o mapeamento acima. A abertura de cada exercício vem do comparativo da mesma versão da DFP. No Santander de 2022, a linha de lucro dos não controladores na DRE estruturada diverge R$ 54 mil da conciliação. O lote preserva os registros e verifica a atribuição do lucro no demonstrativo IFRS auditado e na DMPL da DFP versão 2. O lucro atribuível à controladora coincide nessas fontes. [DFs IFRS de 2022 do Santander](https://cms.santander.com.br/sites/WRI/documentos/url-dfs-ifrs-4T22/23-02-28_185641_dfs%2520ifrs%25204t22.pdf)
 
+## Comparativos setoriais da seleção anual
+
+O painel Empresas reúne os nomes oficiais da seleção anual e o setor declarado por cada emissor no FCA. A junção usa código CVM e versão do formulário, conferidos na data-base da seleção. O setor cadastral pode reunir modelos de negócio distintos. Holdings permanecem nos setores declarados e cada grupo conserva o próprio conjunto de companhias. [Catálogo FCA](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca)
+
+O ROE de cada exercício divide o lucro atribuível à controladora pelo patrimônio líquido médio da controladora. A comparação usa exclusivamente exercícios completos de janeiro a dezembro, em DFP consolidada, com saldos de encerramento e de abertura da mesma versão. O cálculo normaliza as contas em BRL, confere sua classificação e concilia o resultado e o patrimônio com as parcelas atribuíveis aos controladores e não controladores. Abertura e encerramento precisam ser positivos. [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
+
+Quando a atribuição de lucro na DRE diverge do total consolidado, a rotina pode usar a DMPL da mesma versão da DFP. A linha de lucro da DMPL precisa conciliar controladora e não controladores e confirmar o mesmo total consolidado da DRE. O valor da controladora na DRE precisa coincidir com o da DMPL ou as duas parcelas na DRE precisam estar zeradas. O comparativo identifica a demonstração e a conta do lucro. A evidência auditada do Santander de 2022 conserva o vínculo com o documento de apoio.
+
+A média usa os cinco exercícios de 2021 a 2025. O percentil é a posição da média entre as companhias com os cinco exercícios válidos no mesmo setor exato do FCA. São necessárias pelo menos cinco companhias completas no grupo. A menor média ocupa o percentil zero, a maior ocupa cem, e empates usam a posição média. A busca e a paginação preservam o grupo de referência.
+
+Cada lacuna informa o motivo, como período diferente de 31/12, falta de consolidado ou ausência de conciliação. ROIC continua disponível nos estudos com mapeamento validado. A comparação usa dados contábeis e a seleção anual atual. O ranking composto, preços correntes e spreads históricos dependem das fontes descritas nesta metodologia.
+
 ## CDI atual
 
 O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de risco provisória. Empresas e Valuation e Premissas exibem a última observação publicada pelo Banco Central (SGS 4389) com sua data-base. A página Empresas mostra a diferença entre o ROIC ou ROE do exercício mais recente e o CDI atual. Em pontos percentuais, a diferença é `(ROIC ou ROE − CDI anualizado) × 100`, com as taxas em fração. O exercício contábil e a data do CDI são identificados separadamente. [Série SGS 4389](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet)
