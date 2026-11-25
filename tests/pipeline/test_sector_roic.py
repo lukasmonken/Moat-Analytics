@@ -5,7 +5,9 @@ import unittest
 from test_sector_comparison import account_rows, filing
 
 from apps.pipeline.src.moat_cvm.sector_roic import balance_capital, observe_roic
-from apps.pipeline.src.moat_cvm.sector_roic_lease_notes import LeaseBalances
+from apps.pipeline.src.moat_cvm.sector_roic_lease_notes import (
+    LeaseBalances, LeaseReview, LiabilityBalance, ReviewedSubtotal,
+)
 from apps.pipeline.src.moat_cvm.sector_roic_notes import ReviewedAccount
 
 
@@ -95,16 +97,45 @@ class SectorRoicTest(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
             balance_capital("000111", "closing", statements)
-        note = LeaseBalances(30_000, 50_000, 16_000)
+        balances = LeaseBalances(30_000, 50_000, 16_000)
+        note = LeaseReview("12", "https://example.org", balances, balances)
         capital, accounts = balance_capital("000111", "closing", statements, reviewed_leases=note)
         self.assertEqual(capital, 180_000)
         self.assertTrue(all(
             row["amountBrl"] == 0 for row in accounts if row["key"].endswith("LeaseIncluded")
         ))
 
-        wrong_note = LeaseBalances(29_000, 50_000, 16_000)
+        wrong_note = note._replace(closing=LeaseBalances(29_000, 50_000, 16_000))
         with self.assertRaisesRegex(ValueError, "não correspondem à nota auditada"):
             balance_capital("000111", "closing", statements, reviewed_leases=wrong_note)
+
+    def test_audited_subtotal_replaces_only_empty_structured_breakdown(self):
+        statements = balance(filing("000111"))
+        liabilities = statements["BPP"]
+        liabilities["2.01.04.01"]["VL_CONTA"] = 0
+        liabilities["2.01.04.03"]["VL_CONTA"] = 0
+        liabilities.update(by_code(filing("000111"), [
+            ("2.01.04.02", "Debêntures", 0),
+            ("2.01.05", "Outras Obrigações", 6),
+            ("2.01.05.02", "Outros", 6),
+            ("2.01.05.02.04", "Arrendamento a pagar", 6),
+        ]))
+        statements["BPA"]["1"]["VL_CONTA"] = 216
+        statements["BPA"]["1.02"]["VL_CONTA"] = 116
+        liabilities["2"]["VL_CONTA"] = 216
+        liabilities["2.01"]["VL_CONTA"] = 46
+        evidence = ReviewedSubtotal(
+            LiabilityBalance("2.01.04", "Empréstimos e Financiamentos", 30_000, 30_000),
+            ("2.01.04.01", "2.01.04.02", "2.01.04.03"),
+        )
+        with self.assertRaisesRegex(ValueError, "diverge de seus subtotais"):
+            balance_capital("000111", "closing", statements)
+        capital, _ = balance_capital("000111", "closing", statements, reviewed_subtotals=(evidence,))
+        self.assertEqual(capital, 186_000)
+
+        liabilities["2.01.04.01"]["VL_CONTA"] = 1
+        with self.assertRaisesRegex(ValueError, "diverge da revisão auditada"):
+            balance_capital("000111", "closing", statements, reviewed_subtotals=(evidence,))
 
     def test_includes_debentures_outside_borrowings_with_reconciled_subtotals(self):
         document = filing("004170")

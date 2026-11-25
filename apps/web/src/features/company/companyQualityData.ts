@@ -39,6 +39,16 @@ export function annualObservation(company: Company, year: number) {
   return company.observations.find((observation) => observation.year === year);
 }
 
+export function comparisonSector(company: Company): string {
+  return company.metric === 'ROE' ? (company.comparisonGroup ?? company.sector) : company.sector;
+}
+
+export function annualComparisonContext(company: Company, year: number) {
+  if (company.metric !== 'ROE') return undefined;
+  const context = company.comparisonContext;
+  return context && year <= context.throughYear ? context : undefined;
+}
+
 export function annualRate(
   observation: SectorComparisonObservation | SectorRoicObservation | undefined,
 ) {

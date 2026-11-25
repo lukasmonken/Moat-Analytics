@@ -9,9 +9,9 @@ function readSnapshot() {
 }
 
 describe('ROIC setorial estimado da CVM', () => {
-  it('inclui todas as 130 companhias que devem usar ROIC, inclusive quando faltam contas', () => {
+  it('inclui todas as 129 companhias que devem usar ROIC, inclusive quando faltam contas', () => {
     const snapshot = readSnapshot();
-    expect(snapshot.companies).toHaveLength(130);
+    expect(snapshot.companies).toHaveLength(129);
     expect(snapshot.companies.every(({ observations }) => observations.length === 5)).toBe(true);
     const camil = snapshot.companies.find(({ name }) => name === 'CAMIL ALIMENTOS S.A.');
     expect(camil?.observations.at(-1)).toMatchObject({
@@ -31,6 +31,21 @@ describe('ROIC setorial estimado da CVM', () => {
     ['LOJAS RENNER S.A.', 0.09570417277243985, 1_797_160_000, 12_423_752_000, 12_363_581_000],
     ['AMBEV S.A.', 0.20896627114433958, 23_423_386_000, 74_437_576_000, 73_523_477_000],
     ['TUPY S.A.', -0.019397756957106764, -156_481_000, 5_893_456_000, 4_754_936_000],
+    ['IOCHPE MAXION S.A.', 0.06869579774991107, 941_914_000, 9_099_524_000, 8_999_494_000],
+    [
+      'ENGIE BRASIL ENERGIA S.A.',
+      0.11342962979108943,
+      6_268_325_000,
+      32_810_573_000,
+      40_134_997_000,
+    ],
+    [
+      'CIA SANEAMENTO DO PARANA - SANEPAR',
+      0.10356973185628607,
+      2_337_506_000,
+      15_659_285_000,
+      14_132_314_000,
+    ],
   ])('confere 2025 da companhia %s com a DFP consolidada', (name, roic, ebit, opening, closing) => {
     const company = readSnapshot().companies.find((candidate) => candidate.name === name);
     const observation = company?.observations.at(-1);
@@ -41,6 +56,22 @@ describe('ROIC setorial estimado da CVM', () => {
       openingCapitalBrl: opening,
       closingCapitalBrl: closing,
     });
+  });
+
+  it('identifica os arrendamentos fora da dívida e a base individual auditada', () => {
+    const { companies } = readSnapshot();
+    const iochpe = companies.find(({ name }) => name === 'IOCHPE MAXION S.A.')?.observations.at(-1);
+    expect(iochpe?.inputs?.separateLeases).toEqual({
+      note: '14',
+      openingBrl: 103_258_000,
+      closingBrl: 115_932_000,
+    });
+    expect(iochpe?.inputs?.embeddedLeases).toBeUndefined();
+    const sanepar = companies.find(({ name }) => name.endsWith(' - SANEPAR'))?.observations.at(-1);
+    expect(sanepar?.filing?.basis).toBe('individual');
+    expect(sanepar?.inputs?.accounts).toContainEqual(
+      expect.objectContaining({ key: 'closingEquity', label: 'Patrimônio Líquido' }),
+    );
   });
 
   it('preserva os arrendamentos da nota e exige uma fonte de apoio', () => {

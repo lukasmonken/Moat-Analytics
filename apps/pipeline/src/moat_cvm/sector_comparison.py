@@ -19,9 +19,10 @@ from .bank_roe import (
     same_filing,
     santander_income_evidence,
 )
-from .comparison_identity import comparison_identities, uses_roe
+from .comparison_identity import comparison_identities, roe_group
 from .dfp import ORIGIN, SOURCE, CsvRow, amount
 from .fca import SOURCE as SECTOR_SOURCE
+from .sector_roe_notes import AUDITED_ROE_REVIEWS
 
 METHODOLOGY = "roe-dfp-comparisons.v1"
 YEARS = tuple(range(2021, 2026))
@@ -50,6 +51,12 @@ DMPL_INCOME_CODE = "5.05.01"
 DMPL_INCOME_COLUMNS = (
     "Patrimônio Líquido", "Participação dos Não Controladores", "Patrimônio Líquido Consolidado",
 )
+BRADSAUDE_CONTEXT = {
+    "throughYear": 2025,
+    "note": "Este exercício reflete a Odontoprev. A incorporação das ações da Bradesco Gestão de Saúde foi concluída em 30/04/2026.",
+    "sourceUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx"
+                 "?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1514189&numSequencia=1038895&numVersao=1",
+}
 INCOME_MISMATCH = "Lucro consolidado diverge da atribuição aos acionistas."
 DmplAccounts = dict[str, dict[str, list[CsvRow]]]
 
@@ -130,7 +137,9 @@ def accounting_rows(archive: ZipFile, year: int, filings: dict[str, CsvRow]):
                 continue
             period_presence[code].add(role)
             if account_code in codes:
-                by_company[code][role].setdefault(account_code, []).append(row)
+                entries = by_company[code][role].setdefault(account_code, [])
+                if row not in entries:
+                    entries.append(row)
     return by_company, statement_presence, period_presence
 
 
@@ -262,19 +271,43 @@ def calculate_observation(
         "version": int(filing["VERSAO"]),
         "filingUrl": filing["LINK_DOC"],
     }
-    if statements != {"DRE", "BPP"}:
+    reviewed = AUDITED_ROE_REVIEWS.get((
+        filing["CD_CVM"], filing["DT_REFER"], filing.get("ID_DOC", ""), str(filing["VERSAO"]),
+    )) if not statements else None
+    if reviewed is None and statements != {"DRE", "BPP"}:
         return unavailable(year, "DFP consolidada indisponível no lote da CVM.", source)
-    if periods != {"income", "opening", "closing"}:
+    if reviewed is None and periods != {"income", "opening", "closing"}:
         return unavailable(
             year, "Exercício anual ou balanço comparativo incompatível com a janela civil.", source,
         )
     try:
-        income, support = parent_income(archive, filing, rows["income"], dmpl_accounts)
-        opening, opening_codes = parent_equity(rows["opening"])
-        closing, closing_codes = parent_equity(rows["closing"])
-        if opening_codes != closing_codes:
-            raise ValueError("Mapeamentos do patrimônio de abertura e de encerramento divergentes.")
-        result = calculate_roe(net_income=income[1], equity_open=opening, equity_close=closing)
+        if reviewed:
+            if reviewed.opening_date != date(year, 1, 1):
+                raise ValueError("O saldo auditado de abertura não pertence ao início do exercício.")
+            net_income = reviewed.profit.reconciled_parent()
+            opening = reviewed.opening_equity.reconciled_parent()
+            closing = reviewed.closing_equity.reconciled_parent()
+            support = reviewed.url
+            accounts = {
+                "incomeCode": None,
+                "incomeStatement": "DMPL",
+                "equityCodes": [],
+                "auditedStatementPage": reviewed.page,
+                "openingEquityDate": reviewed.opening_date.isoformat(),
+            }
+        else:
+            income, support = parent_income(archive, filing, rows["income"], dmpl_accounts)
+            opening, opening_codes = parent_equity(rows["opening"])
+            closing, closing_codes = parent_equity(rows["closing"])
+            if opening_codes != closing_codes:
+                raise ValueError("Mapeamentos do patrimônio de abertura e de encerramento divergentes.")
+            net_income = income[1]
+            accounts = {
+                "incomeCode": income[0]["code"],
+                "incomeStatement": income[0]["statement"],
+                "equityCodes": list(opening_codes),
+            }
+        result = calculate_roe(net_income=net_income, equity_open=opening, equity_close=closing)
         if result.value is None or result.quality_status != "validated":
             raise ValueError(result.reasons[0] if result.reasons else "ROE indisponível no exercício.")
     except (DecimalException, KeyError):
@@ -290,12 +323,10 @@ def calculate_observation(
         "reason": None,
         "filing": source,
         "inputs": {
-            "netIncomeBrl": amount(income[1]),
+            "netIncomeBrl": amount(net_income),
             "openingEquityBrl": amount(opening),
             "closingEquityBrl": amount(closing),
-            "incomeCode": income[0]["code"],
-            "incomeStatement": income[0]["statement"],
-            "equityCodes": list(opening_codes),
+            **accounts,
         },
     }
 
@@ -335,10 +366,16 @@ def create_sector_comparison(
         raise ValueError("A janela de comparação exige os cinco ZIPs da CVM de 2021 a 2025.")
     by_code, archives = comparison_identities(selection, directory, fca_archives)
     identities = {
-        f"{code:06d}": identity for code, identity in by_code.items() if uses_roe(code, identity)
+        f"{code:06d}": {**identity, "comparisonGroup": group}
+        for code, identity in by_code.items()
+        if (group := roe_group(code, identity)) is not None
     }
     companies = {
-        code: {**{key: identity[key] for key in ("name", "sector", "classification")}, "observations": []}
+        code: {
+            **{key: identity[key] for key in ("name", "sector", "classification", "comparisonGroup")},
+            **({"comparisonContext": BRADSAUDE_CONTEXT} if code == "020125" else {}),
+            "observations": [],
+        }
         for code, identity in identities.items()
     }
     for year in YEARS:

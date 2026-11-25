@@ -32,6 +32,7 @@ describe('Comparativos setoriais da CVM', () => {
       'BCO BTG PACTUAL S.A.',
       'BCO PINE S.A',
       'BCO SANTANDER (BRASIL) S.A.',
+      'BRADSAÚDE S.A.',
       'BRBI BR PARTNERS S.A',
       'CAIXA SEGURIDADE PARTICIPAÇÕES S.A.',
       'IRB - BRASIL RESSEGUROS S.A.',
@@ -42,19 +43,53 @@ describe('Comparativos setoriais da CVM', () => {
       [...directory.companies].sort(),
     );
     for (const company of companies) {
-      expect(Object.keys(company).sort()).toEqual([
-        'classification',
-        'name',
-        'observations',
-        'sector',
-      ]);
+      expect(
+        Object.keys(company)
+          .filter((key) => key !== 'comparisonContext')
+          .sort(),
+      ).toEqual(['classification', 'comparisonGroup', 'name', 'observations', 'sector']);
       expect(company.observations.map(({ year }) => year)).toEqual(manifest.years);
     }
     const abc = companies.find(({ name }) => name === 'BCO ABC BRASIL S.A.');
-    expect(abc?.observations.at(-1)).toMatchObject({
+    expect(abc?.observations.find(({ year }) => year === 2024)).toMatchObject({
       roe: null,
       reason: expect.stringMatching(/consolidada/),
     });
+    expect(companies.every(({ observations }) => observations.at(-1)?.roe !== null)).toBe(true);
+  });
+
+  it('agrupa Bradsaúde com Porto Seguro e identifica o perímetro da Odontoprev', () => {
+    const { companies } = snapshot();
+    const bradsaude = companies.find(({ name }) => name === 'BRADSAÚDE S.A.');
+    const portoSeguro = companies.find(({ name }) => name === 'PORTO SEGURO S.A.');
+    expect(bradsaude?.comparisonGroup).toBe('Seguros e Resseguros');
+    expect(bradsaude?.comparisonGroup).toBe(portoSeguro?.comparisonGroup);
+    expect(bradsaude?.sector).toBe('Serviços médicos');
+    expect(bradsaude?.comparisonContext).toMatchObject({
+      throughYear: 2025,
+      note: expect.stringContaining('Odontoprev'),
+    });
+    expect(bradsaude?.observations.at(-1)?.roe).toBeCloseTo(0.4642765209505009, 10);
+    expect(bradsaude?.observations.find(({ year }) => year === 2023)?.roe).toBeCloseTo(
+      0.40670991754762337,
+      10,
+    );
+  });
+
+  it('usa a abertura e a página auditadas quando a DFP estruturada do ABC está ausente', () => {
+    const data = snapshot();
+    const abc = data.companies
+      .find(({ name }) => name === 'BCO ABC BRASIL S.A.')
+      ?.observations.at(-1);
+    expect(abc?.roe).toBeCloseTo(0.15254733496608713, 10);
+    expect(abc?.inputs).toMatchObject({
+      incomeCode: null,
+      auditedStatementPage: 18,
+      openingEquityDate: '2025-01-01',
+    });
+    if (!abc?.filing) throw new Error('DFP esperada para o Banco ABC.');
+    delete abc.filing.supportingDocumentUrl;
+    expect(() => parseSectorComparison(data)).toThrow();
   });
 
   it('confere o ROE de Itaú com a série previamente auditada', () => {

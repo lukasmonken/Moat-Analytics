@@ -1,7 +1,12 @@
 import type { SectorComparisonObservation, SectorRoicObservation } from '@moat/data-contracts';
 import { useEffect, useRef } from 'react';
 import { Table } from '../../shared/ui';
-import { annualObservation, type Company } from './companyQualityData';
+import {
+  annualComparisonContext,
+  annualObservation,
+  comparisonSector,
+  type Company,
+} from './companyQualityData';
 import { formatCurrency, formatDate } from './financialPresentation';
 import { formatRate } from './QualityHistory';
 
@@ -10,12 +15,15 @@ function RoeCalculation({
 }: {
   inputs: NonNullable<SectorComparisonObservation['inputs']>;
 }) {
+  const incomeSource = inputs.auditedStatementPage
+    ? `${inputs.incomeStatement}, p. ${inputs.auditedStatementPage}`
+    : `${inputs.incomeStatement} ${inputs.incomeCode}`;
   return (
     <dl className="company-metadata">
       <div>
         <dt>Lucro líquido da controladora</dt>
         <dd>
-          {formatCurrency(inputs.netIncomeBrl)} · {inputs.incomeStatement} {inputs.incomeCode}
+          {formatCurrency(inputs.netIncomeBrl)} · {incomeSource}
         </dd>
       </div>
       <div>
@@ -24,7 +32,17 @@ function RoeCalculation({
       </div>
       <div>
         <dt>Patrimônio na abertura</dt>
-        <dd>{formatCurrency(inputs.openingEquityBrl)}</dd>
+        <dd>
+          {formatCurrency(inputs.openingEquityBrl)}
+          {inputs.openingEquityDate && (
+            <>
+              {' · '}
+              <time dateTime={inputs.openingEquityDate}>
+                {formatDate(inputs.openingEquityDate)}
+              </time>
+            </>
+          )}
+        </dd>
       </div>
       <div>
         <dt>Patrimônio no fechamento</dt>
@@ -35,11 +53,12 @@ function RoeCalculation({
 }
 
 const embeddedLeasesLabel = 'Arrendamentos incluídos nos financiamentos';
+const separateLeasesLabel = 'Arrendamentos fora dos financiamentos';
 const balanceLabels = [
   ['Patrimônio líquido consolidado', /Equity$/],
   ['Empréstimos e financiamentos', /Borrowings$/],
   [embeddedLeasesLabel, /LeaseIncluded$/],
-  ['Arrendamentos fora dos financiamentos', /SeparateLease$/],
+  [separateLeasesLabel, /SeparateLease$/],
   ['Outros passivos financeiros', /SeparateDebt\d+$/],
   ['Caixa e equivalentes', /Cash$/],
 ] as const;
@@ -51,6 +70,10 @@ function RoicCalculation({
   inputs: NonNullable<SectorRoicObservation['inputs']>;
   taxRate: number;
 }) {
+  const noteBalances: Record<string, typeof inputs.embeddedLeases> = {
+    [embeddedLeasesLabel]: inputs.embeddedLeases,
+    [separateLeasesLabel]: inputs.separateLeases,
+  };
   const presentation = (period: string, pattern: RegExp) => {
     const accounts = inputs.accounts.filter(
       ({ key }) => key.startsWith(period) && pattern.test(key),
@@ -89,7 +112,7 @@ function RoicCalculation({
           </thead>
           <tbody>
             {balanceLabels.map(([label, pattern]) => {
-              const leases = label === embeddedLeasesLabel ? inputs.embeddedLeases : undefined;
+              const leases = noteBalances[label];
               const opening = leases
                 ? formatCurrency(leases.openingBrl)
                 : presentation('opening', pattern);
@@ -134,6 +157,7 @@ export function CompanyCalculation({
   const focus = useRef<HTMLElement>(null);
   const observation = annualObservation(company, year);
   const filing = observation?.filing;
+  const context = annualComparisonContext(company, year);
   useEffect(() => {
     focus.current?.focus();
   }, [company.name]);
@@ -149,6 +173,17 @@ export function CompanyCalculation({
       <h3 id={calculationHeadingId}>
         {company.name} · {year}
       </h3>
+      {comparisonSector(company) !== company.sector && (
+        <p>Setor cadastral na CVM · {company.sector}</p>
+      )}
+      {context && (
+        <p className="company-source-links">
+          <span>{context.note}</span>
+          <a href={context.sourceUrl} target="_blank" rel="noreferrer">
+            Fato relevante na CVM
+          </a>
+        </p>
+      )}
       {observation?.reason && <p>{observation.reason}</p>}
       {!observation && <p>Demonstrativo indisponível para este exercício.</p>}
       {observation?.inputs &&
@@ -168,6 +203,7 @@ export function CompanyCalculation({
             {' · '}Recebimento{' '}
             <time dateTime={filing.receivedAt}>{formatDate(filing.receivedAt)}</time>
             {' · '}Versão {filing.version}
+            {filing.basis === 'individual' && ' · Demonstração individual'}
           </span>
           {filing.supportingDocumentUrl && (
             <a href={filing.supportingDocumentUrl} target="_blank" rel="noreferrer">

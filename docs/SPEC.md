@@ -45,6 +45,7 @@ A página Empresas reúne todas as companhias da seleção anual em uma lista co
 
 ### 3.1 ROIC para as demais companhias
 
+- Usar os demonstrativos consolidados do exercício. Uma demonstração individual auditada pode cobrir o mesmo perímetro quando o emissor declara ausência de subsidiárias. A base usada deve aparecer nos detalhes e na exportação.
 - `NOPAT = EBIT operacional ajustado × (1 − alíquota tributária apropriada)`; o EBIT pode demandar conciliação/normalização a partir do resultado antes do financeiro e tributos da CVM. Não somar impostos ao EBIT como se fossem lucro.
 - `ROIC = NOPAT anual ou TTM / capital investido médio`.
 - CI financeiro simplificado: `PL ajustado + dívida onerosa − caixa excedente`; documentar ajustes para arrendamentos, minoritários, ativos/passivos não operacionais e equivalentes. Preferir reconciliação operacional e financeira quando houver dados.
@@ -56,6 +57,7 @@ A página Empresas reúne todas as companhias da seleção anual em uma lista co
 
 - `ROE = lucro líquido atribuível aos acionistas / patrimônio líquido médio correspondente`.
 - Usar ROE como indicador de qualidade de bancos e seguradoras, considerando a atividade dos grupos bancários e de seguros. Comparar pares adequados e interpretar alavancagem e capital regulatório.
+- Agrupar bancos e seguradoras pela atividade verificada para comparação. O setor cadastral do FCA permanece disponível para consulta.
 
 ### 3.3 Série e qualidade
 

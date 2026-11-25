@@ -16,7 +16,9 @@ from .fca import SOURCE as SECTOR_SOURCE
 from .quality import ROIC_TAX
 from .quality import ACCOUNTS as QUALITY_ACCOUNTS
 from .sector_comparison import YEARS, selected_filings
-from .sector_roic_lease_notes import EMBEDDED_LEASE_REVIEWS, LeaseBalances
+from .sector_roic_lease_notes import (
+    INDIVIDUAL_FILINGS, LEASE_REVIEWS, SUBTOTAL_REVIEWS, LeaseReview, ReviewedSubtotal,
+)
 from .sector_roic_notes import REVIEWS, ReviewedAccount
 
 METHODOLOGY = "roic-dfp-comparisons.v1"
@@ -95,6 +97,9 @@ def labeled_record(rows: Accounts, key: str, statement: str, code: str, label: s
         raise ValueError(f"Conta ausente ou com classificação divergente em {statement} {code}.")
     return record(key, statement, row)
 
+def filing_key(issuer: str, filing: CsvRow) -> tuple[str, str, str, str]:
+    return issuer, filing["DT_REFER"], filing.get("ID_DOC", ""), str(filing["VERSAO"])
+
 
 def read_accounts(
     archive: ZipFile, year: int, filings: dict[str, CsvRow],
@@ -106,26 +111,30 @@ def read_accounts(
         for code in filings
     }
     duplicates = set()
-    for statement in STATEMENTS:
-        for row in csv_rows(archive, f"dfp_cia_aberta_{statement}_con_{year}.csv"):
-            issuer = row["CD_CVM"]
-            filing = filings.get(issuer)
-            if filing is None or not same_filing(row, filing):
-                continue
-            period = row["ORDEM_EXERC"], row["DT_FIM_EXERC"]
-            if statement == "DRE":
-                if period != (NEWEST, reference) or row["DT_INI_EXERC"] != start:
+    individual_issuers = {issuer for issuer, filing in filings.items() if filing_key(issuer, filing) in INDIVIDUAL_FILINGS}
+    by_basis = {"con": filings.keys() - individual_issuers, "ind": individual_issuers}
+    for basis, issuers in by_basis.items():
+        if not issuers:
+            continue
+        for statement in STATEMENTS:
+            for row in csv_rows(archive, f"dfp_cia_aberta_{statement}_{basis}_{year}.csv"):
+                issuer = row["CD_CVM"]
+                if issuer not in issuers or not same_filing(row, filings[issuer]):
                     continue
-                role = "income"
-            else:
-                role = periods.get(period)
-                if role is None:
-                    continue
-            entries = by_company[issuer][role][statement]
-            account = row["CD_CONTA"]
-            if account in entries:
-                duplicates.add(issuer)
-            entries[account] = row
+                period = row["ORDEM_EXERC"], row["DT_FIM_EXERC"]
+                if statement == "DRE":
+                    if period != (NEWEST, reference) or row["DT_INI_EXERC"] != start:
+                        continue
+                    role = "income"
+                else:
+                    role = periods.get(period)
+                    if role is None:
+                        continue
+                entries = by_company[issuer][role][statement]
+                account = row["CD_CONTA"]
+                if account in entries:
+                    duplicates.add(issuer)
+                entries[account] = row
     return by_company, duplicates
 
 
@@ -206,11 +215,14 @@ def balance_capital(
     issuer: str, stage: str, balance: dict[str, Accounts],
     operating_supplier_balance: int | None = None,
     reviewed_accounts: tuple[ReviewedAccount, ...] = (),
-    reviewed_leases: LeaseBalances | None = None,
+    reviewed_leases: LeaseReview | None = None,
+    reviewed_subtotals: tuple[ReviewedSubtotal, ...] = (),
+    individual: bool = False,
 ) -> tuple[Decimal, list[dict]]:
     assets, liabilities = balance["BPA"], balance["BPP"]
     equity = labeled_record(
-        liabilities, f"{stage}Equity", "BPP", "2.03", "Patrimônio Líquido Consolidado",
+        liabilities, f"{stage}Equity", "BPP", "2.03",
+        "Patrimônio Líquido" if individual else "Patrimônio Líquido Consolidado",
     )
     cash = labeled_record(assets, f"{stage}Cash", "BPA", "1.01.01", "Caixa e Equivalentes de Caixa")
     separately_reported, extra_rollups, operating = separate_financing(
@@ -224,11 +236,38 @@ def balance_capital(
            if entry.key in ("shortLease", "longLease")},
         **LEASES_OUTSIDE_DEBT.get(issuer, {}),
     }
-    if reviewed_leases and not (
-        0 < reviewed_leases.leases_brl
-        <= reviewed_leases.short_borrowings_brl + reviewed_leases.long_borrowings_brl
-    ):
-        raise ValueError("Arrendamentos incompatíveis com os financiamentos da nota auditada.")
+    lease_balances = None
+    reviewed_lease_codes = set()
+    if reviewed_leases:
+        lease_balances = reviewed_leases.opening if stage == "opening" else reviewed_leases.closing
+        upper_bound = lease_balances.short_borrowings_brl + lease_balances.long_borrowings_brl
+        if reviewed_leases.separate_liabilities:
+            upper_bound = 0
+            for liability in reviewed_leases.separate_liabilities:
+                _, value, _ = labeled_record(liabilities, "leaseInOtherLiabilities", "BPP", liability.code, liability.label)
+                expected = liability.opening_brl if stage == "opening" else liability.closing_brl
+                if value != expected or value < 0:
+                    raise ValueError(f"O saldo em BPP {liability.code} diverge da nota de arrendamentos.")
+                upper_bound += value
+                reviewed_lease_codes.add(liability.code)
+                extra_rollups.update(affected_rollups(liability.code, liabilities))
+        if not 0 < lease_balances.leases_brl <= upper_bound:
+            raise ValueError("Arrendamentos incompatíveis com os saldos da nota auditada.")
+
+    note_supported_subtotals = set()
+    for subtotal in reviewed_subtotals:
+        item = subtotal.balance
+        _, value, _ = labeled_record(liabilities, "reviewedSubtotal", "BPP", item.code, item.label)
+        expected = item.opening_brl if stage == "opening" else item.closing_brl
+        children = {code: row for code, row in liabilities.items() if code.startswith(item.code + ".")}
+        if (
+            value != expected
+            or not set(subtotal.zero_children).issubset(children)
+            or any(normalize(row)[0] != 0 for row in children.values())
+        ):
+            raise ValueError(f"O subtotal em BPP {item.code} diverge da revisão auditada.")
+        note_supported_subtotals.add(item.code)
+
     for loan_root, tenure in (("2.01.04", "Short"), ("2.02.01", "Long")):
         liability_root = loan_root[:4]
         borrowings = labeled_record(
@@ -245,6 +284,7 @@ def balance_capital(
                 not code.startswith(liability_root + ".")
                 or code.startswith(loan_root + ".")
                 or code in operating_codes
+                or code in reviewed_lease_codes
             ):
                 continue
             clearly_reported_lease = (
@@ -265,10 +305,10 @@ def balance_capital(
                 )
         if len(outside) > 1 or (included[1] > 0 and any(item[1] > 0 for item in outside)):
             raise ValueError("Apresentação de arrendamentos requer revisão para evitar dupla contagem.")
-        if reviewed_leases:
+        if lease_balances:
             expected_loan = (
-                reviewed_leases.short_borrowings_brl
-                if tenure == "Short" else reviewed_leases.long_borrowings_brl
+                lease_balances.short_borrowings_brl
+                if tenure == "Short" else lease_balances.long_borrowings_brl
             )
             if borrowings[1] != expected_loan or included[1] != 0 or outside:
                 raise ValueError(f"Financiamentos em BPP {loan_root} não correspondem à nota auditada.")
@@ -281,8 +321,11 @@ def balance_capital(
         debt += borrowings[1] + sum(item[1] for item in outside)
         evidence.extend((borrowings, included, *outside))
 
+    if lease_balances and reviewed_lease_codes:
+        debt += lease_balances.leases_brl
     check_rollups(assets, "BPA", {"1", "1.01"})
-    check_rollups(liabilities, "BPP", {"2", "2.01", "2.02", "2.03", "2.01.04", "2.02.01", *extra_rollups})
+    liability_rollups = {"2", "2.01", "2.02", "2.03", "2.01.04", "2.02.01", *extra_rollups}
+    check_rollups(liabilities, "BPP", liability_rollups - note_supported_subtotals)
     if not reconciled(record("assets", "BPA", assets["1"]), record("liabilities", "BPP", liabilities["2"])):
         raise ValueError("O ativo total diverge do passivo total.")
     capital = invested_capital(equity=equity[1], debt=debt, excess_cash=cash[1])
@@ -307,13 +350,13 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         return unavailable(year, "Conta duplicada na mesma versão da DFP.", source)
     if any(not accounts for statements in rows.values() for accounts in statements.values()):
         return unavailable(year, "DFP consolidada ou balanço de abertura indisponível na janela civil.", source)
-    filing_key = (
-        filing["DT_REFER"], filing.get("ID_DOC", ""), str(filing["VERSAO"]),
-    )
-    supplier = GERDAU_NOTES.get(filing_key) if issuer == "003980" else None
-    review_key = (issuer, *filing_key)
+    review_key = filing_key(issuer, filing)
+    supplier = GERDAU_NOTES.get(review_key[1:]) if issuer == "003980" else None
     review = REVIEWS.get(review_key)
-    lease_review = EMBEDDED_LEASE_REVIEWS.get(review_key)
+    lease_review = LEASE_REVIEWS.get(review_key)
+    subtotal_review = SUBTOTAL_REVIEWS.get(review_key)
+    reviewed_subtotals = subtotal_review.accounts if subtotal_review else ()
+    individual_source = INDIVIDUAL_FILINGS.get(review_key)
     reviewed_accounts = review.accounts if review else ()
     try:
         gross_income, operating, ebit = (
@@ -324,11 +367,11 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
             raise ValueError("O resultado antes do financeiro e dos tributos diverge dos subtotais da DRE.")
         opening, opening_accounts = balance_capital(
             issuer, "opening", rows["opening"], supplier[0] if supplier else None, reviewed_accounts,
-            lease_review.opening if lease_review else None,
+            lease_review, reviewed_subtotals, individual=individual_source is not None,
         )
         closing, closing_accounts = balance_capital(
             issuer, "closing", rows["closing"], supplier[1] if supplier else None, reviewed_accounts,
-            lease_review.closing if lease_review else None,
+            lease_review, reviewed_subtotals, individual=individual_source is not None,
         )
         result = calculate_roic(
             ebit=ebit[1], tax_rate=ROIC_TAX, capital_open=opening, capital_close=closing, estimated=True,
@@ -346,6 +389,11 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         source["supportingDocumentUrl"] = review.url
     if lease_review and not review:
         source["supportingDocumentUrl"] = lease_review.url
+    if subtotal_review and not source.get("supportingDocumentUrl"):
+        source["supportingDocumentUrl"] = subtotal_review.url
+    if individual_source:
+        source["basis"] = "individual"
+        source["supportingDocumentUrl"] = individual_source
     if issuer == "004170":
         source["supportingDocumentUrl"] = VALE_NOTES
     return {
@@ -359,7 +407,7 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
             "openingCapitalBrl": amount(opening),
             "closingCapitalBrl": amount(closing),
             "accounts": [gross_income[0], operating[0], ebit[0], *opening_accounts, *closing_accounts],
-            **({"embeddedLeases": {
+            **({("separateLeases" if lease_review.separate_liabilities else "embeddedLeases"): {
                 "note": lease_review.note,
                 "openingBrl": lease_review.opening.leases_brl,
                 "closingBrl": lease_review.closing.leases_brl,

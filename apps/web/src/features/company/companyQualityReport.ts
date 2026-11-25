@@ -2,8 +2,10 @@ import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { cdiRateUrl, type RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import type { ReportSheet, WorkbookReport } from '../../shared/export/report';
 import {
+  annualComparisonContext,
   annualObservation,
   annualRate,
+  comparisonSector,
   type Company,
   type ComparisonData,
 } from './companyQualityData';
@@ -26,49 +28,43 @@ function calculationReportRows(companies: Company[], year: number): ReportSheet[
     ];
     if ('roe' in observation) {
       const { inputs } = observation;
+      const auditedSource = inputs.auditedStatementPage
+        ? `${inputs.incomeStatement}, p. ${inputs.auditedStatementPage}`
+        : null;
+      const equitySource = auditedSource ?? inputs.equityCodes.join(', ');
       return [
         row(
           'Lucro líquido da controladora',
-          `${inputs.incomeStatement} ${inputs.incomeCode}`,
+          auditedSource ?? `${inputs.incomeStatement} ${inputs.incomeCode}`,
           closing,
           inputs.netIncomeBrl,
         ),
         row(
           'Patrimônio na abertura',
-          inputs.equityCodes.join(', '),
-          opening,
+          equitySource,
+          inputs.openingEquityDate ? new Date(inputs.openingEquityDate) : opening,
           inputs.openingEquityBrl,
         ),
-        row(
-          'Patrimônio no fechamento',
-          inputs.equityCodes.join(', '),
-          closing,
-          inputs.closingEquityBrl,
-        ),
+        row('Patrimônio no fechamento', equitySource, closing, inputs.closingEquityBrl),
       ];
     }
     const { inputs } = observation;
-    const { embeddedLeases } = inputs;
+    const leaseNotes = [
+      ['Arrendamentos incluídos nos financiamentos', inputs.embeddedLeases],
+      ['Arrendamentos fora dos financiamentos', inputs.separateLeases],
+    ] as const;
     return [
       row('NOPAT estimado', null, closing, inputs.nopatBrl),
       row('Capital investido na abertura', null, opening, inputs.openingCapitalBrl),
       row('Capital investido no fechamento', null, closing, inputs.closingCapitalBrl),
-      ...(embeddedLeases
-        ? [
-            row(
-              'Arrendamentos incluídos nos financiamentos',
-              `Nota ${embeddedLeases.note}`,
-              opening,
-              embeddedLeases.openingBrl,
-            ),
-            row(
-              'Arrendamentos incluídos nos financiamentos',
-              `Nota ${embeddedLeases.note}`,
-              closing,
-              embeddedLeases.closingBrl,
-            ),
-          ]
-        : []),
+      ...leaseNotes.flatMap(([label, balances]) =>
+        balances
+          ? [
+              row(label, `Nota ${balances.note}`, opening, balances.openingBrl),
+              row(label, `Nota ${balances.note}`, closing, balances.closingBrl),
+            ]
+          : [],
+      ),
       ...inputs.accounts.map((account) =>
         row(
           account.label,
@@ -109,11 +105,16 @@ export function comparisonReport(
           { label: 'Versão da DFP', format: 'integer', width: 18 },
           { label: 'Formulário da CVM', width: 64 },
           { label: 'Demonstrações de apoio', width: 64 },
+          { label: 'Base contábil', width: 19 },
+          { label: 'Grupo no comparativo', width: 37 },
+          { label: 'Contexto do exercício', width: 56 },
+          { label: 'Fonte do contexto', width: 64 },
         ],
         rows: companies.map((company) => {
           const observation = annualObservation(company, year);
           const value = annualRate(observation);
           const filing = observation?.filing;
+          const context = annualComparisonContext(company, year);
           return [
             company.name,
             company.sector,
@@ -127,6 +128,10 @@ export function comparisonReport(
             filing?.version ?? null,
             filing?.filingUrl ?? null,
             filing?.supportingDocumentUrl ?? null,
+            filing ? (filing.basis === 'individual' ? 'Individual' : 'Consolidada') : null,
+            comparisonSector(company),
+            context?.note ?? null,
+            context?.sourceUrl ?? null,
           ];
         }),
       },
@@ -136,7 +141,7 @@ export function comparisonReport(
           { label: 'Companhia', width: 52 },
           { label: 'Indicador', width: 13 },
           { label: 'Conta ou valor calculado', width: 49 },
-          { label: 'Código na DFP', width: 25 },
+          { label: 'Conta ou nota de origem', width: 29 },
           { label: 'Data-base', format: 'date', width: 19 },
           { label: 'Valor em reais', format: 'currency', width: 24 },
         ],

@@ -20,6 +20,13 @@ ACQUISITION_LABEL = "Compromissos com Aquisição de Ativos"
 RENNER_SUPPLIER_LABEL = "Obrigações - Risco Sacado"
 
 REVIEWS = {
+    # Ferbasa. A DFP registra o saldo da aquisição de BW Guirapá.
+    # O informe seguinte confirma a quitação do principal e da atualização.
+    ("003069", "2025-12-31", "155153", "1"): FilingReview(
+        "https://filemanager-cdn.mziq.com/published/e71f73d4-4d0a-41fb-8e5b-8d7f3660b6ad/"
+        "8ae66756-4990-4c23-93bc-ed92ade88e68",
+        (ReviewedAccount("2.02.02.02.06", "Obrigações com aquisição de controlada", 4_978_000, 4_978_000),),
+    ),
     # Lojas Renner, notas de fornecedores e risco sacado. O prazo padrão de
     # pagamento é mantido e a antecipação é contratada pelos fornecedores.
     ("008133", "2022-12-31", "123581", "1"): FilingReview(
@@ -172,5 +179,88 @@ REVIEWS = {
             ReviewedAccount("2.01.05.02.06", "Credores por financiamento", 5_418_000, 1_925_000),
             ReviewedAccount("2.02.02.02.07", "Credores por financiamento", 4_772_000, 2_851_000),
         ),
+    ),
+    # RD Saúde. O FIDC capta por cotas seniores remuneradas na nota 15.
+    # A compra de participação em controlada é registrada a valor presente,
+    # com juros no resultado. O fluxo operacional separa aluguéis a pagar.
+    ("005258", "2025-12-31", "155035", "1"): FilingReview(
+        "https://ri.rdsaude.com.br/Download.aspx?Arquivo=pvBQW9Dgna5MufaSF4UDNQ%3D%3D",
+        (
+            ReviewedAccount(
+                "2.01.02.01.03", "Passivos com Cotistas Seniores - FIDC", 200_267_000, 228_549_000,
+            ),
+            ReviewedAccount(
+                "2.02.02.02.04", "Contas a Pagar por Aquisição de Controladas", 13_573_000, 15_518_000,
+            ),
+            ReviewedAccount("2.01.05.02.04", "Aluguéis", 113_933_000, 132_470_000, False),
+        ),
+    ),
+    # Frasle, notas 6, 21 e 24.6. A dívida inclui os compromissos de
+    # aquisição e o mútuo. O risco sacado mantém os termos comerciais.
+    ("006211", "2025-12-31", "155265", "1"): FilingReview(
+        "https://ads.clicrbs.com.br/PUBLICIDADE-LEGAL/PIO/Publicidade_Legal_PIO_190326_2%20ass.pdf"
+        "?project=rbs-gauchazh-prd",
+        (
+            ReviewedAccount("2.01.02.01.02", "Risco Sacado", 5_212_000, 7_532_000, False),
+            ReviewedAccount("2.01.05.02.06", "Contas a Pagar de Combinação de Negócio", 26_042_000, 11_954_000),
+            ReviewedAccount("2.02.02.01.04", "Débitos com Outras Partes Relacionadas", 5_692_000, 3_480_000),
+            ReviewedAccount("2.02.02.02.05", "Contas a Pagar por Combinação de Negócios", 100_896_000, 164_909_000),
+        ),
+    ),
+    # Metalúrgica Gerdau, nota 14 do consolidado do próprio emissor. Os
+    # fornecedores optam pela antecipação e arcam com o custo financeiro.
+    ("008656", "2025-12-31", "154833", "1"): FilingReview(
+        "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/"
+        "5a4823f5-8d3a-e293-d50e-1d0a3f3fd666?origin=2",
+        (ReviewedAccount("2.01.02.01.02", "Fornecedores risco sacado", 459_899_000, 381_415_000, False),),
+    ),
+    # ENGIE, nota 14(a) da DFP. As preferenciais têm resgate obrigatório e
+    # remuneração financeira. Os saldos aparecem em outras obrigações.
+    ("017329", "2025-12-31", "155137", "2"): FilingReview(
+        "https://www.engie.com.br/wp-content/uploads/2026/02/260225-Release-de-Resultados-4T25.pdf",
+        (
+            ReviewedAccount("2.01.05.02.08", "Ações preferenciais resgatáveis", 10_142_000, 22_873_000),
+            ReviewedAccount("2.02.02.02.05", "Ações preferenciais resgatáveis", 477_145_000, 466_375_000),
+        ),
+    ),
+    # Dexco, nota 20.1. O fornecedor arca com o custo da antecipação.
+    # Os instrumentos atrelados à dívida ainda exigem revisão na nota 4.6.
+    ("021091", "2025-12-31", "155065", "1"): FilingReview(
+        "https://docs.publicnow.com/viewDoc?filename=85349%5CEXT%5C"
+        "FBC144C4C0601722BEC776F76C9910DD5CDF3F7D_D5D7C8F688930DF450A247A54F552E819054A777.PDF",
+        (ReviewedAccount("2.01.02.01.02", "Fornecedores Risco Sacado", 273_347_000, 180_465_000, False),),
+    ),
+    # Hypera, notas 4 e 19. Os títulos a pagar integram o endividamento.
+    # As cessões fazem parte das operações comerciais dos fornecedores.
+    ("021431", "2025-12-31", "155321", "1"): FilingReview(
+        "https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/"
+        "valorri-uploads/bs/2026/5/e/UXkrknS4Sp23N0L6P8Bw/hypera1588156716032026.pdf",
+        (
+            ReviewedAccount("2.01.05.02.04", "Títulos a Pagar", 15_367_000, 18_486_000),
+            ReviewedAccount("2.01.05.02.07", "Cessão de Créditos no País", 327_262_000, 340_492_000, False),
+            ReviewedAccount("2.01.05.02.08", "Cessão de Créditos no Exterior", 208_345_000, 149_051_000, False),
+            ReviewedAccount("2.02.02.02.04", "Títulos a Pagar", 1_959_000, 7_500_000),
+        ),
+    ),
+    # Fleury, nota 19. As obrigações de aquisição, registradas a valor
+    # presente, têm atualização mensal principalmente pelo CDI e IPCA.
+    ("021881", "2025-12-31", "155089", "1"): FilingReview(
+        "https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/"
+        "valorri-uploads/bs/2026/i/O/BTns0RTJmg2u8z8TMWmQ/fleury1587954506032026.pdf",
+        (
+            ReviewedAccount(
+                "2.01.05.02.04", "Contas a Pagar - aquisição de empresas", 42_573_000, 79_339_000,
+            ),
+            ReviewedAccount(
+                "2.02.02.02.03", "Contas a Pagar aquisição de empresas", 301_810_000, 348_031_000,
+            ),
+        ),
+    ),
+    # Grupo SBF, nota 18. A adesão cabe ao fornecedor. O grupo paga o
+    # valor nominal na data de vencimento da obrigação original.
+    ("024694", "2025-12-31", "155192", "1"): FilingReview(
+        "https://docs.publicnow.com/viewDoc?filename=181596%5CEXT%5C"
+        "68E8D496F18E08B133AA0A4DBD124B4F1E75E8E4_F89C0AE6A61C8E006DF1ED9EB03E1BF7DBFFBAAA.PDF",
+        (ReviewedAccount("2.01.02.01.02", "Risco sacado", 52_217_000, 84_325_000, False),),
     ),
 }
