@@ -16,6 +16,7 @@ from .fca import SOURCE as SECTOR_SOURCE
 from .quality import ROIC_TAX
 from .quality import ACCOUNTS as QUALITY_ACCOUNTS
 from .sector_comparison import YEARS, selected_filings
+from .sector_roic_lease_notes import EMBEDDED_LEASE_REVIEWS, LeaseBalances
 from .sector_roic_notes import REVIEWS, ReviewedAccount
 
 METHODOLOGY = "roic-dfp-comparisons.v1"
@@ -39,6 +40,12 @@ SEPARATE_LEASE_LABELS = frozenset((
     "arrendamento mercantil a pagar", "passivo de arrendamento por direito de uso",
     "arrendamento por direito de uso", "arrendamento mercantil - direito de uso",
     "contas a pagar de arrendamento", "contas a pagar com operações com arrendamento",
+))
+NONZERO_SEPARATE_LEASE_LABELS = frozenset((
+    "arrendamento", "arrendamentos", "arrendamento mercantil", "arrendamentos mercantis",
+    "arrendamentos operacionais", "arrendamento custo amortizado",
+    "obrigações - arrendamento mercantil", "obrigações com arrendamento",
+    "valores a pagar de arrendamentos", "arrendamentos de direito de uso a pagar",
 ))
 SEPARATE_DEBT = {
     "004170": {"2.02.04.02.12": "Debentures participativas"},
@@ -199,6 +206,7 @@ def balance_capital(
     issuer: str, stage: str, balance: dict[str, Accounts],
     operating_supplier_balance: int | None = None,
     reviewed_accounts: tuple[ReviewedAccount, ...] = (),
+    reviewed_leases: LeaseBalances | None = None,
 ) -> tuple[Decimal, list[dict]]:
     assets, liabilities = balance["BPA"], balance["BPP"]
     equity = labeled_record(
@@ -208,6 +216,7 @@ def balance_capital(
     separately_reported, extra_rollups, operating = separate_financing(
         issuer, stage, liabilities, operating_supplier_balance, reviewed_accounts,
     )
+    operating_codes = {item[0]["code"] for item in operating}
     evidence = [equity, cash, *separately_reported, *operating]
     debt = sum((item[1] for item in separately_reported), Decimal(0))
     allowed = {
@@ -215,6 +224,11 @@ def balance_capital(
            if entry.key in ("shortLease", "longLease")},
         **LEASES_OUTSIDE_DEBT.get(issuer, {}),
     }
+    if reviewed_leases and not (
+        0 < reviewed_leases.leases_brl
+        <= reviewed_leases.short_borrowings_brl + reviewed_leases.long_borrowings_brl
+    ):
+        raise ValueError("Arrendamentos incompatíveis com os financiamentos da nota auditada.")
     for loan_root, tenure in (("2.01.04", "Short"), ("2.02.01", "Long")):
         liability_root = loan_root[:4]
         borrowings = labeled_record(
@@ -227,21 +241,38 @@ def balance_capital(
         outside = []
         for code, row in liabilities.items():
             label = row["DS_CONTA"].strip().casefold()
-            if not code.startswith(liability_root + ".") or code.startswith(loan_root + "."):
+            if (
+                not code.startswith(liability_root + ".")
+                or code.startswith(loan_root + ".")
+                or code in operating_codes
+            ):
                 continue
             clearly_reported_lease = (
                 code.startswith(("2.01.05.02.", "2.02.02.02."))
-                and label in SEPARATE_LEASE_LABELS
+                and (
+                    label in SEPARATE_LEASE_LABELS
+                    or (label in NONZERO_SEPARATE_LEASE_LABELS and normalize(row)[0] != 0)
+                )
             )
             if clearly_reported_lease or any(
                 label == approved.casefold() for approved in allowed.get(code, ())
             ):
                 outside.append(record(f"{stage}{tenure}SeparateLease", "BPP", row))
             elif any(term in label for term in LEASE_LABEL_TERMS) and normalize(row)[0] != 0:
-                raise ValueError("Arrendamento fora de financiamentos com conta não revisada.")
+                raise ValueError(
+                    "Arrendamento fora de financiamentos com conta não revisada: "
+                    f"BPP {code}, {row['DS_CONTA'].strip()}."
+                )
         if len(outside) > 1 or (included[1] > 0 and any(item[1] > 0 for item in outside)):
             raise ValueError("Apresentação de arrendamentos requer revisão para evitar dupla contagem.")
-        if included[1] == 0 and not outside:
+        if reviewed_leases:
+            expected_loan = (
+                reviewed_leases.short_borrowings_brl
+                if tenure == "Short" else reviewed_leases.long_borrowings_brl
+            )
+            if borrowings[1] != expected_loan or included[1] != 0 or outside:
+                raise ValueError(f"Financiamentos em BPP {loan_root} não correspondem à nota auditada.")
+        elif included[1] == 0 and not outside:
             raise ValueError("Arrendamentos não identificados nas contas estruturadas da DFP.")
         if included[1] > borrowings[1] or any(item[1] < 0 for item in (borrowings, included, *outside)):
             raise ValueError("Saldo de financiamento ou arrendamento incompatível.")
@@ -280,7 +311,9 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         filing["DT_REFER"], filing.get("ID_DOC", ""), str(filing["VERSAO"]),
     )
     supplier = GERDAU_NOTES.get(filing_key) if issuer == "003980" else None
-    review = REVIEWS.get((issuer, *filing_key))
+    review_key = (issuer, *filing_key)
+    review = REVIEWS.get(review_key)
+    lease_review = EMBEDDED_LEASE_REVIEWS.get(review_key)
     reviewed_accounts = review.accounts if review else ()
     try:
         gross_income, operating, ebit = (
@@ -291,9 +324,11 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
             raise ValueError("O resultado antes do financeiro e dos tributos diverge dos subtotais da DRE.")
         opening, opening_accounts = balance_capital(
             issuer, "opening", rows["opening"], supplier[0] if supplier else None, reviewed_accounts,
+            lease_review.opening if lease_review else None,
         )
         closing, closing_accounts = balance_capital(
             issuer, "closing", rows["closing"], supplier[1] if supplier else None, reviewed_accounts,
+            lease_review.closing if lease_review else None,
         )
         result = calculate_roic(
             ebit=ebit[1], tax_rate=ROIC_TAX, capital_open=opening, capital_close=closing, estimated=True,
@@ -309,6 +344,8 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
         source["supportingDocumentUrl"] = supplier[2]
     if review:
         source["supportingDocumentUrl"] = review.url
+    if lease_review and not review:
+        source["supportingDocumentUrl"] = lease_review.url
     if issuer == "004170":
         source["supportingDocumentUrl"] = VALE_NOTES
     return {
@@ -322,6 +359,11 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
             "openingCapitalBrl": amount(opening),
             "closingCapitalBrl": amount(closing),
             "accounts": [gross_income[0], operating[0], ebit[0], *opening_accounts, *closing_accounts],
+            **({"embeddedLeases": {
+                "note": lease_review.note,
+                "openingBrl": lease_review.opening.leases_brl,
+                "closingBrl": lease_review.closing.leases_brl,
+            }} if lease_review else {}),
         },
     }
 

@@ -29,6 +29,8 @@ describe('ROIC setorial estimado da CVM', () => {
     ['TEGMA GESTAO LOGISTICA S.A.', 0.23740197861171464, 326_884_000, 857_147_000, 960_390_000],
     ['SUZANO S.A.', 0.05354438651537135, 10_649_009_000, 131_925_693_000, 130_598_407_000],
     ['LOJAS RENNER S.A.', 0.09570417277243985, 1_797_160_000, 12_423_752_000, 12_363_581_000],
+    ['AMBEV S.A.', 0.20896627114433958, 23_423_386_000, 74_437_576_000, 73_523_477_000],
+    ['TUPY S.A.', -0.019397756957106764, -156_481_000, 5_893_456_000, 4_754_936_000],
   ])('confere 2025 da companhia %s com a DFP consolidada', (name, roic, ebit, opening, closing) => {
     const company = readSnapshot().companies.find((candidate) => candidate.name === name);
     const observation = company?.observations.at(-1);
@@ -39,6 +41,21 @@ describe('ROIC setorial estimado da CVM', () => {
       openingCapitalBrl: opening,
       closingCapitalBrl: closing,
     });
+  });
+
+  it('preserva os arrendamentos da nota e exige uma fonte de apoio', () => {
+    const snapshot = readSnapshot();
+    const b3 = snapshot.companies
+      .find(({ name }) => name.startsWith('B3 S.A.'))
+      ?.observations.at(-1);
+    expect(b3?.inputs?.embeddedLeases).toEqual({
+      note: '9',
+      openingBrl: 33_715_000,
+      closingBrl: 30_563_000,
+    });
+    if (!b3?.filing) throw new Error('DFP esperada para a B3.');
+    delete b3.filing.supportingDocumentUrl;
+    expect(() => parseSectorRoicComparison(snapshot)).toThrow();
   });
 
   it('mostra as fontes para passivos revisados e preserva lacunas entre exercícios válidos', () => {

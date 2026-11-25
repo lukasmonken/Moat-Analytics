@@ -5,6 +5,7 @@ import unittest
 from test_sector_comparison import account_rows, filing
 
 from apps.pipeline.src.moat_cvm.sector_roic import balance_capital, observe_roic
+from apps.pipeline.src.moat_cvm.sector_roic_lease_notes import LeaseBalances
 from apps.pipeline.src.moat_cvm.sector_roic_notes import ReviewedAccount
 
 
@@ -71,8 +72,12 @@ class SectorRoicTest(unittest.TestCase):
         liabilities.update(by_code(document, [
             ("2.01.05", "Outras Obrigações", 6),
             ("2.01.05.02", "Outros", 6),
-            ("2.01.05.02.07", "Arrendamento a pagar", 6),
+            ("2.01.05.02.07", "Arrendamento Mercantil", 0),
         ]))
+        with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
+            balance_capital("003069", "closing", statements)
+
+        liabilities["2.01.05.02.07"]["VL_CONTA"] = 6
         capital, evidence = balance_capital("003069", "closing", statements)
         self.assertEqual(capital, 180_000)
         self.assertEqual([row["key"] for row in evidence].count("closingShortSeparateLease"), 1)
@@ -80,6 +85,26 @@ class SectorRoicTest(unittest.TestCase):
         liabilities["2.01.04.03"]["VL_CONTA"] = 6
         with self.assertRaisesRegex(ValueError, "dupla contagem"):
             balance_capital("003069", "closing", statements)
+
+    def test_verifies_leases_embedded_in_borrowings_without_adding_them_again(self):
+        statements = balance(filing("000111"))
+        liabilities = statements["BPP"]
+        for root, amount in (("2.01.04", 30), ("2.02.01", 50)):
+            liabilities[f"{root}.01"]["VL_CONTA"] = amount
+            liabilities[f"{root}.03"]["VL_CONTA"] = 0
+
+        with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
+            balance_capital("000111", "closing", statements)
+        note = LeaseBalances(30_000, 50_000, 16_000)
+        capital, accounts = balance_capital("000111", "closing", statements, reviewed_leases=note)
+        self.assertEqual(capital, 180_000)
+        self.assertTrue(all(
+            row["amountBrl"] == 0 for row in accounts if row["key"].endswith("LeaseIncluded")
+        ))
+
+        wrong_note = LeaseBalances(29_000, 50_000, 16_000)
+        with self.assertRaisesRegex(ValueError, "não correspondem à nota auditada"):
+            balance_capital("000111", "closing", statements, reviewed_leases=wrong_note)
 
     def test_includes_debentures_outside_borrowings_with_reconciled_subtotals(self):
         document = filing("004170")

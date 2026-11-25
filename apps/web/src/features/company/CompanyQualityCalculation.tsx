@@ -34,10 +34,11 @@ function RoeCalculation({
   );
 }
 
+const embeddedLeasesLabel = 'Arrendamentos incluídos nos financiamentos';
 const balanceLabels = [
   ['Patrimônio líquido consolidado', /Equity$/],
   ['Empréstimos e financiamentos', /Borrowings$/],
-  ['Arrendamentos incluídos nos financiamentos', /LeaseIncluded$/],
+  [embeddedLeasesLabel, /LeaseIncluded$/],
   ['Arrendamentos fora dos financiamentos', /SeparateLease$/],
   ['Outros passivos financeiros', /SeparateDebt\d+$/],
   ['Caixa e equivalentes', /Cash$/],
@@ -88,11 +89,19 @@ function RoicCalculation({
           </thead>
           <tbody>
             {balanceLabels.map(([label, pattern]) => {
-              const opening = presentation('opening', pattern);
-              const closing = presentation('closing', pattern);
+              const leases = label === embeddedLeasesLabel ? inputs.embeddedLeases : undefined;
+              const opening = leases
+                ? formatCurrency(leases.openingBrl)
+                : presentation('opening', pattern);
+              const closing = leases
+                ? formatCurrency(leases.closingBrl)
+                : presentation('closing', pattern);
               return opening === '—' && closing === '—' ? null : (
                 <tr key={label}>
-                  <th scope="row">{label}</th>
+                  <th scope="row">
+                    {label}
+                    {leases && <small>Nota {leases.note}</small>}
+                  </th>
                   <td>{opening}</td>
                   <td>{closing}</td>
                 </tr>

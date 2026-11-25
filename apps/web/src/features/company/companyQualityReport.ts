@@ -48,10 +48,27 @@ function calculationReportRows(companies: Company[], year: number): ReportSheet[
       ];
     }
     const { inputs } = observation;
+    const { embeddedLeases } = inputs;
     return [
       row('NOPAT estimado', null, closing, inputs.nopatBrl),
       row('Capital investido na abertura', null, opening, inputs.openingCapitalBrl),
       row('Capital investido no fechamento', null, closing, inputs.closingCapitalBrl),
+      ...(embeddedLeases
+        ? [
+            row(
+              'Arrendamentos incluídos nos financiamentos',
+              `Nota ${embeddedLeases.note}`,
+              opening,
+              embeddedLeases.openingBrl,
+            ),
+            row(
+              'Arrendamentos incluídos nos financiamentos',
+              `Nota ${embeddedLeases.note}`,
+              closing,
+              embeddedLeases.closingBrl,
+            ),
+          ]
+        : []),
       ...inputs.accounts.map((account) =>
         row(
           account.label,
