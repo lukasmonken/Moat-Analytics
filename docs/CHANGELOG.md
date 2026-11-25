@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — Ordenação de Empresas por retorno
+
+- Filtro por ROE ou ROIC e ordenação pelo maior retorno do exercício dentro do indicador escolhido. Lacunas ficam no fim da tabela ordenada.
+- O Excel do recorte mantém a ordem dos resultados em todas as páginas.
+
 ## M2 — Comparativo unificado de Empresas
 
 - Uma lista reúne as 144 companhias da seleção anual. ROE é o indicador de 14 bancos e seguradoras, e ROIC estimado é o indicador das outras 130 companhias.

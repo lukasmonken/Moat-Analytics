@@ -146,6 +146,69 @@ test('mantém empresas sem ROIC na lista e pagina o setor inteiro', async ({ pag
   await region.getByLabel('Exercício').selectOption('2024');
   await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*Indisponível/s);
 });
+
+test('ordena os retornos de um indicador e exporta todo o recorte em ordem', async ({ page }) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
+  await page.goto('./#/empresas');
+  const region = page.getByRole('region', { name: 'Comparar empresas' });
+  const indicator = region.getByRole('combobox', { name: 'Indicador', exact: true });
+  const ordering = region.getByRole('combobox', { name: 'Ordenação', exact: true });
+  const rows = region.getByRole('table', { name: 'Indicadores das empresas' }).getByRole('row');
+  const pagination = region.getByRole('navigation', { name: 'Paginação das empresas' });
+  const exportComparison = () =>
+    workbookDownload(page, 'Exportar Excel', 'moat-comparativo-empresas.xlsx', region);
+
+  await expect(ordering.locator('option[value="return"]')).toBeDisabled();
+  await indicator.selectOption('ROE');
+  await ordering.selectOption('return');
+  await expect(
+    region.getByRole('columnheader', { name: 'Retorno em 2025', exact: true }),
+  ).toHaveAttribute('aria-sort', 'descending');
+  await expect(rows.nth(1)).toContainText('BB SEGURIDADE PARTICIPAÇÕES S.A.');
+  await expect(rows.nth(2)).toContainText('BCO PINE S.A');
+  await pagination.getByRole('button', { name: 'Próxima página' }).click();
+  await expect(pagination).toContainText('Página 2 de 2');
+
+  const filteredWorkbook = await exportComparison();
+  const filtered = getSheet(filteredWorkbook, 'Comparativo');
+  const notes = getSheet(filteredWorkbook, 'Metodologia e fontes');
+  if (!filtered || !notes) throw new Error('Aba ausente.');
+  expect(getCell(filtered, 2, 1)?.value).toBe('BB SEGURIDADE PARTICIPAÇÕES S.A.');
+  expect(getCell(filtered, 15, 1)?.value).toBe('BCO ABC BRASIL S.A.');
+  expect(getCell(filtered, 15, 3)?.value).toBe('ROE');
+  expect(getCell(filtered, 15, 5)?.value).toBeUndefined();
+  expect(getCell(filtered, 16, 1)?.value).toBeUndefined();
+  const noteEntries = Array.from({ length: 25 }, (_, index) => [
+    getCell(notes, index + 2, 1)?.value,
+    getCell(notes, index + 2, 2)?.value,
+  ]);
+  expect(noteEntries).toContainEqual(['Filtro de indicador', 'ROE']);
+  expect(noteEntries).toContainEqual(['Ordenação', 'Maior retorno do exercício']);
+
+  await region.getByRole('combobox', { name: 'Linhas para exportar' }).selectOption('all');
+  const all = getSheet(await exportComparison(), 'Comparativo');
+  if (!all) throw new Error('Aba ausente.');
+  expect(getAutoFilter(all)?.ref?.split(':')[1]).toMatch(/^[A-Z]+145$/);
+  expect(getCell(all, 2, 1)?.value).toBe('ALLOS S.A.');
+
+  await region.getByRole('combobox', { name: 'Exercício', exact: true }).selectOption('2024');
+  await expect(pagination).toContainText('Página 1 de 2');
+  await expect(rows.nth(2)).toContainText('CAIXA SEGURIDADE PARTICIPAÇÕES S.A.');
+
+  await indicator.selectOption('ROIC');
+  await region
+    .getByRole('combobox', { name: 'Setor', exact: true })
+    .selectOption({ label: 'Serviços Transporte e Logística' });
+  await expect(rows.nth(1)).toContainText('TEGMA GESTAO LOGISTICA S.A.');
+  await expect(rows.nth(2)).toContainText(/HIDROVIAS DO BRASIL S\.A\..*[-−]4,83\s*%/s);
+  await expect(rows.nth(3)).toContainText(/ARMAC LOCAÇÃO.*Indisponível/s);
+  await expect(rows.nth(4)).toContainText(/ECORODOVIAS.*Indisponível/s);
+
+  await indicator.selectOption('');
+  await expect(ordering).toHaveValue('name');
+  await expect(ordering.locator('option[value="return"]')).toBeDisabled();
+});
+
 test('compara cinco exercícios de duas empresas com o mesmo indicador', async ({ page }) => {
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });

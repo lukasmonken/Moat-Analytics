@@ -70,6 +70,7 @@ export function comparisonReport(
   year: number,
   latestYear: number,
   rate: RiskFreeRate | null,
+  { metric, order }: { metric: Company['metric'] | ''; order: 'name' | 'return' },
 ): WorkbookReport {
   const showCdi = year === latestYear;
   return {
@@ -128,6 +129,8 @@ export function comparisonReport(
     notes: [
       ['Data-base da seleção', new Date(data.roe.asOf)],
       ['Exercício', year],
+      ['Filtro de indicador', metric || 'ROE e ROIC'],
+      ['Ordenação', order === 'return' ? 'Maior retorno do exercício' : 'Nome (A–Z)'],
       ['ROE', 'Lucro atribuível à controladora dividido pelo patrimônio médio da controladora.'],
       ['ROIC', 'NOPAT estimado dividido pelo capital investido médio.'],
       ['Alíquota padronizada do ROIC', formatRate(data.roic.taxRate)],
