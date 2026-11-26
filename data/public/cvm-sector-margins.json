@@ -1,0 +1,2576 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "methodologyVersion": "margins-dfp.v1",
+    "asOf": "2026-11-18",
+    "year": 2025,
+    "generatedAt": "2026-11-26T10:31:46+00:00",
+    "source": {
+      "name": "Comissão de Valores Mobiliários (CVM)",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    },
+    "archive": {
+      "kind": "dfp",
+      "year": 2025,
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+      "sha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+      "retrievedAt": "2026-11-18T10:11:46+00:00"
+    }
+  },
+  "companies": [
+    {
+      "name": "ALLOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155236"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2859106000,
+        "grossIncomeBrl": 2112168000,
+        "ebitBrl": 1539360000,
+        "netIncomeBrl": 945293000
+      },
+      "grossMargin": 0.7387512040476988,
+      "operatingMargin": 0.5384060611953527,
+      "netMargin": 0.3306253773032549
+    },
+    {
+      "name": "ALPARGATAS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155116"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4564874000,
+        "grossIncomeBrl": 2381646000,
+        "ebitBrl": 594748000,
+        "netIncomeBrl": 567926000
+      },
+      "grossMargin": 0.5217331299834344,
+      "operatingMargin": 0.13028793346760503,
+      "netMargin": 0.12441219626215314
+    },
+    {
+      "name": "ALUPAR INVESTIMENTO S/A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155099"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4397883000,
+        "grossIncomeBrl": 3059775000,
+        "ebitBrl": 3114519000,
+        "netIncomeBrl": 1733193000
+      },
+      "grossMargin": 0.6957381540163756,
+      "operatingMargin": 0.7081859612909212,
+      "netMargin": 0.3940971144525673
+    },
+    {
+      "name": "AMBEV S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154733"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 88242467000,
+        "grossIncomeBrl": 45378340000,
+        "ebitBrl": 23423386000,
+        "netIncomeBrl": 15988433000
+      },
+      "grossMargin": 0.5142460489006954,
+      "operatingMargin": 0.26544346272639907,
+      "netMargin": 0.18118751145069414
+    },
+    {
+      "name": "ANIMA HOLDING S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155312"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4023697000,
+        "grossIncomeBrl": 2533493000,
+        "ebitBrl": 1002017000,
+        "netIncomeBrl": 256665000
+      },
+      "grossMargin": 0.6296430869421827,
+      "operatingMargin": 0.24902894030042522,
+      "netMargin": 0.06378835185651405
+    },
+    {
+      "name": "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155869"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1887757000,
+        "grossIncomeBrl": 641198000,
+        "ebitBrl": 422487000,
+        "netIncomeBrl": 73771000
+      },
+      "grossMargin": 0.33966130174593445,
+      "operatingMargin": 0.2238036993108753,
+      "netMargin": 0.03907865260200333
+    },
+    {
+      "name": "AUREN ENERGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155028"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 13176952000,
+        "grossIncomeBrl": 2150736000,
+        "ebitBrl": 2316124000,
+        "netIncomeBrl": -557875000
+      },
+      "grossMargin": 0.16321953665764283,
+      "operatingMargin": 0.1757708459437357,
+      "netMargin": -0.042337180859427885
+    },
+    {
+      "name": "AXIA ENERGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154939"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 41281596000,
+        "grossIncomeBrl": 17717190000,
+        "ebitBrl": 3946582000,
+        "netIncomeBrl": 6559659000
+      },
+      "grossMargin": 0.42917890093202793,
+      "operatingMargin": 0.09560148788821052,
+      "netMargin": 0.15890032449326813
+    },
+    {
+      "name": "AZZAS 2154 S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155271"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 11819492000,
+        "grossIncomeBrl": 6495420000,
+        "ebitBrl": 1138192000,
+        "netIncomeBrl": 911249000
+      },
+      "grossMargin": 0.5495515374095604,
+      "operatingMargin": 0.09629787811523541,
+      "netMargin": 0.07709713750810948
+    },
+    {
+      "name": "B3 S.A. - BRASIL, BOLSA, BALCÃO",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154935"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 11121545000,
+        "grossIncomeBrl": 10068227000,
+        "ebitBrl": 6638037000,
+        "netIncomeBrl": 4586872000
+      },
+      "grossMargin": 0.9052903171277012,
+      "operatingMargin": 0.5968628459445158,
+      "netMargin": 0.41243118649432253
+    },
+    {
+      "name": "BEMOBI MOBILE TECH S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155508"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1696407000,
+        "grossIncomeBrl": 436785000,
+        "ebitBrl": 143651000,
+        "netIncomeBrl": 161262000
+      },
+      "grossMargin": 0.25747653717533586,
+      "operatingMargin": 0.08467956097799643,
+      "netMargin": 0.09506091403772797
+    },
+    {
+      "name": "BOA SAFRA SEMENTES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155657"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2622416000,
+        "grossIncomeBrl": 269862000,
+        "ebitBrl": 92281000,
+        "netIncomeBrl": 101130000
+      },
+      "grossMargin": 0.10290587000689441,
+      "operatingMargin": 0.03518930634956468,
+      "netMargin": 0.038563675633461664
+    },
+    {
+      "name": "BRADESPAR S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-27",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155757"
+      },
+      "reason": "DRE anual indisponível na base da mesma DFP do ROIC.",
+      "inputs": null,
+      "grossMargin": null,
+      "operatingMargin": null,
+      "netMargin": null
+    },
+    {
+      "name": "BRAVA ENERGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155283"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 11622991000,
+        "grossIncomeBrl": 3102534000,
+        "ebitBrl": 2216183000,
+        "netIncomeBrl": 1411225000
+      },
+      "grossMargin": 0.2669307753916354,
+      "operatingMargin": 0.19067234931180796,
+      "netMargin": 0.12141668181623817
+    },
+    {
+      "name": "C&A MODAS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154859"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7982958000,
+        "grossIncomeBrl": 4432456000,
+        "ebitBrl": 1044549000,
+        "netIncomeBrl": 587087000
+      },
+      "grossMargin": 0.5552397995830618,
+      "operatingMargin": 0.1308473625941662,
+      "netMargin": 0.07354253899369131
+    },
+    {
+      "name": "CAMIL ALIMENTOS S.A.",
+      "filing": null,
+      "reason": "Encerramento fiscal diferente de 31/12 no lote da CVM.",
+      "inputs": null,
+      "grossMargin": null,
+      "operatingMargin": null,
+      "netMargin": null
+    },
+    {
+      "name": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155515"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 42751283000,
+        "grossIncomeBrl": 7237316000,
+        "ebitBrl": 6750308000,
+        "netIncomeBrl": 4899617000
+      },
+      "grossMargin": 0.16928886087465492,
+      "operatingMargin": 0.1578972027576342,
+      "netMargin": 0.11460748441163743
+    },
+    {
+      "name": "CIA FERRO LIGAS DA BAHIA - FERBASA",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155153"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2334454000,
+        "grossIncomeBrl": 411146000,
+        "ebitBrl": 47089000,
+        "netIncomeBrl": 188676000
+      },
+      "grossMargin": 0.17612084024786953,
+      "operatingMargin": 0.020171312007004637,
+      "netMargin": 0.08082232504902645
+    },
+    {
+      "name": "CIA PARANAENSE DE ENERGIA - COPEL",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154946"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 26116856000,
+        "grossIncomeBrl": 5661499000,
+        "ebitBrl": 5045011000,
+        "netIncomeBrl": 2687939000
+      },
+      "grossMargin": 0.21677567161989178,
+      "operatingMargin": 0.19317068639502397,
+      "netMargin": 0.1029197005948955
+    },
+    {
+      "name": "CIA SANEAMENTO BASICO EST SAO PAULO",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-30",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155830"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 38092050000,
+        "grossIncomeBrl": 14100362000,
+        "ebitBrl": 12599621000,
+        "netIncomeBrl": 8462059000
+      },
+      "grossMargin": 0.37016548072366806,
+      "operatingMargin": 0.3307677323746031,
+      "netMargin": 0.22214763973059995
+    },
+    {
+      "name": "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154917"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 8330190000,
+        "grossIncomeBrl": 3532505000,
+        "ebitBrl": 2007059000,
+        "netIncomeBrl": 1415744000
+      },
+      "grossMargin": 0.424060555641588,
+      "operatingMargin": 0.24093796179919066,
+      "netMargin": 0.16995338641735663
+    },
+    {
+      "name": "CIA SANEAMENTO DO PARANA - SANEPAR",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154938",
+        "basis": "individual",
+        "supportingDocumentUrl": "https://ri.sanepar.com.br/docs/DFP-Sanepar-2025-12-31-BjdwmKcn.pdf"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7205727000,
+        "grossIncomeBrl": 4054944000,
+        "ebitBrl": 2337506000,
+        "netIncomeBrl": 2079568000
+      },
+      "grossMargin": 0.5627390546436188,
+      "operatingMargin": 0.3243955814590256,
+      "netMargin": 0.2885993321700919
+    },
+    {
+      "name": "CIA SIDERURGICA NACIONAL",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155288"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 44797946000,
+        "grossIncomeBrl": 12393725000,
+        "ebitBrl": 4816674000,
+        "netIncomeBrl": -1506726000
+      },
+      "grossMargin": 0.27665833161190023,
+      "operatingMargin": 0.10751997424167617,
+      "netMargin": -0.03363381883624754
+    },
+    {
+      "name": "COGNA EDUCAÇÃO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-27",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155805"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7016663000,
+        "grossIncomeBrl": 4827044000,
+        "ebitBrl": 1307019000,
+        "netIncomeBrl": 586035000
+      },
+      "grossMargin": 0.6879401219639593,
+      "operatingMargin": 0.1862735890265786,
+      "netMargin": 0.08352047119834599
+    },
+    {
+      "name": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155063"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 8788797000,
+        "grossIncomeBrl": 741614000,
+        "ebitBrl": 578807000,
+        "netIncomeBrl": 229854000
+      },
+      "grossMargin": 0.08438174189254798,
+      "operatingMargin": 0.06585736364146311,
+      "netMargin": 0.026153067365192302
+    },
+    {
+      "name": "CONSTRUTORA TENDA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155118"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4173389000,
+        "grossIncomeBrl": 1255391000,
+        "ebitBrl": 518700000,
+        "netIncomeBrl": 484431000
+      },
+      "grossMargin": 0.3008085275539855,
+      "operatingMargin": 0.12428747955199,
+      "netMargin": 0.11607616735463672
+    },
+    {
+      "name": "COSAN S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155203"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 40418596000,
+        "grossIncomeBrl": 13175609000,
+        "ebitBrl": -199864000,
+        "netIncomeBrl": -10194401000
+      },
+      "grossMargin": 0.3259788885294284,
+      "operatingMargin": -0.0049448526119017094,
+      "netMargin": -0.2522205620403044
+    },
+    {
+      "name": "CPFL ENERGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155108"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 44367780000,
+        "grossIncomeBrl": 14124196000,
+        "ebitBrl": 11054471000,
+        "netIncomeBrl": 5742553000
+      },
+      "grossMargin": 0.3183435366836024,
+      "operatingMargin": 0.2491553780694008,
+      "netMargin": 0.12943070399285247
+    },
+    {
+      "name": "CSN MINERAÇÃO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155318"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 18025121000,
+        "grossIncomeBrl": 8174544000,
+        "ebitBrl": 5011143000,
+        "netIncomeBrl": 1649159000
+      },
+      "grossMargin": 0.4535084119546271,
+      "operatingMargin": 0.2780088411056991,
+      "netMargin": 0.09149225683422597
+    },
+    {
+      "name": "CURY CONSTRUTORA E INCORPORADORA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155237"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5399424000,
+        "grossIncomeBrl": 2146587000,
+        "ebitBrl": 1268060000,
+        "netIncomeBrl": 1081220000
+      },
+      "grossMargin": 0.3975585173529621,
+      "operatingMargin": 0.23485097669677357,
+      "netMargin": 0.2002472856363938
+    },
+    {
+      "name": "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155466"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1488493000,
+        "grossIncomeBrl": 1445794000,
+        "ebitBrl": 275257000,
+        "netIncomeBrl": -40935000
+      },
+      "grossMargin": 0.9713139396691822,
+      "operatingMargin": 0.18492327474835285,
+      "netMargin": -0.02750096910096319
+    },
+    {
+      "name": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155491"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9423494000,
+        "grossIncomeBrl": 3069969000,
+        "ebitBrl": 2296181000,
+        "netIncomeBrl": 2395829000
+      },
+      "grossMargin": 0.325778209228976,
+      "operatingMargin": 0.2436655660840873,
+      "netMargin": 0.25423998784315033
+    },
+    {
+      "name": "DESKTOP S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155444"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1218547000,
+        "grossIncomeBrl": 752051000,
+        "ebitBrl": 382164000,
+        "netIncomeBrl": 80773000
+      },
+      "grossMargin": 0.6171702855942364,
+      "operatingMargin": 0.31362269982200114,
+      "netMargin": 0.06628632297318035
+    },
+    {
+      "name": "DEXCO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155065"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 8248752000,
+        "grossIncomeBrl": 2009770000,
+        "ebitBrl": 740303000,
+        "netIncomeBrl": 63065000
+      },
+      "grossMargin": 0.24364534174381774,
+      "operatingMargin": 0.089747273284492,
+      "netMargin": 0.007645398964594887
+    },
+    {
+      "name": "DIAGNOSTICOS DA AMERICA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155752"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 11170362000,
+        "grossIncomeBrl": 3393302000,
+        "ebitBrl": 902806000,
+        "netIncomeBrl": -1135024000
+      },
+      "grossMargin": 0.30377726344052236,
+      "operatingMargin": 0.08082155260500958,
+      "netMargin": -0.10161031486714575
+    },
+    {
+      "name": "DIMED S.A. DISTRIBUIDORA DE MEDICAMENTOS",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155509"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5512118000,
+        "grossIncomeBrl": 1784518000,
+        "ebitBrl": 254693000,
+        "netIncomeBrl": 124605000
+      },
+      "grossMargin": 0.32374452070873666,
+      "operatingMargin": 0.04620601373192664,
+      "netMargin": 0.02260564813743102
+    },
+    {
+      "name": "DIRECIONAL ENGENHARIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155189"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4343008000,
+        "grossIncomeBrl": 1722417000,
+        "ebitBrl": 1003135000,
+        "netIncomeBrl": 979692000
+      },
+      "grossMargin": 0.3965954011597492,
+      "operatingMargin": 0.23097700948282848,
+      "netMargin": 0.2255791377773193
+    },
+    {
+      "name": "ECORODOVIAS INFRAESTRUTURA E LOGÍSTICA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155429"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 11521073000,
+        "grossIncomeBrl": 4465144000,
+        "ebitBrl": 4281662000,
+        "netIncomeBrl": 866818000
+      },
+      "grossMargin": 0.3875632070033755,
+      "operatingMargin": 0.3716374334230848,
+      "netMargin": 0.07523761024689281
+    },
+    {
+      "name": "EMBRAER S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155126"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 41883234000,
+        "grossIncomeBrl": 7358344000,
+        "ebitBrl": 3348114000,
+        "netIncomeBrl": 1992037000
+      },
+      "grossMargin": 0.17568710190812867,
+      "operatingMargin": 0.07993924251408094,
+      "netMargin": 0.04756168064767873
+    },
+    {
+      "name": "EMPREENDIMENTOS PAGUE MENOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-27",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154977"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 14906429000,
+        "grossIncomeBrl": 4763098000,
+        "ebitBrl": 861173000,
+        "netIncomeBrl": 260930000
+      },
+      "grossMargin": 0.31953313566918007,
+      "operatingMargin": 0.057771918411847666,
+      "netMargin": 0.017504527744371237
+    },
+    {
+      "name": "ENERGISA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-13",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155361"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 35441353000,
+        "grossIncomeBrl": 8997641000,
+        "ebitBrl": 6752947000,
+        "netIncomeBrl": 3140072000
+      },
+      "grossMargin": 0.25387408319315574,
+      "operatingMargin": 0.1905386343461549,
+      "netMargin": 0.08859910060431384
+    },
+    {
+      "name": "ENEVA S.A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155111"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 18416056000,
+        "grossIncomeBrl": 5404567000,
+        "ebitBrl": 3713199000,
+        "netIncomeBrl": 1691630000
+      },
+      "grossMargin": 0.2934703825835456,
+      "operatingMargin": 0.20162835082604005,
+      "netMargin": 0.09185625847358414
+    },
+    {
+      "name": "ENGIE BRASIL ENERGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155137"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 12860075000,
+        "grossIncomeBrl": 6006561000,
+        "ebitBrl": 6268325000,
+        "netIncomeBrl": 2857919000
+      },
+      "grossMargin": 0.4670704486560148,
+      "operatingMargin": 0.48742522885753,
+      "netMargin": 0.22223190766772355
+    },
+    {
+      "name": "EQUATORIAL S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-04-08",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156081"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 52073804000,
+        "grossIncomeBrl": 13607256000,
+        "ebitBrl": 8136912000,
+        "netIncomeBrl": 2503931000
+      },
+      "grossMargin": 0.261307124787734,
+      "operatingMargin": 0.15625729973558297,
+      "netMargin": 0.048084272852430755
+    },
+    {
+      "name": "EVEN CONSTRUTORA E INCORPORADORA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155582"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1920257000,
+        "grossIncomeBrl": 520644000,
+        "ebitBrl": 251906000,
+        "netIncomeBrl": 299052000
+      },
+      "grossMargin": 0.27113245779080614,
+      "operatingMargin": 0.1311834822109749,
+      "netMargin": 0.1557354041672547
+    },
+    {
+      "name": "EZ TEC EMPREEND. E PARTICIPACOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155329"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1498822000,
+        "grossIncomeBrl": 625157000,
+        "ebitBrl": 441857000,
+        "netIncomeBrl": 547595000
+      },
+      "grossMargin": 0.4170988949988724,
+      "operatingMargin": 0.2948028518396447,
+      "netMargin": 0.36535025506697927
+    },
+    {
+      "name": "FLEURY S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155089"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 8291182000,
+        "grossIncomeBrl": 2206037000,
+        "ebitBrl": 1221148000,
+        "netIncomeBrl": 596671000
+      },
+      "grossMargin": 0.266070265976552,
+      "operatingMargin": 0.14728273966245103,
+      "netMargin": 0.07196452809744136
+    },
+    {
+      "name": "FRASLE MOBILITY S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155265"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5490878000,
+        "grossIncomeBrl": 1795911000,
+        "ebitBrl": 724106000,
+        "netIncomeBrl": 283166000
+      },
+      "grossMargin": 0.3270717360684393,
+      "operatingMargin": 0.13187435597731365,
+      "netMargin": 0.05157025889120101
+    },
+    {
+      "name": "GERDAU S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154830"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 69858532000,
+        "grossIncomeBrl": 7967493000,
+        "ebitBrl": 3739068000,
+        "netIncomeBrl": 1418438000
+      },
+      "grossMargin": 0.11405182404920848,
+      "operatingMargin": 0.053523426458488996,
+      "netMargin": 0.020304434682366358
+    },
+    {
+      "name": "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155121"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 17283159000,
+        "grossIncomeBrl": 2528272000,
+        "ebitBrl": 1433774000,
+        "netIncomeBrl": 694143000
+      },
+      "grossMargin": 0.14628529425668074,
+      "operatingMargin": 0.08295786667240636,
+      "netMargin": 0.040162970207009034
+    },
+    {
+      "name": "GRENDENE S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155103"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2584341000,
+        "grossIncomeBrl": 1169076000,
+        "ebitBrl": 324895000,
+        "netIncomeBrl": 644808000
+      },
+      "grossMargin": 0.4523690952548445,
+      "operatingMargin": 0.12571676880102123,
+      "netMargin": 0.24950577342541097
+    },
+    {
+      "name": "GRUPO MATEUS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155479"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 38424403000,
+        "grossIncomeBrl": 8607201000,
+        "ebitBrl": 2260989000,
+        "netIncomeBrl": 1857293000
+      },
+      "grossMargin": 0.22400350631342275,
+      "operatingMargin": 0.05884252775508314,
+      "netMargin": 0.048336287749220205
+    },
+    {
+      "name": "GRUPO SBF S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155192"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7736413000,
+        "grossIncomeBrl": 3735083000,
+        "ebitBrl": 528561000,
+        "netIncomeBrl": 327970000
+      },
+      "grossMargin": 0.4827926068579844,
+      "operatingMargin": 0.0683211974334876,
+      "netMargin": 0.042393031499223216
+    },
+    {
+      "name": "GUARARAPES CONFECCOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154721"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 10497046000,
+        "grossIncomeBrl": 6382775000,
+        "ebitBrl": 2375728000,
+        "netIncomeBrl": 1475168000
+      },
+      "grossMargin": 0.6080543993043376,
+      "operatingMargin": 0.22632348186337375,
+      "netMargin": 0.140531726735312
+    },
+    {
+      "name": "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155457"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 31577240000,
+        "grossIncomeBrl": 3723539000,
+        "ebitBrl": 1456626000,
+        "netIncomeBrl": -142169000
+      },
+      "grossMargin": 0.11791844379052761,
+      "operatingMargin": 0.04612898404040378,
+      "netMargin": -0.00450226175561892
+    },
+    {
+      "name": "HIDROVIAS DO BRASIL S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-02",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154999"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2241099000,
+        "grossIncomeBrl": 908058000,
+        "ebitBrl": 570343000,
+        "netIncomeBrl": -140918000
+      },
+      "grossMargin": 0.40518424219545857,
+      "operatingMargin": 0.25449255030679147,
+      "netMargin": -0.06287897143321201
+    },
+    {
+      "name": "HYPERA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155321"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7699157000,
+        "grossIncomeBrl": 4545507000,
+        "ebitBrl": 1764276000,
+        "netIncomeBrl": 1190132000
+      },
+      "grossMargin": 0.5903902206436367,
+      "operatingMargin": 0.2291518409093359,
+      "netMargin": 0.154579520848841
+    },
+    {
+      "name": "IGUATEMI S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154860"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1486833000,
+        "grossIncomeBrl": 1115626000,
+        "ebitBrl": 1122829000,
+        "netIncomeBrl": 582576000
+      },
+      "grossMargin": 0.7503371259583289,
+      "operatingMargin": 0.7551816512009082,
+      "netMargin": 0.39182342603372405
+    },
+    {
+      "name": "INTELBRAS S.A. IND. DE TELECOMUNICAÇÃO ELETRÔNICA BRASILEIRA",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154903"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4460379000,
+        "grossIncomeBrl": 1342581000,
+        "ebitBrl": 425152000,
+        "netIncomeBrl": 483733000
+      },
+      "grossMargin": 0.3010015516618655,
+      "operatingMargin": 0.09531746069112064,
+      "netMargin": 0.10845109798965515
+    },
+    {
+      "name": "IOCHPE MAXION S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154907"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 15366537000,
+        "grossIncomeBrl": 1850772000,
+        "ebitBrl": 941914000,
+        "netIncomeBrl": 217134000
+      },
+      "grossMargin": 0.12044171045174329,
+      "operatingMargin": 0.06129643913915022,
+      "netMargin": 0.014130314461872575
+    },
+    {
+      "name": "IRANI PAPEL E EMBALAGEM S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154822"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1686311000,
+        "grossIncomeBrl": 700242000,
+        "ebitBrl": 447806000,
+        "netIncomeBrl": 242050000
+      },
+      "grossMargin": 0.4152508048633971,
+      "operatingMargin": 0.2655536256360778,
+      "netMargin": 0.1435381729704663
+    },
+    {
+      "name": "ISA ENERGIA BRASIL",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154871"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9411153000,
+        "grossIncomeBrl": 3703115000,
+        "ebitBrl": 4131906000,
+        "netIncomeBrl": 2511015000
+      },
+      "grossMargin": 0.39348154259100876,
+      "operatingMargin": 0.43904354758657094,
+      "netMargin": 0.26681268490693966
+    },
+    {
+      "name": "ITAÚSA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155399"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 8249000000,
+        "grossIncomeBrl": 2010000000,
+        "ebitBrl": 18119000000,
+        "netIncomeBrl": 16550000000
+      },
+      "grossMargin": 0.243665898896836,
+      "operatingMargin": 2.196508667717299,
+      "netMargin": 2.006303794399321
+    },
+    {
+      "name": "JHSF PARTICIPACOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155875"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3479142000,
+        "grossIncomeBrl": 2207161000,
+        "ebitBrl": 2460930000,
+        "netIncomeBrl": 1868540000
+      },
+      "grossMargin": 0.6343980786067369,
+      "operatingMargin": 0.7073381885533847,
+      "netMargin": 0.5370691969456838
+    },
+    {
+      "name": "JSL S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155651"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9640608000,
+        "grossIncomeBrl": 1522033000,
+        "ebitBrl": 1141757000,
+        "netIncomeBrl": 81704000
+      },
+      "grossMargin": 0.15787728325848327,
+      "operatingMargin": 0.1184320532480939,
+      "netMargin": 0.008474984150377238
+    },
+    {
+      "name": "KEPLER WEBER S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154901"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1490300000,
+        "grossIncomeBrl": 362211000,
+        "ebitBrl": 193920000,
+        "netIncomeBrl": 156270000
+      },
+      "grossMargin": 0.24304569549755084,
+      "operatingMargin": 0.1301214520566329,
+      "netMargin": 0.1048580822653157
+    },
+    {
+      "name": "KLABIN S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154693"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 20697507000,
+        "grossIncomeBrl": 7324910000,
+        "ebitBrl": 4480349000,
+        "netIncomeBrl": 1678211000
+      },
+      "grossMargin": 0.35390300870534797,
+      "operatingMargin": 0.21646805095898747,
+      "netMargin": 0.08108276035369863
+    },
+    {
+      "name": "LAVVI EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155273"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1761398000,
+        "grossIncomeBrl": 615309000,
+        "ebitBrl": 472961000,
+        "netIncomeBrl": 464164000
+      },
+      "grossMargin": 0.34932990726684143,
+      "operatingMargin": 0.26851455491603826,
+      "netMargin": 0.26352022654732205
+    },
+    {
+      "name": "LOCALIZA RENT A CAR S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154953"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 41781588000,
+        "grossIncomeBrl": 11129975000,
+        "ebitBrl": 7811656000,
+        "netIncomeBrl": 1870470000
+      },
+      "grossMargin": 0.2663846812141271,
+      "operatingMargin": 0.18696407613803478,
+      "netMargin": 0.04476780537877115
+    },
+    {
+      "name": "LOG COMMERCIAL PROPERTIES E PARTICIPAÇÕES",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154714"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 248759000,
+        "grossIncomeBrl": 241745000,
+        "ebitBrl": 595485000,
+        "netIncomeBrl": 363486000
+      },
+      "grossMargin": 0.9718040352308861,
+      "operatingMargin": 2.393822937059564,
+      "netMargin": 1.461197383813249
+    },
+    {
+      "name": "LOJAS QUERO QUERO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155058"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2788412000,
+        "grossIncomeBrl": 904311000,
+        "ebitBrl": 13170000,
+        "netIncomeBrl": -161941000
+      },
+      "grossMargin": 0.32431039602469075,
+      "operatingMargin": 0.004723118391399836,
+      "netMargin": -0.058076424861175466
+    },
+    {
+      "name": "LOJAS RENNER S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155117"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 15829460000,
+        "grossIncomeBrl": 9767882000,
+        "ebitBrl": 1797160000,
+        "netIncomeBrl": 1457566000
+      },
+      "grossMargin": 0.6170698179217737,
+      "operatingMargin": 0.11353261576832059,
+      "netMargin": 0.09207932551078811
+    },
+    {
+      "name": "LWSA S/A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155030"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1488531000,
+        "grossIncomeBrl": 719097000,
+        "ebitBrl": -276709000,
+        "netIncomeBrl": -225450000
+      },
+      "grossMargin": 0.48309171928565814,
+      "operatingMargin": -0.18589401228459468,
+      "netMargin": -0.15145804823681872
+    },
+    {
+      "name": "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154936"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 10437548000,
+        "grossIncomeBrl": 3357015000,
+        "ebitBrl": 691232000,
+        "netIncomeBrl": 659817000
+      },
+      "grossMargin": 0.32162870053388015,
+      "operatingMargin": 0.06622551580122074,
+      "netMargin": 0.06321570928344473
+    },
+    {
+      "name": "MAGAZINE LUIZA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155314"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 38703387000,
+        "grossIncomeBrl": 11554551000,
+        "ebitBrl": 1918683000,
+        "netIncomeBrl": 204603000
+      },
+      "grossMargin": 0.29854108117204314,
+      "operatingMargin": 0.04957403340436329,
+      "netMargin": 0.0052864365591569545
+    },
+    {
+      "name": "MAHLE METAL LEVE S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155377"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5406682000,
+        "grossIncomeBrl": 1473151000,
+        "ebitBrl": 916237000,
+        "netIncomeBrl": 608756000
+      },
+      "grossMargin": 0.2724685860940222,
+      "operatingMargin": 0.1694638227289861,
+      "netMargin": 0.11259326884769624
+    },
+    {
+      "name": "MARCOPOLO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154922"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9057548000,
+        "grossIncomeBrl": 2314293000,
+        "ebitBrl": 1349620000,
+        "netIncomeBrl": 1235508000
+      },
+      "grossMargin": 0.25550987971579064,
+      "operatingMargin": 0.1490050066530147,
+      "netMargin": 0.13640645349050318
+    },
+    {
+      "name": "MARFRIG GLOBAL FOODS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155455"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 163962737000,
+        "grossIncomeBrl": 20184512000,
+        "ebitBrl": 5577385000,
+        "netIncomeBrl": 762675000
+      },
+      "grossMargin": 0.12310426362302064,
+      "operatingMargin": 0.03401617405301059,
+      "netMargin": 0.004651514203498567
+    },
+    {
+      "name": "METALURGICA GERDAU S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154833"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 69858532000,
+        "grossIncomeBrl": 7967493000,
+        "ebitBrl": 3727878000,
+        "netIncomeBrl": 1413724000
+      },
+      "grossMargin": 0.11405182404920848,
+      "operatingMargin": 0.053363245594682696,
+      "netMargin": 0.02023695545162615
+    },
+    {
+      "name": "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155467"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1837835000,
+        "grossIncomeBrl": 1153080000,
+        "ebitBrl": 622588000,
+        "netIncomeBrl": 301263000
+      },
+      "grossMargin": 0.6274121452687538,
+      "operatingMargin": 0.3387616407348864,
+      "netMargin": 0.1639227678219209
+    },
+    {
+      "name": "MINERVA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155476"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 54830072000,
+        "grossIncomeBrl": 9512810000,
+        "ebitBrl": 3848351000,
+        "netIncomeBrl": 848260000
+      },
+      "grossMargin": 0.17349621572628976,
+      "operatingMargin": 0.07018686752773186,
+      "netMargin": 0.015470707388456467
+    },
+    {
+      "name": "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154655"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 18850645000,
+        "grossIncomeBrl": 8942944000,
+        "ebitBrl": 7268199000,
+        "netIncomeBrl": 3503497000
+      },
+      "grossMargin": 0.47441050425595516,
+      "operatingMargin": 0.3855676556425523,
+      "netMargin": 0.18585555030079873
+    },
+    {
+      "name": "MOURA DUBEUX ENGENHARIA S/A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155260"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2356938000,
+        "grossIncomeBrl": 822760000,
+        "ebitBrl": 446638000,
+        "netIncomeBrl": 420173000
+      },
+      "grossMargin": 0.34908003519821057,
+      "operatingMargin": 0.18949925708694926,
+      "netMargin": 0.17827070546615992
+    },
+    {
+      "name": "MOVIDA PARTICIPACOES SA",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155600"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 14672054000,
+        "grossIncomeBrl": 4762238000,
+        "ebitBrl": 3256129000,
+        "netIncomeBrl": 318364000
+      },
+      "grossMargin": 0.32457882175188285,
+      "operatingMargin": 0.2219272775304671,
+      "netMargin": 0.021698666049075336
+    },
+    {
+      "name": "MRV ENGENHARIA E PARTICIPACOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155167"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 10906236000,
+        "grossIncomeBrl": 3199794000,
+        "ebitBrl": 201196000,
+        "netIncomeBrl": -1042704000
+      },
+      "grossMargin": 0.2933912304850179,
+      "operatingMargin": 0.018447794454475402,
+      "netMargin": -0.09560622014781268
+    },
+    {
+      "name": "MULTIPLAN - EMPREEND IMOBILIARIOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154609"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2739082000,
+        "grossIncomeBrl": 2246041000,
+        "ebitBrl": 1865595000,
+        "netIncomeBrl": 1141233000
+      },
+      "grossMargin": 0.8199977218644787,
+      "operatingMargin": 0.6811022817133624,
+      "netMargin": 0.41664798644217294
+    },
+    {
+      "name": "MÉLIUZ S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155473"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 460204000,
+        "grossIncomeBrl": 19494000,
+        "ebitBrl": 19494000,
+        "netIncomeBrl": -1140000
+      },
+      "grossMargin": 0.04235947536309984,
+      "operatingMargin": 0.04235947536309984,
+      "netMargin": -0.0024771623019356633
+    },
+    {
+      "name": "NATURA COSMÉTICOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155385"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 21823488000,
+        "grossIncomeBrl": 14536320000,
+        "ebitBrl": 1415968000,
+        "netIncomeBrl": -1785238000
+      },
+      "grossMargin": 0.6660860078828829,
+      "operatingMargin": 0.06488275384759759,
+      "netMargin": -0.08180351371879692
+    },
+    {
+      "name": "OCEANPACT SERVIÇOS MARITIMOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155072"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2133917000,
+        "grossIncomeBrl": 573791000,
+        "ebitBrl": 328424000,
+        "netIncomeBrl": 105475000
+      },
+      "grossMargin": 0.26889096436271887,
+      "operatingMargin": 0.1539066421046367,
+      "netMargin": 0.049427883090110813
+    },
+    {
+      "name": "ORIZON VALORIZAÇÃO DE RESÍDUOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155710"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1050340000,
+        "grossIncomeBrl": 485263000,
+        "ebitBrl": 309951000,
+        "netIncomeBrl": 73962000
+      },
+      "grossMargin": 0.4620056362701601,
+      "operatingMargin": 0.29509587371708207,
+      "netMargin": 0.07041719824056972
+    },
+    {
+      "name": "PETROLEO BRASILEIRO S.A. PETROBRAS",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155122"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 497549000000,
+        "grossIncomeBrl": 236998000000,
+        "ebitBrl": 145628000000,
+        "netIncomeBrl": 110605000000
+      },
+      "grossMargin": 0.47633097443668865,
+      "operatingMargin": 0.29269077015530126,
+      "netMargin": 0.22229971319407738
+    },
+    {
+      "name": "PETRORECÔNCAVO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155475"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3157609000,
+        "grossIncomeBrl": 1021436000,
+        "ebitBrl": 721579000,
+        "netIncomeBrl": 638352000
+      },
+      "grossMargin": 0.3234840032442269,
+      "operatingMargin": 0.2285206939807937,
+      "netMargin": 0.20216309239047647
+    },
+    {
+      "name": "PLANO & PLANO DESENVOLVIMENTO IMOBILIÁRIO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155293"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3281707000,
+        "grossIncomeBrl": 1020127000,
+        "ebitBrl": 515029000,
+        "netIncomeBrl": 422700000
+      },
+      "grossMargin": 0.3108525532596298,
+      "operatingMargin": 0.15693936113126492,
+      "netMargin": 0.12880491768460745
+    },
+    {
+      "name": "POSITIVO TECNOLOGIA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155484"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3354898000,
+        "grossIncomeBrl": 843067000,
+        "ebitBrl": 230002000,
+        "netIncomeBrl": 12234000
+      },
+      "grossMargin": 0.25129437616285205,
+      "operatingMargin": 0.06855707684704572,
+      "netMargin": 0.003646608630128248
+    },
+    {
+      "name": "PRINER SERVIÇOS INDUSTRIAIS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155331"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1563623000,
+        "grossIncomeBrl": 310348000,
+        "ebitBrl": 95662000,
+        "netIncomeBrl": 8404000
+      },
+      "grossMargin": 0.1984800684052358,
+      "operatingMargin": 0.0611797089196053,
+      "netMargin": 0.00537469709770194
+    },
+    {
+      "name": "PRIO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155241"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 15583960000,
+        "grossIncomeBrl": 3114907000,
+        "ebitBrl": 1809322000,
+        "netIncomeBrl": 2251479000
+      },
+      "grossMargin": 0.1998790422973365,
+      "operatingMargin": 0.11610155570214503,
+      "netMargin": 0.14447412596028225
+    },
+    {
+      "name": "QUALICORP CONSULTORIA E CORRETORA DE SEGUROS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154937"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1426845000,
+        "grossIncomeBrl": 1243250000,
+        "ebitBrl": 279975000,
+        "netIncomeBrl": 17049000
+      },
+      "grossMargin": 0.8713279998878645,
+      "operatingMargin": 0.1962196314245766,
+      "netMargin": 0.011948740052353269
+    },
+    {
+      "name": "RAIA DROGASIL S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155035"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 44250449000,
+        "grossIncomeBrl": 12964888000,
+        "ebitBrl": 2743567000,
+        "netIncomeBrl": 1300243000
+      },
+      "grossMargin": 0.2929888462826671,
+      "operatingMargin": 0.06200088500796907,
+      "netMargin": 0.029383724445372295
+    },
+    {
+      "name": "RANDONCORP S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155317"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 13143266000,
+        "grossIncomeBrl": 3297410000,
+        "ebitBrl": 856397000,
+        "netIncomeBrl": -59791000
+      },
+      "grossMargin": 0.2508820866898684,
+      "operatingMargin": 0.0651586143048463,
+      "netMargin": -0.004549173698531248
+    },
+    {
+      "name": "REDE D'OR SÃO LUIZ S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154910"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 55725852000,
+        "grossIncomeBrl": 12178480000,
+        "ebitBrl": 9886202000,
+        "netIncomeBrl": 4843623000
+      },
+      "grossMargin": 0.21854273309271252,
+      "operatingMargin": 0.17740782141832484,
+      "netMargin": 0.08691877873845698
+    },
+    {
+      "name": "RUMO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155068"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 13847776000,
+        "grossIncomeBrl": 6285627000,
+        "ebitBrl": 4579664000,
+        "netIncomeBrl": 865125000
+      },
+      "grossMargin": 0.4539087720656371,
+      "operatingMargin": 0.3307147660389654,
+      "netMargin": 0.06247393083192564
+    },
+    {
+      "name": "SAO MARTINHO S.A.",
+      "filing": null,
+      "reason": "Encerramento fiscal diferente de 31/12 no lote da CVM.",
+      "inputs": null,
+      "grossMargin": null,
+      "operatingMargin": null,
+      "netMargin": null
+    },
+    {
+      "name": "SENDAS DISTRIBUIDORA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154718"
+      },
+      "reason": "DRE anual indisponível na base da mesma DFP do ROIC.",
+      "inputs": null,
+      "grossMargin": null,
+      "operatingMargin": null,
+      "netMargin": null
+    },
+    {
+      "name": "SER EDUCACIONAL S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155688"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2216531000,
+        "grossIncomeBrl": 1311538000,
+        "ebitBrl": 444661000,
+        "netIncomeBrl": 214436000
+      },
+      "grossMargin": 0.5917074924735996,
+      "operatingMargin": 0.20061122537875625,
+      "netMargin": 0.09674396613446869
+    },
+    {
+      "name": "SIMPAR S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-30",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155854"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 43528375000,
+        "grossIncomeBrl": 11392337000,
+        "ebitBrl": 8170181000,
+        "netIncomeBrl": 215250000
+      },
+      "grossMargin": 0.26172208358340965,
+      "operatingMargin": 0.1876978178027551,
+      "netMargin": 0.00494505021149997
+    },
+    {
+      "name": "SLC AGRICOLA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155268"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9759214000,
+        "grossIncomeBrl": 2928929000,
+        "ebitBrl": 1812542000,
+        "netIncomeBrl": 565213000
+      },
+      "grossMargin": 0.3001193538741952,
+      "operatingMargin": 0.18572622754250495,
+      "netMargin": 0.0579158321561552
+    },
+    {
+      "name": "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155246"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 7241694000,
+        "grossIncomeBrl": 3076961000,
+        "ebitBrl": 1697845000,
+        "netIncomeBrl": 640534000
+      },
+      "grossMargin": 0.424895197173479,
+      "operatingMargin": 0.2344541208175877,
+      "netMargin": 0.08845085141680938
+    },
+    {
+      "name": "SUZANO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154674"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 50115679000,
+        "grossIncomeBrl": 16226175000,
+        "ebitBrl": 10649009000,
+        "netIncomeBrl": 13437687000
+      },
+      "grossMargin": 0.32377442197281214,
+      "operatingMargin": 0.21248857069261698,
+      "netMargin": 0.2681333919470591
+    },
+    {
+      "name": "TEGMA GESTAO LOGISTICA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155185"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2225428000,
+        "grossIncomeBrl": 429154000,
+        "ebitBrl": 326884000,
+        "netIncomeBrl": 242963000
+      },
+      "grossMargin": 0.19284110741843816,
+      "operatingMargin": 0.14688590239720178,
+      "netMargin": 0.10917585291458543
+    },
+    {
+      "name": "TELEFÔNICA BRASIL S.A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154821"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 59595000000,
+        "grossIncomeBrl": 26669632000,
+        "ebitBrl": 9859278000,
+        "netIncomeBrl": 6177543000
+      },
+      "grossMargin": 0.44751459015018036,
+      "operatingMargin": 0.16543800654417318,
+      "netMargin": 0.10365874653913919
+    },
+    {
+      "name": "TIM S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154688",
+        "basis": "individual",
+        "supportingDocumentUrl": "https://api.mziq.com/mzfilemanager/v2/d/4c4aa51f-1235-4aa1-8b83-adc92e8dacc3/197553f9-c229-4f09-b201-bcf48f2026d6?origin=2"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 26624721000,
+        "grossIncomeBrl": 14358137000,
+        "ebitBrl": 6344032000,
+        "netIncomeBrl": 4311984000
+      },
+      "grossMargin": 0.5392784022037264,
+      "operatingMargin": 0.23827599921140957,
+      "netMargin": 0.16195414780121076
+    },
+    {
+      "name": "TOTVS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154722"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5771867000,
+        "grossIncomeBrl": 4055541000,
+        "ebitBrl": 1122728000,
+        "netIncomeBrl": 920742000
+      },
+      "grossMargin": 0.7026393712814242,
+      "operatingMargin": 0.19451730263361924,
+      "netMargin": 0.15952238677710348
+    },
+    {
+      "name": "TRACK & FIELD CO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155199"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 1046512000,
+        "grossIncomeBrl": 601294000,
+        "ebitBrl": 212454000,
+        "netIncomeBrl": 142318000
+      },
+      "grossMargin": 0.5745696179308025,
+      "operatingMargin": 0.20301152781812346,
+      "netMargin": 0.135992707202593
+    },
+    {
+      "name": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155448"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 4624113000,
+        "grossIncomeBrl": 2546290000,
+        "ebitBrl": 2736283000,
+        "netIncomeBrl": 1579863000
+      },
+      "grossMargin": 0.5506547958494958,
+      "operatingMargin": 0.591742243323206,
+      "netMargin": 0.3416575243727824
+    },
+    {
+      "name": "TRÊS TENTOS AGROINDUSTRIAL S/A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155096"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 16423694000,
+        "grossIncomeBrl": 2484371000,
+        "ebitBrl": 538988000,
+        "netIncomeBrl": 808699000
+      },
+      "grossMargin": 0.15126749195400255,
+      "operatingMargin": 0.03281770836694838,
+      "netMargin": 0.04923977516872879
+    },
+    {
+      "name": "TUPY S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155493"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 9692948000,
+        "grossIncomeBrl": 1223151000,
+        "ebitBrl": -156481000,
+        "netIncomeBrl": -654552000
+      },
+      "grossMargin": 0.12618978250992371,
+      "operatingMargin": -0.016143798563656796,
+      "netMargin": -0.06752868167661685
+    },
+    {
+      "name": "ULTRAPAR PARTICIPACOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155064"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 142369540000,
+        "grossIncomeBrl": 9358841000,
+        "ebitBrl": 4979263000,
+        "netIncomeBrl": 2541908000
+      },
+      "grossMargin": 0.06573625931501921,
+      "operatingMargin": 0.034974215692485905,
+      "netMargin": 0.017854296642385723
+    },
+    {
+      "name": "UNIPAR CARBOCLORO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155510"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5142676000,
+        "grossIncomeBrl": 1465035000,
+        "ebitBrl": 793527000,
+        "netIncomeBrl": 481744000
+      },
+      "grossMargin": 0.28487795070115246,
+      "operatingMargin": 0.15430235153838195,
+      "netMargin": 0.09367574391231336
+    },
+    {
+      "name": "UNIÃO PET PARTICIPAÇÕES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155746"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3013799000,
+        "grossIncomeBrl": 1361214000,
+        "ebitBrl": 220109000,
+        "netIncomeBrl": 109339000
+      },
+      "grossMargin": 0.45166051219739606,
+      "operatingMargin": 0.07303373582644364,
+      "netMargin": 0.03627945991089651
+    },
+    {
+      "name": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-13",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154757"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 26263450000,
+        "grossIncomeBrl": 2183929000,
+        "ebitBrl": -1363886000,
+        "netIncomeBrl": -2910034000
+      },
+      "grossMargin": 0.08315468835967857,
+      "operatingMargin": -0.05193095347336317,
+      "netMargin": -0.11080166543237846
+    },
+    {
+      "name": "VALE S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155313"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 213595000000,
+        "grossIncomeBrl": 74708000000,
+        "ebitBrl": 31969000000,
+        "netIncomeBrl": 11811000000
+      },
+      "grossMargin": 0.34976474168402816,
+      "operatingMargin": 0.14967110653339263,
+      "netMargin": 0.055296238207823215
+    },
+    {
+      "name": "VALID SOLUÇÕES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155901"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2062563000,
+        "grossIncomeBrl": 694719000,
+        "ebitBrl": 297853000,
+        "netIncomeBrl": 268707000
+      },
+      "grossMargin": 0.3368231661287437,
+      "operatingMargin": 0.14440916471399903,
+      "netMargin": 0.1302782024112718
+    },
+    {
+      "name": "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155702"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5755712000,
+        "grossIncomeBrl": 3017602000,
+        "ebitBrl": 2611950000,
+        "netIncomeBrl": 328702000
+      },
+      "grossMargin": 0.524279533096861,
+      "operatingMargin": 0.45380137157661815,
+      "netMargin": 0.057108833798494435
+    },
+    {
+      "name": "VIBRA ENERGIA S/A",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155274"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 189075000000,
+        "grossIncomeBrl": 9218000000,
+        "ebitBrl": 4826000000,
+        "netIncomeBrl": 1979000000
+      },
+      "grossMargin": 0.04875314028824541,
+      "operatingMargin": 0.025524262858653973,
+      "netMargin": 0.010466746000264445
+    },
+    {
+      "name": "VITRU EDUCAÇÃO S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-04-07",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156065"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 2259078000,
+        "grossIncomeBrl": 1482800000,
+        "ebitBrl": 587953000,
+        "netIncomeBrl": 369891000
+      },
+      "grossMargin": 0.6563739720363795,
+      "operatingMargin": 0.2602623725254285,
+      "netMargin": 0.16373538231083654
+    },
+    {
+      "name": "VIVARA PARTICIPAÇÕES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155474"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3026581564,
+        "grossIncomeBrl": 2105109081,
+        "ebitBrl": 726321236,
+        "netIncomeBrl": 619502301
+      },
+      "grossMargin": 0.6955401784109989,
+      "operatingMargin": 0.23998072433907153,
+      "netMargin": 0.20468713229761812
+    },
+    {
+      "name": "VULCABRAS S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155033"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 3560287000,
+        "grossIncomeBrl": 1461024000,
+        "ebitBrl": 753056000,
+        "netIncomeBrl": 1165314000
+      },
+      "grossMargin": 0.41036691704910305,
+      "operatingMargin": 0.2115155323152319,
+      "netMargin": 0.3273090062683149
+    },
+    {
+      "name": "WEG S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154872"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 40804110000,
+        "grossIncomeBrl": 13681633000,
+        "ebitBrl": 7998741000,
+        "netIncomeBrl": 6775958000
+      },
+      "grossMargin": 0.3353003655759187,
+      "operatingMargin": 0.1960278266086431,
+      "netMargin": 0.1660606737899687
+    },
+    {
+      "name": "YDUQS PARTICIPACOES S.A.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155266"
+      },
+      "reason": null,
+      "inputs": {
+        "revenueBrl": 5521740000,
+        "grossIncomeBrl": 3340709000,
+        "ebitBrl": 887347000,
+        "netIncomeBrl": 180177000
+      },
+      "grossMargin": 0.6050101960613864,
+      "operatingMargin": 0.16070061248809253,
+      "netMargin": 0.032630475176303124
+    }
+  ]
+}

@@ -18,6 +18,10 @@ O lote de ROE reúne 15 bancos e grupos de seguros. O lote de ROIC estimado reú
 
 Neste lote, 2025 tem 15 ROEs e 125 ROICs estimados disponíveis. De 2021 a 2025, são 70 observações de ROE em 75 e 605 de ROIC em 645.
 
+A DFC do mesmo exercício e da mesma versão do ROIC fornece as contas identificadas de depreciação e amortização e de CAPEX. Para 2025, há 86 múltiplos de dívida líquida/EBITDA e 89 de NOPAT/reinvestimento na seleção de 129 empresas de ROIC. Os arquivos guardam as contas, os motivos de indisponibilidade e o hash do ZIP oficial. [Dívida líquida/EBITDA](../data/public/cvm-sector-leverage.json) · [NOPAT/reinvestimento](../data/public/cvm-sector-reinvestment.json)
+
+A DRE vinculada ao comparativo fornece receita, resultado bruto, EBIT e lucro líquido para as margens. Há três margens calculadas para 125 das 129 empresas de ROIC em 2025. [Margens](../data/public/cvm-sector-margins.json)
+
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
 
 ## CDI atual
@@ -35,6 +39,12 @@ A Nota 19 do demonstrativo IFRS anexado ao Formulário 6-K do Itaú é a fonte d
 O importador recebe preços de fechamento por ação em um CSV local. A página de cotações históricas da B3 documenta os fechamentos sem ajustes e restringe o conteúdo à consulta informativa. Os termos da brapi restringem a redistribuição. [Cotações históricas da B3](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/historico/mercado-a-vista/cotacoes-historicas/) · [Termos da brapi](https://brapi.dev/legal/terms-of-use)
 
 Uma via contratual para a atualização diária é solicitar fechamento D−1 sem ajustes a um distribuidor licenciado, como a Cedro, com autorização para cálculo, exibição e disponibilização do JSON público do Moat. A regra D−1 da B3 vale para distribuidores e redistribuidores que obtêm os dados pelas plataformas Market Data. Para UP2DATA, a versão 2.4.5 da política prevê divulgação em site aberto mediante contrato e Anexo III, com atraso mínimo de um dia e exibição em tela por até seis meses. Essa modalidade veda downloads manipuláveis e o uso em derivados exige autorização específica. A contratação para o Moat segue pendente. [Perguntas frequentes de Market Data B3](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/distribuidores/perguntas-frequentes/) · [Distribuidores licenciados](https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/distribuidores/distribuidores-licenciados/) · [Cedro EOD](https://ajuda.cedrotech.com/market-data/quais-sao-as-apis-do-market-data-cedro/) · [Política do UP2DATA](https://www.b3.com.br/data/files/44/20/90/B2/E7D5F910CEC024F9AC094EA8/UP2DATA_Politica_Comercial_2.4.5.pdf)
+
+### Valor de mercado diário
+
+O coletor usa a API autenticada da brapi para uso interno, dentro da cobertura da chave disponível. Lê um valor de mercado reportado por companhia da seleção, em reais, e confirma o pregão com preço e volume do fechamento diário da mesma resposta. A data de atualização da cotação é guardada separadamente. Os termos do Yahoo exigem autorização prévia para coleta automatizada. Os termos da brapi restringem a redistribuição. [Documentação da brapi](https://brapi.dev/docs/acoes) · [Termos da brapi](https://brapi.dev/legal/terms-of-use) · [Termos do Yahoo](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)
+
+O lote diário guarda os dados para uso privado, incluindo as fontes contábeis do NOPAT/EV e do earnings yield. O workflow usa o calendário do mercado à vista da B3. [Calendário de negociação da B3](https://www.b3.com.br/pt_br/solucoes/plataformas/puma-trading-system/para-participantes-e-traders/calendario-de-negociacao/feriados/)
 
 ## Cobertura e pendências
 

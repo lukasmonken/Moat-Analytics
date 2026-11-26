@@ -10,7 +10,7 @@ from moat_finance import calculate_roic, invested_capital
 
 from .archives import csv_rows, read_archive
 from .bank_roe import Record, reconciled, record, same_filing
-from .comparison_identity import comparison_identities, uses_roe
+from .comparison_identity import classification_url, comparison_identities, uses_roe
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
 from .fca import SOURCE as SECTOR_SOURCE
 from .quality import ROIC_TAX
@@ -32,6 +32,10 @@ INDIVIDUAL_FILINGS = {
     ),
 }
 DEBT_ACCOUNTS = (("ShortBorrowings", "2.01.04"), ("LongBorrowings", "2.02.01"))
+CLOSING_ACCOUNTS = {
+    **{f"closing{key}": ("BPP", code) for key, code in DEBT_ACCOUNTS},
+    "closingCash": ("BPA", "1.01.01"),
+}
 NEWEST, PRIOR = "ÚLTIMO", "PENÚLTIMO"
 STATEMENTS = ("DRE", "BPA", "BPP")
 Accounts = dict[str, CsvRow]
@@ -134,6 +138,54 @@ def balance_capital(
 
 def unavailable(year: int, reason: str, filing: dict | None = None) -> dict:
     return {"year": year, "roic": None, "reason": reason, "filing": filing, "inputs": None}
+
+
+def closing_net_debt(inputs: dict, reference: str) -> Decimal | None:
+    """Reutiliza os saldos de empréstimos, financiamentos e caixa do ROIC."""
+    accounts = inputs.get("accounts")
+    if not isinstance(accounts, list):
+        return None
+    balances: dict[str, Decimal] = {}
+    for account in accounts:
+        key = account["key"]
+        if key not in CLOSING_ACCOUNTS:
+            continue
+        value = account.get("amountBrl")
+        if (
+            key in balances or type(value) not in (int, float) or not 0 <= value < 2**53
+            or (account.get("statement"), account.get("code")) != CLOSING_ACCOUNTS[key]
+            or account.get("referenceDate") != reference
+        ):
+            return None
+        balances[key] = Decimal(str(value))
+    if balances.keys() != CLOSING_ACCOUNTS.keys():
+        return None
+    net_debt = balances["closingShortBorrowings"] + balances["closingLongBorrowings"] - balances["closingCash"]
+    return net_debt if abs(net_debt) < 2**53 else None
+
+
+def matching_dfp_filings(archive: ZipFile, year: int, observations: dict[str, dict]) -> dict[str, CsvRow]:
+    """Localiza os mesmos formulários das observações anuais por emissor, versão e URL."""
+    reference = f"{year}-12-31"
+    filings: dict[str, CsvRow] = {}
+    conflicts: set[str] = set()
+    for row in csv_rows(archive, f"dfp_cia_aberta_{year}.csv"):
+        code = row["CD_CVM"]
+        filing = observations.get(code, {}).get("filing")
+        if (
+            not filing or row["DT_REFER"] != reference or row["VERSAO"] != str(filing["version"])
+            or row["CATEG_DOC"] != "DFP" or row["DT_RECEB"] != filing["receivedAt"]
+        ):
+            continue
+        try:
+            if classification_url(row["LINK_DOC"]) != filing["filingUrl"]:
+                continue
+        except ValueError:
+            continue
+        if code in filings and filings[code] != row:
+            conflicts.add(code)
+        filings[code] = row
+    return {code: row for code, row in filings.items() if code not in conflicts}
 
 
 def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate: bool = False) -> dict:

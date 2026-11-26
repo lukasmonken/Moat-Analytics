@@ -61,6 +61,8 @@ A página Empresas reúne todas as companhias da seleção anual em uma lista co
 
 ### 3.3 Série e qualidade
 
+O ranking de risco usa o drawdown do ROIC em pontos percentuais, medido pela maior queda de um pico até um exercício posterior nos cinco exercícios consecutivos mais recentes. A lista ordena pela maior queda. Séries incompletas exibem **Empresa muito nova** e a contagem de anos disponíveis.
+
 Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, quando existente. Analisar média, mediana, desvio-padrão, amplitude, variação anual em **pontos percentuais**, estabilidade, tendência, evolução do spread, quantidade de anos positivos e sequência consecutiva. Crescimento percentual do ROIC com valores negativos/próximos de zero pode ser enganoso; usar variação em p.p. como indicador primário. Comparação por pares/segmentos. ROIIC (retorno incremental sobre capital adicional) como métrica complementar, com metodologia própria.
 
 ### 3.4 Curva de juros e spread
@@ -76,8 +78,9 @@ Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, qu
 ## 4. Preço, cotações e rendimento implícito
 
 - Atualização **uma vez ao dia, por volta de 12h de Brasília**, usando **fechamento do último pregão** (não tempo real). Mostrar *data da cotação*, *data/hora da coleta*, provedor e eventual atraso. Em feriados/ausência de mercado, manter o fechamento válido mais recente.
-- Para não financeiras: `EV mercado = capitalização de mercado + dívida líquida + ajustes relevantes`; `yield operacional = NOPAT TTM / EV mercado`.
-- Para bancos: `earnings yield = lucro líquido TTM / capitalização de mercado`; equivalência com `ROE / P/VP` somente com bases/periodicidade coerentes.
+- A rotina privada coleta uma capitalização de mercado por companhia da seleção após o encerramento do pregão da B3. O lote guarda o pregão e a fonte para uso nos cálculos.
+- Para empresas com ROIC, `EV = capitalização de mercado + dívida líquida`. O rendimento implícito usa `NOPAT / EV`, com o NOPAT e a dívida líquida do último comparativo anual disponível.
+- Para empresas com ROE, `earnings yield = lucro líquido atribuível à controladora / capitalização de mercado`, com o lucro do último comparativo anual disponível.
 - **ROIC/ROE não variam com a cotação.** O que se atualiza diariamente é o yield implícito, EV, múltiplos, spread de preço e margem de segurança.
 - Essas métricas não são taxas de retorno total prometido ao acionista e podem ser distorcidas por eventos não recorrentes ou EV inadequado.
 - Fazer tratamento de splits, grupamentos, bonificações, ações em circulação, dividendos e JCP.
@@ -106,6 +109,12 @@ Rotinas independentes: preços diários; demonstrativos e universo periodicament
 - Pontuação por posição opcional: 1º = 1 ponto, 2º = 2, etc.; **menor** soma ponderada vence.
 - Alternativa: score ponderado de percentis 0 a 100, **maior** vence. Peso inicial *proposto*, editável: retorno 30%, spread 25%, estabilidade 20%, preço 15%, crescimento/reinvestimento 10%.
 - Transparência de exclusões, faltantes, critérios, empates, comparáveis e metodologia. O score é heurístico, não recomendação automática de investimento.
+- Para empresas com ROIC, o comparativo pode filtrar por um limite de dívida líquida/EBITDA do último exercício. O EBITDA estimado soma EBIT a depreciação e amortização identificadas nas demonstrações do exercício.
+- A qualidade de reinvestimento usa `NOPAT / (variação do capital de giro operacional + CAPEX)`. O giro operacional soma clientes e estoques e deduz fornecedores. Reinvestimento não positivo não recebe uma posição no ranking do indicador.
+- O crescimento anualizado usa o NOPAT no grupo de ROIC e o lucro atribuível no grupo de ROE, em cinco exercícios consecutivos. A pontuação final das empresas de ROIC aplica pesos iguais aos Z-scores de rentabilidade, qualidade do reinvestimento, endividamento, risco, crescimento e preço. O grupo de ROE usa rentabilidade, crescimento e preço em uma pontuação própria.
+- Os rankings permitem exigir cinco exercícios disponíveis e ocultar empresas com dados indisponíveis em controles independentes.
+- As margens bruta, operacional e líquida aparecem nos detalhes das empresas de ROIC no último exercício. A inclusão das margens no filtro de qualidade fica para uma etapa futura.
+- A revisão da classificação setorial será feita com o usuário, companhia por companhia. O cadastro de origem da CVM serve de referência até a revisão.
 
 ## 7. Valuation e premissas
 

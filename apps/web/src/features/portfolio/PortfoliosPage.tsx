@@ -1,8 +1,11 @@
 import type { CompanyDirectorySnapshot } from '@moat/data-contracts';
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { loadCompanyDirectory } from '../../shared/data-client/companyDirectory';
+import { loadSectorComparison } from '../../shared/data-client/sectorComparison';
+import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
 import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, ButtonLink, Input, PageHeader, Panel, Select, Table } from '../../shared/ui';
+import { combineSnapshots } from '../company/companyQualityData';
 import { compareNames, formatDate, normalizeSearch } from '../screener/presentation';
 import {
   equalWeightUnits,
@@ -14,6 +17,11 @@ import {
   validatePortfolio,
   type PortfolioDraft,
 } from './portfolio';
+import {
+  applyPortfolioPreset,
+  buildPortfolioPresets,
+  type PortfolioPresetId,
+} from './portfolioPresets';
 import { buildPortfolioReport } from './portfolioReport';
 import './portfolio.css';
 
@@ -26,6 +34,99 @@ const weightFormat = new Intl.NumberFormat('pt-BR', { style: 'percent', maximumF
 
 function formatWeight(units: number) {
   return weightFormat.format(units / totalWeightUnits);
+}
+
+const presetLabels: Record<PortfolioPresetId, string> = {
+  'top-roe': 'Maiores ROEs',
+  'top-roic': 'Maiores ROICs',
+  mixed: 'ROE e ROIC (até 5 de cada)',
+  'sector-roic': 'Melhor ROIC por setor',
+};
+
+type PresetState =
+  | { status: 'loading' | 'error' }
+  | { status: 'ready'; data: ReturnType<typeof buildPortfolioPresets> };
+
+function PortfolioPresetSelection({
+  directory,
+  onApply,
+}: {
+  directory: CompanyDirectorySnapshot;
+  onApply: (names: string[]) => void;
+}) {
+  const [preset, setPreset] = useState<PortfolioPresetId | ''>('');
+  const [requested, setRequested] = useState(false);
+  const [state, setState] = useState<PresetState>({ status: 'loading' });
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    if (!requested) return;
+    const controller = new AbortController();
+    const { signal } = controller;
+    void Promise.all([loadSectorComparison(signal), loadSectorRoicComparison(signal)])
+      .then(([roe, roic]) => {
+        if (signal.aborted) return;
+        const comparison = combineSnapshots(roe, roic);
+        if (comparison.roe.asOf !== directory.asOf) throw new Error('Seleções incompatíveis.');
+        const names = new Set(directory.companies);
+        const companies = comparison.companies.filter(({ name }) => names.has(name));
+        setState({ status: 'ready', data: buildPortfolioPresets({ ...comparison, companies }) });
+      })
+      .catch(() => {
+        if (!signal.aborted) setState({ status: 'error' });
+      });
+    return () => controller.abort();
+  }, [attempt, directory, requested]);
+
+  const names = preset && state.status === 'ready' ? state.data.presets[preset] : [];
+
+  return (
+    <div className="portfolio-presets">
+      <div className="portfolio-preset-controls">
+        <Select
+          id="portfolio-preset"
+          label="Modelo de carteira"
+          value={preset}
+          onChange={(event) => {
+            const next = event.currentTarget.value as PortfolioPresetId | '';
+            setPreset(next);
+            if (next) setRequested(true);
+          }}
+        >
+          <option value="">Seleção manual</option>
+          {Object.entries(presetLabels).map(([id, label]) => (
+            <option key={id} value={id}>
+              {label}
+            </option>
+          ))}
+        </Select>
+        <Button onClick={() => onApply(names)} disabled={names.length === 0}>
+          Aplicar ao rascunho
+        </Button>
+      </div>
+      {preset && state.status === 'loading' && <p role="status">Carregando modelos da CVM…</p>}
+      {preset && state.status === 'error' && (
+        <div className="portfolio-actions">
+          <p role="status">Falha ao carregar os indicadores da CVM.</p>
+          <Button
+            onClick={() => {
+              setState({ status: 'loading' });
+              setAttempt((current) => current + 1);
+            }}
+          >
+            Recarregar modelos
+          </Button>
+        </div>
+      )}
+      {preset && state.status === 'ready' && (
+        <p role="status">
+          {names.length === 0
+            ? 'Nenhuma companhia com dados para esse modelo.'
+            : `Demonstrações da CVM · exercício ${state.data.year} · ${names.length} ${names.length === 1 ? 'companhia' : 'companhias'} com pesos iguais.`}
+        </p>
+      )}
+    </div>
+  );
 }
 
 function PortfolioSelection({
@@ -300,6 +401,16 @@ export function PortfoliosPage() {
       />
       <Panel className="portfolio-panel" aria-labelledby="portfolio-builder">
         <h2 id="portfolio-builder">Composição da carteira</h2>
+        {directory.status === 'ready' && (
+          <PortfolioPresetSelection
+            directory={directory.snapshot}
+            onApply={(names) => {
+              changeDraft(applyPortfolioPreset(draft, names));
+              setAttemptedSave(false);
+              setStatus('Modelo aplicado ao rascunho. Confira os parâmetros e salve a carteira.');
+            }}
+          />
+        )}
         <div className="portfolio-settings">
           <Select
             id="portfolio-target"

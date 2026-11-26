@@ -13,6 +13,7 @@ const privateUniverse = new URL(
 const publicUniverse = new URL('./data/public/index-universe.json', import.meta.url);
 const privateCloses = new URL('./data/processed/market-closes/market-closes.json', import.meta.url);
 const publicCloses = new URL('./data/public/market-closes.json', import.meta.url);
+const privateYields = new URL('./data/processed/market-caps/latest.json', import.meta.url);
 const loopbackAddresses = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
 
 async function readOptionalFile(url: URL) {
@@ -93,6 +94,7 @@ export default defineConfig(async ({ command }) => {
       tailwindcss(),
       serveLocalSnapshot('index-universe', privateUniverse),
       serveLocalSnapshot('market-closes', privateCloses),
+      serveLocalSnapshot('market-yields', privateYields),
     ],
     server: {
       fs: {

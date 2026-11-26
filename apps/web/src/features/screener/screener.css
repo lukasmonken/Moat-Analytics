@@ -66,6 +66,12 @@
   gap: 0.5rem 0.75rem;
 }
 
+.screener-views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .screener-export {
   display: flex;
   grid-column: 1 / -1;

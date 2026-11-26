@@ -1,0 +1,52 @@
+.roic-ranking {
+  display: grid;
+  min-width: 0;
+  gap: 0.85rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.roic-ranking :is(h2, p) {
+  margin: 0;
+}
+
+.roic-ranking h2 {
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+}
+
+.roic-ranking p,
+.roic-ranking small {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.roic-ranking-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.8rem;
+}
+
+.roic-ranking-results {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+}
+
+.roic-ranking-results small {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: normal;
+}
+
+.ranking-data-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+.ranking-data-filters label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

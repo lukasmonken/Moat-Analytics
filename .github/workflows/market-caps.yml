@@ -1,0 +1,42 @@
+name: Capitalização de mercado privada
+
+on:
+  schedule:
+    - cron: '23 20 * * 1-5'
+      timezone: America/Sao_Paulo
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: market-caps
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Coletar dados após o pregão
+    if: >-
+      github.event.repository.private == true &&
+      github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Obter código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Atualizar capitalizações de mercado
+        env:
+          BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
+          MOAT_MARKET_CAP_UNIVERSE: ${{ secrets.MOAT_MARKET_CAP_UNIVERSE }}
+        run: python3 apps/pipeline/run_market_caps.py
+      - name: Guardar lote privado
+        if: hashFiles('data/processed/market-caps/latest.json') != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: market-caps-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/processed/market-caps/latest.json
+          if-no-files-found: error
+          retention-days: 90

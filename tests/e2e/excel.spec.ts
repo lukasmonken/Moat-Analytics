@@ -186,10 +186,13 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
     workbookDownload(page, 'Exportar Excel', 'moat-comparativo-empresas.xlsx', region);
 
   await expect(ordering.locator('option[value="return"]')).toBeDisabled();
+  await expect(
+    region.getByRole('columnheader', { name: 'ROIC ou ROE em 2025', exact: true }),
+  ).toBeVisible();
   await indicator.selectOption('ROE');
   await ordering.selectOption('return');
   await expect(
-    region.getByRole('columnheader', { name: 'Retorno em 2025', exact: true }),
+    region.getByRole('columnheader', { name: 'ROE em 2025', exact: true }),
   ).toHaveAttribute('aria-sort', 'descending');
   await expect(rows.nth(1)).toContainText('BB SEGURIDADE PARTICIPAÇÕES S.A.');
   await expect(rows.nth(2)).toContainText('BRADSAÚDE S.A.');
@@ -221,9 +224,15 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
 
   await region.getByRole('combobox', { name: 'Exercício', exact: true }).selectOption('2024');
   await expect(pagination).toContainText('Página 1 de 2');
+  await expect(
+    region.getByRole('columnheader', { name: 'ROE em 2024', exact: true }),
+  ).toBeVisible();
   await expect(rows.nth(3)).toContainText('CAIXA SEGURIDADE PARTICIPAÇÕES S.A.');
 
   await indicator.selectOption('ROIC');
+  await expect(
+    region.getByRole('columnheader', { name: 'ROIC em 2024', exact: true }),
+  ).toBeVisible();
   await region
     .getByRole('combobox', { name: 'Setor', exact: true })
     .selectOption({ label: 'Serviços Transporte e Logística' });
@@ -243,6 +252,7 @@ test('classifica Bradsaúde e Porto Seguro no mesmo grupo de ROE', async ({ page
   await region.getByLabel('Setor', { exact: true }).selectOption('Seguros e Resseguros');
   const table = region.getByRole('table', { name: 'Indicadores das empresas' });
   await expect(table.getByRole('row')).toHaveCount(6);
+  await expect(table.getByRole('columnheader', { name: 'ROE em 2025', exact: true })).toBeVisible();
   await expect(table.getByRole('row', { name: /PORTO SEGURO/ })).toContainText('ROE');
   const bradsaude = table.getByRole('row', { name: /BRADSAÚDE/ });
   await expect(bradsaude.getByRole('cell', { name: 'ROE', exact: true })).toBeVisible();

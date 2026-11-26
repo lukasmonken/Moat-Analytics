@@ -50,6 +50,26 @@ Em cada balanço, o capital investido é `patrimônio líquido + empréstimos e 
 
 Empresas e o Excel mostram as contas e o formulário usados. Se faltar um insumo da DFP ou algum dos dois saldos de capital investido não for positivo, o ROIC do exercício fica indisponível.
 
+### Risco histórico e endividamento
+
+O drawdown do ROIC é a maior queda entre um pico e um exercício posterior na janela dos últimos cinco exercícios consecutivos. Por exemplo, de 24% para 15% a queda é de 9 p.p. Uma série completa sem queda tem drawdown de 0 p.p. **Empresa muito nova** indica que a base tem menos de cinco valores na janela, e a tabela mostra quantos existem.
+
+Dívida líquida/EBITDA estimado usa os empréstimos e financiamentos de fechamento menos caixa e equivalentes. O EBITDA soma o EBIT à depreciação e amortização identificadas na DFC do mesmo exercício. O múltiplo pode ser negativo em empresas com caixa líquido. Um EBITDA ausente ou não positivo deixa o múltiplo indisponível.
+
+### Qualidade do reinvestimento e crescimento
+
+O capital de giro operacional soma o saldo de contas a receber (`1.01.03`) e estoques (`1.01.04`) e deduz fornecedores (`2.01.02`). O reinvestimento soma a variação entre fechamento e abertura ao CAPEX de caixa identificado na DFC. O CAPEX usa os desembolsos de imobilizado e intangível identificados, com fontes do mesmo exercício. O indicador divide o NOPAT já disponível na base de ROIC pelo reinvestimento positivo. O site informa o diagnóstico quando o reinvestimento é zero, negativo ou indisponível.
+
+O crescimento é o CAGR do NOPAT para o grupo de ROIC e do lucro líquido atribuível à controladora para o grupo de ROE. Usa cinco observações anuais consecutivas e quatro intervalos entre as datas. A fórmula é `(valor final / valor inicial)^(1/4) − 1`, com os dois extremos positivos. O ranking mostra os valores inicial e final junto da taxa.
+
+Cada indicador recebe um Z-score no grupo de ROIC ou de ROE, calculado com a média e o desvio-padrão populacional dos valores disponíveis para aquele fator. Um fator constante contribui com zero. São necessárias duas empresas com dados para padronizar o fator. Rentabilidade, NOPAT/reinvestimento, crescimento e rendimento implícito favorecem valores maiores. Dívida líquida/EBITDA e drawdown favorecem valores menores. Os filtros alteram o recorte exibido e a padronização usa o grupo inteiro.
+
+A pontuação final é a média com pesos iguais dos seis Z-scores para empresas com ROIC. Para empresas com ROE, a pontuação final usa três Z-scores, ROE, crescimento do lucro e earnings yield. O cálculo exige todos os fatores aplicáveis. A pontuação contábil disponível no site usa os cinco fatores de ROIC que vêm da CVM. O fator preço e as pontuações finais ficam disponíveis na consulta local quando há um lote privado com valores de mercado.
+
+### Margens do último exercício
+
+Para as empresas com ROIC, a margem bruta divide o resultado bruto (`3.03`) pela receita de venda de bens e serviços (`3.01`). A margem operacional usa o resultado antes do financeiro e dos tributos (`3.05`). A margem líquida usa o lucro ou prejuízo total do período (`3.11`). As três usam a mesma receita positiva da DFP de referência.
+
 ## CDI atual
 
 O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de risco provisória. Empresas e Valuation e Premissas exibem a última observação publicada pelo Banco Central (SGS 4389) com sua data-base. A página Empresas mostra a diferença entre o ROIC ou ROE do exercício mais recente e o CDI atual. Em pontos percentuais, a diferença é `(ROIC ou ROE − CDI anualizado) × 100`, com as taxas em fração. O exercício contábil e a data do CDI são identificados separadamente. [Série SGS 4389](https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?hdOidSerieSelecionada=4389&method=consultarMetadadosSeriesInternet)
@@ -57,6 +77,12 @@ O CDI nominal anualizado em base de 252 dias úteis serve como taxa livre de ris
 A lista de Empresas exibe essa diferença apenas no último exercício comum da seleção. Quando o retorno ou o CDI está indisponível, a diferença também fica indisponível.
 
 Os spreads históricos e o ranking composto dependem de uma série nominal de prazo constante com datas e direitos de uso verificados. A publicação mensal da SUSEP tem uma mudança de modelo para a curva prefixada em 2022. [Parâmetros SUSEP e ANBIMA de 2016 a 2021](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj-1) · [Metodologia e parâmetros atuais](https://www.gov.br/susep/pt-br/assuntos/informacoes-ao-mercado/solvencia-supervisao-prudencial/monitoramento-prudencial/capital-minimo-requerido-e-tap/modelo-de-interpolacao-e-extrapolacao-da-ettj)
+
+## Rendimento implícito com valor de mercado diário
+
+O lote privado associa um valor de mercado em reais a cada companhia da seleção. Para as empresas de ROIC, usa `NOPAT / (valor de mercado + dívida líquida)`. O NOPAT já vem calculado da série de ROIC. A dívida líquida usa os empréstimos e financiamentos de curto e longo prazo menos caixa e equivalentes no fechamento da mesma DFP. O indicador exige EV positivo.
+
+Para as empresas de ROE, o earnings yield divide o lucro líquido atribuível à controladora pelo valor de mercado. Em ambos os casos, o numerador usa a DFP anual mais recente com dados disponíveis até o pregão. O lote registra a data do pregão e a referência contábil. Em desenvolvimento local, o exercício contábil aparece ao lado do indicador.
 
 ## Resultados dos últimos 12 meses e preço
 

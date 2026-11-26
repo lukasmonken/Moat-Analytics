@@ -1,6 +1,9 @@
 import { INDEX_CODES, type IndexCode } from '@moat/data-contracts';
 import { useState } from 'react';
-import { Button, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
+import { useSearchParams } from 'react-router-dom';
+import { Button, ButtonLink, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
+import { FundamentalRanking } from '../ranking/FundamentalRanking';
+import { RoicDrawdownRanking } from '../ranking/RoicDrawdownRanking';
 import { CompanyDirectory } from './CompanyDirectory';
 import {
   IndexUniverseResults,
@@ -15,7 +18,7 @@ import { ScreenerExport } from './ScreenerExport';
 import { compositionReport } from './screenerReport';
 import { useIndexUniverse } from './useIndexUniverse';
 
-export function ScreenerPage() {
+function CompanyScreener() {
   const { state, reload } = useIndexUniverse();
   const [search, setSearch] = useState('');
   const [index, setIndex] = useState<IndexCode | ''>('');
@@ -24,25 +27,14 @@ export function ScreenerPage() {
   const [sort, setSort] = useState<Sort>({ column: 'name', direction: 'ascending' });
 
   if (state.status === 'unavailable') {
-    return (
-      <div className="feature-page module-page">
-        <PageHeader
-          title="Screener e Rankings"
-          description="Pesquise as companhias selecionadas pelo nome."
-        />
-        <CompanyDirectory />
-      </div>
-    );
+    return <CompanyDirectory />;
   }
 
   if (state.status === 'loading') {
     return (
-      <div className="feature-page module-page">
-        <PageHeader title="Screener e Rankings" description="Consulte as companhias disponíveis." />
-        <Panel className="screener-loading">
-          <p role="status">Carregando companhias…</p>
-        </Panel>
-      </div>
+      <Panel className="screener-loading">
+        <p role="status">Carregando companhias…</p>
+      </Panel>
     );
   }
 
@@ -75,12 +67,7 @@ export function ScreenerPage() {
   }
 
   return (
-    <div className="feature-page module-page">
-      <PageHeader
-        title="Screener e Rankings"
-        description="Consulte as companhias da composição anual do IBOV, SMLL e IDIV."
-      />
-
+    <>
       {snapshot && <IndexUniverseSource snapshot={snapshot} />}
 
       <Panel aria-label="Filtros do screener" className="screener-filters">
@@ -167,6 +154,49 @@ export function ScreenerPage() {
           onSort={sortBy}
         />
       )}
+    </>
+  );
+}
+
+export function ScreenerPage() {
+  const [searchParams] = useSearchParams();
+  const ranking = searchParams.get('ranking');
+  const showDrawdown = ranking === 'drawdown-roic';
+  const showFundamentals = ranking === 'fundamentos';
+  const showCompanies = !showDrawdown && !showFundamentals;
+
+  return (
+    <div className="feature-page module-page">
+      <PageHeader
+        title="Screener e Rankings"
+        description="Consulte as companhias da seleção anual e compare seus indicadores."
+      />
+      <nav className="screener-views" aria-label="Consultas do screener">
+        <ButtonLink
+          to="/screener"
+          variant={showCompanies ? 'primary' : 'secondary'}
+          aria-current={showCompanies ? 'page' : undefined}
+        >
+          Companhias
+        </ButtonLink>
+        <ButtonLink
+          to="/screener?ranking=drawdown-roic"
+          variant={showDrawdown ? 'primary' : 'secondary'}
+          aria-current={showDrawdown ? 'page' : undefined}
+        >
+          Drawdown do ROIC
+        </ButtonLink>
+        <ButtonLink
+          to="/screener?ranking=fundamentos"
+          variant={showFundamentals ? 'primary' : 'secondary'}
+          aria-current={showFundamentals ? 'page' : undefined}
+        >
+          Rankings de fundamentos
+        </ButtonLink>
+      </nav>
+      {showCompanies && <CompanyScreener />}
+      {showDrawdown && <RoicDrawdownRanking />}
+      {showFundamentals && <FundamentalRanking />}
     </div>
   );
 }

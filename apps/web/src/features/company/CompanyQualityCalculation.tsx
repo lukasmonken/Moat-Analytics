@@ -1,4 +1,8 @@
-import type { SectorComparisonObservation, SectorRoicObservation } from '@moat/data-contracts';
+import type {
+  SectorComparisonObservation,
+  SectorMarginCompany,
+  SectorRoicObservation,
+} from '@moat/data-contracts';
 import { useEffect, useRef } from 'react';
 import { Table } from '../../shared/ui';
 import {
@@ -131,8 +135,10 @@ export function CompanyCalculation({
   company,
   year,
   taxRate,
+  margins,
 }: {
   company: Company;
+  margins?: SectorMarginCompany | undefined;
   year: number;
   taxRate: number;
 }) {
@@ -174,6 +180,29 @@ export function CompanyCalculation({
         ) : (
           <RoicCalculation inputs={observation.inputs} taxRate={taxRate} />
         ))}
+      {margins && (
+        <section aria-label={`Margens de ${year}`}>
+          <h4>Margens de {year}</h4>
+          {margins.reason ? (
+            <p>{margins.reason}</p>
+          ) : (
+            <dl className="company-metadata">
+              <div>
+                <dt>Margem bruta</dt>
+                <dd>{formatRate(margins.grossMargin)}</dd>
+              </div>
+              <div>
+                <dt>Margem operacional</dt>
+                <dd>{formatRate(margins.operatingMargin)}</dd>
+              </div>
+              <div>
+                <dt>Margem líquida</dt>
+                <dd>{formatRate(margins.netMargin)}</dd>
+              </div>
+            </dl>
+          )}
+        </section>
+      )}
       {filing && (
         <p className="company-source-links">
           <a href={filing.filingUrl} target="_blank" rel="noreferrer">
