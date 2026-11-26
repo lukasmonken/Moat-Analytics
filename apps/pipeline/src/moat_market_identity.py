@@ -2,10 +2,12 @@
 
 import re
 from datetime import date
+from pathlib import Path
 from typing import TypedDict, cast
 
 from .moat_cvm.comparison_identity import selected_companies
 from .moat_cvm.fca import TRADING_CODE
+from .moat_universe import read_security_catalogue
 
 COMPANY_ID = re.compile(r"cvm:[1-9][0-9]{0,5}")
 
@@ -59,7 +61,9 @@ def parse_market_cap_universe(value: object) -> MarketCapUniverse:
     return cast(MarketCapUniverse, value)
 
 
-def create_market_cap_universe(selection: dict, directory: dict) -> MarketCapUniverse:
+def create_market_cap_universe(
+    selection: dict, directory: dict, *, fca_path: Path | None = None,
+) -> MarketCapUniverse:
     cutoff, names = selected_companies(selection, directory)
     companies = []
     for company in sorted(selection["companies"], key=lambda row: row["cvmCode"]):
@@ -84,4 +88,16 @@ def create_market_cap_universe(selection: dict, directory: dict) -> MarketCapUni
         else:
             ordered_tickers = sorted(tickers)
         companies.append({"companyId": company_id, "name": names[code], "tickers": ordered_tickers})
-    return parse_market_cap_universe({"asOf": cutoff.isoformat(), "companies": companies})
+    universe = parse_market_cap_universe({"asOf": cutoff.isoformat(), "companies": companies})
+    if fca_path is not None:
+        catalogue, _, _ = read_security_catalogue([fca_path], cutoff)
+        selected_tickers = {ticker for company in companies for ticker in company["tickers"]}
+        by_id = {company["companyId"]: company for company in universe["companies"]}
+        for ticker, securities in sorted(catalogue.items()):
+            if ticker in selected_tickers or len(securities) != 1:
+                continue
+            security = next(iter(securities))
+            company = by_id.get(f"cvm:{security.cvm_code}")
+            if company is not None and company["name"] == security.name.strip():
+                company["tickers"].append(ticker)
+    return universe

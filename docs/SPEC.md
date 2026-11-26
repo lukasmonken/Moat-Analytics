@@ -78,7 +78,7 @@ Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, qu
 ## 4. Preço, cotações e rendimento implícito
 
 - Atualização **uma vez ao dia, por volta de 12h de Brasília**, usando **fechamento do último pregão** (não tempo real). Mostrar *data da cotação*, *data/hora da coleta*, provedor e eventual atraso. Em feriados/ausência de mercado, manter o fechamento válido mais recente.
-- A rotina privada coleta uma capitalização de mercado por companhia da seleção após o encerramento do pregão da B3. O lote guarda o pregão e a fonte para uso nos cálculos.
+- A rotina privada coleta uma estimativa de capitalização de mercado por companhia da seleção após o encerramento do pregão da B3. O lote guarda o pregão, a fonte e a conferência dos códigos para uso nos cálculos. Se os códigos de uma companhia retornarem estimativas divergentes no mesmo pregão, o preço fica indisponível.
 - Para empresas com ROIC, `EV = capitalização de mercado + dívida líquida`. O rendimento implícito usa `NOPAT / EV`, com o NOPAT e a dívida líquida do último comparativo anual disponível.
 - Para empresas com ROE, `earnings yield = lucro líquido atribuível à controladora / capitalização de mercado`, com o lucro do último comparativo anual disponível.
 - **ROIC/ROE não variam com a cotação.** O que se atualiza diariamente é o yield implícito, EV, múltiplos, spread de preço e margem de segurança.

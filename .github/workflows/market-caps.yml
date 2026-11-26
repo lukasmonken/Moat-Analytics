@@ -23,15 +23,22 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Obter código
+      - name: Obter pipeline e comparativos publicados do Moat
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          repository: lukasmonken/Moat-Analytics
+          ref: main
           persist-credentials: false
       - name: Atualizar capitalizações de mercado
         env:
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
           MOAT_MARKET_CAP_UNIVERSE: ${{ secrets.MOAT_MARKET_CAP_UNIVERSE }}
-        run: python3 apps/pipeline/run_market_caps.py
+        run: |
+          if [[ -z "$BRAPI_TOKEN" || -z "$MOAT_MARKET_CAP_UNIVERSE" ]]; then
+            echo "::error::Configure os secrets BRAPI_TOKEN e MOAT_MARKET_CAP_UNIVERSE no repositório privado."
+            exit 1
+          fi
+          python3 apps/pipeline/run_market_caps.py
       - name: Guardar lote privado
         if: hashFiles('data/processed/market-caps/latest.json') != ''
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

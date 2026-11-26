@@ -5,6 +5,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from zipfile import BadZipFile
 
 from src.moat_cvm.archives import write_snapshot
 from src.moat_market_identity import create_market_cap_universe
@@ -22,6 +23,7 @@ def main() -> int:
     parser.add_argument(
         "--directory", type=Path, default=REPO / "data/public/cvm-company-selection.json",
     )
+    parser.add_argument("--fca", type=Path, help="ZIP cadastral da CVM para incluir tickers alternativos.")
     parser.add_argument("--output", type=Path, default=PROCESSED / "universe.json")
     options = parser.parse_args()
 
@@ -37,11 +39,12 @@ def main() -> int:
             for path in (supplied, output)
         ):
             raise ValueError("A saída dentro do repositório deve ficar em data/processed/market-caps.")
-        if output in (options.selection.resolve(), options.directory.resolve()):
+        inputs = (options.selection, options.directory, options.fca)
+        if any(path is not None and output == path.resolve() for path in inputs):
             raise ValueError("Use saídas e entradas diferentes.")
-        universe = create_market_cap_universe(selection, directory)
+        universe = create_market_cap_universe(selection, directory, fca_path=options.fca)
         wrote = write_snapshot(output, universe)
-    except (KeyError, OSError, TypeError, ValueError) as error:
+    except (BadZipFile, KeyError, OSError, TypeError, ValueError) as error:
         print(f"Mapa rejeitado. A versão anterior foi preservada. {error}", file=sys.stderr)
         return 1
 

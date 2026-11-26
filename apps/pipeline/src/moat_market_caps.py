@@ -12,7 +12,7 @@ from .moat_market_identity import MarketCapUniverse
 
 BRAPI_QUOTES = "https://brapi.dev/api/quote/"
 BRAPI_DOCS = "https://brapi.dev/docs/acoes"
-METHOD = "market-cap.brapi-close.v1"
+METHOD = "market-cap.brapi-close.v2"
 MAX_RESPONSE_BYTES = 1_000_000
 
 
@@ -114,29 +114,43 @@ def collect_market_caps(
     if trade_date.isoformat() < universe["asOf"]:
         raise ValueError("O pregão não pode ser anterior à seleção anual.")
     rows = []
+    compared_companies = 0
+    disagreeing_companies = 0
     for company in universe["companies"]:
-        observation = None
-        reasons = []
+        candidates = []
         for ticker in company["tickers"]:
             observation, reason = closing_cap(read_quote(ticker), ticker, trade_date)
-            if observation is not None:
-                break
-            reasons.append(reason)
+            candidates.append(observation or {
+                "ticker": ticker,
+                "marketCapBrl": None,
+                "quoteUpdatedAt": None,
+                "qualityStatus": "unavailable",
+                "reason": reason,
+            })
 
-        if observation is None:
-            observation = {
+        valid = [candidate for candidate in candidates if candidate["marketCapBrl"] is not None]
+        compared_companies += len(valid) > 1
+        disagree = len({candidate["marketCapBrl"] for candidate in valid}) > 1
+        disagreeing_companies += disagree
+        selected = valid[0] if valid and not disagree else None
+        reason = None
+        if disagree:
+            reason = "Valores de mercado divergentes entre códigos da mesma companhia."
+        elif selected is None:
+            reason = " ".join(dict.fromkeys(
+                candidate["reason"] for candidate in candidates
+            )) or "Empresa sem código validado na seleção."
+        rows.append({
+            "companyId": company["companyId"],
+            "name": company["name"],
+            **(selected or {
                 "ticker": None,
                 "marketCapBrl": None,
                 "quoteUpdatedAt": None,
                 "qualityStatus": "unavailable",
-            }
-        rows.append({
-            "companyId": company["companyId"],
-            "name": company["name"],
-            **observation,
-            "reason": None if observation["marketCapBrl"] is not None else (
-                " ".join(dict.fromkeys(reasons)) or "Empresa sem código validado na seleção."
-            ),
+            }),
+            "reason": reason,
+            "candidateQuotes": candidates,
         })
     return {
         "manifest": {
@@ -150,6 +164,8 @@ def collect_market_caps(
             "coverage": {
                 "includedCompanies": len(rows),
                 "availableCompanies": sum(row["marketCapBrl"] is not None for row in rows),
+                "comparedCompanies": compared_companies,
+                "disagreeingCompanies": disagreeing_companies,
             },
         },
         "companies": rows,

@@ -50,8 +50,13 @@ def main() -> int:
         snapshot = collect_market_caps(universe, trade_date, brapi_quote_reader(token))
         coverage = snapshot["manifest"]["coverage"]
         available, total = coverage["availableCompanies"], coverage["includedCompanies"]
+        compared = coverage["comparedCompanies"]
+        disagreeing = coverage["disagreeingCompanies"]
         if available == 0:
-            raise ValueError("Nenhum valor de mercado do pregão pôde ser confirmado.")
+            raise ValueError(
+                f"Sem valores válidos para as {total} empresas do pregão. "
+                f"Empresas com valores divergentes entre códigos: {disagreeing}."
+            )
         snapshot = attach_market_yields(
             snapshot,
             roic=json.loads((PUBLIC / "cvm-sector-roic.json").read_text(encoding="utf-8")),
@@ -63,8 +68,9 @@ def main() -> int:
         print(f"Coleta de valor de mercado interrompida. Último lote preservado. {error}", file=sys.stderr)
         return 1
     print(
-        f"Pregão {trade_date:%d/%m/%Y}. Valor de mercado para {available} de {total} empresas e "
-        f"rendimento implícito para {yields}."
+        f"Pregão {trade_date:%d/%m/%Y}. Estimativas de valor de mercado para {available} de "
+        f"{total} empresas e rendimento implícito para {yields}. "
+        f"Códigos comparados em {compared} empresas, com {disagreeing} divergências."
     )
     return 0
 

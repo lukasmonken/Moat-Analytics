@@ -83,7 +83,7 @@ def _valuation(company: dict, classified: tuple[str, dict] | None, trade_date: d
         result["netDebtBrl"] = amount(debt)
     cap = _money(company.get("marketCapBrl"))
     if cap is None or cap <= 0:
-        return {**result, "reason": "Valor de mercado indisponível no pregão."}
+        return {**result, "reason": company.get("reason") or "Valor de mercado indisponível no pregão."}
 
     if metric == "operatingYield":
         ev = enterprise_value(market_cap_brl=cap, net_debt_brl=debt, adjustments_brl=Decimal(0))
