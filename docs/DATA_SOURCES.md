@@ -14,9 +14,9 @@ O [lote de comparação bancária](../data/public/cvm-bank-roe.json) usa DFP con
 
 O comparativo de Empresas cruza as 144 companhias da seleção de 18/11/2026 com o setor declarado no FCA de 2026 e os exercícios consolidados de 2021 a 2025. Os arquivos registram a coleta, o hash dos ZIPs, a versão e o recebimento dos formulários. Os nomes, setores e indicadores derivados da CVM são distribuídos sob ODbL 1.0. [Catálogo FCA](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) · [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
 
-O lote de ROE reúne 15 bancos e grupos de seguros. O lote de ROIC estimado reúne as outras 129 companhias. Cada arquivo guarda os formulários de origem, as contas disponíveis e os motivos das lacunas. Quando a classificação de um passivo depende das notas do emissor, a observação aponta também as demonstrações de apoio. [ROE em JSON](../data/public/cvm-sector-comparison.json) · [ROIC em JSON](../data/public/cvm-sector-roic.json) · [Metodologia](METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
+O lote de ROE reúne 15 bancos e grupos de seguros. O lote de ROIC estimado reúne as outras 129 companhias. Cada arquivo guarda os formulários de origem, as contas disponíveis e os motivos das lacunas. Para o capital investido, o ROIC usa os totais publicados de patrimônio, financiamentos e caixa em cada balanço. [ROE em JSON](../data/public/cvm-sector-comparison.json) · [ROIC em JSON](../data/public/cvm-sector-roic.json) · [Metodologia](METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
 
-Neste lote, 2025 tem 15 ROEs e 68 ROICs estimados disponíveis. De 2021 a 2025, são 70 observações de ROE em 75 e 263 de ROIC em 645.
+Neste lote, 2025 tem 15 ROEs e 125 ROICs estimados disponíveis. De 2021 a 2025, são 70 observações de ROE em 75 e 605 de ROIC em 645.
 
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
 

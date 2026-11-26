@@ -52,14 +52,9 @@ function RoeCalculation({
   );
 }
 
-const embeddedLeasesLabel = 'Arrendamentos incluídos nos financiamentos';
-const separateLeasesLabel = 'Arrendamentos fora dos financiamentos';
 const balanceLabels = [
-  ['Patrimônio líquido consolidado', /Equity$/],
+  ['Patrimônio líquido', /Equity$/],
   ['Empréstimos e financiamentos', /Borrowings$/],
-  [embeddedLeasesLabel, /LeaseIncluded$/],
-  [separateLeasesLabel, /SeparateLease$/],
-  ['Outros passivos financeiros', /SeparateDebt\d+$/],
   ['Caixa e equivalentes', /Cash$/],
 ] as const;
 
@@ -70,19 +65,18 @@ function RoicCalculation({
   inputs: NonNullable<SectorRoicObservation['inputs']>;
   taxRate: number;
 }) {
-  const noteBalances: Record<string, typeof inputs.embeddedLeases> = {
-    [embeddedLeasesLabel]: inputs.embeddedLeases,
-    [separateLeasesLabel]: inputs.separateLeases,
-  };
-  const presentation = (period: string, pattern: RegExp) => {
-    const accounts = inputs.accounts.filter(
-      ({ key }) => key.startsWith(period) && pattern.test(key),
+  const balance = (period: 'opening' | 'closing', pattern: RegExp) =>
+    formatCurrency(
+      inputs.accounts
+        .filter(({ key }) => key.startsWith(period) && pattern.test(key))
+        .reduce((sum, account) => sum + account.amountBrl, 0),
     );
-    const total = accounts.reduce((sum, account) => sum + account.amountBrl, 0);
-    return accounts.length > 0 ? formatCurrency(total) : '—';
-  };
   return (
     <>
+      <p>
+        Capital investido = patrimônio líquido + empréstimos e financiamentos − caixa e
+        equivalentes.
+      </p>
       <dl className="company-metadata">
         <div>
           <dt>EBIT</dt>
@@ -111,25 +105,13 @@ function RoicCalculation({
             </tr>
           </thead>
           <tbody>
-            {balanceLabels.map(([label, pattern]) => {
-              const leases = noteBalances[label];
-              const opening = leases
-                ? formatCurrency(leases.openingBrl)
-                : presentation('opening', pattern);
-              const closing = leases
-                ? formatCurrency(leases.closingBrl)
-                : presentation('closing', pattern);
-              return opening === '—' && closing === '—' ? null : (
-                <tr key={label}>
-                  <th scope="row">
-                    {label}
-                    {leases && <small>Nota {leases.note}</small>}
-                  </th>
-                  <td>{opening}</td>
-                  <td>{closing}</td>
-                </tr>
-              );
-            })}
+            {balanceLabels.map(([label, pattern]) => (
+              <tr key={label}>
+                <th scope="row">{label}</th>
+                <td>{balance('opening', pattern)}</td>
+                <td>{balance('closing', pattern)}</td>
+              </tr>
+            ))}
             <tr>
               <th scope="row">Capital investido</th>
               <td>{formatCurrency(inputs.openingCapitalBrl)}</td>

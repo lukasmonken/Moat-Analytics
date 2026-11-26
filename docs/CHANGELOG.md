@@ -1,5 +1,10 @@
 # Changelog
 
+## M2 — Capital investido simplificado
+
+- O ROIC de 2021 a 2025 usa patrimônio líquido mais empréstimos e financiamentos de curto e longo prazo, menos caixa e equivalentes. A tela e o Excel mostram as contas usadas.
+- O comparativo de 2025 passa a ter 125 ROICs estimados e 15 ROEs. A base individual auditada permite calcular a TIM. Bradespar, Assaí, Camil e São Martinho seguem com lacunas em 2025.
+
 ## M2 — Insumos contábeis de 2025 e grupo de seguros
 
 - O comparativo de 2025 tem valores disponíveis para 83 companhias, com 15 ROEs e 68 ROICs estimados. As 144 companhias continuam na lista.

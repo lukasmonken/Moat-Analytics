@@ -74,7 +74,7 @@ export interface QualitySnapshot {
     coverage: { eligibleCompanies: null; includedCompanies: number };
     source: CvmSource;
   };
-  methodologyVersion: 'quality-dfp-m2.v1';
+  methodologyVersion: 'quality-dfp-m2.v1' | 'quality-dfp-m2.v2';
   roicTaxRate: 0.34;
   benchmark: QualityAvailability;
   ranking: QualityAvailability;
@@ -218,7 +218,8 @@ export function parseQualitySnapshot(input: unknown): QualitySnapshot {
   if (
     !isObject(input) ||
     !isManifest(input.manifest) ||
-    input.methodologyVersion !== 'quality-dfp-m2.v1' ||
+    (input.methodologyVersion !== 'quality-dfp-m2.v1' &&
+      input.methodologyVersion !== 'quality-dfp-m2.v2') ||
     input.roicTaxRate !== 0.34 ||
     !isAvailability(input.benchmark) ||
     !isAvailability(input.ranking) ||

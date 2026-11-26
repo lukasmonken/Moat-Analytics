@@ -49,22 +49,10 @@ function calculationReportRows(companies: Company[], year: number): ReportSheet[
       ];
     }
     const { inputs } = observation;
-    const leaseNotes = [
-      ['Arrendamentos incluídos nos financiamentos', inputs.embeddedLeases],
-      ['Arrendamentos fora dos financiamentos', inputs.separateLeases],
-    ] as const;
     return [
       row('NOPAT estimado', null, closing, inputs.nopatBrl),
       row('Capital investido na abertura', null, opening, inputs.openingCapitalBrl),
       row('Capital investido no fechamento', null, closing, inputs.closingCapitalBrl),
-      ...leaseNotes.flatMap(([label, balances]) =>
-        balances
-          ? [
-              row(label, `Nota ${balances.note}`, opening, balances.openingBrl),
-              row(label, `Nota ${balances.note}`, closing, balances.closingBrl),
-            ]
-          : [],
-      ),
       ...inputs.accounts.map((account) =>
         row(
           account.label,
@@ -155,6 +143,10 @@ export function comparisonReport(
       ['Ordenação', order === 'return' ? 'Maior retorno do exercício' : 'Nome (A–Z)'],
       ['ROE', 'Lucro atribuível à controladora dividido pelo patrimônio médio da controladora.'],
       ['ROIC', 'NOPAT estimado dividido pelo capital investido médio.'],
+      [
+        'Capital investido do ROIC',
+        'Patrimônio líquido mais empréstimos e financiamentos de curto e longo prazo, menos caixa e equivalentes. A média usa os saldos de abertura e fechamento.',
+      ],
       ['Alíquota padronizada do ROIC', formatRate(data.roic.taxRate)],
       ['Método ROE', data.roe.methodologyVersion],
       ['Método ROIC', data.roic.methodologyVersion],

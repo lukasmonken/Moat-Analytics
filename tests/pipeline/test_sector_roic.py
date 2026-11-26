@@ -1,21 +1,17 @@
-"""Testa o ROIC com demonstrações consolidadas sintéticas."""
+"""Testa o ROIC anual com demonstrações financeiras sintéticas."""
 
 import unittest
 
 from test_sector_comparison import account_rows, filing
 
 from apps.pipeline.src.moat_cvm.sector_roic import balance_capital, observe_roic
-from apps.pipeline.src.moat_cvm.sector_roic_lease_notes import (
-    LeaseBalances, LeaseReview, LiabilityBalance, ReviewedSubtotal,
-)
-from apps.pipeline.src.moat_cvm.sector_roic_notes import ReviewedAccount
 
 
-def by_code(document, accounts):
-    return {row["CD_CONTA"]: row for row in account_rows(document, accounts)}
+def by_code(document, accounts, *, end="2025-12-31"):
+    return {row["CD_CONTA"]: row for row in account_rows(document, accounts, end=end)}
 
 
-def balance(document):
+def balance(document, *, end="2025-12-31"):
     return {
         "BPA": by_code(document, [
             ("1", "Ativo Total", 210),
@@ -23,7 +19,7 @@ def balance(document):
             ("1.01.01", "Caixa e Equivalentes de Caixa", 20),
             ("1.01.02", "Aplicações Financeiras", 80),
             ("1.02", "Ativo Não Circulante", 110),
-        ]),
+        ], end=end),
         "BPP": by_code(document, [
             ("2", "Passivo Total", 210),
             ("2.01", "Passivo Circulante", 40),
@@ -37,170 +33,127 @@ def balance(document):
             ("2.02.01.03", "Financiamento por Arrendamento", 10),
             ("2.03", "Patrimônio Líquido Consolidado", 120),
             ("2.03.01", "Capital Social Realizado", 120),
-        ]),
+        ], end=end),
+    }
+
+
+def annual_statements(document):
+    return {
+        "income": {"DRE": by_code(document, [
+            ("3.03", "Resultado Bruto", 100),
+            ("3.04", "Despesas/Receitas Operacionais", -70),
+            ("3.05", "Resultado Antes do Resultado Financeiro e dos Tributos", 30),
+        ])},
+        "opening": balance(document, end="2024-12-31"),
+        "closing": balance(document),
     }
 
 
 class SectorRoicTest(unittest.TestCase):
-    def test_reconciles_ebit_and_uses_total_equity_debt_and_cash(self):
+    def test_reconciles_ebit_and_uses_reported_equity_debt_and_cash(self):
         document = filing("000111")
-        income = by_code(document, [
-            ("3.03", "Resultado Bruto", 100),
-            ("3.04", "Despesas/Receitas Operacionais", -70),
-            ("3.05", "Resultado Antes do Resultado Financeiro e dos Tributos", 30),
-        ])
-        rows = {"income": {"DRE": income}, "opening": balance(document), "closing": balance(document)}
+        rows = annual_statements(document)
+        opening_assets = rows["opening"]["BPA"]
+        opening_assets["1.01.01"]["VL_CONTA"] = 40
+        opening_assets["1.01.02"]["VL_CONTA"] = 60
         result = observe_roic("000111", 2025, document, rows)
-        self.assertEqual(result["roic"], 0.11)
-        self.assertEqual(result["inputs"]["ebitBrl"], 30_000)
-        self.assertEqual(result["inputs"]["nopatBrl"], 19_800)
-        self.assertEqual(result["inputs"]["openingCapitalBrl"], 180_000)
-        self.assertEqual(result["inputs"]["closingCapitalBrl"], 180_000)
+        self.assertAlmostEqual(result["roic"], 19_800 / 170_000)
+        inputs = result["inputs"]
+        self.assertEqual(inputs["ebitBrl"], 30_000)
+        self.assertEqual(inputs["nopatBrl"], 19_800)
+        self.assertEqual(inputs["openingCapitalBrl"], 160_000)
+        self.assertEqual(inputs["closingCapitalBrl"], 180_000)
+        self.assertEqual([(row["key"], row["code"], row["referenceDate"]) for row in inputs["accounts"]], [
+            ("ebit", "3.05", "2025-12-31"),
+            ("openingEquity", "2.03", "2024-12-31"),
+            ("openingShortBorrowings", "2.01.04", "2024-12-31"),
+            ("openingLongBorrowings", "2.02.01", "2024-12-31"),
+            ("openingCash", "1.01.01", "2024-12-31"),
+            ("closingEquity", "2.03", "2025-12-31"),
+            ("closingShortBorrowings", "2.01.04", "2025-12-31"),
+            ("closingLongBorrowings", "2.02.01", "2025-12-31"),
+            ("closingCash", "1.01.01", "2025-12-31"),
+        ])
 
-        income["3.05"]["VL_CONTA"] = 32
+        rows["income"]["DRE"]["3.05"]["VL_CONTA"] = 32
         result = observe_roic("000111", 2025, document, rows)
         self.assertIsNone(result["roic"])
         self.assertIn("diverge dos subtotais da DRE", result["reason"])
 
-    def test_includes_a_separate_reviewed_lease_once(self):
-        document = filing("003069")
-        statements = balance(document)
-        liabilities = statements["BPP"]
-        liabilities["2.01.04"]["VL_CONTA"] = 24
-        liabilities["2.01.04.03"]["VL_CONTA"] = 0
-        with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
-            balance_capital("003069", "closing", statements)
-
-        liabilities.update(by_code(document, [
-            ("2.01.05", "Outras Obrigações", 6),
-            ("2.01.05.02", "Outros", 6),
-            ("2.01.05.02.07", "Arrendamento Mercantil", 0),
-        ]))
-        with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
-            balance_capital("003069", "closing", statements)
-
-        liabilities["2.01.05.02.07"]["VL_CONTA"] = 6
-        capital, evidence = balance_capital("003069", "closing", statements)
-        self.assertEqual(capital, 180_000)
-        self.assertEqual([row["key"] for row in evidence].count("closingShortSeparateLease"), 1)
-
-        liabilities["2.01.04.03"]["VL_CONTA"] = 6
-        with self.assertRaisesRegex(ValueError, "dupla contagem"):
-            balance_capital("003069", "closing", statements)
-
-    def test_verifies_leases_embedded_in_borrowings_without_adding_them_again(self):
-        statements = balance(filing("000111"))
-        liabilities = statements["BPP"]
-        for root, amount in (("2.01.04", 30), ("2.02.01", 50)):
-            liabilities[f"{root}.01"]["VL_CONTA"] = amount
-            liabilities[f"{root}.03"]["VL_CONTA"] = 0
-
-        with self.assertRaisesRegex(ValueError, "Arrendamentos não identificados"):
-            balance_capital("000111", "closing", statements)
-        balances = LeaseBalances(30_000, 50_000, 16_000)
-        note = LeaseReview("12", "https://example.org", balances, balances)
-        capital, accounts = balance_capital("000111", "closing", statements, reviewed_leases=note)
-        self.assertEqual(capital, 180_000)
-        self.assertTrue(all(
-            row["amountBrl"] == 0 for row in accounts if row["key"].endswith("LeaseIncluded")
-        ))
-
-        wrong_note = note._replace(closing=LeaseBalances(29_000, 50_000, 16_000))
-        with self.assertRaisesRegex(ValueError, "não correspondem à nota auditada"):
-            balance_capital("000111", "closing", statements, reviewed_leases=wrong_note)
-
-    def test_audited_subtotal_replaces_only_empty_structured_breakdown(self):
-        statements = balance(filing("000111"))
-        liabilities = statements["BPP"]
-        liabilities["2.01.04.01"]["VL_CONTA"] = 0
-        liabilities["2.01.04.03"]["VL_CONTA"] = 0
-        liabilities.update(by_code(filing("000111"), [
-            ("2.01.04.02", "Debêntures", 0),
-            ("2.01.05", "Outras Obrigações", 6),
-            ("2.01.05.02", "Outros", 6),
-            ("2.01.05.02.04", "Arrendamento a pagar", 6),
-        ]))
-        statements["BPA"]["1"]["VL_CONTA"] = 216
-        statements["BPA"]["1.02"]["VL_CONTA"] = 116
-        liabilities["2"]["VL_CONTA"] = 216
-        liabilities["2.01"]["VL_CONTA"] = 46
-        evidence = ReviewedSubtotal(
-            LiabilityBalance("2.01.04", "Empréstimos e Financiamentos", 30_000, 30_000),
-            ("2.01.04.01", "2.01.04.02", "2.01.04.03"),
-        )
-        with self.assertRaisesRegex(ValueError, "diverge de seus subtotais"):
-            balance_capital("000111", "closing", statements)
-        capital, _ = balance_capital("000111", "closing", statements, reviewed_subtotals=(evidence,))
-        self.assertEqual(capital, 186_000)
-
-        liabilities["2.01.04.01"]["VL_CONTA"] = 1
-        with self.assertRaisesRegex(ValueError, "diverge da revisão auditada"):
-            balance_capital("000111", "closing", statements, reviewed_subtotals=(evidence,))
-
-    def test_includes_debentures_outside_borrowings_with_reconciled_subtotals(self):
-        document = filing("004170")
-        statements = balance(document)
-        assets, liabilities = statements["BPA"], statements["BPP"]
-        assets["1"]["VL_CONTA"] = 215
-        assets["1.02"]["VL_CONTA"] = 115
-        liabilities["2"]["VL_CONTA"] = 215
-        liabilities["2.02"]["VL_CONTA"] = 55
-        liabilities.update(by_code(document, [
-            ("2.02.04", "Outras Obrigações", 5),
-            ("2.02.04.02", "Outros", 5),
-            ("2.02.04.02.12", "Debentures participativas", 5),
-        ]))
-        capital, evidence = balance_capital("004170", "closing", statements)
-        self.assertEqual(capital, 185_000)
-        self.assertIn("2.02.04.02.12", [row["code"] for row in evidence])
-
-        liabilities["2.02.04.02.12"]["VL_CONTA"] = 3
-        with self.assertRaisesRegex(ValueError, "2.02.04.02 diverge"):
-            balance_capital("004170", "closing", statements)
-
-    def test_rejects_unreconciled_financing_and_checks_reviewed_supplier_balance(self):
-        document = filing("003980")
-        statements = balance(document)
-        statements["BPP"].update(by_code(document, [
-            ("2.01.02.01", "Fornecedores", 10),
-            ("2.01.02.01.01", "Fornecedores convencionais", 3),
-            ("2.01.02.01.02", "Fornecedores risco sacado", 7),
-        ]))
-        with self.assertRaisesRegex(ValueError, "Financiamento fora das contas revisadas"):
-            balance_capital("003980", "closing", statements)
-        with self.assertRaisesRegex(ValueError, "diverge da nota auditada"):
-            balance_capital("003980", "closing", statements, 6_000)
-
-        capital, evidence = balance_capital("003980", "closing", statements, 7_000)
-        self.assertEqual(capital, 180_000)
-        self.assertIn("closingOperatingSupplier", [row["key"] for row in evidence])
-
-    def test_only_includes_separate_financing_verified_for_the_balance_date(self):
+    def test_keeps_embedded_leases_and_ignores_other_liabilities(self):
         document = filing("000111")
         statements = balance(document)
-        statements["BPA"]["1"]["VL_CONTA"] = 217
-        statements["BPA"]["1.02"]["VL_CONTA"] = 117
-        statements["BPP"]["2"]["VL_CONTA"] = 217
-        statements["BPP"]["2.01"]["VL_CONTA"] = 47
-        statements["BPP"].update(by_code(document, [
-            ("2.01.05", "Outras Obrigações", 7),
-            ("2.01.05.02", "Outros", 7),
-            ("2.01.05.02.06", "Cessão de direitos creditórios", 5),
-            ("2.01.05.02.07", "Contas a pagar por aquisições", 2),
+        liabilities = statements["BPP"]
+        liabilities["2.01.02"]["VL_CONTA"] = 0
+        liabilities.update(by_code(document, [
+            ("2.01.05", "Outras Obrigações", 10),
+            ("2.01.05.02.01", "Arrendamento a pagar", 4),
+            ("2.01.05.02.02", "Instrumentos financeiros derivativos", 2),
+            ("2.01.05.02.03", "Contas a Pagar por Aquisições", 4),
         ]))
-        funding = ReviewedAccount("2.01.05.02.06", "Cessão de direitos creditórios", 4_000, 5_000)
-        operational = ReviewedAccount("2.01.05.02.07", "Contas a pagar por aquisições", 2_000, 2_000, False)
+        capital, evidence = balance_capital("closing", statements)
+        self.assertEqual(capital, 180_000)
+        self.assertEqual([item["amountBrl"] for item in evidence], [120_000, 30_000, 50_000, 20_000])
 
-        with self.assertRaisesRegex(ValueError, "Cessão de direitos creditórios"):
-            balance_capital("000111", "closing", statements)
-        with self.assertRaisesRegex(ValueError, "Contas a pagar por aquisições"):
-            balance_capital("000111", "closing", statements, reviewed_accounts=(funding,))
-        with self.assertRaisesRegex(ValueError, "diverge da nota auditada"):
-            balance_capital("000111", "opening", statements, reviewed_accounts=(funding, operational))
+    def test_accepts_reported_debt_total_without_a_detail_breakdown(self):
+        statements = balance(filing("000111"))
+        liabilities = statements["BPP"]
+        del liabilities["2.01.04.03"]
+        liabilities["2.01.04.01"]["VL_CONTA"] = 0
+        capital, _ = balance_capital("closing", statements)
+        self.assertEqual(capital, 180_000)
 
-        capital, evidence = balance_capital(
-            "000111", "closing", statements, reviewed_accounts=(funding, operational),
-        )
-        self.assertEqual(capital, 185_000)
-        self.assertIn("closingSeparateDebt1", [row["key"] for row in evidence])
-        self.assertIn("closingOperatingSupplier1", [row["key"] for row in evidence])
+    def test_requires_explicit_zero_debt_and_rejects_conflicting_children(self):
+        statements = balance(filing("000111"))
+        liabilities = statements["BPP"]
+        liabilities["2.01.02"]["VL_CONTA"] = 40
+        liabilities["2.01.04"]["VL_CONTA"] = 0
+        liabilities["2.01.04.01"]["VL_CONTA"] = 0
+        liabilities["2.01.04.03"]["VL_CONTA"] = 0
+        capital, _ = balance_capital("closing", statements)
+        self.assertEqual(capital, 150_000)
+
+        liabilities["2.01.04.03"]["VL_CONTA"] = 6
+        with self.assertRaisesRegex(ValueError, "Saldo zerado em BPP 2.01.04"):
+            balance_capital("closing", statements)
+
+        del liabilities["2.01.04"]
+        with self.assertRaisesRegex(ValueError, "Conta ausente.* BPP 2.01.04"):
+            balance_capital("closing", statements)
+
+    def test_keeps_missing_inputs_nonpositive_capital_and_duplicates_unavailable(self):
+        document = filing("000111")
+        rows = annual_statements(document)
+        assets = rows["opening"]["BPA"]
+        assets["1.01.01"]["VL_CONTA"] = 200
+        assets["1.01.02"]["VL_CONTA"] = 0
+        assets["1.01"]["VL_CONTA"] = 200
+        assets["1.02"]["VL_CONTA"] = 10
+        result = observe_roic("000111", 2025, document, rows)
+        self.assertIsNone(result["inputs"])
+        self.assertIn("Capital investido incompatível", result["reason"])
+
+        del assets["1.01.01"]
+        result = observe_roic("000111", 2025, document, rows)
+        self.assertIsNone(result["roic"])
+        self.assertIn("BPA 1.01.01", result["reason"])
+        self.assertEqual(result["filing"]["filingUrl"], document["LINK_DOC"])
+
+        result = observe_roic("000111", 2025, document, rows, duplicate=True)
+        self.assertIsNone(result["roic"])
+        self.assertIn("Conta duplicada", result["reason"])
+
+    def test_uses_the_individual_balance_only_for_the_verified_filing(self):
+        document = {**filing("018627", version=1), "ID_DOC": "154938"}
+        rows = annual_statements(document)
+        for period in ("opening", "closing"):
+            rows[period]["BPP"]["2.03"]["DS_CONTA"] = "Patrimônio Líquido"
+        result = observe_roic("018627", 2025, document, rows)
+        self.assertEqual(result["roic"], 0.11)
+        self.assertEqual(result["filing"]["basis"], "individual")
+        self.assertEqual(result["filing"]["filingUrl"], document["LINK_DOC"])
+        self.assertIn("ri.sanepar.com.br", result["filing"]["supportingDocumentUrl"])
+
+        result = observe_roic("018627", 2025, {**document, "ID_DOC": "0"}, rows)
+        self.assertIsNone(result["roic"])
+        self.assertNotIn("basis", result["filing"])

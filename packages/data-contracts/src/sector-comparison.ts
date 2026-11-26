@@ -71,20 +71,12 @@ export interface SectorComparisonSnapshot {
   companies: SectorComparisonCompany[];
 }
 
-interface LeaseNoteBalances {
-  note: string;
-  openingBrl: number;
-  closingBrl: number;
-}
-
 interface RoicInputs {
   ebitBrl: number;
   nopatBrl: number;
   openingCapitalBrl: number;
   closingCapitalBrl: number;
   accounts: QualityInput[];
-  embeddedLeases?: LeaseNoteBalances;
-  separateLeases?: LeaseNoteBalances;
 }
 
 export interface SectorRoicObservation {
@@ -103,7 +95,7 @@ export interface SectorRoicCompany {
 
 export interface SectorRoicSnapshot {
   manifest: ComparisonManifest & {
-    methodologyVersion: 'roic-dfp-comparisons.v1';
+    methodologyVersion: 'roic-dfp-comparisons.v2';
     taxRate: 0.34;
     sectorSource: CvmSource;
   };
@@ -251,18 +243,6 @@ function isObservation(value: unknown): value is SectorComparisonObservation {
   return numbersAgree(value.roe, expected);
 }
 
-function isLeaseNote(value: unknown): value is LeaseNoteBalances {
-  return (
-    isObject(value) &&
-    typeof value.note === 'string' &&
-    /^\d+(?:\.\d+)*$/.test(value.note) &&
-    isMoney(value.openingBrl) &&
-    value.openingBrl > 0 &&
-    isMoney(value.closingBrl) &&
-    value.closingBrl > 0
-  );
-}
-
 function isRoicInputs(value: unknown): value is RoicInputs {
   return (
     isObject(value) &&
@@ -273,53 +253,57 @@ function isRoicInputs(value: unknown): value is RoicInputs {
     isMoney(value.closingCapitalBrl) &&
     value.closingCapitalBrl > 0 &&
     isListOf(value.accounts, isQualityInput) &&
-    value.accounts.length > 0 &&
-    unique(value.accounts, ({ key, referenceDate }) => `${key}/${referenceDate}`) &&
-    (value.embeddedLeases === undefined || isLeaseNote(value.embeddedLeases)) &&
-    (value.separateLeases === undefined || isLeaseNote(value.separateLeases)) &&
-    (value.embeddedLeases === undefined || value.separateLeases === undefined)
+    value.accounts.length === 9 &&
+    unique(value.accounts, ({ key }) => key)
   );
 }
 
-const saneparIndividualDocument =
-  'https://ri.sanepar.com.br/docs/DFP-Sanepar-2025-12-31-BjdwmKcn.pdf';
-
-const roicSupportingDocuments = new Set([
-  saneparIndividualDocument,
-  'https://vale.com/documents/d/guest/form-20-f-2025-en',
-  'https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/fcad7df5-9607-78ed-3455-ffa6e0470211?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/24165f81-24d6-4648-bf9f-66712905d5a2/197836af-54b5-cff0-af1e-de97ad340f36?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/330c258b-6212-45ce-8c13-557ea46cc23a/ec0bffc6-8050-2a0b-1e23-5a3890c7c7d5?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/0cfe19b8-158f-39a5-8750-42ffc2c71a54?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/6b90b8ef-4914-4021-8296-c5aca7b388eb/332513a1-ba6f-da78-df8f-6c5de67a33d1?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/297cd69b-7cfb-d469-55f1-3d8418bf4b76?origin=2',
-  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/p/P/HKWA55Sxyc8CKT7gPtWg/tupy1588252920032026.pdf',
-  'https://vipfiles.valor.com.br/BDEmpresas/bfc245c3-7342-4b02-a2ff-96206f033415.pdf',
-  'https://api.mziq.com/mzfilemanager/v2/d/aa331a3b-0a4a-4acc-a70e-512ff88e3c02/b12fda81-2659-40c5-b3af-864331bb8306?origin=2',
-  'https://www.engie.com.br/wp-content/uploads/2026/02/260225-Release-de-Resultados-4T25.pdf',
-  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/B/J/FM69NZR6q0cYQrnkrlfQ/orizon1588484430032026.pdf',
-  'https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/5a4823f5-8d3a-e293-d50e-1d0a3f3fd666?origin=2',
-  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/i/O/BTns0RTJmg2u8z8TMWmQ/fleury1587954506032026.pdf',
-  'https://docs.publicnow.com/viewDoc?filename=181596%5CEXT%5C68E8D496F18E08B133AA0A4DBD124B4F1E75E8E4_F89C0AE6A61C8E006DF1ED9EB03E1BF7DBFFBAAA.PDF',
-  'https://ri.rdsaude.com.br/Download.aspx?Arquivo=pvBQW9Dgna5MufaSF4UDNQ%3D%3D',
-  'https://filemanager-cdn.mziq.com/published/e71f73d4-4d0a-41fb-8e5b-8d7f3660b6ad/8ae66756-4990-4c23-93bc-ed92ade88e68',
-  'https://ads.clicrbs.com.br/PUBLICIDADE-LEGAL/PIO/Publicidade_Legal_PIO_190326_2%20ass.pdf?project=rbs-gauchazh-prd',
-  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/5/e/UXkrknS4Sp23N0L6P8Bw/hypera1588156716032026.pdf',
-  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155072',
-  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155361',
+const individualFilingDocuments = new Map([
+  [
+    'https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154938',
+    'https://ri.sanepar.com.br/docs/DFP-Sanepar-2025-12-31-BjdwmKcn.pdf',
+  ],
+  [
+    'https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154688',
+    'https://api.mziq.com/mzfilemanager/v2/d/4c4aa51f-1235-4aa1-8b83-adc92e8dacc3/197553f9-c229-4f09-b201-bcf48f2026d6?origin=2',
+  ],
 ]);
 
-function isRoicSupportingDocumentUrl(value: unknown): value is string {
-  return (
-    typeof value === 'string' &&
-    (roicSupportingDocuments.has(value) ||
-      /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(909327|917851|1073404|1355444|1565025)\/\d{18}\/[\w.-]+\.html?$/.test(
-        value,
-      ) ||
-      /^https:\/\/api\.mziq\.com\/mzfilemanager\/v2\/d\/13154776-9416-4fce-8c46-3e54d45b03a3\/[a-f0-9-]{36}\?origin=[12]$/.test(
-        value,
-      ))
-  );
+function capitalOn(
+  accounts: QualityInput[],
+  period: 'opening' | 'closing',
+  date: string,
+): number | null {
+  const definitions = [
+    ['Equity', 'BPP', '2.03'],
+    ['ShortBorrowings', 'BPP', '2.01.04'],
+    ['LongBorrowings', 'BPP', '2.02.01'],
+    ['Cash', 'BPA', '1.01.01'],
+  ] as const;
+  const [equity, shortDebt, longDebt, cash] = definitions.map(([suffix, statement, code]) => {
+    const account = accounts.find(({ key }) => key === `${period}${suffix}`);
+    if (
+      account?.statement === statement &&
+      account.code === code &&
+      account.referenceDate === date &&
+      isMoney(account.amountBrl)
+    ) {
+      return account.amountBrl;
+    }
+    return undefined;
+  });
+  if (
+    equity === undefined ||
+    shortDebt === undefined ||
+    longDebt === undefined ||
+    cash === undefined ||
+    shortDebt < 0 ||
+    longDebt < 0 ||
+    cash < 0
+  ) {
+    return null;
+  }
+  return equity + shortDebt + longDebt - cash;
 }
 
 function isRoicObservation(value: unknown): value is SectorRoicObservation {
@@ -329,11 +313,12 @@ function isRoicObservation(value: unknown): value is SectorRoicObservation {
     (value.filing !== null &&
       (!isFiling(value.filing) ||
         value.filing.publishedAt !== null ||
-        (value.filing.basis !== undefined &&
-          (value.filing.basis !== 'individual' ||
-            value.filing.supportingDocumentUrl !== saneparIndividualDocument)) ||
-        (value.filing.supportingDocumentUrl !== undefined &&
-          !isRoicSupportingDocumentUrl(value.filing.supportingDocumentUrl)) ||
+        (value.filing.basis === undefined
+          ? value.filing.supportingDocumentUrl !== undefined
+          : value.filing.basis !== 'individual' ||
+            value.filing.supportingDocumentUrl === undefined ||
+            value.filing.supportingDocumentUrl !==
+              individualFilingDocuments.get(value.filing.filingUrl)) ||
         value.filing.referenceDate !== `${value.year}-12-31`))
   )
     return false;
@@ -347,20 +332,19 @@ function isRoicObservation(value: unknown): value is SectorRoicObservation {
   )
     return false;
 
-  const {
-    ebitBrl,
-    nopatBrl,
-    openingCapitalBrl,
-    closingCapitalBrl,
-    accounts,
-    embeddedLeases,
-    separateLeases,
-  } = value.inputs;
-  const ebit = accounts.find(({ statement, code }) => statement === 'DRE' && code === '3.05');
+  const { ebitBrl, nopatBrl, openingCapitalBrl, closingCapitalBrl, accounts } = value.inputs;
+  const ebit = accounts.find(({ key }) => key === 'ebit');
+  const opening = capitalOn(accounts, 'opening', `${value.year - 1}-12-31`);
+  const closing = capitalOn(accounts, 'closing', value.filing.referenceDate);
   return (
-    ebit?.amountBrl === ebitBrl &&
+    ebit?.statement === 'DRE' &&
+    ebit.code === '3.05' &&
+    ebit.amountBrl === ebitBrl &&
     ebit.referenceDate === value.filing.referenceDate &&
-    ((!embeddedLeases && !separateLeases) || value.filing.supportingDocumentUrl !== undefined) &&
+    opening !== null &&
+    Math.abs(opening - openingCapitalBrl) < 0.005 &&
+    closing !== null &&
+    Math.abs(closing - closingCapitalBrl) < 0.005 &&
     numbersAgree(nopatBrl, ebitBrl * 0.66) &&
     numbersAgree(value.roic, nopatBrl / ((openingCapitalBrl + closingCapitalBrl) / 2))
   );
@@ -378,7 +362,7 @@ function isRoicCompany(value: unknown): value is SectorRoicCompany {
 function isRoicManifest(value: unknown): value is SectorRoicSnapshot['manifest'] {
   return (
     isComparisonManifest(value) &&
-    value.methodologyVersion === 'roic-dfp-comparisons.v1' &&
+    value.methodologyVersion === 'roic-dfp-comparisons.v2' &&
     value.taxRate === 0.34 &&
     isCvmSource(value.sectorSource) &&
     value.archives.some(({ kind }) => kind === 'fca')

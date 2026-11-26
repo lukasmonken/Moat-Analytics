@@ -261,6 +261,11 @@ export function companyQualityReport(
 ): WorkbookReport {
   const { manifest } = snapshot;
   const last = [...company.observations].sort((a, b) => b.fiscalYear - a.fiscalYear)[0];
+  const methodology = last?.provenance.methodologyVersion ?? snapshot.methodologyVersion;
+  const capitalDescription =
+    methodology === 'quality-dfp-m2.v1'
+      ? 'O capital inclui empréstimos e arrendamentos separados e deduz caixa e equivalentes.'
+      : 'O capital corresponde ao patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes.';
   const sheets = qualitySheets([company]);
   if (last) {
     sheets.push({
@@ -291,11 +296,11 @@ export function companyQualityReport(
       ['Companhia', company.name],
       ['Data-base do lote', new Date(manifest.asOf)],
       ['Geração do lote (UTC)', new Date(manifest.generatedAt)],
-      ['Versão do cálculo', snapshot.methodologyVersion],
+      ['Versão do cálculo', methodology],
       [
         'Método',
         company.metric === 'roic'
-          ? 'NOPAT estimado dividido pelo capital investido médio. O capital inclui empréstimos e arrendamentos separados e deduz caixa e equivalentes.'
+          ? `NOPAT estimado dividido pelo capital investido médio. ${capitalDescription}`
           : 'Lucro atribuível à controladora dividido pelo patrimônio médio da controladora.',
       ],
       ...(company.metric === 'roic'

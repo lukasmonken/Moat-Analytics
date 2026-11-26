@@ -18,7 +18,8 @@ from .archives import csv_rows, read_archive
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize, select_filings
 from .sample import COMPANIES
 
-METHODOLOGY = "quality-dfp-m2.v1"
+METHODOLOGY = "quality-dfp-m2.v2"
+ROE_METHODOLOGY = "quality-dfp-m2.v1"
 ROIC_TAX = Decimal("0.34")
 BANK = "019348"
 
@@ -66,6 +67,7 @@ ACCOUNTS = {
     ),
 }
 DEBT_PARTS = ("shortDebt", "longDebt", "shortLease", "longLease")
+PRICE_ONLY_KEYS = ("shortLease", "longLease", "shortLeaseInDebt", "longLeaseInDebt")
 
 
 def rename_position(position: str, key: str) -> str:
@@ -75,7 +77,11 @@ def rename_position(position: str, key: str) -> str:
 def read_quality_accounts(archive: ZipFile, year: int, filings: dict[str, CsvRow]):
     reference, opening, start = f"{year}-12-31", f"{year - 1}-12-31", f"{year}-01-01"
     mappings = {
-        code: {(spec.statement, spec.code): spec for spec in ACCOUNTS[code]}
+        code: {
+            (spec.statement, spec.code): spec
+            for spec in ACCOUNTS[code]
+            if spec.key not in PRICE_ONLY_KEYS
+        }
         for code in filings
     }
     inputs: dict[str, dict[str, tuple[dict, Decimal, Decimal]]] = {
@@ -130,7 +136,7 @@ def read_quality_accounts(archive: ZipFile, year: int, filings: dict[str, CsvRow
     for code, group in inputs.items():
         expected = [
             key
-            for spec in ACCOUNTS[code]
+            for spec in mappings[code].values()
             for key in (
                 (spec.key,)
                 if spec.statement == "DRE"
@@ -156,7 +162,7 @@ def reconcile_income(code: str, inputs: dict, year: int) -> None:
         raise ValueError(f"{year} CVM {code}: {failure}")
 
 
-def capital(code: str, values: dict[str, Decimal], position: str, year: int) -> Decimal | None:
+def capital(code: str, values: dict[str, Decimal], position: str) -> Decimal | None:
     def balance(key: str) -> Decimal:
         return values[rename_position(position, key)]
 
@@ -164,11 +170,9 @@ def capital(code: str, values: dict[str, Decimal], position: str, year: int) -> 
     if code == BANK:
         return equity - balance("minorityEquity")
 
-    if balance("shortLeaseInDebt") != 0 or balance("longLeaseInDebt") != 0:
-        raise ValueError(f"{year} CVM {code}: arrendamentos dentro da dívida requerem novo mapeamento.")
     return invested_capital(
         equity=equity,
-        debt=sum((balance(key) for key in DEBT_PARTS), Decimal(0)),
+        debt=balance("shortDebt") + balance("longDebt"),
         excess_cash=balance("cash"),
     )
 
@@ -190,8 +194,8 @@ def year_observations(path: Path, year: int):
         group = inputs[code]
         reconcile_income(code, group, year)
         values = {key: record[1] for key, record in group.items()}
-        opening = capital(code, values, "opening", year)
-        closing = capital(code, values, "closing", year)
+        opening = capital(code, values, "opening")
+        closing = capital(code, values, "closing")
         if code == BANK:
             result = calculate_roe(
                 net_income=values["parentIncome"],
@@ -208,7 +212,10 @@ def year_observations(path: Path, year: int):
             )
         reasons = list(result.reasons)
         if code != BANK:
-            reasons.append("Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente.")
+            reasons.append(
+                "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio "
+                "líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
+            )
         yield code, filing["DENOM_CIA"], QualityPoint(year, result.value), {
             "fiscalYear": year,
             "value": json_number(result.value),
@@ -226,7 +233,7 @@ def year_observations(path: Path, year: int):
                 "referenceDate": reference,
                 "publishedAt": None,
                 "retrievedAt": collected.isoformat(timespec="seconds"),
-                "methodologyVersion": METHODOLOGY,
+                "methodologyVersion": ROE_METHODOLOGY if code == BANK else METHODOLOGY,
                 "qualityStatus": result.quality_status,
             },
             "reasons": reasons,
