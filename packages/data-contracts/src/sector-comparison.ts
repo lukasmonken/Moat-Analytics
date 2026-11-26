@@ -58,6 +58,7 @@ interface ComparisonManifest {
   schemaVersion: '1.0.0';
   asOf: string;
   generatedAt: string;
+  verifiedOn?: string;
   years: number[];
   source: CvmSource;
   archives: SectorComparisonArchive[];
@@ -122,6 +123,10 @@ function isComparisonManifest(
     value.schemaVersion !== '1.0.0' ||
     !isDate(value.asOf) ||
     !isTimestamp(value.generatedAt) ||
+    (value.verifiedOn !== undefined &&
+      (!isDate(value.verifiedOn) ||
+        value.verifiedOn < value.asOf ||
+        value.verifiedOn > value.generatedAt.slice(0, 10))) ||
     !isCvmSource(value.source) ||
     !isListOf(value.archives, isArchive) ||
     !unique(value.archives, (archive) => `${archive.kind}/${archive.year}`) ||
@@ -306,20 +311,27 @@ function capitalOn(
   return equity + shortDebt + longDebt - cash;
 }
 
+export function isSectorRoicFiling(
+  value: unknown,
+  year: number,
+): value is NonNullable<SectorRoicObservation['filing']> {
+  return (
+    isFiling(value) &&
+    value.publishedAt === null &&
+    (value.basis === undefined
+      ? value.supportingDocumentUrl === undefined
+      : value.basis === 'individual' &&
+        typeof value.supportingDocumentUrl === 'string' &&
+        value.supportingDocumentUrl === individualFilingDocuments.get(value.filingUrl)) &&
+    value.referenceDate === `${year}-12-31`
+  );
+}
+
 function isRoicObservation(value: unknown): value is SectorRoicObservation {
   if (
     !isObject(value) ||
     !isPositiveInteger(value.year) ||
-    (value.filing !== null &&
-      (!isFiling(value.filing) ||
-        value.filing.publishedAt !== null ||
-        (value.filing.basis === undefined
-          ? value.filing.supportingDocumentUrl !== undefined
-          : value.filing.basis !== 'individual' ||
-            value.filing.supportingDocumentUrl === undefined ||
-            value.filing.supportingDocumentUrl !==
-              individualFilingDocuments.get(value.filing.filingUrl)) ||
-        value.filing.referenceDate !== `${value.year}-12-31`))
+    (value.filing !== null && !isSectorRoicFiling(value.filing, value.year))
   )
     return false;
   if (value.roic === null) return value.inputs === null && isText(value.reason);

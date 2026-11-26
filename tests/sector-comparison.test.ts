@@ -1,25 +1,19 @@
-import { readFileSync } from 'node:fs';
 import {
   parseCompanyDirectory,
   parseSectorComparison,
   parseSectorRoicComparison,
 } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 function snapshot() {
-  return parseSectorComparison(
-    JSON.parse(readFileSync('data/public/cvm-sector-comparison.json', 'utf8')),
-  );
+  return parseSectorComparison(readCvm2025('cvm-sector-comparison'));
 }
 
 describe('Comparativos setoriais da CVM', () => {
   it('divide toda a seleção anual em ROE para bancos e seguradoras e ROIC para as demais', () => {
-    const directory = parseCompanyDirectory(
-      JSON.parse(readFileSync('data/public/cvm-company-selection.json', 'utf8')),
-    );
+    const directory = parseCompanyDirectory(readCvm2025('cvm-company-selection'));
     const { manifest, companies } = snapshot();
-    const roic = parseSectorRoicComparison(
-      JSON.parse(readFileSync('data/public/cvm-sector-roic.json', 'utf8')),
-    );
+    const roic = parseSectorRoicComparison(readCvm2025('cvm-sector-roic'));
     expect(manifest.asOf).toBe(directory.asOf);
     expect(roic.manifest.asOf).toBe(directory.asOf);
     expect(companies.map(({ name }) => name).sort()).toEqual([

@@ -40,6 +40,23 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
 }
 
+.portfolio-presets {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.portfolio-preset-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.875rem;
+}
+
+.portfolio-preset-controls .ui-field {
+  flex: 0 1 18rem;
+  min-width: 0;
+}
+
 .portfolio-table {
   min-width: 0;
   overflow: auto;

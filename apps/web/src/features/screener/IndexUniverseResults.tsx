@@ -50,7 +50,6 @@ export function IndexUniverseSource({ snapshot }: { snapshot: IndexUniverseSnaps
       <div>
         <h2 id="screener-source-title">Composição anual</h2>
         {snapshot.source.redistributionBasis === null && <Badge>Consulta local</Badge>}
-        <p>O ranking de qualidade ficará disponível quando os indicadores forem integrados.</p>
       </div>
 
       <dl>

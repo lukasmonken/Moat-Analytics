@@ -1,11 +1,9 @@
-import { readFileSync } from 'node:fs';
 import { parseSectorRoicComparison } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
 function readSnapshot() {
-  return parseSectorRoicComparison(
-    JSON.parse(readFileSync('data/public/cvm-sector-roic.json', 'utf8')),
-  );
+  return parseSectorRoicComparison(readCvm2025('cvm-sector-roic'));
 }
 
 describe('ROIC setorial estimado da CVM', () => {

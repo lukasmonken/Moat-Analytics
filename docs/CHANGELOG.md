@@ -1,5 +1,24 @@
 # Changelog
 
+## Atualização automática dos balanços
+
+- A consulta semanal às DFPs da CVM atualiza ROE, ROIC, endividamento, reinvestimento e margens após validação. A janela móvel de cinco exercícios avança assim que há resultados válidos da seleção no novo exercício.
+- A página Empresas mostra a data da conferência da CVM. O workflow publica o lote validado no GitHub Pages.
+
+## Risco, endividamento e modelos de carteira
+
+- Ranking de drawdown do ROIC dos cinco últimos exercícios, com a queda em p.p., os anos do pico e do fundo e a cobertura da série.
+- Ranking de crescimento anualizado do NOPAT ou do lucro atribuível, com valores de início e fim. Z-score por fator, pontuação contábil com cinco fatores e pontuação final com seis fatores de ROIC ou três de ROE, conforme a disponibilidade do preço.
+- Margens bruta, operacional e líquida nos detalhes das companhias de ROIC no último exercício.
+- Os rankings podem exigir cinco anos de histórico ou ocultar empresas com indicadores indisponíveis.
+- Dívida líquida/EBITDA estimado e NOPAT/reinvestimento em Empresas, com filtros por limite para companhias de ROIC. O cabeçalho anual em Empresas identifica ROIC, ROE ou ambos.
+- Quatro modelos de até dez companhias em Carteiras, com pesos iguais no rascunho. A revisão individual dos setores ficou registrada na especificação.
+
+## Capitalização diária para o rendimento implícito
+
+- Pipeline privado de capitalização no fechamento da B3, com NOPAT/EV para empresas de ROIC e earnings yield para empresas de ROE. O snapshot guarda a data do pregão e a DFP do cálculo.
+- Workflow privado agendado para 20h23 de Brasília em dias de negociação. O build público preserva os indicadores contábeis publicados pela CVM.
+
 ## M2 — Capital investido simplificado
 
 - O ROIC de 2021 a 2025 usa patrimônio líquido mais empréstimos e financiamentos de curto e longo prazo, menos caixa e equivalentes. A tela e o Excel mostram as contas usadas.

@@ -1,0 +1,2639 @@
+{
+  "manifest": {
+    "schemaVersion": "1.0.0",
+    "methodologyVersion": "net-debt-ebitda-dfp.v1",
+    "asOf": "2026-11-18",
+    "year": 2025,
+    "generatedAt": "2026-11-26T10:20:23+00:00",
+    "source": {
+      "name": "Comissão de Valores Mobiliários (CVM)",
+      "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
+      "license": "ODbL-1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
+    },
+    "archive": {
+      "kind": "dfp",
+      "year": 2025,
+      "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+      "sha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
+      "retrievedAt": "2026-11-18T10:11:46+00:00"
+    }
+  },
+  "companies": [
+    {
+      "name": "ALLOS S.A.",
+      "value": -0.027858714874769167,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155236"
+      },
+      "inputs": {
+        "ebitBrl": 1539360000,
+        "depreciationBrl": 634825000,
+        "ebitdaBrl": 2174185000,
+        "netDebtBrl": -60570000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ALPARGATAS S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155116"
+      },
+      "inputs": null
+    },
+    {
+      "name": "ALUPAR INVESTIMENTO S/A",
+      "value": 3.6134637008451627,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155099"
+      },
+      "inputs": {
+        "ebitBrl": 3114519000,
+        "depreciationBrl": 185792000,
+        "ebitdaBrl": 3300311000,
+        "netDebtBrl": 11925554000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "AMBEV S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154733"
+      },
+      "inputs": null
+    },
+    {
+      "name": "ANIMA HOLDING S.A.",
+      "value": 3.8310608365949976,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155312"
+      },
+      "inputs": {
+        "ebitBrl": 1002017000,
+        "depreciationBrl": 427468000,
+        "ebitdaBrl": 1429485000,
+        "netDebtBrl": 5476444000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A.",
+      "value": 4.126195827613775,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155869"
+      },
+      "inputs": {
+        "ebitBrl": 422487000,
+        "depreciationBrl": 240443000,
+        "ebitdaBrl": 662930000,
+        "netDebtBrl": 2735379000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.01",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "AUREN ENERGIA S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155028"
+      },
+      "inputs": null
+    },
+    {
+      "name": "AXIA ENERGIA S.A.",
+      "value": 6.790391061137906,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154939"
+      },
+      "inputs": {
+        "ebitBrl": 3946582000,
+        "depreciationBrl": 4576919000,
+        "ebitdaBrl": 8523501000,
+        "netDebtBrl": 57877905000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.05",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "AZZAS 2154 S.A.",
+      "value": 1.5830092967361733,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155271"
+      },
+      "inputs": {
+        "ebitBrl": 1138192000,
+        "depreciationBrl": 697506000,
+        "ebitdaBrl": 1835698000,
+        "netDebtBrl": 2905927000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "B3 S.A. - BRASIL, BOLSA, BALCÃO",
+      "value": 1.899013958599642,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154935"
+      },
+      "inputs": {
+        "ebitBrl": 6638037000,
+        "depreciationBrl": 387023000,
+        "ebitdaBrl": 7025060000,
+        "netDebtBrl": 13340687000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "BEMOBI MOBILE TECH S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155508"
+      },
+      "inputs": null
+    },
+    {
+      "name": "BOA SAFRA SEMENTES S.A.",
+      "value": 6.00789583570588,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155657"
+      },
+      "inputs": {
+        "ebitBrl": 92281000,
+        "depreciationBrl": 39434000,
+        "ebitdaBrl": 131715000,
+        "netDebtBrl": 791330000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "BRADESPAR S.A.",
+      "value": null,
+      "reason": "DFP consolidada ou balanço de abertura indisponível na janela civil.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-27",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155757"
+      },
+      "inputs": null
+    },
+    {
+      "name": "BRAVA ENERGIA S.A.",
+      "value": 3.3445528770565067,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155283"
+      },
+      "inputs": {
+        "ebitBrl": 2216183000,
+        "depreciationBrl": 2435759000,
+        "ebitdaBrl": 4651942000,
+        "netDebtBrl": 15558666000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "C&A MODAS S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154859"
+      },
+      "inputs": null
+    },
+    {
+      "name": "CAMIL ALIMENTOS S.A.",
+      "value": null,
+      "reason": "Encerramento fiscal diferente de 31/12 no lote da CVM.",
+      "filing": null,
+      "inputs": null
+    },
+    {
+      "name": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
+      "value": 2.120265595522014,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155515"
+      },
+      "inputs": {
+        "ebitBrl": 6750308000,
+        "depreciationBrl": 1533416000,
+        "ebitdaBrl": 8283724000,
+        "netDebtBrl": 17563695000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CIA FERRO LIGAS DA BAHIA - FERBASA",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155153"
+      },
+      "inputs": null
+    },
+    {
+      "name": "CIA PARANAENSE DE ENERGIA - COPEL",
+      "value": 2.5869842897781288,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154946"
+      },
+      "inputs": {
+        "ebitBrl": 5045011000,
+        "depreciationBrl": 1481886000,
+        "ebitdaBrl": 6526897000,
+        "netDebtBrl": 16884980000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.11",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CIA SANEAMENTO BASICO EST SAO PAULO",
+      "value": 2.3958808331740205,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-30",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155830"
+      },
+      "inputs": {
+        "ebitBrl": 12599621000,
+        "depreciationBrl": 2208762000,
+        "ebitdaBrl": 14808383000,
+        "netDebtBrl": 35479121000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.06",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG",
+      "value": 2.396609714988803,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154917"
+      },
+      "inputs": {
+        "ebitBrl": 2007059000,
+        "depreciationBrl": 946439000,
+        "ebitdaBrl": 2953498000,
+        "netDebtBrl": 7078382000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.09",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CIA SANEAMENTO DO PARANA - SANEPAR",
+      "value": 0.6021185272611757,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154938",
+        "basis": "individual",
+        "supportingDocumentUrl": "https://ri.sanepar.com.br/docs/DFP-Sanepar-2025-12-31-BjdwmKcn.pdf"
+      },
+      "inputs": {
+        "ebitBrl": 2337506000,
+        "depreciationBrl": 626251000,
+        "ebitdaBrl": 2963757000,
+        "netDebtBrl": 1784533000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CIA SIDERURGICA NACIONAL",
+      "value": 4.293842446467656,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155288"
+      },
+      "inputs": {
+        "ebitBrl": 4816674000,
+        "depreciationBrl": 4150475000,
+        "ebitdaBrl": 8967149000,
+        "netDebtBrl": 38503525000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.05",
+          "label": "Depreciação, exaustão e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "COGNA EDUCAÇÃO S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-27",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155805"
+      },
+      "inputs": null
+    },
+    {
+      "name": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+      "value": 2.4133078841203193,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155063"
+      },
+      "inputs": {
+        "ebitBrl": 578807000,
+        "depreciationBrl": 758235000,
+        "ebitdaBrl": 1337042000,
+        "netDebtBrl": 3226694000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação, amortização e exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CONSTRUTORA TENDA S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155118"
+      },
+      "inputs": null
+    },
+    {
+      "name": "COSAN S.A.",
+      "value": 11.757416482613776,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155203"
+      },
+      "inputs": {
+        "ebitBrl": -199864000,
+        "depreciationBrl": 3890832000,
+        "ebitdaBrl": 3690968000,
+        "netDebtBrl": 43396248000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CPFL ENERGIA S.A.",
+      "value": 1.9942781158766096,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155108"
+      },
+      "inputs": {
+        "ebitBrl": 11054471000,
+        "depreciationBrl": 2397217000,
+        "ebitdaBrl": 13451688000,
+        "netDebtBrl": 26826407000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CSN MINERAÇÃO S.A.",
+      "value": 0.05002674508285727,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155318"
+      },
+      "inputs": {
+        "ebitBrl": 5011143000,
+        "depreciationBrl": 1275994000,
+        "ebitdaBrl": 6287137000,
+        "netDebtBrl": 314525000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.09",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CURY CONSTRUTORA E INCORPORADORA S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155237"
+      },
+      "inputs": null
+    },
+    {
+      "name": "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A.",
+      "value": 0.21507641977606767,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155466"
+      },
+      "inputs": {
+        "ebitBrl": 275257000,
+        "depreciationBrl": 229717000,
+        "ebitdaBrl": 504974000,
+        "netDebtBrl": 108608000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155491"
+      },
+      "inputs": null
+    },
+    {
+      "name": "DESKTOP S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155444"
+      },
+      "inputs": null
+    },
+    {
+      "name": "DEXCO S.A.",
+      "value": 2.710799586194302,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155065"
+      },
+      "inputs": {
+        "ebitBrl": 740303000,
+        "depreciationBrl": 1252903000,
+        "ebitdaBrl": 1993206000,
+        "netDebtBrl": 5403182000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação, amortização e exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "DIAGNOSTICOS DA AMERICA S.A.",
+      "value": 2.4526565684982553,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155752"
+      },
+      "inputs": {
+        "ebitBrl": 902806000,
+        "depreciationBrl": 1123304000,
+        "ebitdaBrl": 2026110000,
+        "netDebtBrl": 4969352000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "DIMED S.A. DISTRIBUIDORA DE MEDICAMENTOS",
+      "value": 3.001685025439574,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155509"
+      },
+      "inputs": {
+        "ebitBrl": 254693000,
+        "depreciationBrl": 232540000,
+        "ebitdaBrl": 487233000,
+        "netDebtBrl": 1462520000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "DIRECIONAL ENGENHARIA S.A.",
+      "value": 1.5204478732846316,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155189"
+      },
+      "inputs": {
+        "ebitBrl": 1003135000,
+        "depreciationBrl": 80743000,
+        "ebitdaBrl": 1083878000,
+        "netDebtBrl": 1647980000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ECORODOVIAS INFRAESTRUTURA E LOGÍSTICA S.A.",
+      "value": 4.46413953083452,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155429"
+      },
+      "inputs": {
+        "ebitBrl": 4281662000,
+        "depreciationBrl": 1358267000,
+        "ebitdaBrl": 5639929000,
+        "netDebtBrl": 25177430000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "EMBRAER S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155126"
+      },
+      "inputs": null
+    },
+    {
+      "name": "EMPREENDIMENTOS PAGUE MENOS S.A.",
+      "value": 1.1151975357490085,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-27",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154977"
+      },
+      "inputs": {
+        "ebitBrl": 861173000,
+        "depreciationBrl": 526348000,
+        "ebitdaBrl": 1387521000,
+        "netDebtBrl": 1547360000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ENERGISA S.A.",
+      "value": 4.865102781714339,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-13",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155361"
+      },
+      "inputs": {
+        "ebitBrl": 6752947000,
+        "depreciationBrl": 2121832000,
+        "ebitdaBrl": 8874779000,
+        "netDebtBrl": 43176712000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.06",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ENEVA S.A",
+      "value": 2.6829601827380305,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155111"
+      },
+      "inputs": {
+        "ebitBrl": 3713199000,
+        "depreciationBrl": 2793602000,
+        "ebitdaBrl": 6506801000,
+        "netDebtBrl": 17457488000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ENGIE BRASIL ENERGIA S.A.",
+      "value": 3.302763163116331,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-06",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155137"
+      },
+      "inputs": {
+        "ebitBrl": 6268325000,
+        "depreciationBrl": 1392171000,
+        "ebitdaBrl": 7660496000,
+        "netDebtBrl": 25300804000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "EQUATORIAL S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-04-08",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156081"
+      },
+      "inputs": null
+    },
+    {
+      "name": "EVEN CONSTRUTORA E INCORPORADORA S.A.",
+      "value": 5.780020544226721,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155582"
+      },
+      "inputs": {
+        "ebitBrl": 251906000,
+        "depreciationBrl": 4127000,
+        "ebitdaBrl": 256033000,
+        "netDebtBrl": 1479876000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "EZ TEC EMPREEND. E PARTICIPACOES S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155329"
+      },
+      "inputs": null
+    },
+    {
+      "name": "FLEURY S.A.",
+      "value": 2.4745568969280103,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155089"
+      },
+      "inputs": {
+        "ebitBrl": 1221148000,
+        "depreciationBrl": 900311000,
+        "ebitdaBrl": 2121459000,
+        "netDebtBrl": 5249671000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "FRASLE MOBILITY S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155265"
+      },
+      "inputs": null
+    },
+    {
+      "name": "GERDAU S.A.",
+      "value": 1.1118640464534715,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154830"
+      },
+      "inputs": {
+        "ebitBrl": 3739068000,
+        "depreciationBrl": 3683585000,
+        "ebitdaBrl": 7422653000,
+        "netDebtBrl": 8252981000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155121"
+      },
+      "inputs": null
+    },
+    {
+      "name": "GRENDENE S.A.",
+      "value": 0.0009619794667952442,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155103"
+      },
+      "inputs": {
+        "ebitBrl": 324895000,
+        "depreciationBrl": 100270000,
+        "ebitdaBrl": 425165000,
+        "netDebtBrl": 409000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "GRUPO MATEUS S.A.",
+      "value": 0.37827561027428197,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155479"
+      },
+      "inputs": {
+        "ebitBrl": 2260989000,
+        "depreciationBrl": 539596000,
+        "ebitdaBrl": 2800585000,
+        "netDebtBrl": 1059393000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.01",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "GRUPO SBF S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155192"
+      },
+      "inputs": null
+    },
+    {
+      "name": "GUARARAPES CONFECCOES S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154721"
+      },
+      "inputs": null
+    },
+    {
+      "name": "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155457"
+      },
+      "inputs": null
+    },
+    {
+      "name": "HIDROVIAS DO BRASIL S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-02",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154999"
+      },
+      "inputs": null
+    },
+    {
+      "name": "HYPERA S.A.",
+      "value": 3.6828852668197296,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155321"
+      },
+      "inputs": {
+        "ebitBrl": 1764276000,
+        "depreciationBrl": 317223000,
+        "ebitdaBrl": 2081499000,
+        "netDebtBrl": 7665922000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "IGUATEMI S.A.",
+      "value": 3.142105334729456,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154860"
+      },
+      "inputs": {
+        "ebitBrl": 1122829000,
+        "depreciationBrl": 127300000,
+        "ebitdaBrl": 1250129000,
+        "netDebtBrl": 3928037000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "INTELBRAS S.A. IND. DE TELECOMUNICAÇÃO ELETRÔNICA BRASILEIRA",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154903"
+      },
+      "inputs": null
+    },
+    {
+      "name": "IOCHPE MAXION S.A.",
+      "value": 2.6996584425489116,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154907"
+      },
+      "inputs": {
+        "ebitBrl": 941914000,
+        "depreciationBrl": 551539000,
+        "ebitdaBrl": 1493453000,
+        "netDebtBrl": 4031813000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "IRANI PAPEL E EMBALAGEM S.A.",
+      "value": 1.6395099906675106,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154822"
+      },
+      "inputs": {
+        "ebitBrl": 447806000,
+        "depreciationBrl": 204753000,
+        "ebitdaBrl": 652559000,
+        "netDebtBrl": 1069877000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ISA ENERGIA BRASIL",
+      "value": 3.516366829725354,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154871"
+      },
+      "inputs": {
+        "ebitBrl": 4131906000,
+        "depreciationBrl": 34692000,
+        "ebitdaBrl": 4166598000,
+        "netDebtBrl": 14651287000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ITAÚSA S.A.",
+      "value": 0.3480908152734778,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155399"
+      },
+      "inputs": {
+        "ebitBrl": 18119000000,
+        "depreciationBrl": 1261000000,
+        "ebitdaBrl": 19380000000,
+        "netDebtBrl": 6746000000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.06",
+          "label": "Depreciação, Amortização e exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "JHSF PARTICIPACOES S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155875"
+      },
+      "inputs": null
+    },
+    {
+      "name": "JSL S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-24",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155651"
+      },
+      "inputs": null
+    },
+    {
+      "name": "KEPLER WEBER S.A.",
+      "value": 0.07214125560538116,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154901"
+      },
+      "inputs": {
+        "ebitBrl": 193920000,
+        "depreciationBrl": 38000000,
+        "ebitdaBrl": 231920000,
+        "netDebtBrl": 16731000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "KLABIN S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154693"
+      },
+      "inputs": null
+    },
+    {
+      "name": "LAVVI EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155273"
+      },
+      "inputs": null
+    },
+    {
+      "name": "LOCALIZA RENT A CAR S.A.",
+      "value": 3.0457829897396316,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154953"
+      },
+      "inputs": {
+        "ebitBrl": 7811656000,
+        "depreciationBrl": 5941749000,
+        "ebitdaBrl": 13753405000,
+        "netDebtBrl": 41889887000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "LOG COMMERCIAL PROPERTIES E PARTICIPAÇÕES",
+      "value": 3.7084829600002656,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154714"
+      },
+      "inputs": {
+        "ebitBrl": 595485000,
+        "depreciationBrl": 6569000,
+        "ebitdaBrl": 602054000,
+        "netDebtBrl": 2232707000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "LOJAS QUERO QUERO S.A.",
+      "value": 0.9498062360948816,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155058"
+      },
+      "inputs": {
+        "ebitBrl": 13170000,
+        "depreciationBrl": 138303000,
+        "ebitdaBrl": 151473000,
+        "netDebtBrl": 143870000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "LOJAS RENNER S.A.",
+      "value": -0.1937073000448817,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155117"
+      },
+      "inputs": {
+        "ebitBrl": 1797160000,
+        "depreciationBrl": 1290958000,
+        "ebitdaBrl": 3088118000,
+        "netDebtBrl": -598191000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "LWSA S/A",
+      "value": null,
+      "reason": "EBITDA estimado inválido ou não positivo.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155030"
+      },
+      "inputs": null
+    },
+    {
+      "name": "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
+      "value": -0.42446229005973046,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154936"
+      },
+      "inputs": {
+        "ebitBrl": 691232000,
+        "depreciationBrl": 412058000,
+        "ebitdaBrl": 1103290000,
+        "netDebtBrl": -468305000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MAGAZINE LUIZA S.A.",
+      "value": 1.0515781324626108,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155314"
+      },
+      "inputs": {
+        "ebitBrl": 1918683000,
+        "depreciationBrl": 1284787000,
+        "ebitdaBrl": 3203470000,
+        "netDebtBrl": 3368699000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciacao e Amortizacao",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MAHLE METAL LEVE S.A.",
+      "value": 0.979429683914626,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155377"
+      },
+      "inputs": {
+        "ebitBrl": 916237000,
+        "depreciationBrl": 127500000,
+        "ebitdaBrl": 1043737000,
+        "netDebtBrl": 1022267000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MARCOPOLO S.A.",
+      "value": 0.9765166912225092,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154922"
+      },
+      "inputs": {
+        "ebitBrl": 1349620000,
+        "depreciationBrl": 156471000,
+        "ebitdaBrl": 1506091000,
+        "netDebtBrl": 1470723000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MARFRIG GLOBAL FOODS S.A.",
+      "value": 5.452882523873492,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155455"
+      },
+      "inputs": {
+        "ebitBrl": 5577385000,
+        "depreciationBrl": 7232639000,
+        "ebitdaBrl": 12810024000,
+        "netDebtBrl": 69851556000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "METALURGICA GERDAU S.A.",
+      "value": 1.1096490665877978,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154833"
+      },
+      "inputs": {
+        "ebitBrl": 3727878000,
+        "depreciationBrl": 3683585000,
+        "ebitdaBrl": 7411463000,
+        "netDebtBrl": 8224123000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
+      "value": 1.5989326002148156,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155467"
+      },
+      "inputs": {
+        "ebitBrl": 622588000,
+        "depreciationBrl": 275857000,
+        "ebitdaBrl": 898445000,
+        "netDebtBrl": 1436553000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MINERVA S.A.",
+      "value": 3.646103026311861,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155476"
+      },
+      "inputs": {
+        "ebitBrl": 3848351000,
+        "depreciationBrl": 974417000,
+        "ebitdaBrl": 4822768000,
+        "netDebtBrl": 17584309000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154655"
+      },
+      "inputs": null
+    },
+    {
+      "name": "MOURA DUBEUX ENGENHARIA S/A",
+      "value": 1.225249857347881,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155260"
+      },
+      "inputs": {
+        "ebitBrl": 446638000,
+        "depreciationBrl": 16026000,
+        "ebitdaBrl": 462664000,
+        "netDebtBrl": 566879000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MOVIDA PARTICIPACOES SA",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155600"
+      },
+      "inputs": null
+    },
+    {
+      "name": "MRV ENGENHARIA E PARTICIPACOES S.A.",
+      "value": 18.432131783288135,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155167"
+      },
+      "inputs": {
+        "ebitBrl": 201196000,
+        "depreciationBrl": 251608000,
+        "ebitdaBrl": 452804000,
+        "netDebtBrl": 8346143000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MULTIPLAN - EMPREEND IMOBILIARIOS S.A.",
+      "value": 2.6200572839920295,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154609"
+      },
+      "inputs": {
+        "ebitBrl": 1865595000,
+        "depreciationBrl": 137757000,
+        "ebitdaBrl": 2003352000,
+        "netDebtBrl": 5248897000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "MÉLIUZ S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155473"
+      },
+      "inputs": null
+    },
+    {
+      "name": "NATURA COSMÉTICOS S.A.",
+      "value": 2.1008502623436027,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-16",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155385"
+      },
+      "inputs": {
+        "ebitBrl": 1415968000,
+        "depreciationBrl": 813932000,
+        "ebitdaBrl": 2229900000,
+        "netDebtBrl": 4684686000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "OCEANPACT SERVIÇOS MARITIMOS S.A.",
+      "value": 2.1260119611431443,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155072"
+      },
+      "inputs": {
+        "ebitBrl": 328424000,
+        "depreciationBrl": 324022000,
+        "ebitdaBrl": 652446000,
+        "netDebtBrl": 1387108000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ORIZON VALORIZAÇÃO DE RESÍDUOS S.A.",
+      "value": 2.5880736018439148,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155710"
+      },
+      "inputs": {
+        "ebitBrl": 309951000,
+        "depreciationBrl": 181178000,
+        "ebitdaBrl": 491129000,
+        "netDebtBrl": 1271078000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.10",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "PETROLEO BRASILEIRO S.A. PETROBRAS",
+      "value": 1.5147511477462436,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155122"
+      },
+      "inputs": {
+        "ebitBrl": 145628000000,
+        "depreciationBrl": 84388000000,
+        "ebitdaBrl": 230016000000,
+        "netDebtBrl": 348417000000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação, depleção e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "PETRORECÔNCAVO S.A.",
+      "value": 1.9932042011401194,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155475"
+      },
+      "inputs": {
+        "ebitBrl": 721579000,
+        "depreciationBrl": 721077000,
+        "ebitdaBrl": 1442656000,
+        "netDebtBrl": 2875508000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação, amortização e depleção",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "PLANO & PLANO DESENVOLVIMENTO IMOBILIÁRIO S.A.",
+      "value": -6.693664446601292e-05,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155293"
+      },
+      "inputs": {
+        "ebitBrl": 515029000,
+        "depreciationBrl": 22793000,
+        "ebitdaBrl": 537822000,
+        "netDebtBrl": -36000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "POSITIVO TECNOLOGIA S.A.",
+      "value": 2.095923407141075,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155484"
+      },
+      "inputs": {
+        "ebitBrl": 230002000,
+        "depreciationBrl": 82612000,
+        "ebitdaBrl": 312614000,
+        "netDebtBrl": 655215000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "PRINER SERVIÇOS INDUSTRIAIS S.A.",
+      "value": 2.6978754285157245,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155331"
+      },
+      "inputs": {
+        "ebitBrl": 95662000,
+        "depreciationBrl": 88987000,
+        "ebitdaBrl": 184649000,
+        "netDebtBrl": 498160000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "PRIO S.A.",
+      "value": 3.266694193528187,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155241"
+      },
+      "inputs": {
+        "ebitBrl": 1809322000,
+        "depreciationBrl": 5855918000,
+        "ebitdaBrl": 7665240000,
+        "netDebtBrl": 25039995000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "QUALICORP CONSULTORIA E CORRETORA DE SEGUROS S.A.",
+      "value": 2.653203515423057,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154937"
+      },
+      "inputs": {
+        "ebitBrl": 279975000,
+        "depreciationBrl": 300325000,
+        "ebitdaBrl": 580300000,
+        "netDebtBrl": 1539654000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciações e amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "RAIA DROGASIL S.A.",
+      "value": 0.6969478738139602,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155035"
+      },
+      "inputs": {
+        "ebitBrl": 2743567000,
+        "depreciationBrl": 2074779000,
+        "ebitdaBrl": 4818346000,
+        "netDebtBrl": 3358136000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "RANDONCORP S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155317"
+      },
+      "inputs": null
+    },
+    {
+      "name": "REDE D'OR SÃO LUIZ S.A.",
+      "value": 3.629339465876181,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154910"
+      },
+      "inputs": {
+        "ebitBrl": 9886202000,
+        "depreciationBrl": 1831830000,
+        "ebitdaBrl": 11718032000,
+        "netDebtBrl": 42528716000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "RUMO S.A.",
+      "value": 2.370928434365107,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155068"
+      },
+      "inputs": {
+        "ebitBrl": 4579664000,
+        "depreciationBrl": 2213331000,
+        "ebitdaBrl": 6792995000,
+        "netDebtBrl": 16105705000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "SAO MARTINHO S.A.",
+      "value": null,
+      "reason": "Encerramento fiscal diferente de 31/12 no lote da CVM.",
+      "filing": null,
+      "inputs": null
+    },
+    {
+      "name": "SENDAS DISTRIBUIDORA S.A.",
+      "value": null,
+      "reason": "DFP consolidada ou balanço de abertura indisponível na janela civil.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154718"
+      },
+      "inputs": null
+    },
+    {
+      "name": "SER EDUCACIONAL S.A.",
+      "value": 0.6790711503493944,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155688"
+      },
+      "inputs": {
+        "ebitBrl": 444661000,
+        "depreciationBrl": 224640000,
+        "ebitdaBrl": 669301000,
+        "netDebtBrl": 454503000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "SIMPAR S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-30",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155854"
+      },
+      "inputs": null
+    },
+    {
+      "name": "SLC AGRICOLA S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155268"
+      },
+      "inputs": null
+    },
+    {
+      "name": "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A.",
+      "value": 1.7789627113502975,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155246"
+      },
+      "inputs": {
+        "ebitBrl": 1697845000,
+        "depreciationBrl": 1757201000,
+        "ebitdaBrl": 3455046000,
+        "netDebtBrl": 6146398000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "SUZANO S.A.",
+      "value": 3.6280203826919633,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154674"
+      },
+      "inputs": {
+        "ebitBrl": 10649009000,
+        "depreciationBrl": 11297258000,
+        "ebitdaBrl": 21946267000,
+        "netDebtBrl": 79621504000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação, Exaustão e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TEGMA GESTAO LOGISTICA S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155185"
+      },
+      "inputs": null
+    },
+    {
+      "name": "TELEFÔNICA BRASIL S.A",
+      "value": 0.5367889331914512,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-23",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154821"
+      },
+      "inputs": {
+        "ebitBrl": 9859278000,
+        "depreciationBrl": 14944404000,
+        "ebitdaBrl": 24803682000,
+        "netDebtBrl": 13314342000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciações e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TIM S.A.",
+      "value": -0.061959351108453395,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-10",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154688",
+        "basis": "individual",
+        "supportingDocumentUrl": "https://api.mziq.com/mzfilemanager/v2/d/4c4aa51f-1235-4aa1-8b83-adc92e8dacc3/197553f9-c229-4f09-b201-bcf48f2026d6?origin=2"
+      },
+      "inputs": {
+        "ebitBrl": 6344032000,
+        "depreciationBrl": 7077687000,
+        "ebitdaBrl": 13421719000,
+        "netDebtBrl": -831601000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortizações",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TOTVS S.A.",
+      "value": 0.03455293439321443,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154722"
+      },
+      "inputs": {
+        "ebitBrl": 1122728000,
+        "depreciationBrl": 341084000,
+        "ebitdaBrl": 1463812000,
+        "netDebtBrl": 50579000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TRACK & FIELD CO S.A.",
+      "value": 0.5382347923716878,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-09",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155199"
+      },
+      "inputs": {
+        "ebitBrl": 212454000,
+        "depreciationBrl": 39607000,
+        "ebitdaBrl": 252061000,
+        "netDebtBrl": 135668000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
+      "value": 3.6551870467337326,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-17",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155448"
+      },
+      "inputs": {
+        "ebitBrl": 2736283000,
+        "depreciationBrl": 63258000,
+        "ebitdaBrl": 2799541000,
+        "netDebtBrl": 10232846000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "TRÊS TENTOS AGROINDUSTRIAL S/A",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-05",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155096"
+      },
+      "inputs": null
+    },
+    {
+      "name": "TUPY S.A.",
+      "value": 9.961913311675325,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155493"
+      },
+      "inputs": {
+        "ebitBrl": -156481000,
+        "depreciationBrl": 381494000,
+        "ebitdaBrl": 225013000,
+        "netDebtBrl": 2241560000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "ULTRAPAR PARTICIPACOES S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-04",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155064"
+      },
+      "inputs": null
+    },
+    {
+      "name": "UNIPAR CARBOCLORO S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-19",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155510"
+      },
+      "inputs": null
+    },
+    {
+      "name": "UNIÃO PET PARTICIPAÇÕES S.A.",
+      "value": null,
+      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-26",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155746"
+      },
+      "inputs": null
+    },
+    {
+      "name": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+      "value": null,
+      "reason": "EBITDA estimado inválido ou não positivo.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-13",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154757"
+      },
+      "inputs": null
+    },
+    {
+      "name": "VALE S.A.",
+      "value": 1.2763876204972096,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-12",
+        "publishedAt": null,
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155313"
+      },
+      "inputs": {
+        "ebitBrl": 31969000000,
+        "depreciationBrl": 17306000000,
+        "ebitdaBrl": 49275000000,
+        "netDebtBrl": 62894000000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.06",
+          "label": "Depreciação, amortização e exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "VALID SOLUÇÕES S.A.",
+      "value": null,
+      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-31",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155901"
+      },
+      "inputs": null
+    },
+    {
+      "name": "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
+      "value": 4.483773409966242,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155702"
+      },
+      "inputs": {
+        "ebitBrl": 2611950000,
+        "depreciationBrl": 1037831000,
+        "ebitdaBrl": 3649781000,
+        "netDebtBrl": 16364791000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "VIBRA ENERGIA S/A",
+      "value": 3.320156090939939,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155274"
+      },
+      "inputs": {
+        "ebitBrl": 4826000000,
+        "depreciationBrl": 1068000000,
+        "ebitdaBrl": 5894000000,
+        "netDebtBrl": 19569000000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "VITRU EDUCAÇÃO S.A.",
+      "value": 2.8074279462385836,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-04-07",
+        "publishedAt": null,
+        "version": 3,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156065"
+      },
+      "inputs": {
+        "ebitBrl": 587953000,
+        "depreciationBrl": 224600000,
+        "ebitdaBrl": 812553000,
+        "netDebtBrl": 2281184000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "VIVARA PARTICIPAÇÕES S.A.",
+      "value": 0.18651173153167394,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-18",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155474"
+      },
+      "inputs": {
+        "ebitBrl": 726321236,
+        "depreciationBrl": 162858011,
+        "ebitdaBrl": 889179247,
+        "netDebtBrl": 165842361,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "VULCABRAS S.A.",
+      "value": 0.8736334965294432,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-03",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155033"
+      },
+      "inputs": {
+        "ebitBrl": 753056000,
+        "depreciationBrl": 130952000,
+        "ebitdaBrl": 884008000,
+        "netDebtBrl": 772299000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "WEG S.A.",
+      "value": -0.18951877642280804,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-02-25",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154872"
+      },
+      "inputs": {
+        "ebitBrl": 7998741000,
+        "depreciationBrl": 1001296000,
+        "ebitdaBrl": 9000037000,
+        "netDebtBrl": -1705676000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    },
+    {
+      "name": "YDUQS PARTICIPACOES S.A.",
+      "value": 2.7856439881947144,
+      "reason": null,
+      "filing": {
+        "referenceDate": "2025-12-31",
+        "receivedAt": "2026-03-11",
+        "publishedAt": null,
+        "version": 1,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155266"
+      },
+      "inputs": {
+        "ebitBrl": 887347000,
+        "depreciationBrl": 815619000,
+        "ebitdaBrl": 1702966000,
+        "netDebtBrl": 4743857000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
+    }
+  ]
+}

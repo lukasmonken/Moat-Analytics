@@ -106,3 +106,33 @@ python3 apps/pipeline/run_market_closes.py \
 ```
 
 A saída padrão `data/processed/market-closes/market-closes.json` é ignorada pelo Git e lida via loopback em `npm run dev`. O importador preserva o último fechamento válido de cada ticker em lotes parciais. Uma linha inválida ou uma data esperada anterior à do lote existente impede a atualização. [Fontes de fechamentos](../../docs/DATA_SOURCES.md#fechamentos-de-mercado)
+
+## Atualizar valor de mercado e rendimento implícito
+
+O mapa privado é gerado a partir da seleção anual e deve ser atualizado quando ela mudar.
+
+```bash
+python3 apps/pipeline/run_market_cap_universe.py
+```
+
+Use uma chave `BRAPI_TOKEN` no ambiente local para executar `python3 apps/pipeline/run_market_caps.py` depois das 20h20, em dia de pregão. A saída é `data/processed/market-caps/latest.json`. O arquivo guarda a capitalização por empresa, o rendimento implícito e suas datas de mercado e de balanço. O `npm run dev` lê esse lote no computador local e mostra NOPAT/EV e earnings yield em Empresas. Os valores do provedor ficam em `data/processed`, ignorados pelo Git.
+
+No GitHub Actions, o workflow roda às 20h23 no fuso `America/Sao_Paulo`, na branch padrão do repositório privado que contém o pipeline. Configure os secrets `BRAPI_TOKEN` e `MOAT_MARKET_CAP_UNIVERSE`, este último com o conteúdo de `data/processed/market-caps/universe.json`. Um lote com valores fica disponível por 90 dias nos artefatos privados da execução. Para ler esse lote no app local, salve o `latest.json` do artefato no caminho de saída acima. Após ativar, confira a cobertura do primeiro pregão no log de execução.
+
+## Gerar endividamento, reinvestimento e margens
+
+Após gerar o comparativo de ROIC e com o ZIP da mesma DFP na pasta `data/raw/cvm`, execute na raiz do repositório.
+
+```bash
+python3 apps/pipeline/run_sector_leverage.py
+python3 apps/pipeline/run_sector_reinvestment.py
+python3 apps/pipeline/run_sector_margins.py
+```
+
+Os lotes usam o último exercício comum e conferem o arquivo e a versão das demonstrações do ROIC. Cada registro guarda as contas de origem ou o motivo de indisponibilidade. A página Empresas usa os lotes de endividamento e reinvestimento nos filtros das companhias de ROIC e apresenta as margens nos detalhes.
+
+## Conferir e publicar os balanços anuais
+
+Na branch padrão `main`, a CI consulta a CVM toda terça-feira às 7h17 de Brasília. O workflow reconstitui a entrada pelos nomes oficiais da seleção, atualiza os cinco lotes contábeis, executa as verificações e publica o site. A etapa de gravação usa a permissão `contents: write` concedida pelo workflow a esse job. A publicação usa a configuração existente de GitHub Pages.
+
+Para validar localmente com os ZIPs já coletados, execute `python3 apps/pipeline/run_annual_refresh.py --offline`. A saída padrão fica em `data/processed/annual-refresh/`. A opção `--end-year` define o exercício máximo a procurar. A execução com acesso à CVM registra a data da conferência. [Fontes de dados](../../docs/DATA_SOURCES.md#atualização-anual-da-cvm)
