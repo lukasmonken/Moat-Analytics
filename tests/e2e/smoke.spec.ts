@@ -105,9 +105,9 @@ test('consulta ROIC estimado, ROE e as contas de origem', async ({ page }) => {
   await page.getByText('Histórico de qualidade', { exact: true }).click();
   await expect(page.getByRole('heading', { name: 'ROIC estimado' })).toBeVisible();
   const series = page.getByRole('table', { name: 'Série de qualidade por exercício' });
-  await expect(series.getByText(/27,87\s*%/)).toBeVisible();
+  await expect(series.getByText(/29,15\s*%/)).toBeVisible();
   await expect(
-    page.getByText(/Diferença para o CDI atual.*ROIC estimado de 2025.*\+14,22 p.p./),
+    page.getByText(/Diferença para o CDI atual.*ROIC estimado de 2025.*\+15,50 p.p./),
   ).toBeVisible();
   await page.getByText('Contas e cálculo de 2025', { exact: true }).click();
   await expect(page.getByText(/SHA-256/).filter({ visible: true })).toHaveCount(1);

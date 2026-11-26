@@ -19,6 +19,7 @@ import {
   annualObservation,
   annualRate,
   combineSnapshots,
+  comparisonSector,
   orderByAnnualReturn,
   type Company,
   type ComparisonData,
@@ -162,7 +163,7 @@ function ComparisonResults({
   const [pageSize, setPageSize] = useState<string>(defaultPageSize);
   const [selectedName, setSelectedName] = useState('');
   const sectors = useMemo(
-    () => [...new Set(companies.map((company) => company.sector))].sort(compareNames),
+    () => [...new Set(companies.map(comparisonSector))].sort(compareNames),
     [companies],
   );
   const rate = rateState.status === 'ready' ? rateState.rate : null;
@@ -171,7 +172,7 @@ function ComparisonResults({
   const searchKey = normalizeSearch(search);
   const filtered = companies.filter(
     (company) =>
-      (!sector || company.sector === sector) &&
+      (!sector || comparisonSector(company) === sector) &&
       (!metric || company.metric === metric) &&
       normalizeSearch(company.name).includes(searchKey),
   );
@@ -341,7 +342,7 @@ function ComparisonResults({
                     <tr key={company.name}>
                       <th scope="row">
                         {company.name}
-                        <small>{company.sector}</small>
+                        <small>{comparisonSector(company)}</small>
                       </th>
                       <td>{company.metric}</td>
                       <td>{formatRate(value)}</td>

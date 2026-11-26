@@ -93,29 +93,36 @@ test('compara ROE e ROIC na mesma lista e exporta toda a seleção', async ({ pa
   await search.fill('VALE S.A.');
   const miner = table.getByRole('row', { name: /^VALE S\.A\./ });
   await expect(miner.getByRole('cell', { name: /ROIC/ })).toBeVisible();
-  await expect(miner).toContainText(/7,58\s*%/);
+  await expect(miner).toContainText(/7,95\s*%/);
   await miner.getByRole('button', { name: 'Ver cálculo de VALE S.A.' }).click();
   const roic = region.getByRole('region', { name: 'VALE S.A. · 2025' });
   await expect(roic.getByText(/31\.969\.000\.000/)).toBeVisible();
+  await expect(roic.getByText(/Capital investido = patrimônio líquido/)).toBeVisible();
   await expect(roic.getByRole('row', { name: /Caixa e equivalentes/ })).toBeVisible();
-  await expect(roic.getByRole('link', { name: 'Demonstrações de apoio' })).toBeVisible();
+  await expect(roic.getByRole('link', { name: 'Formulário DFP na CVM' })).toBeVisible();
   const roicReport = getSheet(await exportComparison(), 'Comparativo');
   if (!roicReport) throw new Error('Aba ausente.');
-  expect(getCell(roicReport, 2, 5)?.value).toBeCloseTo(0.075759868297, 9);
+  expect(getCell(roicReport, 2, 5)?.value).toBeCloseTo(0.07948877432, 9);
 
   await search.fill('AMBEV S.A.');
   const ambev = table.getByRole('row', { name: /^AMBEV S\.A\./ });
   await expect(ambev).toContainText(/20,90\s*%/);
   await ambev.getByRole('button', { name: 'Ver cálculo de AMBEV S.A.' }).click();
   const ambevDetails = region.getByRole('region', { name: 'AMBEV S.A. · 2025' });
-  const leaseNote = ambevDetails.getByRole('row', {
-    name: /Arrendamentos incluídos nos financiamentos.*Nota 23/s,
-  });
-  await expect(leaseNote).toContainText(/2\.965\.100\.000.*2\.975\.700\.000/s);
+  await expect(
+    ambevDetails.getByRole('row', { name: /Empréstimos e financiamentos/ }),
+  ).toContainText(/3\.452\.728\.000.*3\.386\.924\.000/s);
+  await expect(ambevDetails.getByRole('row', { name: /Arrendamentos/ })).toHaveCount(0);
   const ambevAccounts = getSheet(await exportComparison(), 'Contas e saldos');
   if (!ambevAccounts) throw new Error('Aba ausente.');
-  expect(getCell(ambevAccounts, 5, 4)?.value).toBe('Nota 23');
-  expect(getCell(ambevAccounts, 5, 6)?.value).toBe(2_965_100_000);
+  expect(getCell(ambevAccounts, 3, 6)?.value).toBe(74_437_576_000);
+  const exportedAccounts = Array.from({ length: 12 }, (_, index) => [
+    getCell(ambevAccounts, index + 2, 4)?.value,
+    getCell(ambevAccounts, index + 2, 6)?.value,
+  ]);
+  expect(exportedAccounts).toContainEqual(['BPP 2.01.04', 1_276_391_000]);
+  expect(exportedAccounts).toContainEqual(['BPP 2.02.01', 2_176_337_000]);
+  expect(getCell(ambevAccounts, 14, 1)?.value).toBeUndefined();
 
   await region.getByLabel('Exercício').selectOption('2024');
   await expect(table.getByRole('columnheader', { name: 'Diferença para o CDI atual' })).toHaveCount(
@@ -155,10 +162,16 @@ test('mantém empresas sem ROIC na lista e pagina o setor inteiro', async ({ pag
   expect(getCell(report, 12, 1)?.value).toBeUndefined();
 
   await region.getByLabel('Setor', { exact: true }).selectOption({ label: 'Papel e Celulose' });
-  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*6,69\s*%/s);
-  await expect(rows.nth(2)).toContainText(/SUZANO S\.A\..*5,35\s*%/s);
+  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*7,16\s*%/s);
+  await expect(rows.nth(2)).toContainText(/SUZANO S\.A\..*5,66\s*%/s);
   await region.getByLabel('Exercício').selectOption('2024');
-  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*Indisponível/s);
+  await expect(rows.nth(1)).toContainText(/KLABIN S\.A\..*7,70\s*%/s);
+
+  await region.getByLabel('Setor', { exact: true }).selectOption({ label: 'Alimentos' });
+  const camil = region.getByRole('row', { name: /^CAMIL ALIMENTOS S\.A\./ });
+  await expect(camil).toContainText('Indisponível');
+  await camil.getByRole('button', { name: 'Ver cálculo de CAMIL ALIMENTOS S.A.' }).click();
+  await expect(region.getByText(/Encerramento fiscal diferente de 31\/12/)).toBeVisible();
 });
 
 test('ordena os retornos de um indicador e exporta todo o recorte em ordem', async ({ page }) => {
@@ -179,7 +192,7 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
     region.getByRole('columnheader', { name: 'Retorno em 2025', exact: true }),
   ).toHaveAttribute('aria-sort', 'descending');
   await expect(rows.nth(1)).toContainText('BB SEGURIDADE PARTICIPAÇÕES S.A.');
-  await expect(rows.nth(2)).toContainText('BCO PINE S.A');
+  await expect(rows.nth(2)).toContainText('BRADSAÚDE S.A.');
   await pagination.getByRole('button', { name: 'Próxima página' }).click();
   await expect(pagination).toContainText('Página 2 de 2');
 
@@ -188,10 +201,11 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
   const notes = getSheet(filteredWorkbook, 'Metodologia e fontes');
   if (!filtered || !notes) throw new Error('Aba ausente.');
   expect(getCell(filtered, 2, 1)?.value).toBe('BB SEGURIDADE PARTICIPAÇÕES S.A.');
-  expect(getCell(filtered, 15, 1)?.value).toBe('BCO ABC BRASIL S.A.');
-  expect(getCell(filtered, 15, 3)?.value).toBe('ROE');
-  expect(getCell(filtered, 15, 5)?.value).toBeUndefined();
-  expect(getCell(filtered, 16, 1)?.value).toBeUndefined();
+  expect(getCell(filtered, 11, 1)?.value).toBe('BCO ABC BRASIL S.A.');
+  expect(getCell(filtered, 11, 3)?.value).toBe('ROE');
+  expect(getCell(filtered, 11, 5)?.value).toBeCloseTo(0.15254733496608713, 9);
+  expect(getCell(filtered, 16, 1)?.value).toBe('BCO BRASIL S.A.');
+  expect(getCell(filtered, 17, 1)?.value).toBeUndefined();
   const noteEntries = Array.from({ length: 25 }, (_, index) => [
     getCell(notes, index + 2, 1)?.value,
     getCell(notes, index + 2, 2)?.value,
@@ -207,20 +221,50 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
 
   await region.getByRole('combobox', { name: 'Exercício', exact: true }).selectOption('2024');
   await expect(pagination).toContainText('Página 1 de 2');
-  await expect(rows.nth(2)).toContainText('CAIXA SEGURIDADE PARTICIPAÇÕES S.A.');
+  await expect(rows.nth(3)).toContainText('CAIXA SEGURIDADE PARTICIPAÇÕES S.A.');
 
   await indicator.selectOption('ROIC');
   await region
     .getByRole('combobox', { name: 'Setor', exact: true })
     .selectOption({ label: 'Serviços Transporte e Logística' });
   await expect(rows.nth(1)).toContainText('TEGMA GESTAO LOGISTICA S.A.');
-  await expect(rows.nth(2)).toContainText(/HIDROVIAS DO BRASIL S\.A\..*[-−]4,83\s*%/s);
-  await expect(rows.nth(3)).toContainText(/ARMAC LOCAÇÃO.*Indisponível/s);
-  await expect(rows.nth(4)).toContainText(/ECORODOVIAS.*Indisponível/s);
+  await expect(rows.nth(2)).toContainText('MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.');
+  await expect(rows.last()).toContainText(/HIDROVIAS DO BRASIL S\.A\..*[-−]4,83\s*%/s);
 
   await indicator.selectOption('');
   await expect(ordering).toHaveValue('name');
   await expect(ordering.locator('option[value="return"]')).toBeDisabled();
+});
+
+test('classifica Bradsaúde e Porto Seguro no mesmo grupo de ROE', async ({ page }) => {
+  await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
+  await page.goto('./#/empresas');
+  const region = page.getByRole('region', { name: 'Comparar empresas' });
+  await region.getByLabel('Setor', { exact: true }).selectOption('Seguros e Resseguros');
+  const table = region.getByRole('table', { name: 'Indicadores das empresas' });
+  await expect(table.getByRole('row')).toHaveCount(6);
+  await expect(table.getByRole('row', { name: /PORTO SEGURO/ })).toContainText('ROE');
+  const bradsaude = table.getByRole('row', { name: /BRADSAÚDE/ });
+  await expect(bradsaude.getByRole('cell', { name: 'ROE', exact: true })).toBeVisible();
+  await expect(bradsaude).toContainText(/46,43\s*%/);
+  await bradsaude.getByRole('button', { name: 'Ver cálculo de BRADSAÚDE S.A.' }).click();
+  const details = region.getByRole('region', { name: 'BRADSAÚDE S.A. · 2025' });
+  await expect(details.getByText(/Setor cadastral na CVM.*Serviços médicos/)).toBeVisible();
+  await expect(details.getByText(/reflete a Odontoprev/)).toBeVisible();
+  await expect(details.getByRole('link', { name: 'Fato relevante na CVM' })).toBeVisible();
+
+  const workbook = await workbookDownload(
+    page,
+    'Exportar Excel',
+    'moat-comparativo-empresas.xlsx',
+    region,
+  );
+  const report = getSheet(workbook, 'Comparativo');
+  if (!report) throw new Error('Aba ausente.');
+  expect(getCell(report, 3, 1)?.value).toBe('BRADSAÚDE S.A.');
+  expect(getCell(report, 3, 2)?.value).toBe('Serviços médicos');
+  expect(getCell(report, 3, 14)?.value).toBe('Seguros e Resseguros');
+  expect(getCell(report, 3, 15)?.value).toContain('Odontoprev');
 });
 
 test('compara cinco exercícios de duas empresas com o mesmo indicador', async ({ page }) => {
@@ -234,8 +278,8 @@ test('compara cinco exercícios de duas empresas com o mesmo indicador', async (
   await second.selectOption('SUZANO S.A.');
   const history = region.getByRole('table', { name: 'Histórico de ROIC' });
   await expect(history.getByRole('row')).toHaveCount(6);
-  await expect(history.getByRole('row', { name: /2024/ })).toContainText('Indisponível');
-  await expect(history.getByRole('row', { name: /2025/ })).toContainText(/6,69\s*%.*5,35\s*%/s);
+  await expect(history.getByRole('row', { name: /2024/ })).toContainText(/7,70\s*%.*8,69\s*%/s);
+  await expect(history.getByRole('row', { name: /2025/ })).toContainText(/7,16\s*%.*5,66\s*%/s);
 
   await first.selectOption('ITAU UNIBANCO HOLDING S.A.');
   await expect(second).toHaveValue('');

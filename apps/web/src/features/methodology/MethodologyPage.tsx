@@ -59,8 +59,10 @@ export function MethodologyPage() {
               <tr>
                 <th scope="row">ROIC estimado</th>
                 <td>
-                  Para as demais companhias, EBIT conciliado após a alíquota padronizada de 34%,
-                  dividido pelo capital investido médio.
+                  Para as demais companhias, EBIT após a alíquota padronizada de 34%, dividido pelo
+                  capital investido médio. Na abertura e no fechamento, o capital investido é o
+                  patrimônio líquido mais empréstimos e financiamentos de curto e longo prazo, menos
+                  caixa e equivalentes.
                 </td>
               </tr>
               <tr>

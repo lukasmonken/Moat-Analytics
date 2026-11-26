@@ -1,7 +1,7 @@
 {
   "manifest": {
     "schemaVersion": "1.0.0",
-    "generatedAt": "2026-11-18T22:37:28+00:00",
+    "generatedAt": "2026-11-25T22:36:32+00:00",
     "asOf": "2025-12-31",
     "coverage": {
       "eligibleCompanies": null,
@@ -14,7 +14,7 @@
       "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/"
     }
   },
-  "methodologyVersion": "quality-dfp-m2.v1",
+  "methodologyVersion": "quality-dfp-m2.v2",
   "roicTaxRate": 0.34,
   "benchmark": {
     "status": "unavailable",
@@ -32,13 +32,13 @@
       "observations": [
         {
           "fiscalYear": 2021,
-          "value": 0.2343715051709561,
+          "value": 0.2406395956738108,
           "changePp": null,
           "spreadPp": null,
           "numeratorBrl": 2744506380,
-          "openingCapitalBrl": 10012264000,
-          "closingCapitalBrl": 13407873000,
-          "averageCapitalBrl": 11710068500,
+          "openingCapitalBrl": 9724738000,
+          "closingCapitalBrl": 13085360000,
+          "averageCapitalBrl": 11405049000,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
           "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
@@ -47,11 +47,11 @@
             "referenceDate": "2021-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -79,44 +79,12 @@
               "amountBrl": 737071000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamento Mercantil",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 249245000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2021-12-31",
               "amountBrl": 1052044000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamento Mercantil",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 73268000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -159,44 +127,12 @@
               "amountBrl": 1044296000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamento Mercantil",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 223532000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2020-12-31",
               "amountBrl": 642284000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamento Mercantil",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 63994000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -210,13 +146,13 @@
         },
         {
           "fiscalYear": 2022,
-          "value": 0.23633534161171038,
-          "changePp": 0.19638364407542963,
+          "value": 0.2438737499499404,
+          "changePp": 0.32341542761296116,
           "spreadPp": null,
           "numeratorBrl": 3334047420,
-          "openingCapitalBrl": 13407873000,
-          "closingCapitalBrl": 14806675000,
-          "averageCapitalBrl": 14107274000,
+          "openingCapitalBrl": 13085360000,
+          "closingCapitalBrl": 14257045000,
+          "averageCapitalBrl": 13671202500,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
           "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
@@ -225,11 +161,11 @@
             "referenceDate": "2022-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -257,44 +193,12 @@
               "amountBrl": 1151875000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 446594000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2022-12-31",
               "amountBrl": 2307817000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 103036000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -337,44 +241,12 @@
               "amountBrl": 737071000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 249245000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2021-12-31",
               "amountBrl": 1052044000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 73268000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -388,13 +260,13 @@
         },
         {
           "fiscalYear": 2023,
-          "value": 0.28851741607471304,
-          "changePp": 5.218207446300267,
+          "value": 0.29973563543284965,
+          "changePp": 5.586188548290924,
           "spreadPp": null,
           "numeratorBrl": 4265002500,
-          "openingCapitalBrl": 14806675000,
-          "closingCapitalBrl": 14758282000,
-          "averageCapitalBrl": 14782478500,
+          "openingCapitalBrl": 14257045000,
+          "closingCapitalBrl": 14201383000,
+          "averageCapitalBrl": 14229214000,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
           "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
@@ -403,11 +275,11 @@
             "referenceDate": "2023-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -435,44 +307,12 @@
               "amountBrl": 664737000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 484027000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2023-12-31",
               "amountBrl": 2170324000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 72872000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -515,44 +355,12 @@
               "amountBrl": 1151875000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 446594000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2022-12-31",
               "amountBrl": 2307817000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 103036000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -566,13 +374,13 @@
         },
         {
           "fiscalYear": 2024,
-          "value": 0.2904223523001706,
-          "changePp": 0.19049362254575625,
+          "value": 0.30235971282505353,
+          "changePp": 0.26240773922039135,
           "spreadPp": null,
           "numeratorBrl": 5075748480,
-          "openingCapitalBrl": 14758282000,
-          "closingCapitalBrl": 20195973000,
-          "averageCapitalBrl": 17477127500,
+          "openingCapitalBrl": 14201383000,
+          "closingCapitalBrl": 19372855000,
+          "averageCapitalBrl": 16787119000,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
           "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
@@ -581,11 +389,11 @@
             "referenceDate": "2024-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -613,44 +421,12 @@
               "amountBrl": 744281000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 715450000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2024-12-31",
               "amountBrl": 2850956000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 107668000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -693,44 +469,12 @@
               "amountBrl": 664737000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 484027000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2023-12-31",
               "amountBrl": 2170324000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 72872000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -744,13 +488,13 @@
         },
         {
           "fiscalYear": 2025,
-          "value": 0.27865165736476394,
-          "changePp": -1.1770694935406685,
+          "value": 0.29150137589047187,
+          "changePp": -1.0858336934581663,
           "spreadPp": null,
           "numeratorBrl": 5279169060,
-          "openingCapitalBrl": 20195973000,
-          "closingCapitalBrl": 17694841000,
-          "averageCapitalBrl": 18945407000,
+          "openingCapitalBrl": 19372855000,
+          "closingCapitalBrl": 16847688000,
+          "averageCapitalBrl": 18110271500,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
           "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
@@ -759,11 +503,11 @@
             "referenceDate": "2025-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -791,44 +535,12 @@
               "amountBrl": 1041508000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 625219000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2025-12-31",
               "amountBrl": 3549314000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 221934000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -871,44 +583,12 @@
               "amountBrl": 744281000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 715450000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2024-12-31",
               "amountBrl": 2850956000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos",
-              "statement": "BPP",
-              "code": "2.01.05.02.07",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 107668000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -924,11 +604,11 @@
       "name": "WEG S.A.",
       "summary": {
         "validYears": 5,
-        "mean": 0.2656596545044628,
-        "median": 0.27865165736476394,
-        "populationStddev": 0.025073189744401873,
-        "amplitude": 0.05605084712921452,
-        "trendPpPerYear": 1.4264731507607589
+        "mean": 0.27562201395442526,
+        "median": 0.29150137589047187,
+        "populationStddev": 0.02749635347916313,
+        "amplitude": 0.06172011715124276,
+        "trendPpPerYear": 1.6020952330843534
       }
     },
     {
@@ -938,13 +618,13 @@
       "observations": [
         {
           "fiscalYear": 2021,
-          "value": 0.0561715078330944,
+          "value": 0.07357020834274867,
           "changePp": null,
           "spreadPp": null,
           "numeratorBrl": 537203040,
-          "openingCapitalBrl": 8681901000,
-          "closingCapitalBrl": 10445342000,
-          "averageCapitalBrl": 9563621500,
+          "openingCapitalBrl": 6819514000,
+          "closingCapitalBrl": 7784306000,
+          "averageCapitalBrl": 7301910000,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2021.zip",
           "archiveSha256": "64b8693b709538a0357c5179ae02231cb380d0000956ee57a873a21d4efda2e4",
@@ -953,11 +633,11 @@
             "referenceDate": "2021-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -985,44 +665,12 @@
               "amountBrl": 1381128000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 1994936000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2021-12-31",
               "amountBrl": 2085974000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 666100000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -1065,44 +713,12 @@
               "amountBrl": 1966508000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 1365804000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2020-12-31",
               "amountBrl": 1418471000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 496583000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2020-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -1116,13 +732,13 @@
         },
         {
           "fiscalYear": 2022,
-          "value": 0.08077331311401917,
-          "changePp": 2.4601805280924767,
+          "value": 0.10659164849994363,
+          "changePp": 3.302144015719495,
           "spreadPp": null,
           "numeratorBrl": 928884660,
-          "openingCapitalBrl": 10445342000,
-          "closingCapitalBrl": 12554449000,
-          "averageCapitalBrl": 11499895500,
+          "openingCapitalBrl": 7784306000,
+          "closingCapitalBrl": 9644539000,
+          "averageCapitalBrl": 8714422500,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2022.zip",
           "archiveSha256": "0cdb73c0aa57a68e8b2c2d0a0b4a1a3ccce359f16c2964fde656f9624de9a6a4",
@@ -1131,11 +747,11 @@
             "referenceDate": "2022-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -1163,44 +779,12 @@
               "amountBrl": 1701200000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 2190081000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2022-12-31",
               "amountBrl": 704175000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 719829000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -1243,44 +827,12 @@
               "amountBrl": 1381128000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 1994936000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2021-12-31",
               "amountBrl": 2085974000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 666100000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2021-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -1294,13 +846,13 @@
         },
         {
           "fiscalYear": 2023,
-          "value": 0.04743919494394399,
-          "changePp": -3.3334118170075175,
+          "value": 0.06148761167136537,
+          "changePp": -4.510403682857826,
           "spreadPp": null,
           "numeratorBrl": 586790820,
-          "openingCapitalBrl": 12554449000,
-          "closingCapitalBrl": 12184201000,
-          "averageCapitalBrl": 12369325000,
+          "openingCapitalBrl": 9644539000,
+          "closingCapitalBrl": 9441934000,
+          "averageCapitalBrl": 9543236500,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2023.zip",
           "archiveSha256": "5748ee4e9f1c8cd428931050e9da2ead174ad737af11d842a50d7bad8064145b",
@@ -1309,11 +861,11 @@
             "referenceDate": "2023-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -1341,44 +893,12 @@
               "amountBrl": 836169000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 2008945000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2023-12-31",
               "amountBrl": 1090731000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 733322000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -1421,44 +941,12 @@
               "amountBrl": 1701200000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 2190081000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2022-12-31",
               "amountBrl": 704175000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 719829000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2022-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -1472,13 +960,13 @@
         },
         {
           "fiscalYear": 2024,
-          "value": 0.06755266315731341,
-          "changePp": 2.011346821336942,
+          "value": 0.08642554814257361,
+          "changePp": 2.4937936471208237,
           "spreadPp": null,
           "numeratorBrl": 831166380,
-          "openingCapitalBrl": 12184201000,
-          "closingCapitalBrl": 12423752000,
-          "averageCapitalBrl": 12303976500,
+          "openingCapitalBrl": 9441934000,
+          "closingCapitalBrl": 9792341000,
+          "averageCapitalBrl": 9617137500,
           "filingVersion": 1,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
           "archiveSha256": "0a1e41edc81900df6605448acb2fcf6fae36f9a8ac4756a7d658cd7c718a1501",
@@ -1487,11 +975,11 @@
             "referenceDate": "2024-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -1519,44 +1007,12 @@
               "amountBrl": 13740000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 1847561000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2024-12-31",
               "amountBrl": 931760000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 783850000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -1599,44 +1055,12 @@
               "amountBrl": 836169000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 2008945000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2023-12-31",
               "amountBrl": 1090731000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 733322000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2023-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -1650,13 +1074,13 @@
         },
         {
           "fiscalYear": 2025,
-          "value": 0.09570417277243985,
-          "changePp": 2.8151509615126447,
+          "value": 0.12072260399784615,
+          "changePp": 3.4297055855272545,
           "spreadPp": null,
           "numeratorBrl": 1186125600,
-          "openingCapitalBrl": 12423752000,
-          "closingCapitalBrl": 12363581000,
-          "averageCapitalBrl": 12393666500,
+          "openingCapitalBrl": 9792341000,
+          "closingCapitalBrl": 9858090000,
+          "averageCapitalBrl": 9825215500,
           "filingVersion": 2,
           "archiveUrl": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
           "archiveSha256": "6b24bc65a614605e2c1e45ae1fa237ebbe72672467e87f7761cca94f3e6bc040",
@@ -1665,11 +1089,11 @@
             "referenceDate": "2025-12-31",
             "publishedAt": null,
             "retrievedAt": "2026-11-18T10:11:46+00:00",
-            "methodologyVersion": "quality-dfp-m2.v1",
+            "methodologyVersion": "quality-dfp-m2.v2",
             "qualityStatus": "estimated"
           },
           "reasons": [
-            "Estimativa com alíquota de cenário de 34% e caixa total como proxy de caixa excedente."
+            "O NOPAT usa alíquota de cenário de 34%. O capital investido usa patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes."
           ],
           "inputs": [
             {
@@ -1697,44 +1121,12 @@
               "amountBrl": 358788000
             },
             {
-              "key": "closingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 1765254000
-            },
-            {
-              "key": "closingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "closingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2025-12-31",
               "amountBrl": 21087000
-            },
-            {
-              "key": "closingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 740237000
-            },
-            {
-              "key": "closingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2025-12-31",
-              "amountBrl": 0
             },
             {
               "key": "ebit",
@@ -1777,44 +1169,12 @@
               "amountBrl": 13740000
             },
             {
-              "key": "openingLongLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.02.02.02.05",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 1847561000
-            },
-            {
-              "key": "openingLongLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.02.01.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
-            },
-            {
               "key": "openingShortDebt",
               "label": "Empréstimos e Financiamentos",
               "statement": "BPP",
               "code": "2.01.04",
               "referenceDate": "2024-12-31",
               "amountBrl": 931760000
-            },
-            {
-              "key": "openingShortLease",
-              "label": "Arrendamentos a pagar",
-              "statement": "BPP",
-              "code": "2.01.05.02.09",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 783850000
-            },
-            {
-              "key": "openingShortLeaseInDebt",
-              "label": "Financiamento por Arrendamento",
-              "statement": "BPP",
-              "code": "2.01.04.03",
-              "referenceDate": "2024-12-31",
-              "amountBrl": 0
             },
             {
               "key": "operatingIncomeAndExpenses",
@@ -1830,11 +1190,11 @@
       "name": "LOJAS RENNER S.A.",
       "summary": {
         "validYears": 5,
-        "mean": 0.06952817036416216,
-        "median": 0.06755266315731341,
-        "populationStddev": 0.017215471154464316,
-        "amplitude": 0.04826497782849587,
-        "trendPpPerYear": 0.6584467992198516
+        "mean": 0.08975952413089548,
+        "median": 0.08642554814257361,
+        "populationStddev": 0.02151531129833194,
+        "amplitude": 0.05923499232648079,
+        "trendPpPerYear": 0.7413869095282494
       }
     },
     {

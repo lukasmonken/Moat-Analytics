@@ -178,6 +178,30 @@ class SectorComparisonTest(unittest.TestCase):
         self.assertIsNone(results["000333"]["filing"])
         self.assertIsNotNone(results["000111"]["filing"])
 
+    def test_matches_audited_abc_dmpl_to_the_exact_missing_consolidated_filing(self):
+        abc = {**filing("020958", 1), "ID_DOC": "154619"}
+        observation = self.build_year([abc], [], [])["020958"]
+        self.assertAlmostEqual(observation["roe"], 0.15254733496608714)
+        self.assertEqual(observation["inputs"], {
+            "netIncomeBrl": 1_002_000_000,
+            "openingEquityBrl": 6_377_958_000,
+            "closingEquityBrl": 6_758_948_000,
+            "incomeCode": None,
+            "incomeStatement": "DMPL",
+            "equityCodes": [],
+            "auditedStatementPage": 18,
+            "openingEquityDate": "2025-01-01",
+        })
+        self.assertTrue(observation["filing"]["supportingDocumentUrl"].endswith("abc_pt_122025.pdf"))
+
+        for changed in ({**abc, "ID_DOC": "654321"}, {**abc, "VERSAO": 2}):
+            observation = self.build_year([changed], [], [])["020958"]
+            self.assertIsNone(observation["roe"])
+            self.assertIn("DFP consolidada indisponível", observation["reason"])
+
+        observation = self.build_year([abc], profit(abc), [])["020958"]
+        self.assertIsNone(observation["roe"])
+
     def test_uses_consistent_dmpl_from_same_filing_to_resolve_attribution(self):
         absent, matching_parent, conflicting_parent, conflicting_total, old_only = (
             filing("000111"), filing("000222"), filing("000333"), filing("000444"),

@@ -191,6 +191,11 @@ function QualitySeries({
   const metric = isRoic ? 'ROIC estimado' : 'ROE atribuível à controladora';
   const observations = [...company.observations].sort((a, b) => b.fiscalYear - a.fiscalYear);
   const latest = observations[0];
+  const methodology = latest?.provenance.methodologyVersion ?? snapshot.methodologyVersion;
+  const capitalDescription =
+    methodology === 'quality-dfp-m2.v1'
+      ? 'O capital investido soma patrimônio líquido, empréstimos e arrendamentos separados e deduz caixa e equivalentes.'
+      : 'O capital investido corresponde ao patrimônio líquido mais empréstimos e financiamentos, menos caixa e equivalentes.';
 
   return (
     <>
@@ -198,7 +203,7 @@ function QualitySeries({
         <h3>{metric}</h3>
         <p>
           {isRoic
-            ? `A estimativa aplica a alíquota de cenário de ${taxPercent.format(snapshot.roicTaxRate)} ao resultado divulgado antes do financeiro e dos tributos para calcular o NOPAT. O capital investido soma patrimônio líquido consolidado, empréstimos e arrendamentos contabilizados em separado. O cálculo deduz caixa e equivalentes como aproximação do caixa excedente e usa a média dos saldos de abertura e fechamento.`
+            ? `O ROIC divide o NOPAT estimado, calculado com alíquota de ${taxPercent.format(snapshot.roicTaxRate)}, pelo capital investido médio na abertura e no fechamento. ${capitalDescription}`
             : 'O lucro líquido atribuível à controladora é dividido pela média do patrimônio líquido da controladora nos saldos de abertura e fechamento da mesma DFP.'}
         </p>
       </div>
@@ -246,7 +251,7 @@ function QualitySeries({
         ))}
       </div>
       <p className="quality-provenance">
-        Metodologia <code>{snapshot.methodologyVersion}</code> · lote de{' '}
+        Metodologia <code>{methodology}</code> · lote de{' '}
         <time dateTime={snapshot.manifest.asOf}>{formatDate(snapshot.manifest.asOf)}</time>
       </p>
       <p className="company-source-links">

@@ -12,12 +12,12 @@ describe('Séries de qualidade da CVM', () => {
       [
         'cvm:5410',
         'estimated',
-        [0.234371505171, 0.236335341612, 0.288517416075, 0.2904223523, 0.278651657365],
+        [0.240639595674, 0.24387374995, 0.299735635433, 0.302359712825, 0.29150137589],
       ],
       [
         'cvm:8133',
         'estimated',
-        [0.056171507833, 0.080773313114, 0.047439194944, 0.067552663157, 0.095704172772],
+        [0.073570208343, 0.1065916485, 0.061487611671, 0.086425548143, 0.120722603998],
       ],
       [
         'cvm:19348',
@@ -44,6 +44,9 @@ describe('Séries de qualidade da CVM', () => {
       ).toBe(true);
       for (const [index, observation] of observations.entries()) {
         expect(observation.provenance.qualityStatus).toBe(status);
+        expect(observation.provenance.methodologyVersion).toBe(
+          status === 'estimated' ? 'quality-dfp-m2.v2' : 'quality-dfp-m2.v1',
+        );
         expect(observation.spreadPp).toBeNull();
         expect(observation.value).toBeCloseTo(values[index] ?? 0, 9);
       }

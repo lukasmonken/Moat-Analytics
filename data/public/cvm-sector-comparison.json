@@ -3,7 +3,7 @@
     "schemaVersion": "1.0.0",
     "methodologyVersion": "roe-dfp-comparisons.v1",
     "asOf": "2026-11-18",
-    "generatedAt": "2026-11-25T17:05:39+00:00",
+    "generatedAt": "2026-11-25T22:24:08+00:00",
     "years": [
       2021,
       2022,
@@ -79,6 +79,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158209",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -191,6 +192,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156166",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -314,6 +316,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158326",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Seguros e Resseguros",
       "observations": [
         {
           "year": 2021,
@@ -442,6 +445,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=159557",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -497,16 +501,26 @@
         },
         {
           "year": 2025,
-          "roe": null,
-          "reason": "DFP consolidada indisponível no lote da CVM.",
+          "roe": 0.15254733496608713,
+          "reason": null,
           "filing": {
             "referenceDate": "2025-12-31",
             "receivedAt": "2026-02-06",
             "publishedAt": null,
             "version": 1,
-            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154619"
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154619",
+            "supportingDocumentUrl": "https://filemanager-cdn.mziq.com/published/6298ef6f-2b75-43f8-b2ab-99e3fe33e809/cf4c1a42-971e-42e9-8d93-507270859bec_df_banco_abc_pt_122025.pdf"
           },
-          "inputs": null
+          "inputs": {
+            "netIncomeBrl": 1002000000,
+            "openingEquityBrl": 6377958000,
+            "closingEquityBrl": 6758948000,
+            "incomeCode": null,
+            "incomeStatement": "DMPL",
+            "equityCodes": [],
+            "auditedStatementPage": 18,
+            "openingEquityDate": "2025-01-01"
+          }
         }
       ]
     },
@@ -520,6 +534,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158989",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -643,6 +658,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=160576",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -766,6 +782,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158545",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -894,6 +911,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=157361",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -1021,6 +1039,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156191",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -1136,6 +1155,140 @@
       ]
     },
     {
+      "name": "BRADSAÚDE S.A.",
+      "sector": "Serviços médicos",
+      "classification": {
+        "referenceDate": "2026-01-01",
+        "receivedAt": "2026-05-06",
+        "version": 2,
+        "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156733",
+        "archiveYear": 2026
+      },
+      "comparisonGroup": "Seguros e Resseguros",
+      "comparisonContext": {
+        "throughYear": 2025,
+        "note": "Este exercício reflete a Odontoprev. A incorporação das ações da Bradesco Gestão de Saúde foi concluída em 30/04/2026.",
+        "sourceUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1514189&numSequencia=1038895&numVersao=1"
+      },
+      "observations": [
+        {
+          "year": 2021,
+          "roe": 0.32816685166148063,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2021-12-31",
+            "receivedAt": "2022-02-23",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=111983"
+          },
+          "inputs": {
+            "netIncomeBrl": 380359000,
+            "openingEquityBrl": 1202279000,
+            "closingEquityBrl": 1115804000,
+            "incomeCode": "3.11.01",
+            "incomeStatement": "DRE",
+            "equityCodes": [
+              "2.03",
+              "2.03.09"
+            ]
+          }
+        },
+        {
+          "year": 2022,
+          "roe": 0.39319849928020584,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2022-12-31",
+            "receivedAt": "2023-03-01",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=123793"
+          },
+          "inputs": {
+            "netIncomeBrl": 452171000,
+            "openingEquityBrl": 1115804000,
+            "closingEquityBrl": 1184159000,
+            "incomeCode": "3.11.01",
+            "incomeStatement": "DRE",
+            "equityCodes": [
+              "2.03",
+              "2.03.09"
+            ]
+          }
+        },
+        {
+          "year": 2023,
+          "roe": 0.40670991754762337,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2023-12-31",
+            "receivedAt": "2024-02-28",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=134322"
+          },
+          "inputs": {
+            "netIncomeBrl": 511394000,
+            "openingEquityBrl": 1127791000,
+            "closingEquityBrl": 1386994000,
+            "incomeCode": "3.11.01",
+            "incomeStatement": "DRE",
+            "equityCodes": [
+              "2.03",
+              "2.03.09"
+            ]
+          }
+        },
+        {
+          "year": 2024,
+          "roe": 0.41246109111992174,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2024-12-31",
+            "receivedAt": "2025-02-26",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=145038"
+          },
+          "inputs": {
+            "netIncomeBrl": 539244000,
+            "openingEquityBrl": 1386994000,
+            "closingEquityBrl": 1227769000,
+            "incomeCode": "3.11.01",
+            "incomeStatement": "DRE",
+            "equityCodes": [
+              "2.03",
+              "2.03.09"
+            ]
+          }
+        },
+        {
+          "year": 2025,
+          "roe": 0.4642765209505009,
+          "reason": null,
+          "filing": {
+            "referenceDate": "2025-12-31",
+            "receivedAt": "2026-02-27",
+            "publishedAt": null,
+            "version": 1,
+            "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154958"
+          },
+          "inputs": {
+            "netIncomeBrl": 582570000,
+            "openingEquityBrl": 1227769000,
+            "closingEquityBrl": 1281813000,
+            "incomeCode": "3.11.01",
+            "incomeStatement": "DRE",
+            "equityCodes": [
+              "2.03",
+              "2.03.09"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "BRBI BR PARTNERS S.A",
       "sector": "Emp. Adm. Part. - Bancos",
       "classification": {
@@ -1145,6 +1298,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=157515",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -1273,6 +1427,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=161183",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Seguros e Resseguros",
       "observations": [
         {
           "year": 2021,
@@ -1401,6 +1556,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158534",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Seguros e Resseguros",
       "observations": [
         {
           "year": 2021,
@@ -1529,6 +1685,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=156921",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Bancos",
       "observations": [
         {
           "year": 2021,
@@ -1657,6 +1814,7 @@
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=158299",
         "archiveYear": 2026
       },
+      "comparisonGroup": "Seguros e Resseguros",
       "observations": [
         {
           "year": 2021,

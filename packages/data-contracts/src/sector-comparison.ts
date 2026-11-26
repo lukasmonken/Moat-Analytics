@@ -23,6 +23,7 @@ interface ComparisonFiling {
   receivedAt: string;
   version: number;
   filingUrl: string;
+  basis?: 'individual';
 }
 
 interface RoeInputs {
@@ -30,8 +31,10 @@ interface RoeInputs {
   openingEquityBrl: number;
   closingEquityBrl: number;
   incomeStatement: 'DRE' | 'DMPL';
-  incomeCode: string;
+  incomeCode: string | null;
   equityCodes: string[];
+  auditedStatementPage?: number;
+  openingEquityDate?: string;
 }
 
 export interface SectorComparisonObservation {
@@ -45,6 +48,8 @@ export interface SectorComparisonObservation {
 export interface SectorComparisonCompany {
   name: string;
   sector: string;
+  comparisonGroup?: 'Bancos' | 'Seguros e Resseguros';
+  comparisonContext?: { throughYear: number; note: string; sourceUrl: string };
   classification: ComparisonFiling & { archiveYear: number };
   observations: SectorComparisonObservation[];
 }
@@ -72,7 +77,6 @@ interface RoicInputs {
   openingCapitalBrl: number;
   closingCapitalBrl: number;
   accounts: QualityInput[];
-  embeddedLeases?: { note: string; openingBrl: number; closingBrl: number };
 }
 
 export interface SectorRoicObservation {
@@ -91,7 +95,7 @@ export interface SectorRoicCompany {
 
 export interface SectorRoicSnapshot {
   manifest: ComparisonManifest & {
-    methodologyVersion: 'roic-dfp-comparisons.v1';
+    methodologyVersion: 'roic-dfp-comparisons.v2';
     taxRate: 0.34;
     sectorSource: CvmSource;
   };
@@ -167,18 +171,35 @@ function isAccountCode(value: unknown): value is string {
   return typeof value === 'string' && /^\d(?:\.\d{2})+$/.test(value);
 }
 
+const abcAuditedStatement =
+  'https://filemanager-cdn.mziq.com/published/6298ef6f-2b75-43f8-b2ab-99e3fe33e809/cf4c1a42-971e-42e9-8d93-507270859bec_df_banco_abc_pt_122025.pdf';
+
 function isInputs(value: unknown): value is RoeInputs {
+  if (
+    !isObject(value) ||
+    !isMoney(value.netIncomeBrl) ||
+    !isMoney(value.openingEquityBrl) ||
+    !isMoney(value.closingEquityBrl) ||
+    !isListOf(value.equityCodes, isAccountCode) ||
+    !unique(value.equityCodes, (code) => code)
+  ) {
+    return false;
+  }
+  if (value.incomeCode === null) {
+    return (
+      value.incomeStatement === 'DMPL' &&
+      value.equityCodes.length === 0 &&
+      isPositiveInteger(value.auditedStatementPage) &&
+      isDate(value.openingEquityDate)
+    );
+  }
   return (
-    isObject(value) &&
-    isMoney(value.netIncomeBrl) &&
-    isMoney(value.openingEquityBrl) &&
-    isMoney(value.closingEquityBrl) &&
     isAccountCode(value.incomeCode) &&
     ((value.incomeStatement === 'DRE' && value.incomeCode.startsWith('3.')) ||
       (value.incomeStatement === 'DMPL' && value.incomeCode === '5.05.01')) &&
-    isListOf(value.equityCodes, isAccountCode) &&
     value.equityCodes.length > 0 &&
-    unique(value.equityCodes, (code) => code)
+    value.auditedStatementPage === undefined &&
+    value.openingEquityDate === undefined
   );
 }
 
@@ -190,6 +211,7 @@ function isObservation(value: unknown): value is SectorComparisonObservation {
       (!isFiling(value.filing) ||
         value.filing.publishedAt !== null ||
         (value.filing.supportingDocumentUrl !== undefined &&
+          value.filing.supportingDocumentUrl !== abcAuditedStatement &&
           !isSupportingDocumentUrl(value.filing.supportingDocumentUrl)) ||
         !value.filing.referenceDate.startsWith(`${value.year}-`))) ||
     (value.inputs !== null && (!isInputs(value.inputs) || value.filing === null))
@@ -210,20 +232,15 @@ function isObservation(value: unknown): value is SectorComparisonObservation {
   }
 
   const inputs = value.inputs;
+  if (
+    inputs.incomeCode === null &&
+    (inputs.openingEquityDate !== `${value.year}-01-01` ||
+      value.filing.supportingDocumentUrl !== abcAuditedStatement)
+  ) {
+    return false;
+  }
   const expected = inputs.netIncomeBrl / ((inputs.openingEquityBrl + inputs.closingEquityBrl) / 2);
   return numbersAgree(value.roe, expected);
-}
-
-function isEmbeddedLeases(value: unknown): value is NonNullable<RoicInputs['embeddedLeases']> {
-  return (
-    isObject(value) &&
-    typeof value.note === 'string' &&
-    /^\d+(?:\.\d+)*$/.test(value.note) &&
-    isMoney(value.openingBrl) &&
-    value.openingBrl > 0 &&
-    isMoney(value.closingBrl) &&
-    value.closingBrl > 0
-  );
 }
 
 function isRoicInputs(value: unknown): value is RoicInputs {
@@ -236,37 +253,57 @@ function isRoicInputs(value: unknown): value is RoicInputs {
     isMoney(value.closingCapitalBrl) &&
     value.closingCapitalBrl > 0 &&
     isListOf(value.accounts, isQualityInput) &&
-    value.accounts.length > 0 &&
-    unique(value.accounts, ({ key, referenceDate }) => `${key}/${referenceDate}`) &&
-    (value.embeddedLeases === undefined || isEmbeddedLeases(value.embeddedLeases))
+    value.accounts.length === 9 &&
+    unique(value.accounts, ({ key }) => key)
   );
 }
 
-const roicSupportingDocuments = new Set([
-  'https://vale.com/documents/d/guest/form-20-f-2025-en',
-  'https://api.mziq.com/mzfilemanager/v2/d/1c41fa99-efe7-4e72-81dd-5b571f5aa376/fcad7df5-9607-78ed-3455-ffa6e0470211?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/24165f81-24d6-4648-bf9f-66712905d5a2/197836af-54b5-cff0-af1e-de97ad340f36?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/330c258b-6212-45ce-8c13-557ea46cc23a/ec0bffc6-8050-2a0b-1e23-5a3890c7c7d5?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/0cfe19b8-158f-39a5-8750-42ffc2c71a54?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/6b90b8ef-4914-4021-8296-c5aca7b388eb/332513a1-ba6f-da78-df8f-6c5de67a33d1?origin=2',
-  'https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/297cd69b-7cfb-d469-55f1-3d8418bf4b76?origin=2',
-  'https://s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/valorri-uploads/bs/2026/p/P/HKWA55Sxyc8CKT7gPtWg/tupy1588252920032026.pdf',
-  'https://vipfiles.valor.com.br/BDEmpresas/bfc245c3-7342-4b02-a2ff-96206f033415.pdf',
-  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155072',
-  'https://www.rad.cvm.gov.br/ENET/frmGerenciaPaginaFRE.aspx?CodigoTipoInstituicao=1&NumeroSequencialDocumento=155361',
+const individualFilingDocuments = new Map([
+  [
+    'https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154938',
+    'https://ri.sanepar.com.br/docs/DFP-Sanepar-2025-12-31-BjdwmKcn.pdf',
+  ],
+  [
+    'https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154688',
+    'https://api.mziq.com/mzfilemanager/v2/d/4c4aa51f-1235-4aa1-8b83-adc92e8dacc3/197553f9-c229-4f09-b201-bcf48f2026d6?origin=2',
+  ],
 ]);
 
-function isRoicSupportingDocumentUrl(value: unknown): value is string {
-  return (
-    typeof value === 'string' &&
-    (roicSupportingDocuments.has(value) ||
-      /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/(909327|917851|1073404|1355444|1565025)\/\d{18}\/[\w.-]+\.html?$/.test(
-        value,
-      ) ||
-      /^https:\/\/api\.mziq\.com\/mzfilemanager\/v2\/d\/13154776-9416-4fce-8c46-3e54d45b03a3\/[a-f0-9-]{36}\?origin=[12]$/.test(
-        value,
-      ))
-  );
+function capitalOn(
+  accounts: QualityInput[],
+  period: 'opening' | 'closing',
+  date: string,
+): number | null {
+  const definitions = [
+    ['Equity', 'BPP', '2.03'],
+    ['ShortBorrowings', 'BPP', '2.01.04'],
+    ['LongBorrowings', 'BPP', '2.02.01'],
+    ['Cash', 'BPA', '1.01.01'],
+  ] as const;
+  const [equity, shortDebt, longDebt, cash] = definitions.map(([suffix, statement, code]) => {
+    const account = accounts.find(({ key }) => key === `${period}${suffix}`);
+    if (
+      account?.statement === statement &&
+      account.code === code &&
+      account.referenceDate === date &&
+      isMoney(account.amountBrl)
+    ) {
+      return account.amountBrl;
+    }
+    return undefined;
+  });
+  if (
+    equity === undefined ||
+    shortDebt === undefined ||
+    longDebt === undefined ||
+    cash === undefined ||
+    shortDebt < 0 ||
+    longDebt < 0 ||
+    cash < 0
+  ) {
+    return null;
+  }
+  return equity + shortDebt + longDebt - cash;
 }
 
 function isRoicObservation(value: unknown): value is SectorRoicObservation {
@@ -276,8 +313,12 @@ function isRoicObservation(value: unknown): value is SectorRoicObservation {
     (value.filing !== null &&
       (!isFiling(value.filing) ||
         value.filing.publishedAt !== null ||
-        (value.filing.supportingDocumentUrl !== undefined &&
-          !isRoicSupportingDocumentUrl(value.filing.supportingDocumentUrl)) ||
+        (value.filing.basis === undefined
+          ? value.filing.supportingDocumentUrl !== undefined
+          : value.filing.basis !== 'individual' ||
+            value.filing.supportingDocumentUrl === undefined ||
+            value.filing.supportingDocumentUrl !==
+              individualFilingDocuments.get(value.filing.filingUrl)) ||
         value.filing.referenceDate !== `${value.year}-12-31`))
   )
     return false;
@@ -291,13 +332,19 @@ function isRoicObservation(value: unknown): value is SectorRoicObservation {
   )
     return false;
 
-  const { ebitBrl, nopatBrl, openingCapitalBrl, closingCapitalBrl, accounts, embeddedLeases } =
-    value.inputs;
-  const ebit = accounts.find(({ statement, code }) => statement === 'DRE' && code === '3.05');
+  const { ebitBrl, nopatBrl, openingCapitalBrl, closingCapitalBrl, accounts } = value.inputs;
+  const ebit = accounts.find(({ key }) => key === 'ebit');
+  const opening = capitalOn(accounts, 'opening', `${value.year - 1}-12-31`);
+  const closing = capitalOn(accounts, 'closing', value.filing.referenceDate);
   return (
-    ebit?.amountBrl === ebitBrl &&
+    ebit?.statement === 'DRE' &&
+    ebit.code === '3.05' &&
+    ebit.amountBrl === ebitBrl &&
     ebit.referenceDate === value.filing.referenceDate &&
-    (embeddedLeases === undefined || value.filing.supportingDocumentUrl !== undefined) &&
+    opening !== null &&
+    Math.abs(opening - openingCapitalBrl) < 0.005 &&
+    closing !== null &&
+    Math.abs(closing - closingCapitalBrl) < 0.005 &&
     numbersAgree(nopatBrl, ebitBrl * 0.66) &&
     numbersAgree(value.roic, nopatBrl / ((openingCapitalBrl + closingCapitalBrl) / 2))
   );
@@ -315,7 +362,7 @@ function isRoicCompany(value: unknown): value is SectorRoicCompany {
 function isRoicManifest(value: unknown): value is SectorRoicSnapshot['manifest'] {
   return (
     isComparisonManifest(value) &&
-    value.methodologyVersion === 'roic-dfp-comparisons.v1' &&
+    value.methodologyVersion === 'roic-dfp-comparisons.v2' &&
     value.taxRate === 0.34 &&
     isCvmSource(value.sectorSource) &&
     value.archives.some(({ kind }) => kind === 'fca')
@@ -359,6 +406,14 @@ function isCompany(value: unknown): value is SectorComparisonCompany {
     isObject(value) &&
     isText(value.name) &&
     isText(value.sector) &&
+    (value.comparisonGroup === undefined ||
+      value.comparisonGroup === 'Bancos' ||
+      value.comparisonGroup === 'Seguros e Resseguros') &&
+    (value.comparisonContext === undefined ||
+      (isObject(value.comparisonContext) &&
+        isPositiveInteger(value.comparisonContext.throughYear) &&
+        isText(value.comparisonContext.note) &&
+        isCvmUrl(value.comparisonContext.sourceUrl))) &&
     isFiling(value.classification) &&
     isPositiveInteger(value.classification.archiveYear) &&
     isListOf(value.observations, isObservation)

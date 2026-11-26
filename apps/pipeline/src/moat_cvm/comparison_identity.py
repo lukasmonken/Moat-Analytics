@@ -9,13 +9,20 @@ from ..moat_universe import FCA_FILENAME, parse_cnpj, parse_cvm_code
 from .archives import csv_rows, read_archive
 from .fca import ORIGIN, declaration_order, declarations, filing_key, section_key
 
-# Grupos bancários ou de seguros cuja atividade principal exige ROE mesmo
-# quando o setor cadastral agrupa holdings, resseguradoras e corretoras.
-ROE_ISSUERS = frozenset((16_659, 23_159, 23_795, 24_180, 25_860))
+# Emissores com atividade de seguros ou resseguros verificada na seleção anual.
+INSURANCE_ISSUERS = frozenset((16_659, 20_125, 23_159, 23_795, 24_180))
+
+
+def roe_group(code: int, identity: dict) -> str | None:
+    if code in INSURANCE_ISSUERS:
+        return "Seguros e Resseguros"
+    if identity["sector"] == "Bancos" or code == 25_860:
+        return "Bancos"
+    return None
 
 
 def uses_roe(code: int, identity: dict) -> bool:
-    return identity["sector"] == "Bancos" or code in ROE_ISSUERS
+    return roe_group(code, identity) is not None
 
 
 def selected_companies(selection: dict, directory: dict) -> tuple[date, dict[int, str]]:
