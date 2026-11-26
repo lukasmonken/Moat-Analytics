@@ -1,6 +1,10 @@
 import { parseSectorLeverage } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
-import { formatRatio, parseRatioLimit } from '../apps/web/src/shared/analytics/ratios';
+import {
+  formatRatio,
+  matchesRatioRange,
+  ratioRangeOptions,
+} from '../apps/web/src/shared/analytics/ratios';
 import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
 function snapshot() {
@@ -46,15 +50,33 @@ describe('Dívida líquida/EBITDA da CVM', () => {
     expect(() => parseSectorLeverage(data)).toThrow();
   });
 
-  it('aceita limite negativo, zero e vírgula decimal e rejeita texto', () => {
-    expect(parseRatioLimit(' -1,25 ')).toBe(-1.25);
-    expect(parseRatioLimit('0')).toBe(0);
-    expect(parseRatioLimit('2.5')).toBe(2.5);
-    expect(parseRatioLimit(',5')).toBe(0.5);
-    expect(parseRatioLimit('2,5×')).toBeNull();
-    expect(parseRatioLimit('')).toBeNull();
-    expect(parseRatioLimit('Infinity')).toBeNull();
+  it('formata o múltiplo em português e mostra dados ausentes', () => {
     expect(formatRatio(-0.3)).toBe('-0,30×');
     expect(formatRatio(null)).toBe('Indisponível');
+  });
+});
+
+describe('Faixas de múltiplos', () => {
+  it.each([
+    [-1.25, 'negative'],
+    [-0.01, 'negative'],
+    [0, '0-1'],
+    [0.999, '0-1'],
+    [1, '1-2'],
+    [2, '2-3'],
+    [3, '3-4'],
+    [4, '4-5'],
+    [4.999, '4-5'],
+    [5, '5-plus'],
+    [20, '5-plus'],
+    [null, 'unavailable'],
+    [undefined, 'unavailable'],
+    [Infinity, 'unavailable'],
+    [NaN, 'unavailable'],
+  ] as const)('classifica %s de forma exclusiva em %s', (value, expected) => {
+    const matching = ratioRangeOptions
+      .map((option) => option.value)
+      .filter((range) => matchesRatioRange(value, range));
+    expect(matching).toEqual(['all', expected]);
   });
 });

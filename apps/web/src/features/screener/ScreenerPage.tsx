@@ -160,24 +160,23 @@ function CompanyScreener() {
 
 export function ScreenerPage() {
   const [searchParams] = useSearchParams();
-  const ranking = searchParams.get('ranking');
-  const showDrawdown = ranking === 'drawdown-roic';
-  const showFundamentals = ranking === 'fundamentos';
-  const showCompanies = !showDrawdown && !showFundamentals;
+  const showCompanies = searchParams.get('visao') === 'companhias';
+  const showDrawdown = !showCompanies && searchParams.get('ranking') === 'drawdown-roic';
+  const showFundamentals = !showCompanies && !showDrawdown;
 
   return (
     <div className="feature-page module-page">
       <PageHeader
         title="Screener e Rankings"
-        description="Consulte as companhias da seleção anual e compare seus indicadores."
+        description="Filtre por fundamentos, compare os resultados e abra o histórico de cada empresa."
       />
       <nav className="screener-views" aria-label="Consultas do screener">
         <ButtonLink
           to="/screener"
-          variant={showCompanies ? 'primary' : 'secondary'}
-          aria-current={showCompanies ? 'page' : undefined}
+          variant={showFundamentals ? 'primary' : 'secondary'}
+          aria-current={showFundamentals ? 'page' : undefined}
         >
-          Companhias
+          Rankings
         </ButtonLink>
         <ButtonLink
           to="/screener?ranking=drawdown-roic"
@@ -187,16 +186,16 @@ export function ScreenerPage() {
           Drawdown do ROIC
         </ButtonLink>
         <ButtonLink
-          to="/screener?ranking=fundamentos"
-          variant={showFundamentals ? 'primary' : 'secondary'}
-          aria-current={showFundamentals ? 'page' : undefined}
+          to="/screener?visao=companhias"
+          variant={showCompanies ? 'primary' : 'secondary'}
+          aria-current={showCompanies ? 'page' : undefined}
         >
-          Rankings de fundamentos
+          Diretório de empresas
         </ButtonLink>
       </nav>
-      {showCompanies && <CompanyScreener />}
-      {showDrawdown && <RoicDrawdownRanking />}
       {showFundamentals && <FundamentalRanking />}
+      {showDrawdown && <RoicDrawdownRanking />}
+      {showCompanies && <CompanyScreener />}
     </div>
   );
 }

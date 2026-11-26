@@ -24,13 +24,18 @@ test('ordena a maior queda de ROIC, filtra o ranking e identifica cobertura parc
   await expect(biggest).toContainText('2021 → 2024');
   await expect(biggest).toContainText('5/5');
 
-  const leverage = ranking.getByRole('textbox', { name: 'Dívida líquida/EBITDA máxima' });
+  const leverage = ranking.getByRole('combobox', { name: 'Faixa de dívida líquida/EBITDA' });
   await expect(leverage).toBeEnabled();
   await expect(biggest.getByRole('cell', { name: 'Indisponível' })).toBeVisible();
-  await leverage.fill('0,1');
+  await leverage.selectOption('unavailable');
+  await expect(biggest).toContainText('UNIPAR CARBOCLORO S.A.');
+  await leverage.selectOption('0-1');
+  await expect(table.getByRole('rowheader', { name: /UNIPAR/ })).toHaveCount(0);
+  await search.fill('Kepler Weber');
   await expect(biggest).toContainText('KEPLER WEBER S.A.');
   await expect(biggest).toContainText('0,07×');
-  await leverage.fill('');
+  await search.fill('');
+  await leverage.selectOption('all');
 
   const hideUnavailable = ranking.getByRole('checkbox', {
     name: 'Ocultar empresas com indicadores indisponíveis',
@@ -63,6 +68,7 @@ test('ordena a maior queda de ROIC, filtra o ranking e identifica cobertura parc
   await search.fill('itau unibanco');
   await expect(ranking.getByText('Nenhuma companhia encontrada no ranking')).toBeVisible();
 
-  await page.getByRole('link', { name: 'Companhias', exact: true }).click();
+  await page.getByRole('link', { name: 'Diretório de empresas', exact: true }).click();
+  await expect(page).toHaveURL(/visao=companhias/);
   await expect(page.getByRole('table', { name: 'Companhias selecionadas' })).toBeVisible();
 });

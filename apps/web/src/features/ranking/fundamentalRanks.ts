@@ -11,6 +11,7 @@ import {
   type ComparisonData,
 } from '../company/companyQualityData';
 import { compareNames } from '../screener/presentation';
+import { buildGrowthHistory, type GrowthHistory } from './growthHistory';
 import { rankRoicDrawdown } from './roicDrawdown';
 
 export const accountingFactors = ['profitability', 'moat', 'leverage', 'risk', 'growth'] as const;
@@ -27,6 +28,7 @@ export interface FundamentalRow extends Record<FundamentalFactor, number | null>
   growthBaseBrl: number | null;
   growthFinalBrl: number | null;
   growthReason: string | null;
+  growthHistory: GrowthHistory;
   zScores: Partial<Record<ScoreFactor, number>>;
 }
 
@@ -34,17 +36,27 @@ function isNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value);
 }
 
-function annualEarnings(company: Company, year: number) {
-  const inputs = annualObservation(company, year)?.inputs;
-  if (!inputs) return null;
-  return 'nopatBrl' in inputs ? inputs.nopatBrl : inputs.netIncomeBrl;
-}
-
-function growthIn(company: Company, years: number[]) {
-  const points = years.map((year) => annualEarnings(company, year));
+function growthIn(company: Company, years: number[], sourceYears: number[]) {
+  const series = years.map((year) => {
+    const observation = sourceYears.includes(year) ? annualObservation(company, year) : undefined;
+    const inputs = observation?.inputs;
+    const earnings = inputs && ('nopatBrl' in inputs ? inputs.nopatBrl : inputs.netIncomeBrl);
+    const valueBrl = isNumber(earnings) ? earnings : null;
+    return {
+      year,
+      valueBrl,
+      filingUrl: observation?.filing?.filingUrl ?? null,
+      reason: valueBrl === null ? (observation?.reason ?? 'Valor indisponível.') : null,
+    };
+  });
+  const points = series.map(({ valueBrl }) => valueBrl);
   const base = points[0] ?? null;
   const final = points.at(-1) ?? null;
-  const coverage = { growthBaseBrl: base, growthFinalBrl: final };
+  const coverage = {
+    growthBaseBrl: base,
+    growthFinalBrl: final,
+    growthHistory: buildGrowthHistory(series),
+  };
   if (years.length !== 5 || !points.every(isNumber) || base === null || final === null) {
     return { ...coverage, growth: null, growthReason: 'Histórico contábil incompleto.' };
   }
@@ -142,7 +154,7 @@ export function buildFundamentalRanks(
       validYears: sourceYears.filter((year) =>
         isNumber(annualRate(annualObservation(company, year))),
       ).length,
-      ...growthIn(company, sourceYears),
+      ...growthIn(company, years, sourceYears),
       score: null,
       accountingScore: null,
       zScores: {},
