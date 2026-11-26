@@ -4,6 +4,7 @@ import { getSheet, sheetNames } from '@office-kit/xlsx/workbook';
 import { getAutoFilter, getCell } from '@office-kit/xlsx/worksheet';
 import { readFile } from 'node:fs/promises';
 import { cdiRateUrl } from '../../apps/web/src/shared/data-client/riskFreeRate';
+import { serveCvm2025 } from './annual-fixtures';
 
 async function workbookDownload(
   page: Page,
@@ -23,6 +24,7 @@ async function workbookDownload(
 }
 
 test('exporta o screener filtrado e completo sem afiliações de índices', async ({ page }) => {
+  await serveCvm2025(page);
   await page.goto('./#/screener');
   await page.getByRole('searchbox', { name: 'Companhia' }).fill('WEG S.A.');
   const filtered = await workbookDownload(page, 'Exportar Excel', 'moat-companhias.xlsx');
@@ -58,6 +60,7 @@ test('exporta as quatro consultas contábeis de Empresas', async ({ page }) => {
 });
 
 test('compara ROE e ROIC na mesma lista e exporta toda a seleção', async ({ page }) => {
+  await serveCvm2025(page);
   await page.route(cdiRateUrl, (route) =>
     route.fulfill({ json: [{ data: '15/12/2025', valor: '13.65' }] }),
   );
@@ -137,6 +140,7 @@ test('compara ROE e ROIC na mesma lista e exporta toda a seleção', async ({ pa
 });
 
 test('mantém empresas sem ROIC na lista e pagina o setor inteiro', async ({ page }) => {
+  await serveCvm2025(page);
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });
@@ -175,6 +179,7 @@ test('mantém empresas sem ROIC na lista e pagina o setor inteiro', async ({ pag
 });
 
 test('ordena os retornos de um indicador e exporta todo o recorte em ordem', async ({ page }) => {
+  await serveCvm2025(page);
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });
@@ -246,6 +251,7 @@ test('ordena os retornos de um indicador e exporta todo o recorte em ordem', asy
 });
 
 test('classifica Bradsaúde e Porto Seguro no mesmo grupo de ROE', async ({ page }) => {
+  await serveCvm2025(page);
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });
@@ -278,6 +284,7 @@ test('classifica Bradsaúde e Porto Seguro no mesmo grupo de ROE', async ({ page
 });
 
 test('compara cinco exercícios de duas empresas com o mesmo indicador', async ({ page }) => {
+  await serveCvm2025(page);
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });
   await region.getByText('Comparar histórico', { exact: true }).click();

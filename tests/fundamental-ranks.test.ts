@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import {
   parseSectorComparison,
   parseSectorLeverage,
@@ -13,16 +12,13 @@ import {
   buildFundamentalRanks,
   orderFundamentalRanks,
 } from '../apps/web/src/features/ranking/fundamentalRanks';
-
-function readJson(name: string): unknown {
-  return JSON.parse(readFileSync(`data/public/${name}.json`, 'utf8'));
-}
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
 function sources() {
-  const roe = parseSectorComparison(readJson('cvm-sector-comparison'));
-  const roic = parseSectorRoicComparison(readJson('cvm-sector-roic'));
-  const leverage = parseSectorLeverage(readJson('cvm-sector-leverage'));
-  const reinvestment = parseSectorReinvestment(readJson('cvm-sector-reinvestment'));
+  const roe = parseSectorComparison(readCvm2025('cvm-sector-comparison'));
+  const roic = parseSectorRoicComparison(readCvm2025('cvm-sector-roic'));
+  const leverage = parseSectorLeverage(readCvm2025('cvm-sector-leverage'));
+  const reinvestment = parseSectorReinvestment(readCvm2025('cvm-sector-reinvestment'));
   return { roe, roic, leverage, reinvestment, data: combineSnapshots(roe, roic) };
 }
 

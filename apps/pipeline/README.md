@@ -130,3 +130,9 @@ python3 apps/pipeline/run_sector_margins.py
 ```
 
 Os lotes usam o último exercício comum e conferem o arquivo e a versão das demonstrações do ROIC. Cada registro guarda as contas de origem ou o motivo de indisponibilidade. A página Empresas usa os lotes de endividamento e reinvestimento nos filtros das companhias de ROIC e apresenta as margens nos detalhes.
+
+## Conferir e publicar os balanços anuais
+
+Na branch padrão `main`, a CI consulta a CVM toda terça-feira às 7h17 de Brasília. O workflow reconstitui a entrada pelos nomes oficiais da seleção, atualiza os cinco lotes contábeis, executa as verificações e publica o site. A etapa de gravação usa a permissão `contents: write` concedida pelo workflow a esse job. A publicação usa a configuração existente de GitHub Pages.
+
+Para validar localmente com os ZIPs já coletados, execute `python3 apps/pipeline/run_annual_refresh.py --offline`. A saída padrão fica em `data/processed/annual-refresh/`. A opção `--end-year` define o exercício máximo a procurar. A execução com acesso à CVM registra a data da conferência. [Fontes de dados](../../docs/DATA_SOURCES.md#atualização-anual-da-cvm)

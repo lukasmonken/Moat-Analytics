@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import { parseSectorComparison, parseSectorRoicComparison } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 import {
@@ -14,10 +13,11 @@ import {
   applyPortfolioPreset,
   buildPortfolioPresets,
 } from '../apps/web/src/features/portfolio/portfolioPresets';
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
 const comparison = combineSnapshots(
-  parseSectorComparison(JSON.parse(readFileSync('data/public/cvm-sector-comparison.json', 'utf8'))),
-  parseSectorRoicComparison(JSON.parse(readFileSync('data/public/cvm-sector-roic.json', 'utf8'))),
+  parseSectorComparison(readCvm2025('cvm-sector-comparison')),
+  parseSectorRoicComparison(readCvm2025('cvm-sector-roic')),
 );
 
 function company(

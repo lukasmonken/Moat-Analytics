@@ -58,6 +58,7 @@ interface ComparisonManifest {
   schemaVersion: '1.0.0';
   asOf: string;
   generatedAt: string;
+  verifiedOn?: string;
   years: number[];
   source: CvmSource;
   archives: SectorComparisonArchive[];
@@ -122,6 +123,10 @@ function isComparisonManifest(
     value.schemaVersion !== '1.0.0' ||
     !isDate(value.asOf) ||
     !isTimestamp(value.generatedAt) ||
+    (value.verifiedOn !== undefined &&
+      (!isDate(value.verifiedOn) ||
+        value.verifiedOn < value.asOf ||
+        value.verifiedOn > value.generatedAt.slice(0, 10))) ||
     !isCvmSource(value.source) ||
     !isListOf(value.archives, isArchive) ||
     !unique(value.archives, (archive) => `${archive.kind}/${archive.year}`) ||

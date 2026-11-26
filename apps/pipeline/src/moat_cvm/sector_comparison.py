@@ -25,7 +25,7 @@ from .fca import SOURCE as SECTOR_SOURCE
 from .sector_roe_notes import AUDITED_ROE_REVIEWS
 
 METHODOLOGY = "roe-dfp-comparisons.v1"
-YEARS = tuple(range(2021, 2026))
+EXERCISE_COUNT = 5
 INCOME_LAYOUTS = ("3.11", "3.09", "3.13")
 EQUITY_LAYOUTS = ("2.03", "2.07", "2.08")
 INCOME_LABELS = (
@@ -59,6 +59,21 @@ BRADSAUDE_CONTEXT = {
 }
 INCOME_MISMATCH = "Lucro consolidado diverge da atribuição aos acionistas."
 DmplAccounts = dict[str, dict[str, list[CsvRow]]]
+
+
+def annual_window(end_year: int) -> tuple[int, ...]:
+    if type(end_year) is not int or not EXERCISE_COUNT <= end_year <= 9999:
+        raise ValueError("Ano final inválido para a janela de cinco exercícios.")
+    return tuple(range(end_year - EXERCISE_COUNT + 1, end_year + 1))
+
+
+def comparison_years(dfp_archives: dict[int, Path]) -> tuple[int, ...]:
+    if len(dfp_archives) != EXERCISE_COUNT or any(type(year) is not int for year in dfp_archives):
+        raise ValueError("O comparativo exige cinco ZIPs de exercícios consecutivos da CVM.")
+    years = tuple(sorted(dfp_archives))
+    if years != annual_window(years[-1]):
+        raise ValueError("O comparativo exige cinco ZIPs de exercícios consecutivos da CVM.")
+    return years
 
 
 def digits(value: str) -> str:
@@ -362,8 +377,7 @@ def year_comparison(path: Path, year: int, identities: dict[str, dict]) -> tuple
 def create_sector_comparison(
     selection: dict, directory: dict, fca_archives: list[Path], dfp_archives: dict[int, Path],
 ) -> dict:
-    if tuple(sorted(dfp_archives)) != YEARS:
-        raise ValueError("A janela de comparação exige os cinco ZIPs da CVM de 2021 a 2025.")
+    years = comparison_years(dfp_archives)
     by_code, archives = comparison_identities(selection, directory, fca_archives)
     identities = {
         f"{code:06d}": {**identity, "comparisonGroup": group}
@@ -378,7 +392,7 @@ def create_sector_comparison(
         }
         for code, identity in identities.items()
     }
-    for year in YEARS:
+    for year in years:
         source, observations = year_comparison(dfp_archives[year], year, identities)
         archives.append(source)
         for code, observation in observations.items():
@@ -389,7 +403,7 @@ def create_sector_comparison(
             "methodologyVersion": METHODOLOGY,
             "asOf": selection["asOf"],
             "generatedAt": datetime.now(UTC).isoformat(timespec="seconds"),
-            "years": list(YEARS),
+            "years": list(years),
             "source": SOURCE,
             "sectorSource": SECTOR_SOURCE,
             "archives": sorted(archives, key=lambda source: (source["kind"], source["year"])),

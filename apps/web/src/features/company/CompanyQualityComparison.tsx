@@ -561,6 +561,11 @@ function ComparisonResults({
         <span>
           Seleção de <time dateTime={roe.asOf}>{formatDate(roe.asOf)}</time>
         </span>
+        {roe.verifiedOn && roe.verifiedOn === roic.verifiedOn && (
+          <span>
+            CVM conferida em <time dateTime={roe.verifiedOn}>{formatDate(roe.verifiedOn)}</time>
+          </span>
+        )}
         <a href={roe.source.datasetUrl} target="_blank" rel="noreferrer">
           Demonstrativos da CVM
         </a>

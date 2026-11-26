@@ -40,6 +40,8 @@
 - **Drawdown do ROIC.** O ranking mede a maior queda entre um ROIC anual e um ano posterior, em pontos percentuais, dentro dos últimos cinco exercícios consecutivos. As lacunas aparecem com quantidade de exercícios disponíveis.
 - **Insumos faltantes de 2025.** Revisões por documento e versão usam só os dados necessários ao ROE ou ao ROIC. A DMPL auditada fornece os três insumos do Banco ABC. Quando a companhia declara ausência de subsidiárias, a base individual pode cobrir todo o perímetro. O lote explicita essa base na Sanepar. [Metodologia](METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
 
+- **Atualização anual da CVM.** O GitHub Actions reconstitui a entrada pelos nomes oficiais da seleção e consulta os ZIPs de FCA e DFP. Quando o exercício mais recente contém ROE ou ROIC válido, ele entra na janela móvel. Os cinco lotes são validados em conjunto e o mesmo workflow grava e publica os dados. A data da conferência é registrada separadamente da data-base contábil.
+
 ## M3
 
 - **Capitalização diária privada.** Às 20h23 de Brasília em dias de pregão, a rotina em GitHub Actions consulta a API documentada da brapi e grava um valor por companhia em ambiente privado. O fechamento é conferido pelo histórico diário.

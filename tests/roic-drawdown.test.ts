@@ -1,11 +1,9 @@
-import { readFileSync } from 'node:fs';
 import { parseSectorRoicComparison, type SectorRoicCompany } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 import { rankRoicDrawdown } from '../apps/web/src/features/ranking/roicDrawdown';
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
-const snapshot = parseSectorRoicComparison(
-  JSON.parse(readFileSync('data/public/cvm-sector-roic.json', 'utf8')),
-);
+const snapshot = parseSectorRoicComparison(readCvm2025('cvm-sector-roic'));
 
 function company(
   name: string,

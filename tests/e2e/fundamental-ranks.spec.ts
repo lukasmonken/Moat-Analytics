@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { serveCvm2025 } from './annual-fixtures';
 
 test('compara crescimento por grupo e permite ligar e desligar os dois filtros de dados', async ({
   page,
 }) => {
+  await serveCvm2025(page);
   await page.goto('./#/screener?ranking=fundamentos');
   const region = page.getByRole('region', { name: 'Rankings de fundamentos' });
   const ranking = region.getByLabel('Ranking', { exact: true });

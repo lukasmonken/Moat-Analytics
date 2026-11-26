@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { serveCvm2025 } from './annual-fixtures';
 
 test('filtra endividamento e reinvestimento e exibe margens só para empresas de ROIC', async ({
   page,
 }) => {
+  await serveCvm2025(page);
   await page.goto('./#/empresas');
   const region = page.getByRole('region', { name: 'Comparar empresas' });
   const search = region.getByLabel('Buscar empresa', { exact: true });

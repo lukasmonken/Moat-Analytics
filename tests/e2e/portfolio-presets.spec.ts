@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { serveCvm2025 } from './annual-fixtures';
 
 const bbSeguridade = 'BB SEGURIDADE PARTICIPAÇÕES S.A.';
 const csnMineracao = 'CSN MINERAÇÃO S.A.';
@@ -6,6 +7,7 @@ const cury = 'CURY CONSTRUTORA E INCORPORADORA S.A.';
 const plano = 'PLANO & PLANO DESENVOLVIMENTO IMOBILIÁRIO S.A.';
 
 test('aplica os quatro modelos de carteira sem sobrescrever a carteira salva', async ({ page }) => {
+  await serveCvm2025(page);
   await page.goto('./#/carteiras');
   const model = page.getByLabel('Modelo de carteira');
   const apply = page.getByRole('button', { name: 'Aplicar ao rascunho' });

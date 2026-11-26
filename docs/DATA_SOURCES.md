@@ -12,17 +12,21 @@ O [lote de qualidade](../data/public/cvm-quality.json) usa as mesmas DFP consoli
 
 O [lote de comparação bancária](../data/public/cvm-bank-roe.json) usa DFP consolidadas da CVM de cinco bancos, com 25 observações de ROE de 2021 a 2025. A fonte, a versão de cada formulário e as contas usadas acompanham o indicador. O lote está disponível sob ODbL 1.0.
 
-O comparativo de Empresas cruza as 144 companhias da seleção de 18/11/2026 com o setor declarado no FCA de 2026 e os exercícios consolidados de 2021 a 2025. Os arquivos registram a coleta, o hash dos ZIPs, a versão e o recebimento dos formulários. Os nomes, setores e indicadores derivados da CVM são distribuídos sob ODbL 1.0. [Catálogo FCA](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) · [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
+O comparativo de Empresas cruza as 144 companhias da seleção de 18/11/2026 com o setor cadastrado no FCA na data da seleção e os cinco exercícios consolidados mais recentes. Os arquivos registram a coleta, o hash dos ZIPs, a versão e o recebimento dos formulários. Os nomes, setores e indicadores derivados da CVM são distribuídos sob ODbL 1.0. [Catálogo FCA](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) · [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
 
 O lote de ROE reúne 15 bancos e grupos de seguros. O lote de ROIC estimado reúne as outras 129 companhias. Cada arquivo guarda os formulários de origem, as contas disponíveis e os motivos das lacunas. Para o capital investido, o ROIC usa os totais publicados de patrimônio, financiamentos e caixa em cada balanço. [ROE em JSON](../data/public/cvm-sector-comparison.json) · [ROIC em JSON](../data/public/cvm-sector-roic.json) · [Metodologia](METHODOLOGY.md#comparativos-setoriais-da-seleção-anual)
 
-Neste lote, 2025 tem 15 ROEs e 125 ROICs estimados disponíveis. De 2021 a 2025, são 70 observações de ROE em 75 e 605 de ROIC em 645.
+No lote original com encerramento em 2025, o último exercício tinha 15 ROEs e 125 ROICs estimados disponíveis. De 2021 a 2025, são 70 observações de ROE em 75 e 605 de ROIC em 645.
 
-A DFC do mesmo exercício e da mesma versão do ROIC fornece as contas identificadas de depreciação e amortização e de CAPEX. Para 2025, há 86 múltiplos de dívida líquida/EBITDA e 89 de NOPAT/reinvestimento na seleção de 129 empresas de ROIC. Os arquivos guardam as contas, os motivos de indisponibilidade e o hash do ZIP oficial. [Dívida líquida/EBITDA](../data/public/cvm-sector-leverage.json) · [NOPAT/reinvestimento](../data/public/cvm-sector-reinvestment.json)
+A DFC do mesmo exercício e da mesma versão do ROIC fornece as contas identificadas de depreciação e amortização e de CAPEX. No lote original de 2025, havia 86 múltiplos de dívida líquida/EBITDA e 89 de NOPAT/reinvestimento na seleção de 129 empresas de ROIC. Os arquivos guardam as contas, os motivos de indisponibilidade e o hash do ZIP oficial. [Dívida líquida/EBITDA](../data/public/cvm-sector-leverage.json) · [NOPAT/reinvestimento](../data/public/cvm-sector-reinvestment.json)
 
-A DRE vinculada ao comparativo fornece receita, resultado bruto, EBIT e lucro líquido para as margens. Há três margens calculadas para 125 das 129 empresas de ROIC em 2025. [Margens](../data/public/cvm-sector-margins.json)
+A DRE vinculada ao comparativo fornece receita, resultado bruto, EBIT e lucro líquido para as margens. O lote original de 2025 inclui as três margens para 125 das 129 empresas de ROIC. [Margens](../data/public/cvm-sector-margins.json)
 
 O [Formulário Cadastral da CVM](https://dados.cvm.gov.br/dataset/cia_aberta-doc-fca) fornece os códigos e as classes declarados pelas três companhias em 2026. A página Empresas mostra essa evidência separadamente, com data de referência, recebimento e versão. O [snapshot cadastral em JSON](../data/public/cvm-identity.json) é disponibilizado sob ODbL 1.0. A qualificação do universo e a escolha do ticker representativo dependem da composição oficial dos índices e do volume por classe.
+
+## Atualização anual da CVM
+
+O portal da CVM atualiza semanalmente as DFPs, incluindo reapresentações. O GitHub Actions confere o conjunto toda terça-feira às 7h17 de Brasília na branch principal. A atualização usa a seleção anual publicada e avança quando o novo exercício civil tem ao menos um indicador calculável. O site mostra a data da conferência. Cada observação mantém o documento, a versão e a origem. [Catálogo DFP](https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp)
 
 ## CDI atual
 

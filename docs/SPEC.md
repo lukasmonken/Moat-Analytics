@@ -100,7 +100,7 @@ Histórico mínimo desejado: **5 exercícios**, idealmente **10 a 20+ anos**, qu
 
 Pipeline idempotente: capturar originais, versionar com origem e hash, padronizar tipos/unidades, identificar consolidado vs individual, validar mapas contábeis por companhia, conciliar e produzir Parquet interno + JSON para frontend. Separar dados correntes e snapshots point-in-time; cada observação deve ter `referenceDate`, `publishedAt`, `retrievedAt`, `source`, `methodologyVersion`, `qualityStatus`. Incluir `schemaVersion`, `generatedAt`, `asOf`, `coverage` no manifesto público. Retificações devem ser identificáveis.
 
-Rotinas independentes: preços diários; demonstrativos e universo periodicamente; validação e publicação. Execuções programadas no GitHub Actions podem atrasar; publicar apenas lote validado. Se atualização falhar, manter o último snapshot bom, registrar erro e sinalizar dado desatualizado no app.
+Rotinas independentes para cotações, demonstrativos e seleção anual. O workflow público confere semanalmente a CVM para a seleção publicada, gera juntos os cinco lotes contábeis e atualiza o GitHub Pages após a validação. A janela de cinco exercícios avança quando a CVM disponibiliza observações válidas do exercício novo. Execuções programadas no GitHub Actions podem atrasar; publicar apenas lote validado. Se atualização falhar, manter o último snapshot bom, registrar erro e sinalizar dado desatualizado no app.
 
 ## 6. Rankings e pontuação
 

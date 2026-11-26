@@ -6,8 +6,10 @@ import os
 import sys
 import tempfile
 import unittest
+from contextlib import nullcontext
 from datetime import UTC, datetime
 from pathlib import Path
+from unittest.mock import patch
 from zipfile import ZipFile
 
 REPO = Path(__file__).resolve().parents[2]
@@ -15,8 +17,12 @@ sys.path.insert(0, str(REPO / "packages/finance-core/src"))
 
 from apps.pipeline.src.moat_cvm.sector_comparison import (
     ITAU_EQUITY_COMPONENTS,
+    annual_window,
+    comparison_years,
+    create_sector_comparison,
     year_comparison,
 )
+from apps.pipeline.src.moat_cvm.sector_roic import create_sector_roic
 
 
 def csv_bytes(rows, fields):
@@ -105,6 +111,44 @@ def dmpl(document, *, parent=20, minority=5, total=25):
 
 
 class SectorComparisonTest(unittest.TestCase):
+    def test_builders_roll_to_five_exercises_ending_in_2026(self):
+        years = annual_window(2026)
+        archives = {year: Path(f"{year}.zip") for year in reversed(years)}
+        selection = {"asOf": "2026-11-18"}
+        identities = {
+            111: {"name": "Banco Exemplo", "sector": "Bancos", "classification": {}},
+            222: {"name": "Indústria Exemplo", "sector": "Metalurgia"},
+        }
+        roe_module = "apps.pipeline.src.moat_cvm.sector_comparison"
+        roic_module = "apps.pipeline.src.moat_cvm.sector_roic"
+        with (
+            patch(f"{roe_module}.comparison_identities", return_value=(identities, [])),
+            patch(f"{roe_module}.year_comparison") as year_comparison_mock,
+        ):
+            year_comparison_mock.side_effect = lambda path, year, companies: (
+                {"kind": "dfp", "year": year}, {"000111": {"year": year, "roe": None}},
+            )
+            roe = create_sector_comparison(selection, {}, [], archives)
+        collected = datetime(2027, 4, 1, tzinfo=UTC)
+        with (
+            patch(f"{roic_module}.comparison_identities", return_value=(identities, [])),
+            patch(f"{roic_module}.read_archive", return_value=nullcontext((None, "hash", collected))),
+            patch(f"{roic_module}.selected_filings", return_value=({}, {"000222": "Ausente"})),
+            patch(f"{roic_module}.read_accounts", return_value=({}, set())),
+        ):
+            roic = create_sector_roic(selection, {}, [], archives)
+
+        for snapshot in (roe, roic):
+            self.assertEqual(snapshot["manifest"]["years"], [2022, 2023, 2024, 2025, 2026])
+            self.assertEqual([row["year"] for row in snapshot["manifest"]["archives"]], list(years))
+            self.assertEqual([row["year"] for row in snapshot["companies"][0]["observations"]], list(years))
+        self.assertTrue(roic["manifest"]["archives"][-1]["url"].endswith("dfp_cia_aberta_2026.zip"))
+
+    def test_rejects_gaps_or_missing_archives(self):
+        for years in ((2023, 2024, 2025, 2026), (2021, 2023, 2024, 2025, 2026)):
+            with self.assertRaisesRegex(ValueError, "cinco ZIPs de exercícios consecutivos"):
+                comparison_years({year: Path(f"{year}.zip") for year in years})
+
     def build_year(self, filings, income, equity_rows, *, individual_equity=(), dmpl_rows=()):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)

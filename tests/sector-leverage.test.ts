@@ -1,10 +1,10 @@
-import { readFileSync } from 'node:fs';
 import { parseSectorLeverage } from '@moat/data-contracts';
 import { describe, expect, it } from 'vitest';
 import { formatRatio, parseRatioLimit } from '../apps/web/src/shared/analytics/ratios';
+import { readCvm2025 } from './fixtures/annual-cvm-2025';
 
 function snapshot() {
-  const value: unknown = JSON.parse(readFileSync('data/public/cvm-sector-leverage.json', 'utf8'));
+  const value: unknown = readCvm2025('cvm-sector-leverage');
   return parseSectorLeverage(value);
 }
 

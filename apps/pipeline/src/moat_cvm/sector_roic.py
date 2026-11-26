@@ -14,7 +14,7 @@ from .comparison_identity import classification_url, comparison_identities, uses
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
 from .fca import SOURCE as SECTOR_SOURCE
 from .quality import ROIC_TAX
-from .sector_comparison import YEARS, selected_filings
+from .sector_comparison import comparison_years, selected_filings
 
 METHODOLOGY = "roic-dfp-comparisons.v2"
 INCOME_ACCOUNTS = (
@@ -242,19 +242,20 @@ def observe_roic(issuer: str, year: int, filing: CsvRow, rows: Roles, duplicate:
 def create_sector_roic(
     selection: dict, directory: dict, fca_archives: list[Path], dfp_archives: dict[int, Path],
 ) -> dict:
+    years = comparison_years(dfp_archives)
     identities, archives = comparison_identities(selection, directory, fca_archives)
     selected = {
         f"{code:06}": identity for code, identity in identities.items()
         if not uses_roe(code, identity)
     }
-    if not selected or tuple(sorted(dfp_archives)) != YEARS:
-        raise ValueError("Seleção de ROIC vazia ou ZIPs anuais incompletos.")
+    if not selected:
+        raise ValueError("A seleção de ROIC está vazia.")
     companies = {
         code: {"name": item["name"], "sector": item["sector"], "observations": []}
         for code, item in selected.items()
     }
-    for year, path in sorted(dfp_archives.items()):
-        with read_archive(path) as (archive, checksum, collected):
+    for year in years:
+        with read_archive(dfp_archives[year]) as (archive, checksum, collected):
             filings, reasons = selected_filings(archive, year, selected, collected)
             rows, duplicates = read_accounts(archive, year, filings)
             for code, company in companies.items():
@@ -265,7 +266,7 @@ def create_sector_roic(
                 )
                 company["observations"].append(observation)
             archives.append({
-                "kind": "dfp", "year": year, "url": f"{ORIGIN}{path.name}",
+                "kind": "dfp", "year": year, "url": f"{ORIGIN}dfp_cia_aberta_{year}.zip",
                 "sha256": checksum, "retrievedAt": collected.isoformat(timespec="seconds"),
             })
     return {
@@ -274,7 +275,7 @@ def create_sector_roic(
             "methodologyVersion": METHODOLOGY,
             "asOf": selection["asOf"],
             "generatedAt": datetime.now(UTC).isoformat(timespec="seconds"),
-            "years": list(YEARS),
+            "years": list(years),
             "source": SOURCE,
             "sectorSource": SECTOR_SOURCE,
             "archives": sorted(archives, key=lambda archive: (archive["kind"], archive["year"])),

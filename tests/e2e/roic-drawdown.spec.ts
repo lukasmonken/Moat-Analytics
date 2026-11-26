@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { serveCvm2025 } from './annual-fixtures';
 
 test('ordena a maior queda de ROIC, filtra o ranking e identifica cobertura parcial', async ({
   page,
 }) => {
+  await serveCvm2025(page);
   await page.goto('./#/screener');
   await page.getByRole('link', { name: 'Drawdown do ROIC', exact: true }).click();
   await expect(page).toHaveURL(/ranking=drawdown-roic/);

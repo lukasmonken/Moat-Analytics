@@ -1,5 +1,10 @@
 # Changelog
 
+## Atualização automática dos balanços
+
+- A consulta semanal às DFPs da CVM atualiza ROE, ROIC, endividamento, reinvestimento e margens após validação. A janela móvel de cinco exercícios avança assim que há resultados válidos da seleção no novo exercício.
+- A página Empresas mostra a data da conferência da CVM. O workflow publica o lote validado no GitHub Pages.
+
 ## Risco, endividamento e modelos de carteira
 
 - Ranking de drawdown do ROIC dos cinco últimos exercícios, com a queda em p.p., os anos do pico e do fundo e a cobertura da série.
