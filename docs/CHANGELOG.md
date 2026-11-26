@@ -1,5 +1,9 @@
 # Changelog
 
+## Comparação de fundamentos
+
+- No Screener, duas companhias do mesmo grupo podem ser comparadas lado a lado pelos indicadores, Z-scores e pontuações disponíveis. A tabela identifica o exercício, a janela histórica e o pregão quando há rendimento implícito.
+
 ## Diagnóstico de crescimento e Screener
 
 - Screener e Rankings abre na análise de fundamentos, com atalhos, líderes por indicador, posições no recorte filtrado e diretório em aba própria.
