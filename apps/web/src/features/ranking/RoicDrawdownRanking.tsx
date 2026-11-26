@@ -1,9 +1,9 @@
 import type { SectorLeverageSnapshot } from '@moat/data-contracts';
 import { useEffect, useState } from 'react';
-import { formatRatio, parseRatioLimit } from '../../shared/analytics/ratios';
+import { formatRatio, matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
 import { loadSectorLeverage } from '../../shared/data-client/sectorLeverage';
 import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
-import { Button, EmptyState, Input, Panel, Select, Table } from '../../shared/ui';
+import { Button, EmptyState, Input, Panel, RatioRangeSelect, Select, Table } from '../../shared/ui';
 import { formatPoints } from '../company/QualityHistory';
 import {
   compareNames,
@@ -36,7 +36,7 @@ function RankingResults({
 }: Extract<LoadState, { status: 'ready' }> & { leverageState: LeverageState }) {
   const [search, setSearch] = useState('');
   const [sector, setSector] = useState('');
-  const [leverageLimit, setLeverageLimit] = useState('');
+  const [leverageRange, setLeverageRange] = useState<RatioRange>('all');
   const [requireHistory, setRequireHistory] = useState(false);
   const [hideUnavailable, setHideUnavailable] = useState(false);
   const [page, setPage] = useState(1);
@@ -50,8 +50,7 @@ function RankingResults({
       : null;
   const leverageByName = new Map(leverage?.companies.map(({ name, value }) => [name, value]));
   const hasLeverage = rows.some(({ name }) => leverageByName.get(name) != null);
-  const maxLeverage = hasLeverage ? parseRatioLimit(leverageLimit) : null;
-  const invalidLimit = hasLeverage && leverageLimit.trim() !== '' && maxLeverage === null;
+  const activeLeverageRange = leverage ? leverageRange : 'all';
   const sectors = [...new Set(rows.map((row) => row.sector))].sort(compareNames);
   const matches = rows.filter((row) => {
     const ratio = leverageByName.get(row.name);
@@ -60,7 +59,7 @@ function RankingResults({
       normalizeSearch(row.name).includes(query) &&
       (!requireHistory || row.validYears === years.length) &&
       (!hideUnavailable || (row.drawdownPp !== null && ratio != null)) &&
-      (maxLeverage === null || (ratio != null && ratio <= maxLeverage))
+      matchesRatioRange(ratio, activeLeverageRange)
     );
   });
   const pageSize = Number(defaultPageSize);
@@ -100,17 +99,13 @@ function RankingResults({
             </option>
           ))}
         </Select>
-        <Input
-          id="roic-ranking-max-leverage"
-          label="Dívida líquida/EBITDA máxima"
-          placeholder="2,5"
-          inputMode="decimal"
-          aria-invalid={invalidLimit || undefined}
-          aria-describedby={invalidLimit ? 'roic-ranking-leverage-error' : undefined}
-          disabled={!hasLeverage}
-          value={leverageLimit}
-          onChange={(event) => {
-            setLeverageLimit(event.currentTarget.value);
+        <RatioRangeSelect
+          id="roic-ranking-leverage-range"
+          label="Faixa de dívida líquida/EBITDA"
+          disabled={!leverage}
+          value={leverageRange}
+          onChange={(next) => {
+            setLeverageRange(next);
             setPage(1);
           }}
         />
@@ -127,11 +122,6 @@ function RankingResults({
           setPage(1);
         }}
       />
-      {invalidLimit && (
-        <p id="roic-ranking-leverage-error" role="status">
-          Informe um limite numérico para a alavancagem.
-        </p>
-      )}
       {!hasLeverage && (
         <p role="status">
           {leverageState.status === 'loading'

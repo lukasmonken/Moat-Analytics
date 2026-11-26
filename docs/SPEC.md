@@ -113,6 +113,9 @@ Rotinas independentes para cotações, demonstrativos e seleção anual. O workf
 - A qualidade de reinvestimento usa `NOPAT / (variação do capital de giro operacional + CAPEX)`. O giro operacional soma clientes e estoques e deduz fornecedores. Reinvestimento não positivo não recebe uma posição no ranking do indicador.
 - O crescimento anualizado usa o NOPAT no grupo de ROIC e o lucro atribuível no grupo de ROE, em cinco exercícios consecutivos. A pontuação final das empresas de ROIC aplica pesos iguais aos Z-scores de rentabilidade, qualidade do reinvestimento, endividamento, risco, crescimento e preço. O grupo de ROE usa rentabilidade, crescimento e preço em uma pontuação própria.
 - Os rankings permitem exigir cinco exercícios disponíveis e ocultar empresas com dados indisponíveis em controles independentes.
+- Screener e Rankings abre na análise por fundamentos, com atalhos de pontuação, crescimento e risco. O diretório consultável e exportável tem uma aba própria.
+- O ranking de crescimento abre o diagnóstico por companhia com série anual, variações em reais e percentuais, contagem de altas e sinalização de base inicial baixa.
+- Os seletores de dívida líquida/EBITDA e NOPAT/reinvestimento aceitam faixas de 1×, de valores negativos a 5× ou mais, além da seleção de dados indisponíveis.
 - As margens bruta, operacional e líquida aparecem nos detalhes das empresas de ROIC no último exercício. A inclusão das margens no filtro de qualidade fica para uma etapa futura.
 - A revisão da classificação setorial será feita com o usuário, companhia por companhia. O cadastro de origem da CVM serve de referência até a revisão.
 

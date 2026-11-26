@@ -50,3 +50,74 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+.ranking-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0.65rem;
+}
+
+.ranking-shortcut {
+  display: grid;
+  align-content: start;
+  gap: 0.22rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  color: var(--text);
+  background: var(--surface);
+  text-align: start;
+  cursor: pointer;
+}
+
+.ranking-shortcut:is(:hover, [aria-pressed='true']) {
+  border-color: var(--focus);
+  background: var(--surface-subtle);
+}
+
+.ranking-shortcut__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.ranking-shortcut strong {
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ranking-shortcut__leader {
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+}
+
+.ranking-shortcut small {
+  font-size: 0.75rem;
+}
+
+.ranking-position {
+  width: 1%;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ranking-company-link {
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  cursor: pointer;
+}
+
+.ranking-company-link[aria-expanded='true'] {
+  text-decoration-thickness: 0.14em;
+}
+
+.ranking-filter-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}

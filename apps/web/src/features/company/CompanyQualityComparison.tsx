@@ -5,7 +5,7 @@ import type {
   SectorReinvestmentSnapshot,
 } from '@moat/data-contracts';
 import { useEffect, useMemo, useState } from 'react';
-import { formatRatio, parseRatioLimit } from '../../shared/analytics/ratios';
+import { formatRatio, matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
 import { spreadToRiskFreeRate } from '../../shared/analytics/riskFreeRate';
 import { loadLocalMarketYields } from '../../shared/data-client/marketYields';
 import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
@@ -15,7 +15,7 @@ import { loadSectorMargins } from '../../shared/data-client/sectorMargins';
 import { loadSectorReinvestment } from '../../shared/data-client/sectorReinvestment';
 import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
 import type { RiskFreeRateState } from '../../shared/data-client/useRiskFreeRate';
-import { Button, EmptyState, Input, Panel, Select, Table } from '../../shared/ui';
+import { Button, EmptyState, Input, Panel, RatioRangeSelect, Select, Table } from '../../shared/ui';
 import { ScreenerExport } from '../screener/ScreenerExport';
 import { ScreenerToolbar } from '../screener/ScreenerToolbar';
 import {
@@ -154,35 +154,6 @@ function CompareHistory({ companies, years }: { companies: Company[]; years: num
   );
 }
 
-function RatioLimitField({
-  id,
-  label,
-  value,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  const invalid = value.trim() !== '' && parseRatioLimit(value) === null;
-  return (
-    <div>
-      <Input
-        id={id}
-        label={label}
-        value={value}
-        placeholder="Sem limite"
-        inputMode="decimal"
-        aria-invalid={invalid || undefined}
-        aria-describedby={invalid ? `${id}-error` : undefined}
-        onChange={(event) => onChange(event.currentTarget.value)}
-      />
-      {invalid && <small id={`${id}-error`}>Informe um número, como 2,5.</small>}
-    </div>
-  );
-}
-
 function ComparisonResults({
   data,
   rateState,
@@ -210,8 +181,8 @@ function ComparisonResults({
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<string>(defaultPageSize);
   const [selectedName, setSelectedName] = useState('');
-  const [maxLeverage, setMaxLeverage] = useState('');
-  const [minReinvestment, setMinReinvestment] = useState('');
+  const [leverageRange, setLeverageRange] = useState<RatioRange>('all');
+  const [reinvestmentRange, setReinvestmentRange] = useState<RatioRange>('all');
   const sectors = useMemo(
     () => [...new Set(companies.map(comparisonSector))].sort(compareNames),
     [companies],
@@ -241,8 +212,8 @@ function ComparisonResults({
   );
   const showLeverageFilter = leverageSnapshot !== null && metric !== 'ROE';
   const showReinvestmentFilter = reinvestmentSnapshot !== null && metric !== 'ROE';
-  const leverageLimit = showLeverageFilter ? parseRatioLimit(maxLeverage) : null;
-  const reinvestmentLimit = showReinvestmentFilter ? parseRatioLimit(minReinvestment) : null;
+  const activeLeverageRange = showLeverageFilter ? leverageRange : 'all';
+  const activeReinvestmentRange = showReinvestmentFilter ? reinvestmentRange : 'all';
   const orderByReturn = metric !== '' && order === 'return';
   const searchKey = normalizeSearch(search);
   const filtered = companies.filter((company) => {
@@ -253,14 +224,13 @@ function ComparisonResults({
     ) {
       return false;
     }
-    if (leverageLimit === null && reinvestmentLimit === null) return true;
+    if (activeLeverageRange === 'all' && activeReinvestmentRange === 'all') return true;
     if (company.metric !== 'ROIC') return false;
     const leverageValue = leverageByName.get(company.name)?.value;
     const reinvestmentValue = reinvestmentByName.get(company.name)?.value;
     return (
-      (leverageLimit === null || (leverageValue != null && leverageValue <= leverageLimit)) &&
-      (reinvestmentLimit === null ||
-        (reinvestmentValue != null && reinvestmentValue >= reinvestmentLimit))
+      matchesRatioRange(leverageValue, activeLeverageRange) &&
+      matchesRatioRange(reinvestmentValue, activeReinvestmentRange)
     );
   });
   const hasRoic = filtered.some((company) => company.metric === 'ROIC');
@@ -359,23 +329,23 @@ function ComparisonResults({
           ))}
         </Select>
         {showLeverageFilter && (
-          <RatioLimitField
-            id="company-quality-max-leverage"
-            label="Dívida líquida/EBITDA máxima"
-            value={maxLeverage}
+          <RatioRangeSelect
+            id="company-quality-leverage-range"
+            label="Faixa de dívida líquida/EBITDA"
+            value={leverageRange}
             onChange={(next) => {
-              setMaxLeverage(next);
+              setLeverageRange(next);
               showPage(1);
             }}
           />
         )}
         {showReinvestmentFilter && (
-          <RatioLimitField
-            id="company-quality-min-reinvestment"
-            label="NOPAT/reinvestimento mínimo"
-            value={minReinvestment}
+          <RatioRangeSelect
+            id="company-quality-reinvestment-range"
+            label="Faixa de NOPAT/reinvestimento"
+            value={reinvestmentRange}
             onChange={(next) => {
-              setMinReinvestment(next);
+              setReinvestmentRange(next);
               showPage(1);
             }}
           />

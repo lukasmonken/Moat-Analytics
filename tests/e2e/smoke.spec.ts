@@ -25,6 +25,8 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
 
   await page.getByRole('link', { name: 'Explorar screener' }).click();
   await expect(page).toHaveURL(/#\/screener$/);
+  await expect(page.getByRole('heading', { name: 'Rankings de fundamentos' })).toBeVisible();
+  await page.getByRole('link', { name: 'Diretório de empresas' }).click();
   await expect(page.getByRole('heading', { name: 'Diretório de companhias' })).toBeVisible();
   const directory = page.getByRole('table', { name: 'Companhias selecionadas' });
   await expect(directory.getByRole('columnheader')).toHaveText(['Companhia']);
@@ -37,7 +39,7 @@ test('navega, atualiza a rota e mantém o tema sem erros no navegador', async ({
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   const response = await page.reload();
   expect(response?.ok()).toBe(true);
-  await expect(page).toHaveURL(/#\/screener$/);
+  await expect(page).toHaveURL(/#\/screener\?visao=companhias$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Screener e Rankings' })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   expect(errors).toEqual([]);

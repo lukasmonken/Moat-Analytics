@@ -53,6 +53,8 @@ describe('Moat Analytics', () => {
 
     expect(window.location.hash).toBe('#/screener');
     expect(screen.getByRole('heading', { level: 1, name: 'Screener e Rankings' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Rankings de fundamentos' })).toBeTruthy();
+    await user.click(screen.getByRole('link', { name: 'Diretório de empresas' }));
     expect(await screen.findByRole('heading', { name: 'Diretório de companhias' })).toBeTruthy();
   });
 
@@ -79,7 +81,7 @@ describe('Moat Analytics', () => {
   });
 
   it('filtra a lista pública pelo nome da companhia', async () => {
-    window.history.replaceState(null, '', '/#/screener');
+    window.history.replaceState(null, '', '/#/screener?visao=companhias');
     const user = userEvent.setup();
     render(<App />);
 

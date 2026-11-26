@@ -49,7 +49,7 @@ function sample(): IndexUniverseSnapshot {
 
 function renderScreener() {
   return render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={['/screener?visao=companhias']}>
       <ScreenerPage />
     </MemoryRouter>,
   );

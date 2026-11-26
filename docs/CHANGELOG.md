@@ -1,5 +1,11 @@
 # Changelog
 
+## Diagnóstico de crescimento e Screener
+
+- Screener e Rankings abre na análise de fundamentos, com atalhos, líderes por indicador, posições no recorte filtrado e diretório em aba própria.
+- O diagnóstico por empresa mostra a série anual de NOPAT ou lucro atribuível, altas, variações em reais e em percentual e uma indicação de base inicial baixa.
+- Seletores de faixa de dívida líquida/EBITDA e NOPAT/reinvestimento substituem os campos de limite nos fluxos de análise.
+
 ## Atualização automática dos balanços
 
 - A consulta semanal às DFPs da CVM atualiza ROE, ROIC, endividamento, reinvestimento e margens após validação. A janela móvel de cinco exercícios avança assim que há resultados válidos da seleção no novo exercício.

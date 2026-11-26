@@ -25,7 +25,7 @@ async function workbookDownload(
 
 test('exporta o screener filtrado e completo sem afiliações de índices', async ({ page }) => {
   await serveCvm2025(page);
-  await page.goto('./#/screener');
+  await page.goto('./#/screener?visao=companhias');
   await page.getByRole('searchbox', { name: 'Companhia' }).fill('WEG S.A.');
   const filtered = await workbookDownload(page, 'Exportar Excel', 'moat-companhias.xlsx');
   expect(sheetNames(filtered)).toEqual(['Companhias', 'Metodologia e fontes']);

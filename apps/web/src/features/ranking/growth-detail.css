@@ -1,0 +1,85 @@
+.growth-detail {
+  display: grid;
+  min-width: 0;
+  gap: 0.8rem;
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  scroll-margin: 1rem;
+}
+
+.growth-detail__header,
+.growth-detail__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 0.65rem 1.25rem;
+}
+
+.growth-detail__header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.growth-detail__header h3,
+.growth-detail__summary,
+.growth-detail__summary dd {
+  margin: 0;
+}
+
+.growth-detail__header h3 {
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.growth-detail__summary dt,
+.growth-detail__note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.growth-detail__summary dd {
+  font-weight: 600;
+}
+
+.growth-detail__flag {
+  padding: 0.55rem 0.65rem;
+  border-inline-start: 2px solid var(--focus);
+  background: var(--surface-subtle);
+}
+
+.growth-detail__scroll {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.growth-detail__scroll .ui-table {
+  min-width: 29rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.growth-detail__scroll :is(td, th) {
+  white-space: nowrap;
+}
+
+.growth-detail__scroll small {
+  display: block;
+  max-width: 21rem;
+  white-space: normal;
+}
+
+.growth-detail__track {
+  display: block;
+  max-width: 12rem;
+  height: 0.24rem;
+  margin-top: 0.2rem;
+  border-radius: 0.125rem;
+  background: var(--surface-subtle);
+}
+
+.growth-detail__bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--focus);
+}

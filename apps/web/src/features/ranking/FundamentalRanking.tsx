@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { formatRatio } from '../../shared/analytics/ratios';
+import { useEffect, useRef, useState } from 'react';
+import { formatRatio, matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
 import { loadLocalMarketYields } from '../../shared/data-client/marketYields';
 import { loadSectorComparison } from '../../shared/data-client/sectorComparison';
 import { loadSectorLeverage } from '../../shared/data-client/sectorLeverage';
 import { loadSectorReinvestment } from '../../shared/data-client/sectorReinvestment';
 import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
-import { Button, EmptyState, Input, Panel, Select, Table } from '../../shared/ui';
+import { Button, EmptyState, Input, Panel, RatioRangeSelect, Select, Table } from '../../shared/ui';
 import { formatPoints, formatRate } from '../company/QualityHistory';
 import { combineSnapshots } from '../company/companyQualityData';
 import { formatCurrency } from '../company/financialPresentation';
@@ -16,6 +16,7 @@ import {
   formatCompanyCount,
   normalizeSearch,
 } from '../screener/presentation';
+import { GrowthDetail } from './GrowthDetail';
 import { RankingDataFilters } from './RankingDataFilters';
 import {
   availableFactorCount,
@@ -43,6 +44,8 @@ const scoreFormat = new Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2,
 });
 
+const growthDetailId = 'ranking-growth-detail';
+
 type RankingData = ReturnType<typeof buildFundamentalRanks>;
 type LoadState = { status: 'loading' | 'error' } | { status: 'ready'; data: RankingData };
 
@@ -56,16 +59,67 @@ function formatRankingValue(row: FundamentalRow, factor: FundamentalFactor) {
   return formatRatio(value);
 }
 
+function RankingShortcuts({
+  rows,
+  current,
+  onSelect,
+  hasPrice,
+}: {
+  rows: FundamentalRow[];
+  current: FundamentalFactor;
+  onSelect: (factor: FundamentalFactor) => void;
+  hasPrice: boolean;
+}) {
+  const isRoic = rows[0]?.metric === 'ROIC';
+  const views: FundamentalFactor[] = isRoic
+    ? [rows.some(({ score }) => score !== null) ? 'score' : 'accountingScore', 'growth', 'risk']
+    : ['profitability', 'growth', ...(hasPrice ? (['price'] as const) : [])];
+  return (
+    <div className="ranking-shortcuts" role="group" aria-label="Destaques dos rankings">
+      {views.map((factor) => {
+        const available = rows.filter((row) => row[factor] !== null);
+        const leader = orderFundamentalRanks(available, factor).at(0);
+        return (
+          <button
+            key={factor}
+            type="button"
+            className="ranking-shortcut"
+            aria-pressed={current === factor}
+            onClick={() => onSelect(factor)}
+          >
+            <span className="ranking-shortcut__label">
+              {factor === 'risk' ? 'Menor drawdown do ROIC' : labels[factor]}
+            </span>
+            {leader && (
+              <>
+                <strong>{formatRankingValue(leader, factor)}</strong>
+                <span className="ranking-shortcut__leader">{leader.name}</span>
+              </>
+            )}
+            <small>{formatCompanyCount(available.length, rows.length)} com dados</small>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function RankingResults({ data }: { data: RankingData }) {
   const [group, setGroup] = useState<FundamentalRow['metric']>('ROIC');
   const [selectedFactor, setSelectedFactor] = useState<FundamentalFactor>(
-    data.marketTradeDate ? 'score' : 'accountingScore',
+    data.rows.some(({ metric, score }) => metric === 'ROIC' && score !== null)
+      ? 'score'
+      : 'accountingScore',
   );
   const [search, setSearch] = useState('');
   const [sector, setSector] = useState('');
+  const [leverageRange, setLeverageRange] = useState<RatioRange>('all');
+  const [reinvestmentRange, setReinvestmentRange] = useState<RatioRange>('all');
   const [requireHistory, setRequireHistory] = useState(false);
   const [hideUnavailable, setHideUnavailable] = useState(false);
   const [page, setPage] = useState(1);
+  const [expandedName, setExpandedName] = useState<string | null>(null);
+  const growthTrigger = useRef<HTMLButtonElement>(null);
   const isRoic = group === 'ROIC';
   const validFactors = isRoic ? factors : (['profitability', 'growth', 'price', 'score'] as const);
   const factor = validFactors.some((candidate) => candidate === selectedFactor)
@@ -83,11 +137,22 @@ function RankingResults({ data }: { data: RankingData }) {
   const requiredFactors = (isRoic ? 5 : 2) + (includePrice ? 1 : 0);
   const scoreSampleSize = groupRows.filter((row) => row[factor] !== null).length;
   const query = normalizeSearch(search);
+  const hasFilters = Boolean(
+    query ||
+    sector ||
+    requireHistory ||
+    hideUnavailable ||
+    (isRoic && (leverageRange !== 'all' || reinvestmentRange !== 'all')),
+  );
+
   const matches = orderFundamentalRanks(
     groupRows.filter(
       (row) =>
         (!sector || row.sector === sector) &&
         normalizeSearch(row.name).includes(query) &&
+        (!isRoic ||
+          (matchesRatioRange(row.leverage, leverageRange) &&
+            matchesRatioRange(row.moat, reinvestmentRange))) &&
         (!requireHistory || row.validYears === 5) &&
         (!hideUnavailable ||
           (row[factor] !== null && availableFactorCount(row, includePrice) === requiredFactors)),
@@ -99,9 +164,48 @@ function RankingResults({ data }: { data: RankingData }) {
   const tableLabel = `Ranking de ${criterion.toLowerCase()}`;
   const numeratorLabel = isRoic ? 'NOPAT' : 'Lucro atribuível';
   const priceLabel = isRoic ? 'NOPAT/EV' : 'Earnings yield';
+  const showGrowth = factor === 'growth';
+  const rankByValue = new Map<number, number>();
+  for (const [index, row] of matches.entries()) {
+    const value = row[factor];
+    if (value !== null && !rankByValue.has(value)) rankByValue.set(value, index + 1);
+  }
+  const visible = matches.slice(offset, offset + pageSize);
+  const expanded = showGrowth ? visible.find(({ name }) => name === expandedName) : undefined;
+
+  function showPage(pageNumber: number) {
+    setPage(pageNumber);
+    setExpandedName(null);
+  }
+
+  function selectFactor(value: FundamentalFactor) {
+    setSelectedFactor(value);
+    showPage(1);
+  }
+
+  function clearFilters() {
+    setSearch('');
+    setSector('');
+    setLeverageRange('all');
+    setReinvestmentRange('all');
+    setRequireHistory(false);
+    setHideUnavailable(false);
+    showPage(1);
+  }
+
+  function closeGrowth() {
+    setExpandedName(null);
+    growthTrigger.current?.focus();
+  }
 
   return (
     <>
+      <RankingShortcuts
+        rows={groupRows}
+        current={factor}
+        onSelect={selectFactor}
+        hasPrice={marketTradeDate !== null}
+      />
       <div className="roic-ranking-filters">
         <Select
           id="fundamental-ranking-group"
@@ -110,7 +214,7 @@ function RankingResults({ data }: { data: RankingData }) {
           onChange={(event) => {
             setGroup(event.currentTarget.value as FundamentalRow['metric']);
             setSector('');
-            setPage(1);
+            showPage(1);
           }}
         >
           <option value="ROIC">Empresas de ROIC</option>
@@ -120,10 +224,7 @@ function RankingResults({ data }: { data: RankingData }) {
           id="fundamental-ranking-factor"
           label="Ranking"
           value={factor}
-          onChange={(event) => {
-            setSelectedFactor(event.currentTarget.value as FundamentalFactor);
-            setPage(1);
-          }}
+          onChange={(event) => selectFactor(event.currentTarget.value as FundamentalFactor)}
         >
           {validFactors.map((key) => (
             <option key={key} value={key}>
@@ -138,7 +239,7 @@ function RankingResults({ data }: { data: RankingData }) {
           value={search}
           onChange={(event) => {
             setSearch(event.currentTarget.value);
-            setPage(1);
+            showPage(1);
           }}
         />
         <Select
@@ -147,7 +248,7 @@ function RankingResults({ data }: { data: RankingData }) {
           value={sector}
           onChange={(event) => {
             setSector(event.currentTarget.value);
-            setPage(1);
+            showPage(1);
           }}
         >
           <option value="">Todos os setores</option>
@@ -157,19 +258,48 @@ function RankingResults({ data }: { data: RankingData }) {
             </option>
           ))}
         </Select>
+        {isRoic && (
+          <>
+            <RatioRangeSelect
+              id="fundamental-ranking-leverage"
+              label="Faixa de dívida líquida/EBITDA"
+              value={leverageRange}
+              onChange={(value) => {
+                setLeverageRange(value);
+                showPage(1);
+              }}
+            />
+            <RatioRangeSelect
+              id="fundamental-ranking-reinvestment"
+              label="Faixa de NOPAT/reinvestimento"
+              value={reinvestmentRange}
+              onChange={(value) => {
+                setReinvestmentRange(value);
+                showPage(1);
+              }}
+            />
+          </>
+        )}
       </div>
-      <RankingDataFilters
-        requireHistory={requireHistory}
-        hideUnavailable={hideUnavailable}
-        onHistoryChange={(checked) => {
-          setRequireHistory(checked);
-          setPage(1);
-        }}
-        onUnavailableChange={(checked) => {
-          setHideUnavailable(checked);
-          setPage(1);
-        }}
-      />
+      <div className="ranking-filter-actions">
+        <RankingDataFilters
+          requireHistory={requireHistory}
+          hideUnavailable={hideUnavailable}
+          onHistoryChange={(checked) => {
+            setRequireHistory(checked);
+            showPage(1);
+          }}
+          onUnavailableChange={(checked) => {
+            setHideUnavailable(checked);
+            showPage(1);
+          }}
+        />
+        {hasFilters && (
+          <Button variant="quiet" onClick={clearFilters}>
+            Limpar filtros
+          </Button>
+        )}
+      </div>
       {aggregate && (
         <p>
           Pontuação com pesos iguais em {requiredFactors} fatores, calculada para {scoreSampleSize}{' '}
@@ -194,7 +324,7 @@ function RankingResults({ data }: { data: RankingData }) {
       {factor === 'growth' && (
         <p>
           Crescimento anualizado de {years[0]} a {years.at(-1)}, com cinco exercícios e valores de
-          início e fim positivos.
+          início e fim positivos. Selecione uma companhia para ver a série anual.
         </p>
       )}
       {matches.length === 0 ? (
@@ -209,7 +339,7 @@ function RankingResults({ data }: { data: RankingData }) {
             count={formatCompanyCount(matches.length, groupRows.length)}
             currentPage={page}
             totalPages={Math.ceil(matches.length / pageSize)}
-            onPageChange={setPage}
+            onPageChange={showPage}
             paginationLabel="Paginação do ranking de fundamentos"
           />
           <div
@@ -221,6 +351,9 @@ function RankingResults({ data }: { data: RankingData }) {
             <Table aria-label={tableLabel}>
               <thead>
                 <tr>
+                  <th scope="col" className="ranking-position">
+                    Posição
+                  </th>
                   <th scope="col">Companhia</th>
                   <th
                     scope="col"
@@ -247,10 +380,29 @@ function RankingResults({ data }: { data: RankingData }) {
                 </tr>
               </thead>
               <tbody>
-                {matches.slice(offset, offset + pageSize).map((row) => (
+                {visible.map((row) => (
                   <tr key={row.name}>
+                    <td className="ranking-position">
+                      {row[factor] === null ? '—' : rankByValue.get(row[factor])}
+                    </td>
                     <th scope="row">
-                      {row.name}
+                      {showGrowth ? (
+                        <button
+                          type="button"
+                          className="ranking-company-link"
+                          aria-label={`Ver crescimento de ${row.name}`}
+                          aria-expanded={expandedName === row.name}
+                          aria-controls={expandedName === row.name ? growthDetailId : undefined}
+                          onClick={(event) => {
+                            growthTrigger.current = event.currentTarget;
+                            setExpandedName(expandedName === row.name ? null : row.name);
+                          }}
+                        >
+                          {row.name}
+                        </button>
+                      ) : (
+                        row.name
+                      )}
                       <small>{row.sector}</small>
                     </th>
                     <td>
@@ -282,6 +434,7 @@ function RankingResults({ data }: { data: RankingData }) {
           </div>
         </div>
       )}
+      {expanded && <GrowthDetail id={growthDetailId} row={expanded} onClose={closeGrowth} />}
     </>
   );
 }
