@@ -1,5 +1,14 @@
 # Changelog
 
+## Comparação de fundamentos
+
+- No Screener, duas companhias do mesmo grupo podem ser comparadas lado a lado pelos indicadores, Z-scores e pontuações disponíveis. A tabela identifica o exercício, a janela histórica e o pregão quando há rendimento implícito.
+
+## Conferência do fator preço
+
+- A coleta privada compara as estimativas de valor de mercado por código, preserva uma estimativa por companhia e sinaliza divergências. O mapa privado passa a aceitar códigos alternativos de ações e units da FCA.
+- O workflow privado usa os comparativos publicados na branch padrão do Moat e informa a cobertura de valor de mercado e rendimentos no log.
+
 ## Diagnóstico de crescimento e Screener
 
 - Screener e Rankings abre na análise de fundamentos, com atalhos, líderes por indicador, posições no recorte filtrado e diretório em aba própria.

@@ -109,15 +109,15 @@ A saída padrão `data/processed/market-closes/market-closes.json` é ignorada p
 
 ## Atualizar valor de mercado e rendimento implícito
 
-O mapa privado é gerado a partir da seleção anual e deve ser atualizado quando ela mudar.
+Gere o mapa privado quando a seleção anual mudar. Use o ZIP da FCA do ano da seleção para incluir códigos alternativos de ações e units cadastrados na CVM.
 
 ```bash
-python3 apps/pipeline/run_market_cap_universe.py
+python3 apps/pipeline/run_market_cap_universe.py --fca data/raw/cvm/fca_cia_aberta_2026.zip
 ```
 
-Use uma chave `BRAPI_TOKEN` no ambiente local para executar `python3 apps/pipeline/run_market_caps.py` depois das 20h20, em dia de pregão. A saída é `data/processed/market-caps/latest.json`. O arquivo guarda a capitalização por empresa, o rendimento implícito e suas datas de mercado e de balanço. O `npm run dev` lê esse lote no computador local e mostra NOPAT/EV e earnings yield em Empresas. Os valores do provedor ficam em `data/processed`, ignorados pelo Git.
+Use uma chave `BRAPI_TOKEN` no ambiente local para executar `python3 apps/pipeline/run_market_caps.py` depois das 20h20, em dia de pregão. A saída é `data/processed/market-caps/latest.json`. O arquivo guarda a estimativa de capitalização por empresa, a conferência por ticker e o rendimento implícito com as datas de mercado e de balanço. Divergência entre os valores de dois códigos da mesma empresa deixa o preço e o rendimento indisponíveis. A estimativa da brapi pode divergir de uma apuração pelas quantidades de ações por classe. O `npm run dev` lê esse lote no computador local e mostra NOPAT/EV e earnings yield em Empresas. Os valores do provedor ficam em `data/processed`, ignorados pelo Git.
 
-No GitHub Actions, o workflow roda às 20h23 no fuso `America/Sao_Paulo`, na branch padrão do repositório privado que contém o pipeline. Configure os secrets `BRAPI_TOKEN` e `MOAT_MARKET_CAP_UNIVERSE`, este último com o conteúdo de `data/processed/market-caps/universe.json`. Um lote com valores fica disponível por 90 dias nos artefatos privados da execução. Para ler esse lote no app local, salve o `latest.json` do artefato no caminho de saída acima. Após ativar, confira a cobertura do primeiro pregão no log de execução.
+Copie `.github/workflows/market-caps.yml` para a branch padrão do repositório privado. O workflow usa o pipeline e os comparativos atualizados da `main` de `lukasmonken/Moat-Analytics` e roda às 20h23 de Brasília. Configure os secrets `BRAPI_TOKEN` e `MOAT_MARKET_CAP_UNIVERSE`, este último com o conteúdo de `data/processed/market-caps/universe.json`. O log da execução informa a cobertura de capitalização e rendimento e quantas empresas tiveram códigos comparados ou valores divergentes. Um lote com valores fica disponível por 90 dias nos artefatos privados da execução. Para ler esse lote no app local, salve o `latest.json` do artefato no caminho de saída acima.
 
 ## Gerar endividamento, reinvestimento e margens
 

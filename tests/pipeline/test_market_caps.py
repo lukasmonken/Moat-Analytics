@@ -75,11 +75,41 @@ class MarketCapTests(unittest.TestCase):
         self.assertEqual(fetched, ["TEST3", "TEST4"])
         self.assertEqual(snapshot["manifest"]["coverage"], {
             "includedCompanies": 2, "availableCompanies": 1,
+            "comparedCompanies": 0, "disagreeingCompanies": 0,
         })
         self.assertEqual(snapshot["companies"][0]["ticker"], "TEST4")
         self.assertEqual(snapshot["companies"][0]["marketCapBrl"], 500_000_000)
         self.assertIsNone(snapshot["companies"][1]["marketCapBrl"])
         self.assertEqual(snapshot["companies"][1]["qualityStatus"], "unavailable")
+
+    def test_only_uses_one_estimate_when_tickers_agree_and_withholds_divergence(self):
+        for alternate_cap in (500_000_000, 490_000_000):
+            with self.subTest(alternate_cap=alternate_cap):
+                def read(ticker):
+                    payload = quote(ticker)
+                    if ticker == "TEST4":
+                        payload["marketCap"] = alternate_cap
+                    return payload
+
+                snapshot = collect_market_caps(UNIVERSE, TRADE_DATE, read)
+                issuer = snapshot["companies"][0]
+                coverage = snapshot["manifest"]["coverage"]
+                self.assertEqual(coverage["comparedCompanies"], 1)
+                self.assertEqual(
+                    [entry["marketCapBrl"] for entry in issuer["candidateQuotes"]],
+                    [500_000_000, alternate_cap],
+                )
+                if alternate_cap == 500_000_000:
+                    self.assertEqual(issuer["marketCapBrl"], 500_000_000)
+                    self.assertEqual(issuer["ticker"], "TEST3")
+                    self.assertEqual(issuer["qualityStatus"], "estimated")
+                    self.assertIsNone(issuer["reason"])
+                    self.assertEqual(coverage["disagreeingCompanies"], 0)
+                else:
+                    self.assertIsNone(issuer["marketCapBrl"])
+                    self.assertIsNone(issuer["ticker"])
+                    self.assertIn("divergentes", issuer["reason"])
+                    self.assertEqual(coverage["disagreeingCompanies"], 1)
 
     def test_failed_run_preserves_previous_data_and_logs_no_secrets(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { formatRatio, matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
+import { matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
 import { loadLocalMarketYields } from '../../shared/data-client/marketYields';
 import { loadSectorComparison } from '../../shared/data-client/sectorComparison';
 import { loadSectorLeverage } from '../../shared/data-client/sectorLeverage';
 import { loadSectorReinvestment } from '../../shared/data-client/sectorReinvestment';
 import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
 import { Button, EmptyState, Input, Panel, RatioRangeSelect, Select, Table } from '../../shared/ui';
-import { formatPoints, formatRate } from '../company/QualityHistory';
 import { combineSnapshots } from '../company/companyQualityData';
 import { formatCurrency } from '../company/financialPresentation';
 import { ScreenerToolbar } from '../screener/ScreenerToolbar';
@@ -16,6 +15,7 @@ import {
   formatCompanyCount,
   normalizeSearch,
 } from '../screener/presentation';
+import { FundamentalComparison } from './FundamentalComparison';
 import { GrowthDetail } from './GrowthDetail';
 import { RankingDataFilters } from './RankingDataFilters';
 import {
@@ -26,38 +26,19 @@ import {
   type FundamentalFactor,
   type FundamentalRow,
 } from './fundamentalRanks';
+import {
+  formatRankingScore,
+  formatRankingValue,
+  rankingFactorLabels as labels,
+} from './rankingPresentation';
 import './ranking.css';
 
-const labels: Record<FundamentalFactor, string> = {
-  profitability: 'Rentabilidade',
-  moat: 'NOPAT/reinvestimento',
-  leverage: 'Dívida líquida/EBITDA',
-  risk: 'Drawdown do ROIC',
-  growth: 'Crescimento',
-  price: 'Preço',
-  accountingScore: 'Pontuação contábil',
-  score: 'Pontuação final',
-};
 const factors = Object.keys(labels) as FundamentalFactor[];
-const scoreFormat = new Intl.NumberFormat('pt-BR', {
-  maximumFractionDigits: 2,
-  minimumFractionDigits: 2,
-});
 
 const growthDetailId = 'ranking-growth-detail';
 
 type RankingData = ReturnType<typeof buildFundamentalRanks>;
 type LoadState = { status: 'loading' | 'error' } | { status: 'ready'; data: RankingData };
-
-function formatRankingValue(row: FundamentalRow, factor: FundamentalFactor) {
-  const value = row[factor];
-  if (value === null) return factor === 'risk' ? 'Empresa muito nova' : 'Indisponível';
-  if (factor === 'risk') return formatPoints(value);
-  if (factor === 'score' || factor === 'accountingScore') return scoreFormat.format(value);
-  if (factor === 'profitability' || factor === 'growth' || factor === 'price')
-    return formatRate(value);
-  return formatRatio(value);
-}
 
 function RankingShortcuts({
   rows,
@@ -300,6 +281,12 @@ function RankingResults({ data }: { data: RankingData }) {
           </Button>
         )}
       </div>
+      <FundamentalComparison
+        key={group}
+        rows={groupRows}
+        years={years}
+        marketTradeDate={marketTradeDate}
+      />
       {aggregate && (
         <p>
           Pontuação com pesos iguais em {requiredFactors} fatores, calculada para {scoreSampleSize}{' '}
@@ -424,7 +411,7 @@ function RankingResults({ data }: { data: RankingData }) {
                         ? `${availableFactorCount(row, includePrice)}/${requiredFactors}`
                         : row.zScores[factor] === undefined
                           ? '—'
-                          : scoreFormat.format(row.zScores[factor])}
+                          : formatRankingScore(row.zScores[factor])}
                     </td>
                     <td>{row.validYears}/5</td>
                   </tr>

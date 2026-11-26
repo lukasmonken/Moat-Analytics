@@ -1,0 +1,72 @@
+.fundamental-comparison {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  background: var(--surface);
+}
+
+.fundamental-comparison summary {
+  padding: 0.65rem 0.8rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fundamental-comparison summary:focus-visible,
+.fundamental-comparison__scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.fundamental-comparison__body {
+  display: grid;
+  min-width: 0;
+  gap: 0.75rem;
+  padding: 0 0.8rem 0.8rem;
+}
+
+.fundamental-comparison__selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.65rem;
+}
+
+.fundamental-comparison__selectors .ui-field {
+  min-width: 0;
+}
+
+.fundamental-comparison__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+}
+
+.fundamental-comparison__scroll .ui-table {
+  min-width: 27rem;
+}
+
+.fundamental-comparison__scroll :is(th, td) {
+  vertical-align: top;
+}
+
+.fundamental-comparison__scroll th {
+  overflow-wrap: anywhere;
+}
+
+.fundamental-comparison__scroll th[scope='row'] {
+  width: 40%;
+}
+
+.fundamental-comparison__scroll small {
+  display: block;
+  margin-top: 0.1rem;
+  font-weight: 400;
+}
+
+.fundamental-comparison__scroll td {
+  font-variant-numeric: tabular-nums;
+}
+
+.fundamental-comparison__scroll tbody tr:last-child > * {
+  border-bottom: 0;
+}

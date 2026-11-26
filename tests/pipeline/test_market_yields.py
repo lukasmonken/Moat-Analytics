@@ -116,6 +116,18 @@ class MarketYieldsTest(unittest.TestCase):
         self.assertIsNone(rows[1]["valuation"]["value"])
         self.assertIsNone(rows[1]["valuation"]["enterpriseValueBrl"])
 
+    def test_explains_market_cap_disagreement_in_the_yield(self):
+        caps = snapshot(("BANCO", None))
+        reason = "Valores de mercado divergentes entre códigos da mesma companhia."
+        caps["companies"][0]["reason"] = reason
+        result = attach_market_yields(
+            caps, roic=annual(), roe=annual("roe", BANCO=[dfp({"netIncomeBrl": 9})]),
+        )
+        valuation = result["companies"][0]["valuation"]
+        self.assertIsNone(valuation["value"])
+        self.assertEqual(valuation["reason"], reason)
+        self.assertEqual(result["manifest"]["coverage"]["availableYields"], 0)
+
     def test_rejects_universe_or_methodology_mismatch(self):
         other = annual("roe")
         other["manifest"]["asOf"] = "2026-11-17"
