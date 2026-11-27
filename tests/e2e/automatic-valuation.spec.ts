@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test';
 import { ipcaRateUrl } from '../../apps/web/src/shared/data-client/inflationRate';
 import { cdiRateUrl } from '../../apps/web/src/shared/data-client/riskFreeRate';
+import { serveCvm2025 } from './annual-fixtures';
 
 const ipca = [{ data: '01/10/2025', valor: '4.63' }];
 const cdi = [{ data: '26/11/2025', valor: '14.15' }];
+
+test.beforeEach(async ({ page }) => {
+  await serveCvm2025(page);
+});
 
 test('projeta DCF e DDM da DFP com taxas datadas e sem preencher premissas', async ({ page }) => {
   await page.route(ipcaRateUrl, (route) => route.fulfill({ json: ipca }));
