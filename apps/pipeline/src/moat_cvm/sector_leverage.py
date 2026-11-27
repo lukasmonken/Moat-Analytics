@@ -12,6 +12,7 @@ from .archives import csv_rows, read_archive
 from .bank_roe import same_filing
 from .comparison_identity import selected_companies
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
+from .sector_leverage_notes import review_cyrela_depreciation
 from .sector_roic import METHODOLOGY as ROIC_METHOD, NEWEST, closing_net_debt, matching_dfp_filings
 
 METHOD = "net-debt-ebitda-dfp.v2"
@@ -22,6 +23,10 @@ DEPLETION = {"exaustao", "exaustoes", "deplecao", "deplecoes"}
 ASSETS = ("direito de uso", "direitos de uso", "imobilizado", "intang", "mais valia", "arrendamento", "concessao")
 DVA_CODE = "7.04.01"
 DVA_LABEL = "depreciacao, amortizacao e exaustao"
+DVA_IMPAIRMENT_CODE = "7.02.03"
+DVA_IMPAIRMENT_LABEL = "perda/recuperacao de valores ativos"
+MIXED_DEPRECIATION_LABEL = "depreciacao, amortizacao e impairment"
+WORKING_CAPITAL_IMPAIRMENT = "perda por impairment nas contas a receber, nos estoques e nas demais contas a receber"
 RIGHT_OF_USE = re.compile(r"(?:depreciacao|amortizacao) (?:(?:de|do) )?direitos? de uso")
 DFCRow = tuple[str, CsvRow]
 
@@ -78,31 +83,78 @@ def _split_depreciation(rows: list[DFCRow]) -> list[DFCRow]:
     return sorted(components, key=lambda entry: entry[1]["CD_CONTA"])
 
 
+def _dva_row(rows: tuple[CsvRow, ...], code: str, label: str) -> CsvRow | None:
+    matches = [row for row in rows if row["CD_CONTA"] == code]
+    if len(matches) == 1 and _label(matches[0]["DS_CONTA"]) == label:
+        return matches[0]
+    return None
+
+
+def _account(statement: str, row: CsvRow) -> dict:
+    return {
+        "statement": statement,
+        "code": row["CD_CONTA"],
+        "label": row["DS_CONTA"].strip(),
+        "referenceDate": row["DT_FIM_EXERC"],
+    }
+
+
 def _corroborated_total(total: DFCRow, separate: DFCRow, dva_rows: tuple[CsvRow, ...]) -> dict | None:
     statement, total_row = total
     separate_statement, separate_row = separate
     total_words = set(re.findall(r"[a-z]+", _label(total_row["DS_CONTA"])))
     if (
-        len(dva_rows) != 1
-        or not total_words <= DEPRECIATION | AMORTIZATION | {"e"}
+        not total_words <= DEPRECIATION | AMORTIZATION | {"e"}
         or statement != separate_statement
         or total_row["CD_CONTA"].rsplit(".", 1)[0] != separate_row["CD_CONTA"].rsplit(".", 1)[0]
         or not RIGHT_OF_USE.fullmatch(_label(separate_row["DS_CONTA"]))
         or normalize(separate_row)[0] <= 0
     ):
         return None
-    dva = dva_rows[0]
-    if dva["CD_CONTA"] != DVA_CODE or _label(dva["DS_CONTA"]) != DVA_LABEL:
+    dva = _dva_row(dva_rows, DVA_CODE, DVA_LABEL)
+    if dva is None:
         return None
     value, _ = normalize(dva)
     if value > 0 or value != -normalize(total_row)[0]:
         return None
-    return {
-        "statement": "DVA",
-        "code": DVA_CODE,
-        "label": dva["DS_CONTA"].strip(),
-        "referenceDate": dva["DT_FIM_EXERC"],
-        "amountBrl": amount(value),
+    return {**_account("DVA", dva), "amountBrl": amount(value)}
+
+
+def _split_impairment(rows: list[DFCRow], dva_rows: tuple[CsvRow, ...]) -> tuple[Decimal, dict] | None:
+    combined = [entry for entry in rows if _label(entry[1]["DS_CONTA"]) == MIXED_DEPRECIATION_LABEL]
+    if len(combined) != 1:
+        return None
+    statement, mixed = combined[0]
+    for entry in rows:
+        other_statement, row = entry
+        if entry == combined[0]:
+            continue
+        if other_statement == statement and row["CD_CONTA"] == mixed["CD_CONTA"]:
+            return None
+        label = _label(row["DS_CONTA"])
+        if (
+            label != WORKING_CAPITAL_IMPAIRMENT
+            and re.search(r"\b(?:deprec|amortiz|amotiz|exaus|deple|impair)", label)
+            and normalize(row)[0] != 0
+        ):
+            return None
+
+    dva = _dva_row(dva_rows, DVA_CODE, DVA_LABEL)
+    impairment = _dva_row(dva_rows, DVA_IMPAIRMENT_CODE, DVA_IMPAIRMENT_LABEL)
+    if dva is None or impairment is None:
+        return None
+    depreciation, _ = normalize(dva)
+    loss, _ = normalize(impairment)
+    combined_value, _ = normalize(mixed)
+    if depreciation >= 0 or loss >= 0 or combined_value != -(depreciation + loss):
+        return None
+    return -depreciation, {
+        "depreciationAccount": _account(statement, mixed),
+        "depreciationDvaAccount": {**_account("DVA", dva), "amountBrl": amount(depreciation)},
+        "depreciationImpairmentReconciliation": {
+            "combinedDfcAmountBrl": amount(combined_value),
+            "impairmentDvaAccount": {**_account("DVA", impairment), "amountBrl": amount(loss)},
+        },
     }
 
 
@@ -110,6 +162,11 @@ def _depreciation(rows: list[DFCRow], dva_rows: tuple[CsvRow, ...] = ()) -> tupl
     totals = [(statement, row) for statement, row in rows if _total(_label(row["DS_CONTA"]))]
     if len(totals) > 1:
         raise ValueError("Mais de uma conta de depreciação e amortização na DFC.")
+
+    if not totals:
+        reconciled = _split_impairment(rows, dva_rows)
+        if reconciled is not None:
+            return reconciled
 
     selected = totals or _split_depreciation(rows)
     statement = selected[0][0]
@@ -142,12 +199,7 @@ def _depreciation(rows: list[DFCRow], dva_rows: tuple[CsvRow, ...] = ()) -> tupl
         value, _ = normalize(row)
         if value < 0:
             raise ValueError("Saldo de depreciação e amortização negativo na DFC.")
-        account = {
-            "statement": statement,
-            "code": row["CD_CONTA"],
-            "label": row["DS_CONTA"].strip(),
-            "referenceDate": row["DT_FIM_EXERC"],
-        }
+        account = _account(statement, row)
         if len(selected) == 1:
             evidence = {"depreciationAccount": account}
             if corroboration is not None:
@@ -184,7 +236,7 @@ def _read_depreciation_rows(
                 ):
                     continue
                 if statement == "DVA":
-                    if row["CD_CONTA"] == DVA_CODE and row not in dva_rows[code]:
+                    if row["CD_CONTA"] in (DVA_CODE, DVA_IMPAIRMENT_CODE) and row not in dva_rows[code]:
                         dva_rows[code].append(row)
                 elif row["CD_CONTA"].startswith(GROUPS[statement]):
                     entry = statement, row
@@ -195,6 +247,7 @@ def _read_depreciation_rows(
 
 def _leverage(
     name: str, observation: dict, rows: list[DFCRow], dva_rows: tuple[CsvRow, ...] = (),
+    *, issuer: str = "",
 ) -> dict:
     filing = observation.get("filing")
     result = {"name": name, "value": None, "reason": None, "filing": filing, "inputs": None}
@@ -205,7 +258,13 @@ def _leverage(
     if net_debt is None:
         return {**result, "reason": "Dívida líquida indisponível no balanço de fechamento."}
     try:
-        depreciation, evidence = _depreciation(rows, dva_rows)
+        try:
+            depreciation, evidence = _depreciation(rows, dva_rows)
+        except ValueError:
+            reviewed = review_cyrela_depreciation(issuer, filing, rows)
+            if reviewed is None:
+                raise
+            depreciation, evidence = reviewed
         ebit = Decimal(str(inputs["ebitBrl"]))
         ebitda = ebit + depreciation
         if not ebitda.is_finite() or abs(ebitda) >= 2**53:
@@ -260,7 +319,7 @@ def create_sector_leverage(selection: dict, directory: dict, roic: dict, raw_dir
             },
         },
         "companies": [
-            _leverage(name, observation, rows.get(code, []), tuple(dva_rows.get(code, [])))
+            _leverage(name, observation, rows.get(code, []), tuple(dva_rows.get(code, [])), issuer=code)
             for code, (name, observation) in companies.items()
         ],
     }

@@ -4,7 +4,7 @@
     "methodologyVersion": "net-debt-ebitda-dfp.v2",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-27T16:06:00+00:00",
+    "generatedAt": "2026-11-27T17:15:16+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -83,8 +83,8 @@
     },
     {
       "name": "AMBEV S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": -0.5114411164975322,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-12",
@@ -92,7 +92,35 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154733"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 23423386000,
+        "depreciationBrl": 6396868000,
+        "ebitdaBrl": 29820254000,
+        "netDebtBrl": -15251304000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação, Amortização e Impairment",
+          "referenceDate": "2025-12-31"
+        },
+        "depreciationDvaAccount": {
+          "statement": "DVA",
+          "code": "7.04.01",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31",
+          "amountBrl": -6396868000
+        },
+        "depreciationImpairmentReconciliation": {
+          "combinedDfcAmountBrl": 6832085000,
+          "impairmentDvaAccount": {
+            "statement": "DVA",
+            "code": "7.02.03",
+            "label": "Perda/Recuperação de Valores Ativos",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -435217000
+          }
+        }
+      }
     },
     {
       "name": "ANIMA HOLDING S.A.",
@@ -670,8 +698,8 @@
     },
     {
       "name": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 3.363776505260535,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-19",
@@ -679,7 +707,23 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155491"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 2296181000,
+        "depreciationBrl": 79338000,
+        "ebitdaBrl": 2375519000,
+        "netDebtBrl": 7990715000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.01",
+          "label": "Depreciação de Bens do Ativo Imobilizado",
+          "referenceDate": "2025-12-31"
+        },
+        "depreciationReview": {
+          "documentUrl": "https://api.mziq.com/mzfilemanager/v2/d/d7617e78-1c42-4341-83ae-a1faa8569ca8/94fc56d7-8c92-79a5-4365-560e5f1accd1?origin=2",
+          "page": 67,
+          "accountCode": "6.01.01.01"
+        }
+      }
     },
     {
       "name": "DESKTOP S.A.",

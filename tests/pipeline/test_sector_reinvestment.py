@@ -179,3 +179,58 @@ class SectorReinvestmentTest(unittest.TestCase):
         result = _reinvestment("COMPANHIA", observation, accounts, capex, False)
         self.assertIsNone(result["inputs"])
         self.assertIn("1.01.04", result["reason"])
+
+    def test_uses_audited_capex_scope_only_for_the_exact_consolidated_filing_and_account(self):
+        document = filing("006343", version=1)
+        observation = observe_roic("006343", 2025, document, annual_statements(document))
+        observation["filing"]["filingUrl"] = (
+            "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx"
+            "?CodigoInstituicao=1&NumeroSequencialDocumento=155493"
+        )
+        assets, liabilities = balance_accounts(document)
+        accounts = {}
+        account_keys = {"1.01.03": "Receivables", "1.01.04": "Inventories", "2.01.02": "Suppliers"}
+        for statement, rows in (("BPA", assets), ("BPP", liabilities)):
+            for row in rows:
+                stage = "opening" if row["ORDEM_EXERC"] == "PENÚLTIMO" else "closing"
+                accounts[stage + account_keys[row["CD_CONTA"]]] = (statement, row)
+        purchases, sale = cash_flows(document, [
+            ("6.02.02", "Adições ao Imobilizado", -447_934),
+            ("6.02.04", "Venda de bens do imobilizado", 4_715),
+        ])
+        purchases["GRUPO_DFP"] = "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)"
+        result = _reinvestment("TUPY S.A.", observation, accounts, [("DFC_MI", purchases), ("DFC_MI", sale)], False)
+        inputs = result["inputs"]
+        self.assertEqual(inputs["capexBrl"], 447_934_000)
+        self.assertEqual(inputs["capexReview"], {
+            "documentUrl": "https://api.mziq.com/mzfilemanager/v2/d/5ab6a371-dd2f-452a-b6b2-22c97ed0abbb/"
+                           "e1a13af4-e0af-5e7e-c099-6a2d3ace78ea?origin=2",
+            "page": 23,
+            "accountCode": "6.02.02",
+        })
+        self.assertEqual(inputs["accounts"][-1]["label"], "Adições ao Imobilizado")
+        self.assertEqual(inputs["accounts"][-1]["key"], "capex")
+
+        for changes in (
+            {"CD_CVM": "000111"},
+            {"VERSAO": 2},
+            {"DT_INI_EXERC": "2025-04-01"},
+            {"GRUPO_DFP": "DF Individual - Demonstração do Fluxo de Caixa (Método Indireto)"},
+            {"CD_CONTA": "6.02.03"},
+            {"DS_CONTA": "Adições de imobilizado"},
+            {"VL_CONTA": -447_933},
+        ):
+            with self.subTest(changes=changes):
+                revised = _reinvestment("TUPY S.A.", observation, accounts, [("DFC_MI", {**purchases, **changes})], False)
+                self.assertIsNone(revised["inputs"])
+
+        for changes in ({"filingUrl": document["LINK_DOC"]}, {"version": 2}, {"basis": "individual"}):
+            with self.subTest(changes=changes):
+                superseded = {**observation, "filing": {**observation["filing"], **changes}}
+                revised = _reinvestment("TUPY S.A.", superseded, accounts, [("DFC_MI", purchases)], False)
+                self.assertIsNone(revised["inputs"])
+
+        replacements = cash_flows(document, [("6.02.02", "Adições ao imobilizado e intangível", -447_934)])
+        revised = _reinvestment("TUPY S.A.", observation, accounts, [("DFC_MI", replacements[0])], False)
+        self.assertEqual(revised["inputs"]["capexBrl"], 447_934_000)
+        self.assertNotIn("capexReview", revised["inputs"])

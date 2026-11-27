@@ -33,6 +33,17 @@ test('projeta DCF e DDM da DFP com taxas datadas e sem preencher premissas', asy
   await expect(flows.getByRole('row', { name: /^1 / })).toContainText(/71\.225\.282\.124/);
 
   await panel.getByRole('searchbox', { name: 'Buscar companhia' }).clear();
+  await select.selectOption('AMBEV S.A.');
+  await expect(panel.getByText(/D&A do fluxo separa a perda de valor/)).toBeVisible();
+  await expect(panel.getByText(/R\$\s*16\.906\.925\.760/)).toBeVisible();
+  await select.selectOption('TUPY S.A.');
+  await expect(
+    panel.getByRole('link', { name: 'CAPEX nas demonstrações auditadas · p. 23' }),
+  ).toBeVisible();
+  await select.selectOption('CYRELA BRAZIL REALTY S.A.EMPREEND E PART');
+  await expect(
+    panel.getByRole('link', { name: 'D&A nas demonstrações auditadas · p. 67' }),
+  ).toBeVisible();
   await select.selectOption('C&A MODAS S.A.');
   await expect(panel.getByText(/D&A do fluxo exclui a parcela de direito de uso/)).toBeVisible();
   await expect(

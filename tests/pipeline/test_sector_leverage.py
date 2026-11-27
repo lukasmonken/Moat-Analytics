@@ -77,7 +77,8 @@ class SectorLeverageTest(unittest.TestCase):
         ])]
         label = "Depreciação, Amortização e Exaustão"
         evidence_row = dfc(document, [("7.04.01", label, -15)])[0]
-        value, evidence = _depreciation(rows, (evidence_row,))
+        loss = dfc(document, [("7.02.03", "Perda/Recuperação de Valores Ativos", -9)])[0]
+        value, evidence = _depreciation(rows, (evidence_row, loss))
         self.assertEqual(value, 15_000)
         self.assertEqual(evidence["depreciationDvaAccount"], {
             "statement": "DVA", "code": "7.04.01", "label": label,
@@ -96,6 +97,52 @@ class SectorLeverageTest(unittest.TestCase):
         alternative = dfc(document, [("6.01.01.05", "Amortiz. com perda recuperável", 8)])[0]
         with self.assertRaisesRegex(ValueError, "contas separadas"):
             _depreciation([*rows, ("DFC_MI", alternative)], (evidence_row,))
+
+    def test_dva_separates_depreciation_and_asset_impairment_in_the_dfc(self):
+        document = filing("000111")
+        mixed = "Depreciação, Amortização e Impairment"
+        loss_label = "Perda/Recuperação de Valores Ativos"
+        rows = [("DFC_MI", row) for row in dfc(document, [
+            ("6.01.01.02", mixed, 19),
+            ("6.01.01.03", "Perda por impairment nas contas a receber, nos estoques e nas demais contas a receber", 3),
+        ])]
+        depreciation, loss = dfc(document, [
+            ("7.04.01", "Depreciação, Amortização e Exaustão", -15),
+            ("7.02.03", loss_label, -4),
+        ])
+
+        value, evidence = _depreciation(rows, (depreciation, loss))
+        self.assertEqual(value, 15_000)
+        self.assertEqual(evidence["depreciationAccount"]["label"], mixed)
+        self.assertEqual(evidence["depreciationDvaAccount"]["amountBrl"], -15_000)
+        self.assertEqual(evidence["depreciationImpairmentReconciliation"], {
+            "combinedDfcAmountBrl": 19_000,
+            "impairmentDvaAccount": {
+                "statement": "DVA", "code": "7.02.03", "label": loss_label,
+                "referenceDate": "2025-12-31", "amountBrl": -4_000,
+            },
+        })
+
+        for evidence_rows in (
+            (depreciation,),
+            (depreciation, {**loss, "VL_CONTA": "0"}),
+            (depreciation, {**loss, "VL_CONTA": "4"}),
+            (depreciation, {**loss, "VL_CONTA": "-3"}),
+            (depreciation, {**loss, "DS_CONTA": "Outros gastos"}),
+            (depreciation, loss, {**loss, "VL_CONTA": "-5"}),
+        ):
+            with self.subTest(evidence_rows=evidence_rows), self.assertRaisesRegex(ValueError, "indisponível"):
+                _depreciation(rows, evidence_rows)
+
+        for extra in (
+            ("6.01.01.04", "Amortização de intangível", 2),
+            ("6.01.01.04", "Impairment de imobilizado", 2),
+            ("6.01.01.04", mixed, 19),
+            ("6.01.01.02", "Custo de transação", 19),
+        ):
+            entry = dfc(document, [extra])[0]
+            with self.subTest(extra=extra), self.assertRaisesRegex(ValueError, "indisponível"):
+                _depreciation([*rows, ("DFC_MI", entry)], (depreciation, loss))
 
     def test_conciles_only_separate_depreciation_and_amortization_siblings(self):
         document = filing("000111")

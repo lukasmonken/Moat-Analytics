@@ -104,6 +104,17 @@ describe('Dívida líquida/EBITDA da CVM', () => {
     confirmation.amountBrl -= 1;
     expect(() => parseSectorLeverage(data)).toThrow();
   });
+
+  it('rejeita uma perda de ativos que não concilia com a DFC da Ambev', () => {
+    const data = snapshot();
+    const ambev = data.companies.find(({ name }) => name === 'AMBEV S.A.');
+    const evidence = ambev?.inputs?.depreciationImpairmentReconciliation;
+    if (!evidence) throw new Error('Conciliação da Ambev ausente.');
+    expect(evidence.combinedDfcAmountBrl).toBe(6_832_085_000);
+    expect(evidence.impairmentDvaAccount.amountBrl).toBe(-435_217_000);
+    evidence.impairmentDvaAccount.amountBrl += 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
+  });
 });
 
 describe('Faixas de múltiplos', () => {

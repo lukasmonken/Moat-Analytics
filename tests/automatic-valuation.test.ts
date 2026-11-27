@@ -120,6 +120,10 @@ describe('Valuation automático', () => {
   it('reaproveita CAPEX segregado e D&A documentada, inclusive com EBITDA não positivo', () => {
     const { roic, leverage, reinvestment } = sources();
     const cases = [
+      ['AMBEV S.A.', 16_906_925_760],
+      ['CYRELA BRAZIL REALTY S.A.EMPREEND E PART', -899_457_540],
+      ['TUPY S.A.', 200_511_540],
+      ['VALE S.A.', 7_227_540_000],
       ['B3 S.A. - BRASIL, BOLSA, BALCÃO', 4_425_259_420],
       ['C&A MODAS S.A.', -12_236_660],
       ['LAVVI EMPREENDIMENTOS IMOBILIÁRIOS S.A.', -434_962_740],

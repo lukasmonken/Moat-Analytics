@@ -4,7 +4,7 @@
     "methodologyVersion": "nopat-reinvestment-dfp.v1",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-27T16:02:40+00:00",
+    "generatedAt": "2026-11-27T17:14:03+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -7781,8 +7781,8 @@
     },
     {
       "name": "TUPY S.A.",
-      "value": null,
-      "reason": "Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.",
+      "value": -1.3290967119232997,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-19",
@@ -7790,7 +7790,76 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155493"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": -103277460,
+        "openingWorkingCapitalBrl": 2552519000,
+        "closingWorkingCapitalBrl": 2182290000,
+        "capexBrl": 447934000,
+        "reinvestmentBrl": 77705000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 1837435000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 2197704000
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 1482620000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 1597455000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 1721952000
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 1137117000
+          },
+          {
+            "key": "capex",
+            "label": "Adições ao Imobilizado",
+            "statement": "DFC_MI",
+            "code": "6.02.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -447934000
+          }
+        ],
+        "capexReview": {
+          "documentUrl": "https://api.mziq.com/mzfilemanager/v2/d/5ab6a371-dd2f-452a-b6b2-22c97ed0abbb/e1a13af4-e0af-5e7e-c099-6a2d3ace78ea?origin=2",
+          "page": 23,
+          "accountCode": "6.02.02"
+        }
+      }
     },
     {
       "name": "ULTRAPAR PARTICIPACOES S.A.",
@@ -8054,8 +8123,8 @@
     },
     {
       "name": "VALE S.A.",
-      "value": null,
-      "reason": "Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.",
+      "value": 0.6767444993264481,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-12",
@@ -8063,7 +8132,76 @@
         "version": 2,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155313"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": 21099540000,
+        "openingWorkingCapitalBrl": 16896000000,
+        "closingWorkingCapitalBrl": 14684000000,
+        "capexBrl": 33390000000,
+        "reinvestmentBrl": 31178000000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 14600000000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 28513000000
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 26217000000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 12639000000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 32666000000
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 30621000000
+          },
+          {
+            "key": "capex",
+            "label": "Adições ao Imobilizado",
+            "statement": "DFC_MI",
+            "code": "6.02.05",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -33390000000
+          }
+        ],
+        "capexReview": {
+          "documentUrl": "https://vipfiles.valor.com.br/BDEmpresas/3e5fc308-60c2-477c-a9e7-7d2cfc52d411.pdf",
+          "page": 5,
+          "accountCode": "6.02.05"
+        }
+      }
     },
     {
       "name": "VALID SOLUÇÕES S.A.",

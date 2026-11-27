@@ -1,4 +1,5 @@
 import { isCvmSource, isCvmUrl, type CvmSource } from './cvm.ts';
+import { isDfpAccountReview, type DfpAccountReview } from './dfp-review.ts';
 import { isSectorRoicFiling, type SectorRoicObservation } from './sector-comparison.ts';
 import { isDate, isObject, isPositiveInteger, isText, isTimestamp, unique } from './validation.ts';
 
@@ -17,12 +18,17 @@ interface DepreciationAccount {
   referenceDate: string;
 }
 
-interface DepreciationDvaAccount {
+interface DvaAccount<Code extends string> {
   statement: 'DVA';
-  code: '7.04.01';
+  code: Code;
   label: string;
   referenceDate: string;
   amountBrl: number;
+}
+
+interface DepreciationImpairmentReconciliation {
+  combinedDfcAmountBrl: number;
+  impairmentDvaAccount: DvaAccount<'7.02.03'>;
 }
 
 type LeverageInputs = {
@@ -34,12 +40,16 @@ type LeverageInputs = {
   | {
       depreciationAccount: DepreciationAccount;
       depreciationAccounts?: never;
-      depreciationDvaAccount?: DepreciationDvaAccount;
+      depreciationDvaAccount?: DvaAccount<'7.04.01'>;
+      depreciationImpairmentReconciliation?: DepreciationImpairmentReconciliation;
+      depreciationReview?: DfpAccountReview;
     }
   | {
       depreciationAccount?: never;
       depreciationAccounts: (DepreciationAccount & { amountBrl: number })[];
       depreciationDvaAccount?: never;
+      depreciationImpairmentReconciliation?: never;
+      depreciationReview?: never;
     }
 );
 
@@ -121,6 +131,23 @@ function confirmsDepreciation(account: unknown, referenceDate: string, depreciat
   );
 }
 
+function reconcilesImpairment(value: unknown, referenceDate: string, depreciationBrl: number) {
+  if (!isObject(value) || !isAmount(value.combinedDfcAmountBrl) || depreciationBrl <= 0) {
+    return false;
+  }
+  const loss = value.impairmentDvaAccount;
+  return (
+    isObject(loss) &&
+    loss.statement === 'DVA' &&
+    loss.code === '7.02.03' &&
+    isText(loss.label) &&
+    loss.referenceDate === referenceDate &&
+    isAmount(loss.amountBrl) &&
+    loss.amountBrl < 0 &&
+    Math.abs(value.combinedDfcAmountBrl - (depreciationBrl - loss.amountBrl)) < 0.005
+  );
+}
+
 function isLeverageInputs(input: unknown, referenceDate: string): input is LeverageInputs {
   if (
     !isObject(input) ||
@@ -134,15 +161,33 @@ function isLeverageInputs(input: unknown, referenceDate: string): input is Lever
     return false;
   }
   if (input.depreciationAccounts === undefined) {
+    const {
+      depreciationAccount,
+      depreciationDvaAccount,
+      depreciationImpairmentReconciliation,
+      depreciationReview,
+    } = input;
     return (
-      isDepreciationAccount(input.depreciationAccount, referenceDate) &&
-      (input.depreciationDvaAccount === undefined ||
-        confirmsDepreciation(input.depreciationDvaAccount, referenceDate, input.depreciationBrl))
+      isDepreciationAccount(depreciationAccount, referenceDate) &&
+      (depreciationDvaAccount === undefined ||
+        confirmsDepreciation(depreciationDvaAccount, referenceDate, input.depreciationBrl)) &&
+      (depreciationImpairmentReconciliation === undefined ||
+        (depreciationDvaAccount !== undefined &&
+          reconcilesImpairment(
+            depreciationImpairmentReconciliation,
+            referenceDate,
+            input.depreciationBrl,
+          ))) &&
+      (depreciationReview === undefined ||
+        (depreciationDvaAccount === undefined &&
+          isDfpAccountReview(depreciationReview, depreciationAccount.code)))
     );
   }
   if (
     input.depreciationAccount !== undefined ||
     input.depreciationDvaAccount !== undefined ||
+    input.depreciationImpairmentReconciliation !== undefined ||
+    input.depreciationReview !== undefined ||
     !Array.isArray(input.depreciationAccounts) ||
     input.depreciationAccounts.length !== 2
   ) {
@@ -185,10 +230,16 @@ function isCompany(
   if (input.inputs === null) return input.value === null && isText(input.reason);
   if (input.filing === null || !isLeverageInputs(input.inputs, input.filing.referenceDate))
     return false;
-  const { depreciationAccounts, depreciationDvaAccount, ebitdaBrl, netDebtBrl } = input.inputs;
+  const {
+    depreciationAccounts,
+    depreciationDvaAccount,
+    depreciationReview,
+    ebitdaBrl,
+    netDebtBrl,
+  } = input.inputs;
   if (
     manifest.methodologyVersion === 'net-debt-ebitda-dfp.v1' &&
-    (depreciationAccounts || depreciationDvaAccount || ebitdaBrl <= 0)
+    (depreciationAccounts || depreciationDvaAccount || depreciationReview || ebitdaBrl <= 0)
   )
     return false;
   if (ebitdaBrl <= 0) return input.value === null && isText(input.reason);

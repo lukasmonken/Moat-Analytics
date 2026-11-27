@@ -1,5 +1,11 @@
 # Changelog
 
+## Contas conciliadas nas demonstrações auditadas
+
+- O DCF separa depreciação e amortização das perdas de ativos quando as duas contas da DVA conciliam exatamente a rubrica combinada da DFC.
+- A revisão das demonstrações auditadas da Cyrela, Tupy e Vale confirma os insumos que aparecem com descrições resumidas na DFP estruturada. O Valuation aponta o documento e a página utilizados.
+- As conciliações acrescentam Ambev, Cyrela, Tupy e Vale à projeção DCF de 2025. São 87 das 129 companhias de ROIC, com 71 fluxos-base positivos.
+
 ## Conciliação adicional de contas da DFP
 
 - O Valuation usa o CAPEX documentado de software da B3 e reconhece mais contas de depreciação e amortização. Quando a DFC separa a D&A de direito de uso e a DVA confirma o total principal, o cálculo usa o total confirmado e registra as duas fontes.
