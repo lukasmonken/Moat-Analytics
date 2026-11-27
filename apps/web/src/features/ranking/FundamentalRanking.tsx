@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { matchesRatioRange, type RatioRange } from '../../shared/analytics/ratios';
 import { loadLocalMarketYields } from '../../shared/data-client/marketYields';
 import { loadSectorComparison } from '../../shared/data-client/sectorComparison';
@@ -8,6 +9,10 @@ import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicCom
 import { Button, EmptyState, Input, Panel, RatioRangeSelect, Select, Table } from '../../shared/ui';
 import { combineSnapshots } from '../company/companyQualityData';
 import { formatCurrency } from '../company/financialPresentation';
+import {
+  rankingPortfolioLimit,
+  type RankingPortfolioTransfer,
+} from '../portfolio/portfolioRankingDraft';
 import { ScreenerToolbar } from '../screener/ScreenerToolbar';
 import {
   compareNames,
@@ -86,6 +91,7 @@ function RankingShortcuts({
 }
 
 function RankingResults({ data }: { data: RankingData }) {
+  const navigate = useNavigate();
   const [group, setGroup] = useState<FundamentalRow['metric']>('ROIC');
   const [selectedFactor, setSelectedFactor] = useState<FundamentalFactor>(
     data.rows.some(({ metric, score }) => metric === 'ROIC' && score !== null)
@@ -107,7 +113,7 @@ function RankingResults({ data }: { data: RankingData }) {
     ? selectedFactor
     : 'profitability';
   const criterion = labels[factor];
-  const { rows, years, marketTradeDate } = data;
+  const { rows, years, marketTradeDate, selectionAsOf } = data;
   const aggregate = factor === 'score' || factor === 'accountingScore';
   const includePrice =
     factor === 'score' ||
@@ -145,6 +151,10 @@ function RankingResults({ data }: { data: RankingData }) {
   const tableLabel = `Ranking de ${criterion.toLowerCase()}`;
   const numeratorLabel = isRoic ? 'NOPAT' : 'Lucro atribuível';
   const priceLabel = isRoic ? 'NOPAT/EV' : 'Earnings yield';
+  const portfolioNames = matches
+    .filter((row) => Number.isFinite(row[factor]))
+    .slice(0, rankingPortfolioLimit)
+    .map(({ name }) => name);
   const showGrowth = factor === 'growth';
   const rankByValue = new Map<number, number>();
   for (const [index, row] of matches.entries()) {
@@ -177,6 +187,18 @@ function RankingResults({ data }: { data: RankingData }) {
   function closeGrowth() {
     setExpandedName(null);
     growthTrigger.current?.focus();
+  }
+
+  function createPortfolio() {
+    navigate('/carteiras', {
+      state: {
+        rankingPortfolio: {
+          names: portfolioNames,
+          label: `${group} · ${factor === 'price' ? priceLabel : criterion}`,
+          selectionAsOf,
+        },
+      } satisfies RankingPortfolioTransfer,
+    });
   }
 
   return (
@@ -314,6 +336,17 @@ function RankingResults({ data }: { data: RankingData }) {
           início e fim positivos. Selecione uma companhia para ver a série anual.
         </p>
       )}
+      <div className="ranking-filter-actions">
+        <Button variant="primary" onClick={createPortfolio} disabled={portfolioNames.length === 0}>
+          Criar carteira
+        </Button>
+        {portfolioNames.length > 0 && (
+          <p>
+            Rascunho com {portfolioNames.length}{' '}
+            {portfolioNames.length === 1 ? 'companhia' : 'companhias'} do ranking, com pesos iguais.
+          </p>
+        )}
+      </div>
       {matches.length === 0 ? (
         <EmptyState
           icon="search"

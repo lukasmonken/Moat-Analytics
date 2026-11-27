@@ -144,6 +144,8 @@ A seção **Premissas manuais** reúne edição por ano e variável, reset, salv
 
 Carteira de **10 ativos por padrão**, opção 15, 20 ou N, seleção manual ou via ranking. Pesos iguais ou personalizados, com validação exata/adequada para soma de 100%, limites por setor/ativo, exposição, liquidez como opção **de construção de carteira** (não filtro obrigatório do universo). Capital inicial em BRL, aportes opcionais, periodicidade de rebalanceamento, custos e tributação em parâmetros documentados.
 
+Em Rankings de fundamentos, **Criar carteira** leva até dez companhias do recorte filtrado, na ordem do indicador escolhido e com dados disponíveis. A composição é aberta como rascunho com pesos iguais para revisão e salvamento.
+
 ### Histórico e métricas
 
 Horizontes YTD e 2, 3, 4, 5, 6, 7 anos e customizado quando dados disponíveis. Patrimônio/capital inicial e final, aportes, lucro, retorno total, CAGR, retornos anuais, dividendos/JCP (com e sem reinvestimento), fluxo de caixa, volatilidade anualizada, drawdown máximo e série de drawdown, Sharpe com benchmark explícito, contribuição por ativo, concentração e correlação.

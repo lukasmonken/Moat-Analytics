@@ -122,7 +122,7 @@ O desconto parte de WACC ou custo de capital próprio informados. O CDI anualiza
 
 ## Carteiras e retrospectiva mensal
 
-A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. Limites setoriais e seleção por ranking aguardam dados próprios.
+A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. O ranking filtrado pode preencher até dez posições com pesos iguais.
 
 Em Carteiras, **Exportar carteira em JSON** cria uma cópia editável da composição, dos pesos e dos parâmetros válidos no formulário. **Importar carteira em JSON** lê o arquivo local e exige os nomes exatos da seleção atual da CVM. Revise os campos importados e use **Salvar carteira** para aplicar a composição ao simulador. As séries de retorno total são carregadas em separado no Simulador.
 
