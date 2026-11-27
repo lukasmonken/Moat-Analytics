@@ -125,9 +125,14 @@ class SectorComparisonTest(unittest.TestCase):
             patch(f"{roe_module}.comparison_identities", return_value=(identities, [])),
             patch(f"{roe_module}.year_comparison") as year_comparison_mock,
         ):
-            year_comparison_mock.side_effect = lambda path, year, companies: (
-                {"kind": "dfp", "year": year}, {"000111": {"year": year, "roe": None}},
-            )
+            def comparison_year(path, year, companies, *, include_dividends):
+                return (
+                    {"kind": "dfp", "year": year},
+                    {"000111": {"year": year, "roe": None}},
+                    {"000111": {"year": year}} if include_dividends else {},
+                )
+
+            year_comparison_mock.side_effect = comparison_year
             roe = create_sector_comparison(selection, {}, [], archives)
         collected = datetime(2027, 4, 1, tzinfo=UTC)
         with (
@@ -143,13 +148,16 @@ class SectorComparisonTest(unittest.TestCase):
             self.assertEqual([row["year"] for row in snapshot["manifest"]["archives"]], list(years))
             self.assertEqual([row["year"] for row in snapshot["companies"][0]["observations"]], list(years))
         self.assertTrue(roic["manifest"]["archives"][-1]["url"].endswith("dfp_cia_aberta_2026.zip"))
+        self.assertEqual(roe["companies"][0]["dividends"]["year"], 2026)
 
     def test_rejects_gaps_or_missing_archives(self):
         for years in ((2023, 2024, 2025, 2026), (2021, 2023, 2024, 2025, 2026)):
             with self.assertRaisesRegex(ValueError, "cinco ZIPs de exercícios consecutivos"):
                 comparison_years({year: Path(f"{year}.zip") for year in years})
 
-    def build_year(self, filings, income, equity_rows, *, individual_equity=(), dmpl_rows=()):
+    def build_year(
+        self, filings, income, equity_rows, *, individual_equity=(), dmpl_rows=(), individual_dfc=None,
+    ):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         path = Path(temp.name) / "dfp_cia_aberta_2025.zip"
@@ -161,13 +169,81 @@ class SectorComparisonTest(unittest.TestCase):
             archive.writestr("dfp_cia_aberta_BPP_con_2025.csv", csv_bytes(equity_rows, fields))
             archive.writestr("dfp_cia_aberta_BPP_ind_2025.csv", csv_bytes(individual_equity, fields))
             archive.writestr("dfp_cia_aberta_DMPL_con_2025.csv", csv_bytes(dmpl_rows, (*fields, "COLUNA_DF")))
+            for statement, rows in (individual_dfc or {}).items():
+                archive.writestr(f"dfp_cia_aberta_{statement}_ind_2025.csv", csv_bytes(rows, fields))
         collected = datetime(2026, 11, 18, tzinfo=UTC).timestamp()
         os.utime(path, (collected, collected))
         identities = {row["CD_CVM"]: {"cnpj": row["CNPJ_CIA"]} for row in filings}
-        source, observations = year_comparison(path, 2025, identities)
+        source, observations, dividends = year_comparison(
+            path, 2025, identities, include_dividends=individual_dfc is not None,
+        )
         self.assertEqual(source["kind"], "dfp")
         self.assertEqual(len(source["sha256"]), 64)
-        return observations
+        return observations if individual_dfc is None else dividends
+
+    def test_dividends_use_latest_annual_outflows_and_keep_explicit_zero(self):
+        old, paid, zero, missing = filing("000111", 1), filing("000111"), filing("000222"), filing("000333")
+        records = (
+            account_rows(old, [("6.03.04", "Dividendos pagos", -999)], start="2025-01-01")
+            + account_rows(
+                paid, [
+                    ("6.02.01", "Dividendos recebidos", 990),
+                    ("6.03.01", "Dividendos pagos", -12),
+                    ("6.03.02", "Juros sobre o capital próprio pagos", -8),
+                ], start="2025-01-01",
+            )
+            + account_rows(
+                paid, [("6.03.03", "Dividendos pagos", -999)], start="2025-04-01",
+            )
+            + account_rows(
+                zero, [("6.03.01", "Distribuição de dividendos e JCP", 0)], start="2025-01-01",
+            )
+        )
+        dividends = self.build_year(
+            [old, paid, zero, missing], [], [],
+            individual_dfc={"DFC_MI": records},
+        )
+        self.assertEqual(dividends["000111"], {
+            "year": 2025,
+            "paidBrl": 20000,
+            "statement": "DFC_MI",
+            "accountCodes": ["6.03.01", "6.03.02"],
+            "reason": None,
+        })
+        self.assertEqual(dividends["000222"]["paidBrl"], 0)
+        self.assertIsNone(dividends["000333"]["paidBrl"])
+        self.assertIn("indisponível", dividends["000333"]["reason"])
+
+    def test_dividends_prefer_total_and_reject_incompatible_outflows(self):
+        aggregate, positive, conflicting = filing("000111"), filing("000222"), filing("000333")
+        records = (
+            account_rows(
+                aggregate, [
+                    ("6.03.01", "Dividendos e juros sobre capital próprio pagos", -20),
+                    ("6.03.01.01", "Dividendos pagos", -12),
+                    ("6.03.01.02", "JCP pagos", -8),
+                ], start="2025-01-01",
+            )
+            + account_rows(
+                positive, [("6.03.01", "Dividendos pagos", 12)], start="2025-01-01",
+            )
+            + account_rows(
+                conflicting, [("6.03.01", "Dividendos pagos", -12)], start="2025-01-01",
+            )
+        )
+        other_method = account_rows(
+            conflicting, [("6.03.02", "Pagamento de dividendos", -14)], start="2025-01-01",
+        )
+        dividends = self.build_year(
+            [aggregate, positive, conflicting], [], [],
+            individual_dfc={"DFC_MI": records, "DFC_MD": other_method},
+        )
+        self.assertEqual(dividends["000111"]["paidBrl"], 20000)
+        self.assertEqual(dividends["000111"]["accountCodes"], ["6.03.01"])
+        self.assertIsNone(dividends["000222"]["paidBrl"])
+        self.assertIn("sinal de saída", dividends["000222"]["reason"])
+        self.assertIsNone(dividends["000333"]["paidBrl"])
+        self.assertIn("divergem", dividends["000333"]["reason"])
 
     def test_valid_roe_uses_same_latest_filing_and_parent_equity(self):
         old, operating, bank, alternative = (

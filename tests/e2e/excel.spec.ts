@@ -311,6 +311,7 @@ test('exporta resultados de valuation e mantém a origem da taxa aplicada enquan
     route.fulfill({ json: [{ data: '15/12/2025', valor: '10' }] }),
   );
   await page.goto('./#/valuation');
+  await page.getByText('Premissas manuais', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Modelo' }).selectOption('ddm');
   await page.getByRole('button', { name: 'Aplicar CDI como desconto' }).click();
   await page.getByLabel('Crescimento na perpetuidade (% a.a.)').fill('0');
@@ -346,6 +347,7 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
 }) => {
   await page.route(cdiRateUrl, (route) => route.fulfill({ json: [] }));
   await page.goto('./#/valuation');
+  await page.getByText('Premissas manuais', { exact: true }).click();
   const valuation = await workbookDownload(
     page,
     'Exportar valuation em Excel',

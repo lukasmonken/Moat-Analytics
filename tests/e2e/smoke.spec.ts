@@ -164,6 +164,7 @@ test('calcula DDM, mostra sensibilidade e salva premissas por modelo e cenário'
   page,
 }) => {
   await page.goto('./#/valuation');
+  await page.getByText('Premissas manuais', { exact: true }).click();
   await page.getByRole('button', { name: 'Aplicar CDI como desconto' }).click();
   const discount = page.getByLabel('Taxa de desconto (% a.a.)');
   await expect(discount).toHaveValue('13,65');
@@ -189,6 +190,7 @@ test('calcula DDM, mostra sensibilidade e salva premissas por modelo e cenário'
   ).toHaveCount(4);
   await page.getByRole('button', { name: 'Salvar no navegador' }).click();
   await page.reload();
+  await page.getByText('Premissas manuais', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Modelo' }).selectOption('ddm');
   await expect(discount).toHaveValue('10');
   await page.getByRole('combobox', { name: 'Cenário' }).selectOption('otimista');
@@ -199,6 +201,7 @@ test('aplica as referências contábeis da WEG às premissas sem preencher as pr
   page,
 }) => {
   await page.goto('./#/valuation');
+  await page.getByText('Premissas manuais', { exact: true }).click();
   const reference = page.getByRole('region', { name: 'Referências contábeis' });
   await reference
     .getByRole('combobox', { name: 'Companhia de referência' })
@@ -212,6 +215,7 @@ test('aplica as referências contábeis da WEG às premissas sem preencher as pr
 
 test('calcula DCF após importar premissas e exporta o cenário', async ({ page }) => {
   await page.goto('./#/valuation');
+  await page.getByText('Premissas manuais', { exact: true }).click();
   const downloaded = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Exportar premissas' }).click();
   const download = await downloaded;
@@ -451,6 +455,7 @@ test.describe('janela móvel', () => {
 
   test('mantém o editor de valuation dentro da largura da página', async ({ page }) => {
     await page.goto('./#/valuation');
+    await page.getByText('Premissas manuais', { exact: true }).click();
     const projections = page.getByRole('region', { name: 'Editor de projeções anuais' });
     await expect(projections).toBeVisible();
     expect(await projections.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(

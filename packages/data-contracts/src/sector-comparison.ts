@@ -45,6 +45,14 @@ export interface SectorComparisonObservation {
   inputs: RoeInputs | null;
 }
 
+interface PaidDistributions {
+  year: number;
+  paidBrl: number | null;
+  statement: 'DFC_MI' | 'DFC_MD' | null;
+  accountCodes: string[];
+  reason: string | null;
+}
+
 export interface SectorComparisonCompany {
   name: string;
   sector: string;
@@ -52,6 +60,7 @@ export interface SectorComparisonCompany {
   comparisonContext?: { throughYear: number; note: string; sourceUrl: string };
   classification: ComparisonFiling & { archiveYear: number };
   observations: SectorComparisonObservation[];
+  dividends?: PaidDistributions;
 }
 
 interface ComparisonManifest {
@@ -413,6 +422,27 @@ export function parseSectorRoicComparison(value: unknown): SectorRoicSnapshot {
   return { manifest, companies };
 }
 
+function isPaidDistributions(value: unknown): value is PaidDistributions {
+  if (
+    !isObject(value) ||
+    !isPositiveInteger(value.year) ||
+    !isListOf(value.accountCodes, isAccountCode) ||
+    !unique(value.accountCodes, (code) => code)
+  ) {
+    return false;
+  }
+  if (value.paidBrl === null) {
+    return value.statement === null && value.accountCodes.length === 0 && isText(value.reason);
+  }
+  return (
+    isMoney(value.paidBrl) &&
+    value.paidBrl >= 0 &&
+    (value.statement === 'DFC_MI' || value.statement === 'DFC_MD') &&
+    value.accountCodes.length > 0 &&
+    value.reason === null
+  );
+}
+
 function isCompany(value: unknown): value is SectorComparisonCompany {
   return (
     isObject(value) &&
@@ -428,7 +458,8 @@ function isCompany(value: unknown): value is SectorComparisonCompany {
         isCvmUrl(value.comparisonContext.sourceUrl))) &&
     isFiling(value.classification) &&
     isPositiveInteger(value.classification.archiveYear) &&
-    isListOf(value.observations, isObservation)
+    isListOf(value.observations, isObservation) &&
+    (value.dividends === undefined || isPaidDistributions(value.dividends))
   );
 }
 
@@ -447,13 +478,18 @@ export function parseSectorComparison(value: unknown): SectorComparisonSnapshot 
   const byArchive = new Map(
     manifest.archives.map((archive) => [`${archive.kind}/${archive.year}`, archive]),
   );
-  const matchesArchives = companies.every(({ classification, observations }) => {
+  const latestYear = manifest.years.at(-1);
+  const matchesArchives = companies.every(({ classification, observations, dividends }) => {
     const sector = byArchive.get(`fca/${classification.archiveYear}`);
     return (
       sector &&
       classification.receivedAt <= manifest.asOf &&
       classification.receivedAt <= sector.retrievedAt.slice(0, 10) &&
       observations.length === manifest.years.length &&
+      (dividends === undefined ||
+        (dividends.year === latestYear &&
+          (dividends.paidBrl === null ||
+            observations.at(-1)?.filing?.referenceDate === `${latestYear}-12-31`))) &&
       observations.every(({ year, filing }, index) => {
         const archive = byArchive.get(`dfp/${year}`);
         return (

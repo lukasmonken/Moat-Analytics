@@ -8,6 +8,26 @@ interface Projection {
 export type ValuationInput = Projection &
   ({ model: 'dcf'; netDebt: number; equityAdjustments: number } | { model: 'ddm' });
 
+export function discountValuationFlows(flows: readonly number[], discount: number) {
+  const years = flows.map((flow, index) => ({
+    flow,
+    presentValue: flow / (1 + discount) ** (index + 1),
+  }));
+  const presentYears = years.reduce((sum, year) => sum + year.presentValue, 0);
+  return { years, presentYears };
+}
+
+export function valuePerpetuity(
+  finalFlow: number,
+  discount: number,
+  growth: number,
+  years: number,
+) {
+  const terminal = (finalFlow * (1 + growth)) / (discount - growth);
+  const presentTerminal = terminal / (1 + discount) ** years;
+  return { terminal, presentTerminal };
+}
+
 export function valueScenario(input: ValuationInput) {
   const { flows, discount, growth, shares } = input;
   const finalFlow = flows.at(-1);
@@ -22,13 +42,8 @@ export function valueScenario(input: ValuationInput) {
   ) {
     return null;
   }
-  const years = flows.map((flow, index) => ({
-    flow,
-    presentValue: flow / (1 + discount) ** (index + 1),
-  }));
-  const terminal = (finalFlow * (1 + growth)) / (discount - growth);
-  const presentTerminal = terminal / (1 + discount) ** flows.length;
-  const presentYears = years.reduce((sum, year) => sum + year.presentValue, 0);
+  const { years, presentYears } = discountValuationFlows(flows, discount);
+  const { terminal, presentTerminal } = valuePerpetuity(finalFlow, discount, growth, flows.length);
   const businessValue = presentYears + presentTerminal;
   const equityValue =
     input.model === 'dcf' ? businessValue - input.netDebt + input.equityAdjustments : businessValue;

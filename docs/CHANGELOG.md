@@ -1,5 +1,11 @@
 # Changelog
 
+## Valuation automático
+
+- A escolha de uma companhia projeta dez anos pelo IPCA de 12 meses e desconta pelo CDI atualizado do Banco Central.
+- O DCF usa o fluxo livre e a dívida líquida conciliados com a DFP. Para bancos e seguros, o DDM usa dividendos e JCP pagos. A tela mostra as fontes e sinaliza lacunas de cobertura.
+- O editor de cenários e suas exportações ficam em **Premissas manuais**.
+
 ## Comparação de fundamentos
 
 - No Screener, duas companhias do mesmo grupo podem ser comparadas lado a lado pelos indicadores, Z-scores e pontuações disponíveis. A tabela identifica o exercício, a janela histórica e o pregão quando há rendimento implícito.

@@ -122,17 +122,21 @@ Rotinas independentes para cotações, demonstrativos e seleção anual. O workf
 
 ## 7. Valuation e premissas
 
+O modo automático é a entrada padrão. Ao escolher uma companhia, projeta por dez anos o fluxo observado no último exercício comum. Usa o IPCA acumulado em 12 meses para correção nominal anual e o CDI anualizado corrente para desconto. A perpetuidade usa o mesmo IPCA quando o fluxo-base é positivo e o CDI supera o IPCA. O resultado mostra valores agregados em reais, a data da DFP e a referência de cada taxa. Campos ausentes e mudanças de perímetro ficam explícitos.
+
 ### 7.1 Empresas não financeiras — DCF (FCFF)
+
+No automático, o FCFF reúne o NOPAT do ROIC, depreciação e amortização, CAPEX e variação do capital de giro da mesma DFP. O valor estimado do patrimônio deduz a dívida líquida desse exercício.
 
 Horizonte padrão 10 anos. Projeções anuais: receita, crescimento, margem/EBIT, impostos normalizados, depreciação/amortização, CAPEX, variação de capital de giro. `FCFF = NOPAT + D&A − CAPEX − Δcapital de giro`. Calcular valor terminal por perpetuidade (quando taxa de desconto > crescimento terminal) ou múltiplo explicitado; descontar fluxos e terminal, ajustar dívida líquida/minoritários e ações para valor por ação. Exibir cotação, valor intrínseco estimado, potencial/margem de segurança e sensibilidade.
 
-### 7.2 Bancos — DDM
+### 7.2 Bancos e seguros — DDM
 
-Projeção de 10 anos para lucros/dividendos, retenção/payout, crescimento, restrições de capital regulatório e perpetuidade/terminal. Variante simplificada corrigindo dividendos pela inflação pode existir como cenário explicitamente mecânico; não é projeção robusta de banco.
+No automático, a base é o caixa pago em dividendos e JCP na DFC individual da companhia. As premissas manuais permitem projetar lucros e payout, com crescimento, restrições de capital regulatório e perpetuidade a cargo do usuário.
 
 ### 7.3 Premissas e descontos
 
-Aba separada para premissas automáticas (derivadas de históricos disponíveis com regras documentadas), edição manual por ano/variável, reset, salvar localmente, importar/exportar e cenários conservador/base/otimista. Exibir WACC/custo de equity ou desconto ajustado ao risco como padrão técnico quando aplicável; taxa livre de risco isolada como cenário alternativo explícito, com aviso de que pode superestimar valor. Alinhar valores nominais/reais, inflação e taxa de desconto. Evitar fluxo nulo/retorno esperado positivo inventado sem fonte.
+A seção **Premissas manuais** reúne edição por ano e variável, reset, salvamento local, importação, exportação e cenários conservador, base e otimista. As taxas de desconto manuais aceitam WACC ou custo de capital próprio, conforme o modelo. O CDI isolado do modo automático é uma aproximação e pode superestimar o valor. Alinhar valores nominais, inflação e desconto e sinalizar fluxos ausentes.
 
 ## 8. Carteiras e simulações
 

@@ -60,6 +60,7 @@
 
 ## M4
 
+- **Valuation automático.** O último exercício comum fornece o fluxo-base. O DCF concilia exercício, versão, perímetro e arquivo da DFP entre os lotes de ROIC, alavancagem e reinvestimento. O DDM usa dividendos e JCP pagos na DFC individual da versão registrada no lote de ROE. O IPCA de 12 meses corrige os fluxos e a perpetuidade, e o CDI anualizado corrente desconta ambos. O editor manual fica recolhido na mesma página. [Metodologia](METHODOLOGY.md#valuation-e-premissas)
 - **Editor de valuation.** Dez anos de valores e taxas nominais em BRL, com fluxos no fim de cada ano e perpetuidade de Gordon. A entrada anual é explícita para DCF e DDM. Os motores Decimal e TypeScript usam as mesmas convenções, com comparação em casos de referência.
 - **Premissas de desconto e dados históricos.** WACC ou custo de capital próprio são entradas manuais. O CDI atual pode ser aplicado como taxa de desconto mediante ação explícita. A posição de ações, a dívida líquida simplificada e o ajuste contábil de minoritários podem ser copiados da amostra datada. O preço de referência é informado manualmente.
 - **Cenários.** Base, conservador e otimista preservam valores independentes por modelo. O armazenamento é local e os arquivos de premissas em JSON têm versão de esquema. [Metodologia](METHODOLOGY.md#valuation-e-premissas)

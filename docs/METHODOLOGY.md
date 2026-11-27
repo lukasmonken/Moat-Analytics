@@ -100,6 +100,18 @@ Os fechamentos importados localmente exibem a data do pregão, a coleta e a font
 
 ## Valuation e premissas
 
+### Estimativa automática
+
+O modo automático usa o último exercício comum da seleção. Para companhias de ROIC, o fluxo de caixa livre para a firma é `NOPAT + depreciação e amortização − CAPEX − (capital de giro final − capital de giro inicial)`. Os valores vêm de lotes conciliados pela mesma DFP. O valor estimado do patrimônio deduz a dívida líquida da firma e fica indisponível se essa conta estiver ausente. A estimativa é agregada, sem ajuste de minoritários ou divisão por ações.
+
+A cobertura do DCF depende dos insumos dos lotes de alavancagem e reinvestimento. Uma conta ausente ou excluída pelo cálculo de origem também impede seu uso na projeção.
+
+Para companhias de ROE, o DDM usa dividendos e JCP efetivamente pagos pela companhia. A base soma os desembolsos identificados no financiamento da DFC individual da mesma versão da DFP, em reais e com o sinal de saída convertido para magnitude. Um zero declarado é preservado. Sem a conta identificada ou quando o exercício retrata um perímetro societário anterior, a estimativa fica indisponível.
+
+O fluxo nominal do ano `n` é o fluxo-base multiplicado por `(1 + IPCA em 12 meses)ⁿ`. O valor presente divide o fluxo por `(1 + CDI anualizado)ⁿ`. As duas taxas são as últimas publicadas pelo Banco Central. Se o fluxo-base for positivo e o CDI maior que o IPCA, a perpetuidade do ano 10 é o fluxo projetado do ano 11 dividido por `CDI − IPCA` e descontado por dez anos. Nos demais casos, a tela mostra o valor presente dos dez anos, com a perpetuidade e o total indisponíveis. O desconto usa apenas o CDI e o resultado pode superar a estimativa que usaria um prêmio de risco. [IPCA em 12 meses, SGS 13522](https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do?method=consultarSeries&series=13522)
+
+### Cenários manuais
+
 Os cenários usam valores e taxas nominais. O DCF calcula EBIT como receita vezes margem EBIT, aplica a alíquota informada e soma depreciação e amortização ao NOPAT. O CAPEX e o aumento do capital de giro consomem caixa. No DDM, dividendos projetados são o lucro atribuível aos acionistas vezes o payout de cada ano. Previsões de payout e adequação ao capital regulatório ficam a cargo das premissas do usuário.
 
 Os fluxos dos dez anos são descontados a partir do fim de cada ano. A perpetuidade usa o fluxo do último ano multiplicado por (1 + g) e dividido pela diferença entre a taxa de desconto e o crescimento terminal (g). O cálculo exige desconto maior que crescimento, crescimento acima de −100% e fluxo terminal não negativo. O valor do patrimônio no DCF deduz dívida líquida do valor da firma e soma os demais ajustes com o sinal informado. O DDM estima diretamente o patrimônio. A divisão pelo número total de ações produz um valor médio por ação quando existem classes com direitos distintos.
