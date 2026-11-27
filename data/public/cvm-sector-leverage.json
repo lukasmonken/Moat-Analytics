@@ -4,7 +4,7 @@
     "methodologyVersion": "net-debt-ebitda-dfp.v2",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-27T15:45:25+00:00",
+    "generatedAt": "2026-11-27T16:06:00+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -303,8 +303,8 @@
     },
     {
       "name": "C&A MODAS S.A.",
-      "value": null,
-      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "value": 0.13385849444376857,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-24",
@@ -312,7 +312,25 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154859"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 1044549000,
+        "depreciationBrl": 344612000,
+        "ebitdaBrl": 1389161000,
+        "netDebtBrl": 185951000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e Amortização",
+          "referenceDate": "2025-12-31"
+        },
+        "depreciationDvaAccount": {
+          "statement": "DVA",
+          "code": "7.04.01",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31",
+          "amountBrl": -344612000
+        }
+      }
     },
     {
       "name": "CAMIL ALIMENTOS S.A.",
@@ -1320,8 +1338,8 @@
     },
     {
       "name": "JHSF PARTICIPACOES S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 0.8743694086773188,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-31",
@@ -1329,7 +1347,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155875"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 2460930000,
+        "depreciationBrl": 50998000,
+        "ebitdaBrl": 2511928000,
+        "netDebtBrl": 2196353000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização de bens ativo imobilizado e intangível",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "JSL S.A.",
@@ -1394,8 +1423,8 @@
     },
     {
       "name": "LAVVI EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 2.322594579847217,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-11",
@@ -1403,7 +1432,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155273"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 472961000,
+        "depreciationBrl": 10863000,
+        "ebitdaBrl": 483824000,
+        "netDebtBrl": 1123727000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação de bens do ativo imobilizado e intangivel",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "LOCALIZA RENT A CAR S.A.",
@@ -2223,8 +2263,8 @@
     },
     {
       "name": "SLC AGRICOLA S.A.",
-      "value": null,
-      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "value": 2.3166392553483988,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-11",
@@ -2232,7 +2272,25 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155268"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 1812542000,
+        "depreciationBrl": 380591000,
+        "ebitdaBrl": 2193133000,
+        "netDebtBrl": 5080698000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        },
+        "depreciationDvaAccount": {
+          "statement": "DVA",
+          "code": "7.04.01",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31",
+          "amountBrl": -380591000
+        }
+      }
     },
     {
       "name": "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A.",
@@ -2284,8 +2342,8 @@
     },
     {
       "name": "TEGMA GESTAO LOGISTICA S.A.",
-      "value": null,
-      "reason": "A DFC apresenta componentes de depreciação e amortização em contas separadas.",
+      "value": 0.24615028075377712,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-09",
@@ -2293,7 +2351,25 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155185"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 326884000,
+        "depreciationBrl": 31259000,
+        "ebitdaBrl": 358143000,
+        "netDebtBrl": 88157000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.03",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        },
+        "depreciationDvaAccount": {
+          "statement": "DVA",
+          "code": "7.04.01",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31",
+          "amountBrl": -31259000
+        }
+      }
     },
     {
       "name": "TELEFÔNICA BRASIL S.A",

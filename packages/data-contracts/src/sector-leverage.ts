@@ -17,16 +17,29 @@ interface DepreciationAccount {
   referenceDate: string;
 }
 
+interface DepreciationDvaAccount {
+  statement: 'DVA';
+  code: '7.04.01';
+  label: string;
+  referenceDate: string;
+  amountBrl: number;
+}
+
 type LeverageInputs = {
   ebitBrl: number;
   depreciationBrl: number;
   ebitdaBrl: number;
   netDebtBrl: number;
 } & (
-  | { depreciationAccount: DepreciationAccount; depreciationAccounts?: never }
+  | {
+      depreciationAccount: DepreciationAccount;
+      depreciationAccounts?: never;
+      depreciationDvaAccount?: DepreciationDvaAccount;
+    }
   | {
       depreciationAccount?: never;
       depreciationAccounts: (DepreciationAccount & { amountBrl: number })[];
+      depreciationDvaAccount?: never;
     }
 );
 
@@ -97,6 +110,17 @@ function isDepreciationAccount(
   );
 }
 
+function confirmsDepreciation(account: unknown, referenceDate: string, depreciationBrl: number) {
+  return (
+    isObject(account) &&
+    account.statement === 'DVA' &&
+    account.code === '7.04.01' &&
+    isText(account.label) &&
+    account.referenceDate === referenceDate &&
+    account.amountBrl === -depreciationBrl
+  );
+}
+
 function isLeverageInputs(input: unknown, referenceDate: string): input is LeverageInputs {
   if (
     !isObject(input) ||
@@ -110,10 +134,15 @@ function isLeverageInputs(input: unknown, referenceDate: string): input is Lever
     return false;
   }
   if (input.depreciationAccounts === undefined) {
-    return isDepreciationAccount(input.depreciationAccount, referenceDate);
+    return (
+      isDepreciationAccount(input.depreciationAccount, referenceDate) &&
+      (input.depreciationDvaAccount === undefined ||
+        confirmsDepreciation(input.depreciationDvaAccount, referenceDate, input.depreciationBrl))
+    );
   }
   if (
     input.depreciationAccount !== undefined ||
+    input.depreciationDvaAccount !== undefined ||
     !Array.isArray(input.depreciationAccounts) ||
     input.depreciationAccounts.length !== 2
   ) {
@@ -156,10 +185,10 @@ function isCompany(
   if (input.inputs === null) return input.value === null && isText(input.reason);
   if (input.filing === null || !isLeverageInputs(input.inputs, input.filing.referenceDate))
     return false;
-  const { depreciationAccounts, ebitdaBrl, netDebtBrl } = input.inputs;
+  const { depreciationAccounts, depreciationDvaAccount, ebitdaBrl, netDebtBrl } = input.inputs;
   if (
     manifest.methodologyVersion === 'net-debt-ebitda-dfp.v1' &&
-    (depreciationAccounts || ebitdaBrl <= 0)
+    (depreciationAccounts || depreciationDvaAccount || ebitdaBrl <= 0)
   )
     return false;
   if (ebitdaBrl <= 0) return input.value === null && isText(input.reason);

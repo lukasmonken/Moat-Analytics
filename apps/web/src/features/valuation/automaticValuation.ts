@@ -16,6 +16,7 @@ interface DcfBase extends ValuationReference {
   model: 'dcf';
   nopatBrl: number;
   depreciationBrl: number;
+  depreciationExcludesSeparateRightOfUse?: true;
   capexBrl: number;
   workingCapitalChangeBrl: number;
   netDebtBrl: number | null;
@@ -97,7 +98,7 @@ export function buildAutomaticDcfBase(
       'As contas do fluxo de caixa precisam corresponder à mesma DFP da companhia.',
     );
   }
-  const { depreciationBrl, netDebtBrl } = leverageCompany.inputs;
+  const { depreciationBrl, depreciationDvaAccount, netDebtBrl } = leverageCompany.inputs;
   const { capexBrl, closingWorkingCapitalBrl, openingWorkingCapitalBrl } =
     reinvestmentCompany.inputs;
   return {
@@ -108,6 +109,7 @@ export function buildAutomaticDcfBase(
       filingUrl: filing.filingUrl,
       nopatBrl: inputs.nopatBrl,
       depreciationBrl,
+      ...(depreciationDvaAccount && { depreciationExcludesSeparateRightOfUse: true as const }),
       capexBrl,
       workingCapitalChangeBrl: closingWorkingCapitalBrl - openingWorkingCapitalBrl,
       netDebtBrl,

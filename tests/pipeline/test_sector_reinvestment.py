@@ -85,6 +85,24 @@ class SectorReinvestmentTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "zerado"):
             _capex([("DFC_MI", rows[0]), ("DFC_MI", {**rows[1], "CD_CONTA": "6.02.05.01"})])
 
+    def test_recognizes_explicit_software_acquisition_and_development_as_intangible(self):
+        document = filing("000111")
+        label = "Aquisição e Desenvolvimento de Softwares"
+        property_purchase = ("6.02.02", "Aquisição de Imobilizado", -145_242)
+        rows = cash_flows(document, [property_purchase, ("6.02.03", label, -142_031)])
+        value, accounts = _capex([("DFC_MI", row) for row in rows])
+        self.assertEqual(value, 287_273_000)
+        self.assertEqual(accounts[-1]["key"], "capexIntangible")
+        self.assertEqual(accounts[-1]["amountBrl"], -142_031_000)
+
+        for description, signed_value, reason in (
+            (label, 142_031, "entrada de caixa"),
+            (f"{label} e serviços de manutenção", -142_031, "indisponíveis"),
+        ):
+            with self.subTest(description=description), self.assertRaisesRegex(ValueError, reason):
+                rows = cash_flows(document, [property_purchase, ("6.02.03", description, signed_value)])
+                _capex([("DFC_MI", row) for row in rows])
+
     def test_requires_gross_capex_for_both_asset_classes_and_preserves_reported_zero(self):
         document = filing("000111")
         property_only = [("6.02.01", "Imobilizado", -9)]

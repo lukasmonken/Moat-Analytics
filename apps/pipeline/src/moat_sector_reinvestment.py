@@ -47,6 +47,8 @@ def _label(text: str) -> str:
 
 
 def _capex_kind(text: str) -> str | None:
+    if text == "aquisicao e desenvolvimento de softwares":
+        return "capexIntangible"
     words = set(text.split())
     if words & {"investimento", "investimentos"} and not re.match(r"^investimentos? (em|no|na) ", text):
         return None

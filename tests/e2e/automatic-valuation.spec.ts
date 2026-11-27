@@ -33,6 +33,11 @@ test('projeta DCF e DDM da DFP com taxas datadas e sem preencher premissas', asy
   await expect(flows.getByRole('row', { name: /^1 / })).toContainText(/71\.225\.282\.124/);
 
   await panel.getByRole('searchbox', { name: 'Buscar companhia' }).clear();
+  await select.selectOption('C&A MODAS S.A.');
+  await expect(panel.getByText(/D&A do fluxo exclui a parcela de direito de uso/)).toBeVisible();
+  await expect(
+    panel.getByText('A perpetuidade exige um fluxo do exercício positivo.'),
+  ).toBeVisible();
   await select.selectOption('ITAU UNIBANCO HOLDING S.A.');
   await expect(
     panel.getByRole('heading', { name: /ITAU UNIBANCO HOLDING S.A. · DDM/ }),

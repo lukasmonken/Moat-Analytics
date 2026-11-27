@@ -120,6 +120,11 @@ describe('Valuation automático', () => {
   it('reaproveita CAPEX segregado e D&A documentada, inclusive com EBITDA não positivo', () => {
     const { roic, leverage, reinvestment } = sources();
     const cases = [
+      ['B3 S.A. - BRASIL, BOLSA, BALCÃO', 4_425_259_420],
+      ['C&A MODAS S.A.', -12_236_660],
+      ['LAVVI EMPREENDIMENTOS IMOBILIÁRIOS S.A.', -434_962_740],
+      ['SLC AGRICOLA S.A.', 687_030_720],
+      ['TEGMA GESTAO LOGISTICA S.A.', 143_106_440],
       ['CONSTRUTORA TENDA S.A.', -225_741_000],
       ['EMBRAER S.A.', 1_866_098_240],
       ['JSL S.A.', 1_053_887_620],

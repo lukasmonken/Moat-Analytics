@@ -136,6 +136,9 @@ function AutomaticResults({
     <>
       <Measures values={values} />
       {result.terminalReason && <p role="status">{result.terminalReason}</p>}
+      {isDcf && base.depreciationExcludesSeparateRightOfUse && (
+        <p>A D&A do fluxo exclui a parcela de direito de uso apresentada em separado na DFC.</p>
+      )}
       {isDcf && base.netDebtBrl === null && (
         <p role="status">Dívida líquida indisponível para estimar o patrimônio.</p>
       )}

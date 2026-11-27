@@ -1,5 +1,10 @@
 # Changelog
 
+## Conciliação adicional de contas da DFP
+
+- O Valuation usa o CAPEX documentado de software da B3 e reconhece mais contas de depreciação e amortização. Quando a DFC separa a D&A de direito de uso e a DVA confirma o total principal, o cálculo usa o total confirmado e registra as duas fontes.
+- Na base de 2025, o DCF projeta 83 das 129 empresas de ROIC. Em 68, o fluxo-base positivo permite estimar a perpetuidade quando o CDI supera o IPCA.
+
 ## Cobertura contábil do Valuation
 
 - O DCF aproveita mais contas documentadas de depreciação, amortização e CAPEX nas DFPs. O múltiplo dívida líquida/EBITDA continua indisponível quando o EBITDA é zero ou negativo. A depreciação e a amortização identificadas nesses casos seguem disponíveis para projetar o fluxo de caixa.

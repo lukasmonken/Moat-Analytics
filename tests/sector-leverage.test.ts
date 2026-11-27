@@ -88,6 +88,22 @@ describe('Dívida líquida/EBITDA da CVM', () => {
     expect(formatRatio(-0.3)).toBe('-0,30×');
     expect(formatRatio(null)).toBe('Indisponível');
   });
+
+  it('confere a DVA do exercício quando corrobora a conta de D&A da DFC', () => {
+    const data = snapshot();
+    const ca = data.companies.find(({ name }) => name === 'C&A MODAS S.A.');
+    const confirmation = ca?.inputs?.depreciationDvaAccount;
+    if (!confirmation) throw new Error('DVA da C&A ausente.');
+    expect(ca.inputs?.depreciationBrl).toBe(344_612_000);
+    expect(confirmation).toMatchObject({
+      statement: 'DVA',
+      code: '7.04.01',
+      referenceDate: '2025-12-31',
+      amountBrl: -344_612_000,
+    });
+    confirmation.amountBrl -= 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
+  });
 });
 
 describe('Faixas de múltiplos', () => {

@@ -4,7 +4,7 @@
     "methodologyVersion": "nopat-reinvestment-dfp.v1",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-27T14:11:02+00:00",
+    "generatedAt": "2026-11-27T16:02:40+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -683,8 +683,8 @@
     },
     {
       "name": "B3 S.A. - BRASIL, BOLSA, BALCÃO",
-      "value": null,
-      "reason": "Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.",
+      "value": 12.777816594141186,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-26",
@@ -692,7 +692,79 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154935"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": 4381104420,
+        "openingWorkingCapitalBrl": 171933000,
+        "closingWorkingCapitalBrl": 227528000,
+        "capexBrl": 287273000,
+        "reinvestmentBrl": 342868000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 506647000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 0
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 334714000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 618339000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 0
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 390811000
+          },
+          {
+            "key": "capexProperty",
+            "label": "Aquisição de Imobilizado",
+            "statement": "DFC_MI",
+            "code": "6.02.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -145242000
+          },
+          {
+            "key": "capexIntangible",
+            "label": "Aquisição e Desenvolvimento de Softwares",
+            "statement": "DFC_MI",
+            "code": "6.02.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -142031000
+          }
+        ]
+      }
     },
     {
       "name": "BEMOBI MOBILE TECH S.A.",
