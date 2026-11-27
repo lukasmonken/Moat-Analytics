@@ -6,7 +6,7 @@ import {
 import { simulatePortfolio, type MonthlyLevels } from '../../shared/analytics/backtest';
 import { totalWeightUnits, type SavedPortfolio } from '../portfolio/portfolio';
 
-export const horizons = ['ytd', '2', '3', '4', '5', '6', '7', 'custom'] as const;
+export const horizons = ['ytd', '1', '2', '3', '4', '5', '6', '7', 'custom'] as const;
 export type Horizon = (typeof horizons)[number];
 
 function month(date: string) {

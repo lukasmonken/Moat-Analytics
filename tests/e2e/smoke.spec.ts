@@ -298,7 +298,7 @@ test('salva uma carteira e exige meses completos para calcular a retrospectiva',
       ],
       benchmarks: [{ symbol: 'IBOV', observations: rows }],
     };
-    await page.getByLabel('Arquivo de séries mensais (JSON)').setInputFiles({
+    await page.getByLabel('Arquivo de séries diárias ou mensais (JSON)').setInputFiles({
       name: 'fixture.json',
       mimeType: 'application/json',
       buffer: Buffer.from(JSON.stringify(history)),

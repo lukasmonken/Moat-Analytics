@@ -6,6 +6,12 @@
 - O DCF usa o fluxo livre e a dívida líquida conciliados com a DFP. Para bancos e seguros, o DDM usa dividendos e JCP pagos. A tela mostra as fontes e sinaliza lacunas de cobertura.
 - O editor de cenários e suas exportações ficam em **Premissas manuais**.
 
+## Rentabilidade por ativo e carteira
+
+- Simulador aceita histórico diário ajustado, mostra rentabilidade por companhia e pelos pesos iniciais da carteira salva e reaproveita os fechamentos mensais no backtest.
+- Pipeline privado da brapi guarda a base e consulta os pregões novos com uma janela de conferência para ajustes por proventos e eventos societários.
+- Coletas iniciadas de madrugada usam o último fechamento validado, inclusive quando o GitHub atrasa o agendamento para o dia seguinte.
+
 ## Carteira pelo ranking filtrado
 
 - Em Rankings de fundamentos, **Criar carteira** abre um rascunho com até dez companhias do recorte, em ordem de classificação e com pesos iguais.

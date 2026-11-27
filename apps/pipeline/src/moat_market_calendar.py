@@ -1,10 +1,12 @@
 """Calendário do mercado à vista da B3 para a coleta após o pregão."""
 
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 SAO_PAULO = ZoneInfo("America/Sao_Paulo")
 COLLECTION_START = time(20, 20)
+# Pré-abertura do mercado à vista no Ofício Circular 055/2026-VNC.
+PRE_OPEN = time(9, 45)
 
 # Quadro A dos Ofícios Circulares 041/2026-VNC (2026) e 057/2026-VNC (2027).
 CLOSED_DAYS = {
@@ -19,16 +21,27 @@ CLOSED_DAYS = {
 }
 
 
+def _is_trade_date(day: date) -> bool:
+    holidays = CLOSED_DAYS.get(day.year)
+    if holidays is None:
+        raise ValueError(f"Calendário de negociação da B3 indisponível para {day.year}.")
+    return day.weekday() < 5 and (day.month, day.day) not in holidays
+
+
 def completed_b3_trade_date(now: datetime) -> date | None:
-    """Retorna o pregão da data local após a janela de fechamento."""
+    """Seleciona o fechamento de hoje ou, antes da pré-abertura, o último concluído."""
     if now.utcoffset() is None:
         raise ValueError("Informe a hora da coleta com fuso horário.")
 
     local = now.astimezone(SAO_PAULO)
     today = local.date()
-    if today.year not in CLOSED_DAYS:
-        raise ValueError(f"Calendário de negociação da B3 indisponível para {today.year}.")
-    if today.weekday() >= 5 or (today.month, today.day) in CLOSED_DAYS[today.year]:
+    today_is_trade_date = _is_trade_date(today)
+    if local.time() < PRE_OPEN:
+        previous = today - timedelta(days=1)
+        while not _is_trade_date(previous):
+            previous -= timedelta(days=1)
+        return previous
+    if not today_is_trade_date:
         return None
     if local.time() < COLLECTION_START:
         raise ValueError("A coleta diária começa às 20h20 no horário de Brasília.")

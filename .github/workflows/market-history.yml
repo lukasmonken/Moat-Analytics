@@ -1,0 +1,107 @@
+name: Histórico de mercado privado
+
+on:
+  schedule:
+    - cron: '7 21 * * 1-5'
+      timezone: America/Sao_Paulo
+  workflow_dispatch:
+
+permissions: {}
+
+# Compartilha a chave da brapi com a coleta de capitalização.
+concurrency:
+  group: market-caps
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Atualizar histórico após o pregão
+    if: >-
+      github.event.repository.private == true &&
+      github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Obter pipeline publicado do Moat
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: lukasmonken/Moat-Analytics
+          ref: main
+          persist-credentials: false
+      - name: Restaurar último histórico privado
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          actions="repos/$GITHUB_REPOSITORY/actions"
+          previous_dir="$RUNNER_TEMP/market-history"
+          candidates=$(gh api --method GET --paginate --slurp "$actions/artifacts" -F per_page=100 \
+            | jq -r --arg branch "$GITHUB_REF_NAME" '
+              [.[].artifacts[] | select(.workflow_run.head_branch == $branch)]
+              | sort_by(.created_at) | reverse[] as $artifact
+              | ($artifact.name | capture("^market-history-(?<run>[0-9]+)-(?<attempt>[0-9]+)$")) as $key
+              | select($key.run == ($artifact.workflow_run.id | tostring))
+              | [$artifact.name, $key.run, $key.attempt, $artifact.expired] | @tsv')
+
+          had_history=false
+          while IFS=$'\t' read -r name run attempt expired; do
+            [[ -n "$name" ]] || continue
+            succeeded=$(gh api "$actions/runs/$run/attempts/$attempt" --jq '
+              (.path | split("@")[0]) == ".github/workflows/market-history.yml" and .conclusion == "success"')
+            [[ "$succeeded" == true ]] || continue
+            had_history=true
+            [[ "$expired" == false ]] || continue
+
+            gh run download "$run" --repo "$GITHUB_REPOSITORY" --name "$name" --dir "$previous_dir"
+            if [[ ! -s "$previous_dir/latest.json" ]]; then
+              echo "::error::O artefato anterior está incompleto."
+              exit 1
+            fi
+            exit 0
+          done <<< "$candidates"
+
+          # Artefatos removidos ou expirados podem sumir da listagem de artefatos.
+          last_success=$(gh api --method GET "$actions/workflows/market-history.yml/runs" \
+            -f branch="$GITHUB_REF_NAME" -f status=success -F per_page=1 --jq '.workflow_runs[0].id // empty')
+          if [[ -n "$last_success" && "$had_history" == false ]]; then
+            had_history=$(gh api --paginate --slurp "$actions/runs/$last_success/jobs" | jq -r '
+              any(.[].jobs[].steps[]; .name == "Guardar histórico privado" and .conclusion == "success")')
+          fi
+          if [[ "$had_history" == true ]]; then
+            echo "::error::O histórico já foi publicado e não há artefato válido para restaurar."
+            exit 1
+          fi
+      - name: Acrescentar fechamentos ajustados
+        shell: bash
+        env:
+          BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
+          MOAT_MARKET_CAP_UNIVERSE: ${{ secrets.MOAT_MARKET_CAP_UNIVERSE }}
+          MOAT_HISTORY_RANGE: ${{ vars.MOAT_HISTORY_RANGE || '3mo' }}
+        run: |
+          if [[ -z "$BRAPI_TOKEN" || -z "$MOAT_MARKET_CAP_UNIVERSE" ]]; then
+            echo "::error::Configure os secrets BRAPI_TOKEN e MOAT_MARKET_CAP_UNIVERSE no repositório privado."
+            exit 1
+          fi
+          args=(--range "$MOAT_HISTORY_RANGE")
+          previous="$RUNNER_TEMP/market-history/latest.json"
+          if [[ -f "$previous" ]]; then
+            args+=(--previous "$previous")
+          fi
+          python3 apps/pipeline/run_market_history.py "${args[@]}"
+          output=data/processed/market-history/latest.json
+          if [[ -f "$previous" && ! -e "$output" ]]; then
+            # Mantém a série disponível após dias sem novo fechamento.
+            mkdir -p "$(dirname "$output")"
+            cp "$previous" "$output"
+          fi
+      - name: Guardar histórico privado
+        if: hashFiles('data/processed/market-history/latest.json') != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: market-history-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/processed/market-history/latest.json
+          if-no-files-found: error
+          retention-days: 90

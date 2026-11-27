@@ -25,6 +25,27 @@ class MarketCalendarTests(unittest.TestCase):
             date(2027, 1, 4),
         )
 
+    def test_uses_the_previous_close_when_github_starts_after_midnight(self):
+        self.assertEqual(
+            completed_b3_trade_date(datetime.fromisoformat("2026-11-27T05:09:18+00:00")),
+            date(2026, 11, 26),
+        )
+        self.assertEqual(
+            completed_b3_trade_date(datetime.fromisoformat("2026-11-27T09:44:59-03:00")),
+            date(2026, 11, 26),
+        )
+        with self.assertRaisesRegex(ValueError, "20h20"):
+            completed_b3_trade_date(datetime.fromisoformat("2026-11-27T09:45:00-03:00"))
+
+    def test_recovers_the_previous_close_across_holidays_weekends_and_years(self):
+        for now, expected in (
+            ("2026-11-28T02:00:00-03:00", date(2026, 11, 27)),
+            ("2026-11-23T02:00:00-03:00", date(2026, 11, 19)),
+            ("2027-01-01T02:00:00-03:00", date(2026, 12, 30)),
+        ):
+            with self.subTest(now=now):
+                self.assertEqual(completed_b3_trade_date(datetime.fromisoformat(now)), expected)
+
     def test_skips_weekends_and_market_holidays(self):
         for day in ("2026-11-28", "2026-12-24", "2026-12-31", "2027-02-09", "2027-11-15"):
             with self.subTest(day=day):

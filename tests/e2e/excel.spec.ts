@@ -370,7 +370,7 @@ test('exporta premissas, carteira válida e retrospectiva calculada no navegador
   expect(sheetNames(portfolio)).toContain('Composição');
   await page.getByRole('button', { name: 'Salvar carteira' }).click();
   await page.getByRole('link', { name: 'Abrir simulador' }).click();
-  await page.getByLabel('Arquivo de séries mensais (JSON)').setInputFiles({
+  await page.getByLabel('Arquivo de séries diárias ou mensais (JSON)').setInputFiles({
     name: 'teste.json',
     mimeType: 'application/json',
     buffer: Buffer.from(

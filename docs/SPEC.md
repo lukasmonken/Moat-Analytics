@@ -148,7 +148,9 @@ Em Rankings de fundamentos, **Criar carteira** leva até dez companhias do recor
 
 ### Histórico e métricas
 
-Horizontes YTD e 2, 3, 4, 5, 6, 7 anos e customizado quando dados disponíveis. Patrimônio/capital inicial e final, aportes, lucro, retorno total, CAGR, retornos anuais, dividendos/JCP (com e sem reinvestimento), fluxo de caixa, volatilidade anualizada, drawdown máximo e série de drawdown, Sharpe com benchmark explícito, contribuição por ativo, concentração e correlação.
+A retrospectiva mensal cobre o acumulado do ano, períodos de um a sete anos e janelas personalizadas quando há dados. Patrimônio/capital inicial e final, aportes, lucro, retorno total, CAGR, retornos anuais, dividendos/JCP (com e sem reinvestimento), fluxo de caixa, volatilidade anualizada, drawdown máximo e série de drawdown, Sharpe com benchmark explícito, contribuição por ativo, concentração e correlação.
+
+Uma série privada de fechamentos diários ajustados alimenta a rentabilidade por ativo e da carteira nos pesos iniciais. As datas-base incluem semana, mês e ano correntes, último mês e ano fechados, um mês acumulado e horizontes de 1 a 5 anos. A retrospectiva com aportes, custos e rebalanceamento usa o último pregão registrado de cada mês encerrado, com datas comuns. A rotina acrescenta novos pregões após conferir o trecho em comum com o histórico salvo.
 
 Benchmarks: Ibovespa, IDIV e **SMAL11 (ETF, não índice)**; metodologia equivalente de total return, ajustando adequadamente dividendos, splits, custos, datas e impostos e informando diferenças.
 
