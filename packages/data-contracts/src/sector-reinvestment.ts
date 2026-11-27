@@ -1,4 +1,5 @@
 import { isCvmSource } from './cvm.ts';
+import { isDfpAccountReview, type DfpAccountReview } from './dfp-review.ts';
 import { isSectorRoicFiling, type SectorRoicObservation } from './sector-comparison.ts';
 import { isSectorDfpArchive, type SectorLeverageSnapshot } from './sector-leverage.ts';
 import {
@@ -27,6 +28,7 @@ interface ReinvestmentInputs {
   capexBrl: number;
   reinvestmentBrl: number;
   accounts: ReinvestmentAccount[];
+  capexReview?: DfpAccountReview;
 }
 
 export interface SectorReinvestmentCompany {
@@ -108,6 +110,10 @@ function isInputs(value: unknown, year: number): value is ReinvestmentInputs {
   return (
     capex.length > 0 &&
     accounts.length === capex.length + 6 &&
+    (value.capexReview === undefined ||
+      (capex.length === 1 &&
+        capex[0]?.key === 'capex' &&
+        isDfpAccountReview(value.capexReview, capex[0].code))) &&
     capex.every(
       ({ referenceDate, amountBrl, code }) =>
         referenceDate === closing && amountBrl <= 0 && code.startsWith('6.02.'),

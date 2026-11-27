@@ -1,4 +1,5 @@
 import type {
+  DfpAccountReview,
   SectorLeverageSnapshot,
   SectorReinvestmentSnapshot,
   SectorRoicObservation,
@@ -16,7 +17,10 @@ interface DcfBase extends ValuationReference {
   model: 'dcf';
   nopatBrl: number;
   depreciationBrl: number;
+  depreciationAdjustment?: 'impairment' | 'separate-right-of-use';
+  depreciationReview?: DfpAccountReview;
   capexBrl: number;
+  capexReview?: DfpAccountReview;
   workingCapitalChangeBrl: number;
   netDebtBrl: number | null;
 }
@@ -97,9 +101,20 @@ export function buildAutomaticDcfBase(
       'As contas do fluxo de caixa precisam corresponder à mesma DFP da companhia.',
     );
   }
-  const { depreciationBrl, netDebtBrl } = leverageCompany.inputs;
-  const { capexBrl, closingWorkingCapitalBrl, openingWorkingCapitalBrl } =
+  const {
+    depreciationBrl,
+    depreciationDvaAccount,
+    depreciationImpairmentReconciliation,
+    depreciationReview,
+    netDebtBrl,
+  } = leverageCompany.inputs;
+  const { capexBrl, capexReview, closingWorkingCapitalBrl, openingWorkingCapitalBrl } =
     reinvestmentCompany.inputs;
+  const depreciationAdjustment = depreciationImpairmentReconciliation
+    ? 'impairment'
+    : depreciationDvaAccount
+      ? 'separate-right-of-use'
+      : undefined;
   return {
     status: 'ready',
     base: {
@@ -108,7 +123,10 @@ export function buildAutomaticDcfBase(
       filingUrl: filing.filingUrl,
       nopatBrl: inputs.nopatBrl,
       depreciationBrl,
+      ...(depreciationAdjustment && { depreciationAdjustment }),
+      ...(depreciationReview && { depreciationReview }),
       capexBrl,
+      ...(capexReview && { capexReview }),
       workingCapitalChangeBrl: closingWorkingCapitalBrl - openingWorkingCapitalBrl,
       netDebtBrl,
     },

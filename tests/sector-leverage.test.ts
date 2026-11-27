@@ -37,7 +37,8 @@ describe('Dívida líquida/EBITDA da CVM', () => {
   it('rejeita razão alterada, EBITDA incompatível e contas fora do exercício', () => {
     const data = snapshot();
     const vale = data.companies.find(({ name }) => name === 'VALE S.A.');
-    if (!vale?.inputs || vale.value === null) throw new Error('Vale precisa de insumos no lote.');
+    if (!vale?.inputs?.depreciationAccount || vale.value === null)
+      throw new Error('Vale precisa de insumos no lote.');
     const { value, inputs } = vale;
     vale.value = 10;
     expect(() => parseSectorLeverage(data)).toThrow();
@@ -46,13 +47,73 @@ describe('Dívida líquida/EBITDA da CVM', () => {
     inputs.ebitdaBrl = 1;
     expect(() => parseSectorLeverage(data)).toThrow();
     inputs.ebitdaBrl = ebitdaBrl;
-    inputs.depreciationAccount.referenceDate = '2024-12-31';
+    vale.inputs.depreciationAccount.referenceDate = '2024-12-31';
+    expect(() => parseSectorLeverage(data)).toThrow();
+  });
+
+  it('valida duas contas irmãs e preserva os insumos quando EBITDA não é positivo', () => {
+    const data = snapshot();
+    const issuer = data.companies.find(({ name }) => name === 'VALE S.A.');
+    const account = issuer?.inputs?.depreciationAccount;
+    if (!issuer?.inputs || !account) throw new Error('Conta de depreciação ausente.');
+    const amountBrl = issuer.inputs.depreciationBrl;
+    data.manifest.methodologyVersion = 'net-debt-ebitda-dfp.v2';
+    const components = [
+      { ...account, label: 'Depreciação', code: '6.01.01.02', amountBrl: amountBrl - 500_000 },
+      { ...account, label: 'Amortização', code: '6.01.01.03', amountBrl: 500_000 },
+    ];
+    issuer.inputs = {
+      ebitBrl: -amountBrl,
+      ebitdaBrl: 0,
+      netDebtBrl: issuer.inputs.netDebtBrl,
+      depreciationBrl: amountBrl,
+      depreciationAccounts: components,
+    };
+    issuer.value = null;
+    issuer.reason = 'EBITDA estimado não positivo.';
+    expect(() => parseSectorLeverage(data)).not.toThrow();
+    const [depreciation, amortization] = components;
+    if (!depreciation || !amortization) throw new Error('Componentes de D&A ausentes.');
+    amortization.amountBrl += 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
+    amortization.amountBrl -= 1;
+    amortization.code = depreciation.code;
+    expect(() => parseSectorLeverage(data)).toThrow();
+    amortization.code = '6.01.01.03';
+    issuer.value = 0;
     expect(() => parseSectorLeverage(data)).toThrow();
   });
 
   it('formata o múltiplo em português e mostra dados ausentes', () => {
     expect(formatRatio(-0.3)).toBe('-0,30×');
     expect(formatRatio(null)).toBe('Indisponível');
+  });
+
+  it('confere a DVA do exercício quando corrobora a conta de D&A da DFC', () => {
+    const data = snapshot();
+    const ca = data.companies.find(({ name }) => name === 'C&A MODAS S.A.');
+    const confirmation = ca?.inputs?.depreciationDvaAccount;
+    if (!confirmation) throw new Error('DVA da C&A ausente.');
+    expect(ca.inputs?.depreciationBrl).toBe(344_612_000);
+    expect(confirmation).toMatchObject({
+      statement: 'DVA',
+      code: '7.04.01',
+      referenceDate: '2025-12-31',
+      amountBrl: -344_612_000,
+    });
+    confirmation.amountBrl -= 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
+  });
+
+  it('rejeita uma perda de ativos que não concilia com a DFC da Ambev', () => {
+    const data = snapshot();
+    const ambev = data.companies.find(({ name }) => name === 'AMBEV S.A.');
+    const evidence = ambev?.inputs?.depreciationImpairmentReconciliation;
+    if (!evidence) throw new Error('Conciliação da Ambev ausente.');
+    expect(evidence.combinedDfcAmountBrl).toBe(6_832_085_000);
+    expect(evidence.impairmentDvaAccount.amountBrl).toBe(-435_217_000);
+    evidence.impairmentDvaAccount.amountBrl += 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
   });
 });
 

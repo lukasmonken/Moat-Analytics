@@ -1,5 +1,21 @@
 # Changelog
 
+## Contas conciliadas nas demonstrações auditadas
+
+- O DCF separa depreciação e amortização das perdas de ativos quando as duas contas da DVA conciliam exatamente a rubrica combinada da DFC.
+- A revisão das demonstrações auditadas da Cyrela, Tupy e Vale confirma os insumos que aparecem com descrições resumidas na DFP estruturada. O Valuation aponta o documento e a página utilizados.
+- As conciliações acrescentam Ambev, Cyrela, Tupy e Vale à projeção DCF de 2025. São 87 das 129 companhias de ROIC, com 71 fluxos-base positivos.
+
+## Conciliação adicional de contas da DFP
+
+- O Valuation usa o CAPEX documentado de software da B3 e reconhece mais contas de depreciação e amortização. Quando a DFC separa a D&A de direito de uso e a DVA confirma o total principal, o cálculo usa o total confirmado e registra as duas fontes.
+- Na base de 2025, o DCF projeta 83 das 129 empresas de ROIC. Em 68, o fluxo-base positivo permite estimar a perpetuidade quando o CDI supera o IPCA.
+
+## Cobertura contábil do Valuation
+
+- O DCF aproveita mais contas documentadas de depreciação, amortização e CAPEX nas DFPs. O múltiplo dívida líquida/EBITDA continua indisponível quando o EBITDA é zero ou negativo. A depreciação e a amortização identificadas nesses casos seguem disponíveis para projetar o fluxo de caixa.
+- No exercício de 2025, a cobertura do DCF passou de 67 para 78 das 129 companhias de ROIC. Em 65 delas o fluxo-base é positivo e permite estimar a perpetuidade quando o CDI supera o IPCA.
+
 ## Valuation automático
 
 - A escolha de uma companhia projeta dez anos pelo IPCA de 12 meses e desconta pelo CDI atualizado do Banco Central.

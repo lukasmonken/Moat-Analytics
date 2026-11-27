@@ -12,6 +12,7 @@ from .moat_cvm.archives import csv_rows, read_archive
 from .moat_cvm.bank_roe import record, same_filing
 from .moat_cvm.comparison_identity import selected_companies
 from .moat_cvm.dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
+from .moat_cvm.sector_reinvestment_notes import AUDITED_CAPEX_REVIEWS, AuditedCapexReview
 from .moat_cvm.sector_roic import METHODOLOGY as ROIC_METHOD
 from .moat_cvm.sector_roic import NEWEST, PRIOR, matching_dfp_filings
 
@@ -34,7 +35,16 @@ CAPEX_QUALIFIERS = frozenset("""
 CAPEX_PROPERTY = frozenset(("imobilizado", "imobilizados", "fixo", "fixos"))
 CAPEX_INTANGIBLE = frozenset(("intangivel", "intangiveis", "instangivel", "intangives"))
 CAPEX_ASSETS = CAPEX_PROPERTY | CAPEX_INTANGIBLE
+SALE_PREFIX = re.compile(r"^(?:(?:valor recebido|recebimento) pela )?(?:venda|alienacao) ")
+SALE_ASSET_WORDS = CAPEX_ASSETS | {
+    "ativo", "ativos", "bem", "bens", "da", "das", "de", "do", "dos", "e", "investimento", "investimentos",
+}
 EachRow = tuple[str, CsvRow]
+CONSOLIDATED_DFC = "DF Consolidado - Demonstração do Fluxo de Caixa (Método Indireto)"
+DFP_URL = (
+    "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx"
+    "?CodigoInstituicao=1&NumeroSequencialDocumento="
+)
 
 
 def _label(text: str) -> str:
@@ -42,8 +52,9 @@ def _label(text: str) -> str:
     return " ".join(re.findall(r"[a-z]+", re.sub(r"\(notas? [^)]+\)", "", ascii_text)))
 
 
-def _capex_kind(label: str) -> str | None:
-    text = _label(label)
+def _capex_kind(text: str) -> str | None:
+    if text == "aquisicao e desenvolvimento de softwares":
+        return "capexIntangible"
     words = set(text.split())
     if words & {"investimento", "investimentos"} and not re.match(r"^investimentos? (em|no|na) ", text):
         return None
@@ -56,16 +67,58 @@ def _capex_kind(label: str) -> str | None:
     return "capexIntangible"
 
 
-def _capex(rows: list[EachRow]) -> tuple[Decimal, list[dict]]:
+def _is_asset_sale(text: str) -> bool:
+    prefix = SALE_PREFIX.match(text)
+    return prefix is not None and set(text[prefix.end():].split()) <= SALE_ASSET_WORDS
+
+
+def _is_descendant(detail: dict, parent: dict) -> bool:
+    return detail["statement"] == parent["statement"] and detail["code"].startswith(parent["code"] + ".")
+
+
+def _reviewed_capex_account(
+    filing: dict, rows: list[EachRow],
+) -> tuple[EachRow, AuditedCapexReview] | None:
+    if not rows or filing.get("basis") is not None:
+        return None
+    issuer = rows[0][1]["CD_CVM"]
+    reference = filing["referenceDate"]
+    version = filing["version"]
+    review = AUDITED_CAPEX_REVIEWS.get((issuer, reference, version))
+    if review is None or filing["filingUrl"] != DFP_URL + review.document_id:
+        return None
+    matches = [entry for entry in rows if entry[1]["CD_CONTA"] == review.account_code]
+    if len(matches) != 1:
+        return None
+    statement, row = matches[0]
+    if (
+        statement != "DFC_MI"
+        or row.get("GRUPO_DFP") != CONSOLIDATED_DFC
+        or row["CD_CVM"] != issuer
+        or row["DT_REFER"] != reference
+        or str(row["VERSAO"]) != str(version)
+        or row["ORDEM_EXERC"] != NEWEST
+        or row["DT_INI_EXERC"] != reference[:4] + "-01-01"
+        or row["DT_FIM_EXERC"] != reference
+        or row["DS_CONTA"] != review.csv_label
+        or normalize(row)[0] != review.amount_brl
+    ):
+        return None
+    return matches[0], review
+
+
+def _capex(rows: list[EachRow], *, reviewed_account: EachRow | None = None) -> tuple[Decimal, list[dict]]:
     candidates = []
     seen: set[tuple[str, str]] = set()
     for statement, row in rows:
-        source_label = row["DS_CONTA"]
-        key = _capex_kind(source_label)
+        label = _label(row["DS_CONTA"])
+        key = "capex" if reviewed_account == (statement, row) else _capex_kind(label)
         if key is None:
-            words = set(_label(source_label).split())
-            if words & CAPEX_ASSETS and words & CAPEX_OPERATIONS and normalize(row)[0] != 0:
-                raise ValueError("Aquisições de ativos aparecem agregadas a outros fluxos na DFC.")
+            words = set(label.split())
+            if words & CAPEX_ASSETS and words & CAPEX_OPERATIONS:
+                value, _ = normalize(row)
+                if value != 0 and not (value > 0 and _is_asset_sale(label)):
+                    raise ValueError("Aquisições de ativos aparecem agregadas a outros fluxos na DFC.")
             continue
         detail, value, _ = record(key, statement, row)
         account = statement, detail["code"]
@@ -77,16 +130,29 @@ def _capex(rows: list[EachRow]) -> tuple[Decimal, list[dict]]:
         candidates.append((detail, value))
 
     # Uma rubrica agregadora já inclui os componentes cujos códigos descendem dela.
+    for detail, value in candidates:
+        if value == 0 and any(child_value != 0 and _is_descendant(child, detail) for child, child_value in candidates):
+            raise ValueError("O total zerado da DFC conflita com os detalhes de CAPEX.")
     roots = [
         (detail, value)
         for detail, value in candidates
-        if not any(
-            detail["statement"] == parent["statement"] and detail["code"].startswith(parent["code"] + ".")
-            for parent, _ in candidates
-        )
+        if not any(_is_descendant(detail, parent) for parent, _ in candidates)
+    ]
+    # Uma linha agregada zerada fora da hierarquia pode coexistir com as duas compras em linhas próprias.
+    property_statements = {detail["statement"] for detail, _ in roots if detail["key"] == "capexProperty"}
+    intangible_statements = {detail["statement"] for detail, _ in roots if detail["key"] == "capexIntangible"}
+    complete_statements = property_statements & intangible_statements
+    roots = [
+        (detail, value)
+        for detail, value in roots
+        if not (value == 0 and detail["key"] == "capex" and detail["statement"] in complete_statements)
     ]
     keys = {detail["key"] for detail, _ in roots}
-    if len(roots) != len(keys) or len({detail["statement"] for detail, _ in roots}) > 1:
+    if (
+        len(roots) != len(keys)
+        or len({detail["statement"] for detail, _ in roots}) > 1
+        or ("capex" in keys and len(keys) > 1)
+    ):
         raise ValueError("A DFC apresenta contas de CAPEX sobrepostas ou conflitantes.")
     if keys not in ({"capex"}, {"capexProperty", "capexIntangible"}):
         raise ValueError("Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.")
@@ -160,10 +226,26 @@ def _reinvestment(name: str, observation: dict, balances: dict[str, EachRow], ca
         return {**result, "reason": observation.get("reason") or "NOPAT indisponível no exercício."}
     if conflict:
         return {**result, "reason": "Contas de capital de giro conflitantes na DFP."}
+    capex_review = {}
     try:
         opening, opening_accounts = _working_capital("opening", balances)
         closing, closing_accounts = _working_capital("closing", balances)
-        capex, cash_flow_accounts = _capex(cash_flows)
+        try:
+            capex, cash_flow_accounts = _capex(cash_flows)
+        except ValueError:
+            reviewed = _reviewed_capex_account(filing, cash_flows)
+            if reviewed is None:
+                raise
+            account_row, evidence = reviewed
+            capex, cash_flow_accounts = _capex(cash_flows, reviewed_account=account_row)
+            if any(account["code"] == evidence.account_code for account in cash_flow_accounts):
+                capex_review = {
+                    "capexReview": {
+                        "documentUrl": evidence.document_url,
+                        "page": evidence.page,
+                        "accountCode": evidence.account_code,
+                    },
+                }
         nopat = Decimal(str(roic["nopatBrl"]))
         reinvestment = capex + closing - opening
         if not all(value.is_finite() and abs(value) < 2**53 for value in (nopat, opening, closing, capex, reinvestment)):
@@ -181,6 +263,7 @@ def _reinvestment(name: str, observation: dict, balances: dict[str, EachRow], ca
             "capexBrl": amount(capex),
             "reinvestmentBrl": amount(reinvestment),
             "accounts": [*opening_accounts, *closing_accounts, *cash_flow_accounts],
+            **capex_review,
         },
     }
 

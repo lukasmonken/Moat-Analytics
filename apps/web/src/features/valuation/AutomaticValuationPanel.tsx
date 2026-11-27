@@ -136,6 +136,12 @@ function AutomaticResults({
     <>
       <Measures values={values} />
       {result.terminalReason && <p role="status">{result.terminalReason}</p>}
+      {isDcf && base.depreciationAdjustment === 'separate-right-of-use' && (
+        <p>A D&A do fluxo exclui a parcela de direito de uso apresentada em separado na DFC.</p>
+      )}
+      {isDcf && base.depreciationAdjustment === 'impairment' && (
+        <p>A D&A do fluxo separa a perda de valor da rubrica agregada da DFC, conforme a DVA.</p>
+      )}
       {isDcf && base.netDebtBrl === null && (
         <p role="status">Dívida líquida indisponível para estimar o patrimônio.</p>
       )}
@@ -146,6 +152,20 @@ function AutomaticResults({
         {' · '}
         <time dateTime={base.referenceDate}>{formatDate(base.referenceDate)}</time>
       </p>
+      {isDcf && base.depreciationReview && (
+        <p>
+          <a href={base.depreciationReview.documentUrl} target="_blank" rel="noreferrer">
+            D&A nas demonstrações auditadas · p. {base.depreciationReview.page}
+          </a>
+        </p>
+      )}
+      {isDcf && base.capexReview && (
+        <p>
+          <a href={base.capexReview.documentUrl} target="_blank" rel="noreferrer">
+            CAPEX nas demonstrações auditadas · p. {base.capexReview.page}
+          </a>
+        </p>
+      )}
       <details className="valuation-details">
         <summary>Ver projeções anuais</summary>
         <div className="valuation-inputs">
@@ -154,7 +174,7 @@ function AutomaticResults({
               values={[
                 ['NOPAT', base.nopatBrl],
                 ['Depreciação e amortização', base.depreciationBrl],
-                ['CAPEX', base.capexBrl],
+                ['CAPEX de imobilizado e intangível', base.capexBrl],
                 ['Variação do capital de giro', base.workingCapitalChangeBrl],
               ]}
             />
