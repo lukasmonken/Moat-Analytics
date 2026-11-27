@@ -53,6 +53,43 @@ class SectorLeverageTest(unittest.TestCase):
             with self.subTest(entries=entries), self.assertRaisesRegex(ValueError, reason):
                 _depreciation([("DFC_MI", row) for row in dfc(document, entries)])
 
+    def test_accepts_operating_totals_with_explicit_expense_notes_and_documented_typo(self):
+        document = filing("000111")
+        for label in (
+            "Despesas com depreciação e amortização",
+            "Depreciação e amortização (Nota 9 e 10)",
+            "Depreciação e amotização",
+        ):
+            with self.subTest(label=label):
+                rows = dfc(document, [("6.01.01.02", label, 15)])
+                value, evidence = _depreciation([("DFC_MI", row) for row in rows])
+                self.assertEqual(value, 15_000)
+                self.assertEqual(evidence["depreciationAccount"]["label"], label)
+
+    def test_conciles_only_separate_depreciation_and_amortization_siblings(self):
+        document = filing("000111")
+        rows = dfc(document, [
+            ("6.01.01.03", "Depreciação", 12),
+            ("6.01.01.04", "Amortização", 4),
+            ("6.01.01.04.01", "Amortização do intangível", 4),
+            ("6.01.01.05", "Amortização de custos de transação", 20),
+        ])
+        value, evidence = _depreciation([("DFC_MI", row) for row in rows])
+        self.assertEqual(value, 16_000)
+        self.assertEqual(
+            [(item["code"], item["amountBrl"]) for item in evidence["depreciationAccounts"]],
+            [("6.01.01.03", 12_000), ("6.01.01.04", 4_000)],
+        )
+        with self.assertRaisesRegex(ValueError, "sem conciliação"):
+            _depreciation([("DFC_MI", rows[0]), ("DFC_MD", rows[1])])
+        with self.assertRaisesRegex(ValueError, "sem conciliação"):
+            _depreciation([("DFC_MI", rows[0]), ("DFC_MI", {**rows[1], "CD_CONTA": "6.01.01.03.01"})])
+        with self.assertRaisesRegex(ValueError, "contas separadas"):
+            _depreciation([
+                *[("DFC_MI", row) for row in rows],
+                ("DFC_MI", {**rows[2], "CD_CONTA": "6.01.01.06"}),
+            ])
+
     def test_latest_same_filing_and_preserves_individual_provenance(self):
         document = {**filing("018627", version=1), "ID_DOC": "154938"}
         annual = annual_statements(document)
@@ -93,5 +130,7 @@ class SectorLeverageTest(unittest.TestCase):
         observation["inputs"]["ebitBrl"] = -15_000
         result = _leverage("EMPRESA", observation, rows)
         self.assertIsNone(result["value"])
-        self.assertIsNone(result["inputs"])
+        self.assertEqual(result["inputs"]["depreciationBrl"], 15_000)
+        self.assertEqual(result["inputs"]["ebitdaBrl"], 0)
+        self.assertLess(result["inputs"]["netDebtBrl"], 0)
         self.assertIn("EBITDA", result["reason"])

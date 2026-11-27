@@ -154,7 +154,7 @@ function AutomaticResults({
               values={[
                 ['NOPAT', base.nopatBrl],
                 ['Depreciação e amortização', base.depreciationBrl],
-                ['CAPEX', base.capexBrl],
+                ['CAPEX de imobilizado e intangível', base.capexBrl],
                 ['Variação do capital de giro', base.workingCapitalChangeBrl],
               ]}
             />

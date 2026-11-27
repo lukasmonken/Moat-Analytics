@@ -37,7 +37,8 @@ describe('Dívida líquida/EBITDA da CVM', () => {
   it('rejeita razão alterada, EBITDA incompatível e contas fora do exercício', () => {
     const data = snapshot();
     const vale = data.companies.find(({ name }) => name === 'VALE S.A.');
-    if (!vale?.inputs || vale.value === null) throw new Error('Vale precisa de insumos no lote.');
+    if (!vale?.inputs?.depreciationAccount || vale.value === null)
+      throw new Error('Vale precisa de insumos no lote.');
     const { value, inputs } = vale;
     vale.value = 10;
     expect(() => parseSectorLeverage(data)).toThrow();
@@ -46,7 +47,40 @@ describe('Dívida líquida/EBITDA da CVM', () => {
     inputs.ebitdaBrl = 1;
     expect(() => parseSectorLeverage(data)).toThrow();
     inputs.ebitdaBrl = ebitdaBrl;
-    inputs.depreciationAccount.referenceDate = '2024-12-31';
+    vale.inputs.depreciationAccount.referenceDate = '2024-12-31';
+    expect(() => parseSectorLeverage(data)).toThrow();
+  });
+
+  it('valida duas contas irmãs e preserva os insumos quando EBITDA não é positivo', () => {
+    const data = snapshot();
+    const issuer = data.companies.find(({ name }) => name === 'VALE S.A.');
+    const account = issuer?.inputs?.depreciationAccount;
+    if (!issuer?.inputs || !account) throw new Error('Conta de depreciação ausente.');
+    const amountBrl = issuer.inputs.depreciationBrl;
+    data.manifest.methodologyVersion = 'net-debt-ebitda-dfp.v2';
+    const components = [
+      { ...account, label: 'Depreciação', code: '6.01.01.02', amountBrl: amountBrl - 500_000 },
+      { ...account, label: 'Amortização', code: '6.01.01.03', amountBrl: 500_000 },
+    ];
+    issuer.inputs = {
+      ebitBrl: -amountBrl,
+      ebitdaBrl: 0,
+      netDebtBrl: issuer.inputs.netDebtBrl,
+      depreciationBrl: amountBrl,
+      depreciationAccounts: components,
+    };
+    issuer.value = null;
+    issuer.reason = 'EBITDA estimado não positivo.';
+    expect(() => parseSectorLeverage(data)).not.toThrow();
+    const [depreciation, amortization] = components;
+    if (!depreciation || !amortization) throw new Error('Componentes de D&A ausentes.');
+    amortization.amountBrl += 1;
+    expect(() => parseSectorLeverage(data)).toThrow();
+    amortization.amountBrl -= 1;
+    amortization.code = depreciation.code;
+    expect(() => parseSectorLeverage(data)).toThrow();
+    amortization.code = '6.01.01.03';
+    issuer.value = 0;
     expect(() => parseSectorLeverage(data)).toThrow();
   });
 

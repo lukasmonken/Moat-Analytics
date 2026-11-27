@@ -117,6 +117,45 @@ describe('Valuation automático', () => {
     expect(valuation.equityValue).toBe(valuation.enterpriseValue + 60_570_000);
   });
 
+  it('reaproveita CAPEX segregado e D&A documentada, inclusive com EBITDA não positivo', () => {
+    const { roic, leverage, reinvestment } = sources();
+    const cases = [
+      ['CONSTRUTORA TENDA S.A.', -225_741_000],
+      ['EMBRAER S.A.', 1_866_098_240],
+      ['JSL S.A.', 1_053_887_620],
+      ['MÉLIUZ S.A.', -371_790_960],
+      ['INTELBRAS S.A. IND. DE TELECOMUNICAÇÃO ELETRÔNICA BRASILEIRA', 489_279_320],
+      ['VALID SOLUÇÕES S.A.', 251_150_980],
+      ['LWSA S/A', -248_089_940],
+      ['USINAS SID DE MINAS GERAIS S.A.-USIMINAS', 454_023_240],
+      ['CIA SANEAMENTO DE MINAS GERAIS-COPASA MG', 1_369_489_940],
+      ['GERDAU S.A.', 730_243_880],
+      ['METALURGICA GERDAU S.A.', 722_858_480],
+    ] as const;
+
+    for (const [name, expectedFlow] of cases) {
+      const company = roic.companies.find((entry) => entry.name === name);
+      if (!company) throw new Error(`Companhia ausente na amostra: ${name}.`);
+      const input = buildAutomaticDcfBase(
+        { ...company, metric: 'ROIC' },
+        2025,
+        roic.manifest,
+        leverage,
+        reinvestment,
+      );
+      if (input.status !== 'ready') throw new Error(`${name} — ${input.reason}`);
+      const result = evaluateAutomaticValuation(input.base, 0.04, 0.12);
+      if (result.status !== 'ready') throw new Error(`${name} — ${result.reason}`);
+      expect(result.baseFlow, name).toBe(expectedFlow);
+      expect(result.years).toHaveLength(10);
+      expect(result.equityValue !== null, name).toBe(expectedFlow > 0);
+    }
+
+    for (const name of ['LWSA S/A', 'USINAS SID DE MINAS GERAIS S.A.-USIMINAS']) {
+      expect(leverage.companies.find((entry) => entry.name === name)?.value).toBeNull();
+    }
+  });
+
   it('recusa contas de outro exercício, arquivo, seleção, emissor ou versão da DFP', () => {
     const { company, roic, leverage, reinvestment } = sources();
     const otherYear = buildAutomaticDcfBase(company, 2024, roic.manifest, leverage, reinvestment);

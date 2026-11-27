@@ -10,18 +10,25 @@ export interface SectorDfpArchive {
   retrievedAt: string;
 }
 
-interface LeverageInputs {
+interface DepreciationAccount {
+  statement: 'DFC_MI' | 'DFC_MD';
+  code: string;
+  label: string;
+  referenceDate: string;
+}
+
+type LeverageInputs = {
   ebitBrl: number;
   depreciationBrl: number;
   ebitdaBrl: number;
   netDebtBrl: number;
-  depreciationAccount: {
-    statement: 'DFC_MI' | 'DFC_MD';
-    code: string;
-    label: string;
-    referenceDate: string;
-  };
-}
+} & (
+  | { depreciationAccount: DepreciationAccount; depreciationAccounts?: never }
+  | {
+      depreciationAccount?: never;
+      depreciationAccounts: (DepreciationAccount & { amountBrl: number })[];
+    }
+);
 
 export interface SectorLeverageCompany {
   name: string;
@@ -34,7 +41,7 @@ export interface SectorLeverageCompany {
 export interface SectorLeverageSnapshot {
   manifest: {
     schemaVersion: '1.0.0';
-    methodologyVersion: 'net-debt-ebitda-dfp.v1';
+    methodologyVersion: 'net-debt-ebitda-dfp.v1' | 'net-debt-ebitda-dfp.v2';
     asOf: string;
     year: number;
     generatedAt: string;
@@ -60,7 +67,8 @@ function isManifest(input: unknown): input is SectorLeverageSnapshot['manifest']
   return (
     isObject(input) &&
     input.schemaVersion === '1.0.0' &&
-    input.methodologyVersion === 'net-debt-ebitda-dfp.v1' &&
+    (input.methodologyVersion === 'net-debt-ebitda-dfp.v1' ||
+      input.methodologyVersion === 'net-debt-ebitda-dfp.v2') &&
     isDate(input.asOf) &&
     isPositiveInteger(input.year) &&
     isTimestamp(input.generatedAt) &&
@@ -75,20 +83,10 @@ function isAmount(value: unknown): value is number {
   return typeof value === 'number' && Math.abs(value) < 2 ** 53;
 }
 
-function isLeverageInputs(input: unknown, referenceDate: string): input is LeverageInputs {
-  if (
-    !isObject(input) ||
-    !isAmount(input.ebitBrl) ||
-    !isAmount(input.depreciationBrl) ||
-    input.depreciationBrl < 0 ||
-    !isAmount(input.ebitdaBrl) ||
-    input.ebitdaBrl <= 0 ||
-    !isAmount(input.netDebtBrl) ||
-    Math.abs(input.ebitdaBrl - (input.ebitBrl + input.depreciationBrl)) >= 0.005
-  ) {
-    return false;
-  }
-  const account = input.depreciationAccount;
+function isDepreciationAccount(
+  account: unknown,
+  referenceDate: string,
+): account is DepreciationAccount {
   return (
     isObject(account) &&
     (account.statement === 'DFC_MI' || account.statement === 'DFC_MD') &&
@@ -96,6 +94,50 @@ function isLeverageInputs(input: unknown, referenceDate: string): input is Lever
     /^6\.01(?:\.\d{2})+$/.test(account.code) &&
     isText(account.label) &&
     account.referenceDate === referenceDate
+  );
+}
+
+function isLeverageInputs(input: unknown, referenceDate: string): input is LeverageInputs {
+  if (
+    !isObject(input) ||
+    !isAmount(input.ebitBrl) ||
+    !isAmount(input.depreciationBrl) ||
+    input.depreciationBrl < 0 ||
+    !isAmount(input.ebitdaBrl) ||
+    !isAmount(input.netDebtBrl) ||
+    Math.abs(input.ebitdaBrl - (input.ebitBrl + input.depreciationBrl)) >= 0.005
+  ) {
+    return false;
+  }
+  if (input.depreciationAccounts === undefined) {
+    return isDepreciationAccount(input.depreciationAccount, referenceDate);
+  }
+  if (
+    input.depreciationAccount !== undefined ||
+    !Array.isArray(input.depreciationAccounts) ||
+    input.depreciationAccounts.length !== 2
+  ) {
+    return false;
+  }
+  const components = input.depreciationAccounts as unknown[];
+  const [left, right] = components;
+  if (
+    !isObject(left) ||
+    !isObject(right) ||
+    !isAmount(left.amountBrl) ||
+    !isAmount(right.amountBrl) ||
+    !isDepreciationAccount(left, referenceDate) ||
+    !isDepreciationAccount(right, referenceDate)
+  ) {
+    return false;
+  }
+  return (
+    left.amountBrl >= 0 &&
+    right.amountBrl >= 0 &&
+    left.statement === right.statement &&
+    left.code !== right.code &&
+    left.code.slice(0, -3) === right.code.slice(0, -3) &&
+    Math.abs(input.depreciationBrl - (left.amountBrl + right.amountBrl)) < 0.005
   );
 }
 
@@ -111,17 +153,20 @@ function isCompany(
   ) {
     return false;
   }
-  if (input.value === null) return isText(input.reason) && input.inputs === null;
+  if (input.inputs === null) return input.value === null && isText(input.reason);
+  if (input.filing === null || !isLeverageInputs(input.inputs, input.filing.referenceDate))
+    return false;
+  const { depreciationAccounts, ebitdaBrl, netDebtBrl } = input.inputs;
   if (
-    typeof input.value !== 'number' ||
-    !Number.isFinite(input.value) ||
-    input.reason !== null ||
-    input.filing === null ||
-    !isLeverageInputs(input.inputs, input.filing.referenceDate)
-  ) {
+    manifest.methodologyVersion === 'net-debt-ebitda-dfp.v1' &&
+    (depreciationAccounts || ebitdaBrl <= 0)
+  )
+    return false;
+  if (ebitdaBrl <= 0) return input.value === null && isText(input.reason);
+  if (typeof input.value !== 'number' || !Number.isFinite(input.value) || input.reason !== null) {
     return false;
   }
-  const expected = input.inputs.netDebtBrl / input.inputs.ebitdaBrl;
+  const expected = netDebtBrl / ebitdaBrl;
   return Math.abs(input.value - expected) <= 1e-8 * Math.max(1, Math.abs(expected));
 }
 

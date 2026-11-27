@@ -34,6 +34,10 @@ CAPEX_QUALIFIERS = frozenset("""
 CAPEX_PROPERTY = frozenset(("imobilizado", "imobilizados", "fixo", "fixos"))
 CAPEX_INTANGIBLE = frozenset(("intangivel", "intangiveis", "instangivel", "intangives"))
 CAPEX_ASSETS = CAPEX_PROPERTY | CAPEX_INTANGIBLE
+SALE_PREFIX = re.compile(r"^(?:(?:valor recebido|recebimento) pela )?(?:venda|alienacao) ")
+SALE_ASSET_WORDS = CAPEX_ASSETS | {
+    "ativo", "ativos", "bem", "bens", "da", "das", "de", "do", "dos", "e", "investimento", "investimentos",
+}
 EachRow = tuple[str, CsvRow]
 
 
@@ -42,8 +46,7 @@ def _label(text: str) -> str:
     return " ".join(re.findall(r"[a-z]+", re.sub(r"\(notas? [^)]+\)", "", ascii_text)))
 
 
-def _capex_kind(label: str) -> str | None:
-    text = _label(label)
+def _capex_kind(text: str) -> str | None:
     words = set(text.split())
     if words & {"investimento", "investimentos"} and not re.match(r"^investimentos? (em|no|na) ", text):
         return None
@@ -56,16 +59,27 @@ def _capex_kind(label: str) -> str | None:
     return "capexIntangible"
 
 
+def _is_asset_sale(text: str) -> bool:
+    prefix = SALE_PREFIX.match(text)
+    return prefix is not None and set(text[prefix.end():].split()) <= SALE_ASSET_WORDS
+
+
+def _is_descendant(detail: dict, parent: dict) -> bool:
+    return detail["statement"] == parent["statement"] and detail["code"].startswith(parent["code"] + ".")
+
+
 def _capex(rows: list[EachRow]) -> tuple[Decimal, list[dict]]:
     candidates = []
     seen: set[tuple[str, str]] = set()
     for statement, row in rows:
-        source_label = row["DS_CONTA"]
-        key = _capex_kind(source_label)
+        label = _label(row["DS_CONTA"])
+        key = _capex_kind(label)
         if key is None:
-            words = set(_label(source_label).split())
-            if words & CAPEX_ASSETS and words & CAPEX_OPERATIONS and normalize(row)[0] != 0:
-                raise ValueError("Aquisições de ativos aparecem agregadas a outros fluxos na DFC.")
+            words = set(label.split())
+            if words & CAPEX_ASSETS and words & CAPEX_OPERATIONS:
+                value, _ = normalize(row)
+                if value != 0 and not (value > 0 and _is_asset_sale(label)):
+                    raise ValueError("Aquisições de ativos aparecem agregadas a outros fluxos na DFC.")
             continue
         detail, value, _ = record(key, statement, row)
         account = statement, detail["code"]
@@ -77,16 +91,29 @@ def _capex(rows: list[EachRow]) -> tuple[Decimal, list[dict]]:
         candidates.append((detail, value))
 
     # Uma rubrica agregadora já inclui os componentes cujos códigos descendem dela.
+    for detail, value in candidates:
+        if value == 0 and any(child_value != 0 and _is_descendant(child, detail) for child, child_value in candidates):
+            raise ValueError("O total zerado da DFC conflita com os detalhes de CAPEX.")
     roots = [
         (detail, value)
         for detail, value in candidates
-        if not any(
-            detail["statement"] == parent["statement"] and detail["code"].startswith(parent["code"] + ".")
-            for parent, _ in candidates
-        )
+        if not any(_is_descendant(detail, parent) for parent, _ in candidates)
+    ]
+    # Uma linha agregada zerada fora da hierarquia pode coexistir com as duas compras em linhas próprias.
+    property_statements = {detail["statement"] for detail, _ in roots if detail["key"] == "capexProperty"}
+    intangible_statements = {detail["statement"] for detail, _ in roots if detail["key"] == "capexIntangible"}
+    complete_statements = property_statements & intangible_statements
+    roots = [
+        (detail, value)
+        for detail, value in roots
+        if not (value == 0 and detail["key"] == "capex" and detail["statement"] in complete_statements)
     ]
     keys = {detail["key"] for detail, _ in roots}
-    if len(roots) != len(keys) or len({detail["statement"] for detail, _ in roots}) > 1:
+    if (
+        len(roots) != len(keys)
+        or len({detail["statement"] for detail, _ in roots}) > 1
+        or ("capex" in keys and len(keys) > 1)
+    ):
         raise ValueError("A DFC apresenta contas de CAPEX sobrepostas ou conflitantes.")
     if keys not in ({"capex"}, {"capexProperty", "capexIntangible"}):
         raise ValueError("Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.")

@@ -1,10 +1,10 @@
 {
   "manifest": {
     "schemaVersion": "1.0.0",
-    "methodologyVersion": "net-debt-ebitda-dfp.v1",
+    "methodologyVersion": "net-debt-ebitda-dfp.v2",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-26T10:20:23+00:00",
+    "generatedAt": "2026-11-27T15:45:25+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -519,8 +519,8 @@
     },
     {
       "name": "CONSTRUTORA TENDA S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 2.1997023181800253,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-05",
@@ -528,7 +528,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155118"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 518700000,
+        "depreciationBrl": 64473000,
+        "ebitdaBrl": 583173000,
+        "netDebtBrl": 1282807000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização (Nota 9 e 10)",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "COSAN S.A.",
@@ -787,8 +798,8 @@
     },
     {
       "name": "EMBRAER S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 0.7399132352293282,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-06",
@@ -796,7 +807,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155126"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 3348114000,
+        "depreciationBrl": 1441157000,
+        "ebitdaBrl": 4789271000,
+        "netDebtBrl": 3543645000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Despesas com depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "EMPREENDIMENTOS PAGUE MENOS S.A.",
@@ -1168,8 +1190,8 @@
     },
     {
       "name": "INTELBRAS S.A. IND. DE TELECOMUNICAÇÃO ELETRÔNICA BRASILEIRA",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": -0.3350954359450475,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-25",
@@ -1177,7 +1199,28 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154903"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 425152000,
+        "depreciationBrl": 116625000,
+        "ebitdaBrl": 541777000,
+        "netDebtBrl": -181547000,
+        "depreciationAccounts": [
+          {
+            "statement": "DFC_MI",
+            "code": "6.01.01.03",
+            "label": "Depreciação",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 67744000
+          },
+          {
+            "statement": "DFC_MI",
+            "code": "6.01.01.04",
+            "label": "Amortização",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 48881000
+          }
+        ]
+      }
     },
     {
       "name": "IOCHPE MAXION S.A.",
@@ -1290,8 +1333,8 @@
     },
     {
       "name": "JSL S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 3.932976269532297,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-24",
@@ -1299,7 +1342,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155651"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 1141757000,
+        "depreciationBrl": 817370000,
+        "ebitdaBrl": 1959127000,
+        "netDebtBrl": 7705200000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização (nota 28)",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "KEPLER WEBER S.A.",
@@ -1450,7 +1504,7 @@
     {
       "name": "LWSA S/A",
       "value": null,
-      "reason": "EBITDA estimado inválido ou não positivo.",
+      "reason": "EBITDA estimado não positivo.",
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-03",
@@ -1458,7 +1512,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155030"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": -276709000,
+        "depreciationBrl": 142027000,
+        "ebitdaBrl": -134682000,
+        "netDebtBrl": -296458000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amortização",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
@@ -1752,8 +1817,8 @@
     },
     {
       "name": "MÉLIUZ S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": -1.9605241913782896,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-18",
@@ -1761,7 +1826,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155473"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 19494000,
+        "depreciationBrl": 17668000,
+        "ebitdaBrl": 37162000,
+        "netDebtBrl": -72857000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.02",
+          "label": "Depreciação e amotização",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "NATURA COSMÉTICOS S.A.",
@@ -2420,7 +2496,7 @@
     {
       "name": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
       "value": null,
-      "reason": "EBITDA estimado inválido ou não positivo.",
+      "reason": "EBITDA estimado não positivo.",
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-13",
@@ -2428,7 +2504,18 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154757"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": -1363886000,
+        "depreciationBrl": 1274791000,
+        "ebitdaBrl": -89095000,
+        "netDebtBrl": 1248522000,
+        "depreciationAccount": {
+          "statement": "DFC_MI",
+          "code": "6.01.01.04",
+          "label": "Depreciação, Amortização e Exaustão",
+          "referenceDate": "2025-12-31"
+        }
+      }
     },
     {
       "name": "VALE S.A.",
@@ -2456,8 +2543,8 @@
     },
     {
       "name": "VALID SOLUÇÕES S.A.",
-      "value": null,
-      "reason": "Total de depreciação e amortização indisponível na DFC.",
+      "value": 0.2050894105102379,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-31",
@@ -2465,7 +2552,28 @@
         "version": 3,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=155901"
       },
-      "inputs": null
+      "inputs": {
+        "ebitBrl": 297853000,
+        "depreciationBrl": 118541000,
+        "ebitdaBrl": 416394000,
+        "netDebtBrl": 85398000,
+        "depreciationAccounts": [
+          {
+            "statement": "DFC_MI",
+            "code": "6.01.01.02",
+            "label": "Depreciação",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 64292000
+          },
+          {
+            "statement": "DFC_MI",
+            "code": "6.01.01.04",
+            "label": "Amortização",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 54249000
+          }
+        ]
+      }
     },
     {
       "name": "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",

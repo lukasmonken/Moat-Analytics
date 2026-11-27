@@ -14,17 +14,20 @@ from .comparison_identity import selected_companies
 from .dfp import ORIGIN, SOURCE, CsvRow, amount, normalize
 from .sector_roic import METHODOLOGY as ROIC_METHOD, NEWEST, closing_net_debt, matching_dfp_filings
 
-METHOD = "net-debt-ebitda-dfp.v1"
+METHOD = "net-debt-ebitda-dfp.v2"
 GROUPS = {"DFC_MI": "6.01.01.", "DFC_MD": "6.01."}
 DEPRECIATION = {"depreciacao", "depreciacoes", "deprecicao"}
-AMORTIZATION = {"amortizacao", "amortizacoes"}
+AMORTIZATION = {"amortizacao", "amortizacoes", "amotizacao"}
 DEPLETION = {"exaustao", "exaustoes", "deplecao", "deplecoes"}
 ASSETS = ("direito de uso", "direitos de uso", "imobilizado", "intang", "mais valia", "arrendamento", "concessao")
 DFCRow = tuple[str, CsvRow]
 
 
 def _label(text: str) -> str:
-    return unicodedata.normalize("NFKD", text.casefold()).encode("ascii", "ignore").decode()
+    ascii_text = unicodedata.normalize("NFKD", text.casefold()).encode("ascii", "ignore").decode()
+    label = " ".join(ascii_text.split())
+    label = re.sub(r"^despesas? (?:com|de) ", "", label)
+    return re.sub(r"\s*\(nota \d+(?: e \d+)*\)$", "", label)
 
 
 def _total(label: str) -> bool:
@@ -48,30 +51,64 @@ def _component(label: str) -> bool:
     )
 
 
+def _split_depreciation(rows: list[DFCRow]) -> list[DFCRow]:
+    components = [
+        (statement, row) for statement, row in rows
+        if _label(row["DS_CONTA"]) in DEPRECIATION | AMORTIZATION
+    ]
+    if len(components) != 2:
+        raise ValueError("Total de depreciação e amortização indisponível na DFC.")
+    first, second = components
+    labels = {_label(row["DS_CONTA"]) for _, row in components}
+    codes = [row["CD_CONTA"] for _, row in components]
+    if (
+        len(labels & DEPRECIATION) != 1 or len(labels & AMORTIZATION) != 1
+        or first[0] != second[0] or codes[0] == codes[1]
+        or codes[0].rsplit(".", 1)[0] != codes[1].rsplit(".", 1)[0]
+    ):
+        raise ValueError("Contas separadas de depreciação e amortização sem conciliação na DFC.")
+    return sorted(components, key=lambda entry: entry[1]["CD_CONTA"])
+
+
 def _depreciation(rows: list[DFCRow]) -> tuple[Decimal, dict]:
     totals = [(statement, row) for statement, row in rows if _total(_label(row["DS_CONTA"]))]
-    if not totals:
-        raise ValueError("Total de depreciação e amortização indisponível na DFC.")
-    if len(totals) != 1:
+    if len(totals) > 1:
         raise ValueError("Mais de uma conta de depreciação e amortização na DFC.")
-    statement, total = totals[0]
-    value, _ = normalize(total)
-    if value < 0:
-        raise ValueError("Saldo de depreciação e amortização negativo na DFC.")
-    code = total["CD_CONTA"]
+
+    selected = totals or _split_depreciation(rows)
+    statement = selected[0][0]
+    codes = {row["CD_CONTA"] for _, row in selected}
     for other_statement, row in rows:
-        if (other_statement, row) == (statement, total) or not _component(_label(row["DS_CONTA"])):
+        if (other_statement, row) in selected:
             continue
-        if other_statement == statement and row["CD_CONTA"].startswith(code + "."):
+        if other_statement == statement and row["CD_CONTA"] in codes:
+            raise ValueError("Conta de depreciação e amortização duplicada na DFC.")
+        if not _component(_label(row["DS_CONTA"])):
+            continue
+        if other_statement == statement and any(row["CD_CONTA"].startswith(code + ".") for code in codes):
             continue
         if normalize(row)[0] != 0:
             raise ValueError("A DFC apresenta componentes de depreciação e amortização em contas separadas.")
-    return value, {
-        "statement": statement,
-        "code": code,
-        "label": total["DS_CONTA"].strip(),
-        "referenceDate": total["DT_FIM_EXERC"],
-    }
+
+    accounts = []
+    depreciation = Decimal(0)
+    for statement, row in selected:
+        value, _ = normalize(row)
+        if value < 0:
+            raise ValueError("Saldo de depreciação e amortização negativo na DFC.")
+        account = {
+            "statement": statement,
+            "code": row["CD_CONTA"],
+            "label": row["DS_CONTA"].strip(),
+            "referenceDate": row["DT_FIM_EXERC"],
+        }
+        if len(selected) == 1:
+            return value, {"depreciationAccount": account}
+        accounts.append({**account, "amountBrl": amount(value)})
+        depreciation += value
+    if depreciation >= 2**53:
+        raise ValueError("Total de depreciação e amortização fora da faixa suportada.")
+    return depreciation, {"depreciationAccounts": accounts}
 
 
 def _read_dfc(
@@ -113,22 +150,23 @@ def _leverage(name: str, observation: dict, rows: list[DFCRow]) -> dict:
     if net_debt is None:
         return {**result, "reason": "Dívida líquida indisponível no balanço de fechamento."}
     try:
-        depreciation, account = _depreciation(rows)
+        depreciation, evidence = _depreciation(rows)
         ebit = Decimal(str(inputs["ebitBrl"]))
         ebitda = ebit + depreciation
-        if not 0 < ebitda < 2**53:
-            raise ValueError("EBITDA estimado inválido ou não positivo.")
+        if not ebitda.is_finite() or abs(ebitda) >= 2**53:
+            raise ValueError("EBITDA estimado inválido.")
     except (DecimalException, ValueError) as error:
         return {**result, "reason": str(error)}
     return {
         **result,
-        "value": amount(net_debt / ebitda),
+        "value": amount(net_debt / ebitda) if ebitda > 0 else None,
+        "reason": "EBITDA estimado não positivo." if ebitda <= 0 else None,
         "inputs": {
             "ebitBrl": amount(ebit),
             "depreciationBrl": amount(depreciation),
             "ebitdaBrl": amount(ebitda),
             "netDebtBrl": amount(net_debt),
-            "depreciationAccount": account,
+            **evidence,
         },
     }
 

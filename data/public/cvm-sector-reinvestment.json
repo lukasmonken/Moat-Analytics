@@ -4,7 +4,7 @@
     "methodologyVersion": "nopat-reinvestment-dfp.v1",
     "asOf": "2026-11-18",
     "year": 2025,
-    "generatedAt": "2026-11-26T10:26:17+00:00",
+    "generatedAt": "2026-11-27T14:11:02+00:00",
     "source": {
       "name": "Comissão de Valores Mobiliários (CVM)",
       "datasetUrl": "https://dados.cvm.gov.br/dataset/cia_aberta-doc-dfp",
@@ -1236,8 +1236,8 @@
     },
     {
       "name": "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG",
-      "value": null,
-      "reason": "Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.",
+      "value": 1.4692182633694466,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-25",
@@ -1245,7 +1245,79 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154917"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": 1324658940,
+        "openingWorkingCapitalBrl": 1035561000,
+        "closingWorkingCapitalBrl": 1127061000,
+        "capexBrl": 810108000,
+        "reinvestmentBrl": 901608000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 1289584000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 104850000
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 358873000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 1450516000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 106140000
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 429595000
+          },
+          {
+            "key": "capexIntangible",
+            "label": "Aquisição de Ativos Intangíveis",
+            "statement": "DFC_MI",
+            "code": "6.02.11",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -727089000
+          },
+          {
+            "key": "capexProperty",
+            "label": "Aquisição de Ativos Imobilizados",
+            "statement": "DFC_MI",
+            "code": "6.02.12",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -83019000
+          }
+        ]
+      }
     },
     {
       "name": "CIA SANEAMENTO DO PARANA - SANEPAR",
@@ -3042,8 +3114,8 @@
     },
     {
       "name": "GERDAU S.A.",
-      "value": null,
-      "reason": "Aquisições de ativos aparecem agregadas a outros fluxos na DFC.",
+      "value": 0.45521629270376673,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-23",
@@ -3051,7 +3123,79 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154830"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": 2467784880,
+        "openingWorkingCapitalBrl": 15963765000,
+        "closingWorkingCapitalBrl": 14532050000,
+        "capexBrl": 6852841000,
+        "reinvestmentBrl": 5421126000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 5176958000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 16504911000
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 5718104000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 4810640000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 14731081000
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 5009671000
+          },
+          {
+            "key": "capexProperty",
+            "label": "Adições de imobilizado",
+            "statement": "DFC_MI",
+            "code": "6.02.01",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -6681620000
+          },
+          {
+            "key": "capexIntangible",
+            "label": "Adições de outros ativos intangíveis",
+            "statement": "DFC_MI",
+            "code": "6.02.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -171221000
+          }
+        ]
+      }
     },
     {
       "name": "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
@@ -5104,8 +5248,8 @@
     },
     {
       "name": "METALURGICA GERDAU S.A.",
-      "value": null,
-      "reason": "Aquisições de ativos aparecem agregadas a outros fluxos na DFC.",
+      "value": 0.45385395580180204,
+      "reason": null,
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-02-23",
@@ -5113,7 +5257,79 @@
         "version": 1,
         "filingUrl": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&NumeroSequencialDocumento=154833"
       },
-      "inputs": null
+      "inputs": {
+        "nopatBrl": 2460399480,
+        "openingWorkingCapitalBrl": 15963765000,
+        "closingWorkingCapitalBrl": 14532050000,
+        "capexBrl": 6852841000,
+        "reinvestmentBrl": 5421126000,
+        "accounts": [
+          {
+            "key": "openingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 5176958000
+          },
+          {
+            "key": "openingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 16504911000
+          },
+          {
+            "key": "openingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2024-12-31",
+            "amountBrl": 5718104000
+          },
+          {
+            "key": "closingReceivables",
+            "label": "Contas a Receber",
+            "statement": "BPA",
+            "code": "1.01.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 4810640000
+          },
+          {
+            "key": "closingInventories",
+            "label": "Estoques",
+            "statement": "BPA",
+            "code": "1.01.04",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 14731081000
+          },
+          {
+            "key": "closingSuppliers",
+            "label": "Fornecedores",
+            "statement": "BPP",
+            "code": "2.01.02",
+            "referenceDate": "2025-12-31",
+            "amountBrl": 5009671000
+          },
+          {
+            "key": "capexProperty",
+            "label": "Adições de imobilizado",
+            "statement": "DFC_MI",
+            "code": "6.02.01",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -6681620000
+          },
+          {
+            "key": "capexIntangible",
+            "label": "Adições de outros ativos intangíveis",
+            "statement": "DFC_MI",
+            "code": "6.02.03",
+            "referenceDate": "2025-12-31",
+            "amountBrl": -171221000
+          }
+        ]
+      }
     },
     {
       "name": "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
@@ -7507,7 +7723,7 @@
     {
       "name": "ULTRAPAR PARTICIPACOES S.A.",
       "value": null,
-      "reason": "Compras de imobilizado e intangível indisponíveis em contas distintas ou agregadas.",
+      "reason": "A DFC apresenta contas de CAPEX sobrepostas ou conflitantes.",
       "filing": {
         "referenceDate": "2025-12-31",
         "receivedAt": "2026-03-04",

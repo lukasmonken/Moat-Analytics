@@ -46,6 +46,45 @@ class SectorReinvestmentTest(unittest.TestCase):
         self.assertEqual(value, 9_000)
         self.assertEqual([(row["code"], row["amountBrl"]) for row in accounts], [("6.02.01", -9_000)])
 
+    def test_separate_purchases_exclude_sale_proceeds_even_if_investments_are_named(self):
+        document = filing("000111")
+        sale = "Recebimento pela venda de imobilizado, investimento e intangíveis"
+        purchases = [
+            ("6.02.01", "Adições de imobilizado", -8),
+            ("6.02.03", "Adições de outros ativos intangíveis", -2),
+        ]
+        rows = cash_flows(document, [purchases[0], ("6.02.02", sale, 7), purchases[1]])
+        value, accounts = _capex([("DFC_MI", row) for row in rows])
+        self.assertEqual(value, 10_000)
+        self.assertEqual(
+            [(row["code"], row["amountBrl"]) for row in accounts],
+            [("6.02.01", -8_000), ("6.02.03", -2_000)],
+        )
+        for label, receipt in (
+            (sale, -7),
+            ("Recebimento pela venda de imobilizado e investimento em intangíveis", 7),
+        ):
+            with self.subTest(label=label, receipt=receipt), self.assertRaisesRegex(ValueError, "outros fluxos"):
+                _capex([("DFC_MI", row) for row in cash_flows(document, [*purchases, ("6.02.02", label, receipt)])])
+
+    def test_zero_aggregate_does_not_hide_complete_separate_purchases(self):
+        document = filing("000111")
+        details = [
+            ("6.02.11", "Aquisição de Ativos Intangíveis", -7),
+            ("6.02.12", "Aquisição de Ativos Imobilizados", -3),
+        ]
+        zero_total = ("6.02.05", "Compra de Ativos Intangíveis e Imobilizado", 0)
+        rows = cash_flows(document, [zero_total, *details])
+        value, accounts = _capex([("DFC_MI", row) for row in rows])
+        self.assertEqual(value, 10_000)
+        self.assertEqual([account["code"] for account in accounts], ["6.02.11", "6.02.12"])
+        with self.assertRaisesRegex(ValueError, "sobrepostas"):
+            _capex([("DFC_MD", rows[0]), *(("DFC_MI", row) for row in rows[1:])])
+        with self.assertRaisesRegex(ValueError, "sobrepostas"):
+            _capex([("DFC_MI", {**rows[0], "VL_CONTA": -10}), *(("DFC_MI", row) for row in rows[1:])])
+        with self.assertRaisesRegex(ValueError, "zerado"):
+            _capex([("DFC_MI", rows[0]), ("DFC_MI", {**rows[1], "CD_CONTA": "6.02.05.01"})])
+
     def test_requires_gross_capex_for_both_asset_classes_and_preserves_reported_zero(self):
         document = filing("000111")
         property_only = [("6.02.01", "Imobilizado", -9)]

@@ -1,5 +1,10 @@
 # Changelog
 
+## Cobertura contábil do Valuation
+
+- O DCF aproveita mais contas documentadas de depreciação, amortização e CAPEX nas DFPs. O múltiplo dívida líquida/EBITDA continua indisponível quando o EBITDA é zero ou negativo. A depreciação e a amortização identificadas nesses casos seguem disponíveis para projetar o fluxo de caixa.
+- No exercício de 2025, a cobertura do DCF passou de 67 para 78 das 129 companhias de ROIC. Em 65 delas o fluxo-base é positivo e permite estimar a perpetuidade quando o CDI supera o IPCA.
+
 ## Valuation automático
 
 - A escolha de uma companhia projeta dez anos pelo IPCA de 12 meses e desconta pelo CDI atualizado do Banco Central.
