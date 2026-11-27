@@ -1,9 +1,9 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { cdiRateUrl } from '../../shared/data-client/riskFreeRate';
+import { cdiRateUrl, type RiskFreeRate } from '../../shared/data-client/riskFreeRate';
 import { useRiskFreeRate } from '../../shared/data-client/useRiskFreeRate';
 import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, PageHeader, Panel, Select } from '../../shared/ui';
-import { RiskFreeRatePanel } from '../../shared/ui/RiskFreeRatePanel';
+import { AutomaticValuation } from './AutomaticValuationPanel';
 import {
   caseLabels,
   cases,
@@ -25,6 +25,26 @@ import { buildValuationReport } from './valuationReport';
 
 export function ValuationPage() {
   const { state, reload } = useRiskFreeRate();
+  const cdi = state.status === 'ready' ? state.rate : null;
+
+  return (
+    <div className="feature-page module-page">
+      <PageHeader
+        title="Valuation e Premissas"
+        description="Escolha uma companhia para estimar seu valor com dez anos de projeção."
+      />
+      <AutomaticValuation cdi={state} reloadCdi={reload} />
+      <details className="valuation-details">
+        <summary>Premissas manuais</summary>
+        <div className="valuation-inputs">
+          <ManualValuation cdi={cdi} />
+        </div>
+      </details>
+    </div>
+  );
+}
+
+function ManualValuation({ cdi }: { cdi: RiskFreeRate | null }) {
   const [model, setModel] = useState<ValuationModel>('dcf');
   const [activeCase, setActiveCase] = useState<ValuationCase>('base');
   const [scenarios, setScenarios] = useState(readStoredScenarios);
@@ -32,7 +52,6 @@ export function ValuationPage() {
   const [status, setStatus] = useState('');
   const importField = useRef<HTMLInputElement>(null);
   const activeDraft = scenarios[model][activeCase];
-  const cdi = state.status === 'ready' ? state.rate : null;
   const cdiPercentage =
     cdi === null ? '' : String(Number((cdi.value * 100).toFixed(8))).replace('.', ',');
 
@@ -96,12 +115,7 @@ export function ValuationPage() {
   }
 
   return (
-    <div className="feature-page module-page">
-      <PageHeader
-        title="Valuation e Premissas"
-        description="Projete dez anos e compare premissas de valor por ação."
-      />
-      <RiskFreeRatePanel state={state} reload={reload} />
+    <>
       <Panel className="valuation-panel" aria-labelledby="valuation-scenario">
         <h2 id="valuation-scenario">Premissas do cenário</h2>
         <div className="valuation-premises-grid">
@@ -221,6 +235,6 @@ export function ValuationPage() {
           })
         }
       />
-    </div>
+    </>
   );
 }

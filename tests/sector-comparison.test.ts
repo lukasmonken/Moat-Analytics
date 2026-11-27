@@ -41,7 +41,14 @@ describe('Comparativos setoriais da CVM', () => {
         Object.keys(company)
           .filter((key) => key !== 'comparisonContext')
           .sort(),
-      ).toEqual(['classification', 'comparisonGroup', 'name', 'observations', 'sector']);
+      ).toEqual([
+        'classification',
+        'comparisonGroup',
+        'dividends',
+        'name',
+        'observations',
+        'sector',
+      ]);
       expect(company.observations.map(({ year }) => year)).toEqual(manifest.years);
     }
     const abc = companies.find(({ name }) => name === 'BCO ABC BRASIL S.A.');
@@ -109,6 +116,20 @@ describe('Comparativos setoriais da CVM', () => {
       incomeCode: '3.13.01',
       netIncomeBrl: 9_017_329_000,
     });
+  });
+
+  it('valida o exercício e o sinal dos dividendos e aceita lotes anteriores sem o campo', () => {
+    const data = snapshot();
+    const irb = data.companies.find(({ name }) => name.startsWith('IRB -'));
+    if (!irb?.dividends) throw new Error('Dividendos esperados para o IRB.');
+    expect(irb.dividends).toMatchObject({ year: 2025, paidBrl: 0, reason: null });
+    irb.dividends.year = 2024;
+    expect(() => parseSectorComparison(data)).toThrow();
+    irb.dividends.year = 2025;
+    irb.dividends.paidBrl = -1;
+    expect(() => parseSectorComparison(data)).toThrow();
+    delete irb.dividends;
+    expect(() => parseSectorComparison(data)).not.toThrow();
   });
 
   it('rejeita ROE inconsistente com os saldos, empresa duplicada e ZIP ausente', () => {

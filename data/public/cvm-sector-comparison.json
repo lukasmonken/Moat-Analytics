@@ -3,7 +3,7 @@
     "schemaVersion": "1.0.0",
     "methodologyVersion": "roe-dfp-comparisons.v1",
     "asOf": "2026-11-18",
-    "generatedAt": "2026-11-25T22:24:08+00:00",
+    "generatedAt": "2026-11-27T11:29:24+00:00",
     "years": [
       2021,
       2022,
@@ -180,7 +180,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 236000000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
@@ -304,7 +313,17 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 655978000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03",
+          "6.03.04"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BB SEGURIDADE PARTICIPAÇÕES S.A.",
@@ -433,7 +452,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 8273740000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.01"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO ABC BRASIL S.A.",
@@ -522,7 +550,16 @@
             "openingEquityDate": "2025-01-01"
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 630809000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO BRADESCO S.A.",
@@ -646,7 +683,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 11834032000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.05"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO BRASIL S.A.",
@@ -770,7 +816,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 6680889000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.04"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO BTG PACTUAL S.A.",
@@ -899,7 +954,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 4019818000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.05"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO PINE S.A",
@@ -1027,7 +1091,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 123902000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BCO SANTANDER (BRASIL) S.A.",
@@ -1152,7 +1225,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 5969969000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.07"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BRADSAÚDE S.A.",
@@ -1286,7 +1368,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 662132000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.01"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "BRBI BR PARTNERS S.A",
@@ -1415,7 +1506,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 195293000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "CAIXA SEGURIDADE PARTICIPAÇÕES S.A.",
@@ -1544,7 +1644,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 3785467000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.01"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "IRB - BRASIL RESSEGUROS S.A.",
@@ -1673,7 +1782,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 0,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "ITAU UNIBANCO HOLDING S.A.",
@@ -1802,7 +1920,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 48299000000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.05"
+        ],
+        "reason": null
+      }
     },
     {
       "name": "PORTO SEGURO S.A.",
@@ -1931,7 +2058,16 @@
             ]
           }
         }
-      ]
+      ],
+      "dividends": {
+        "year": 2025,
+        "paidBrl": 1190052000,
+        "statement": "DFC_MI",
+        "accountCodes": [
+          "6.03.03"
+        ],
+        "reason": null
+      }
     }
   ]
 }

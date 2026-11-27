@@ -119,6 +119,20 @@ Use uma chave `BRAPI_TOKEN` no ambiente local para executar `python3 apps/pipeli
 
 Copie `.github/workflows/market-caps.yml` para a branch padrão do repositório privado. O workflow usa o pipeline e os comparativos atualizados da `main` de `lukasmonken/Moat-Analytics` e roda às 20h23 de Brasília. Configure os secrets `BRAPI_TOKEN` e `MOAT_MARKET_CAP_UNIVERSE`, este último com o conteúdo de `data/processed/market-caps/universe.json`. O log da execução informa a cobertura de capitalização e rendimento e quantas empresas tiveram códigos comparados ou valores divergentes. Um lote com valores fica disponível por 90 dias nos artefatos privados da execução. Para ler esse lote no app local, salve o `latest.json` do artefato no caminho de saída acima.
 
+Se uma execução começar antes da pré-abertura às 9h45 de Brasília, os dois coletores procuram o último pregão concluído, incluindo após atrasos do GitHub para a madrugada. Durante a sessão, a coleta do fechamento aguarda 20h20.
+
+## Atualizar o histórico diário de rentabilidade
+
+A rotina usa a mesma chave `BRAPI_TOKEN` e a mesma seleção privada da coleta de valor de mercado. Após a janela de fechamento, execute na raiz.
+
+```bash
+python3 apps/pipeline/run_market_history.py --range 3mo
+```
+
+A carga inicial usa `3mo` no plano gratuito ou `5y` quando a chave tem cobertura. A saída padrão fica em `data/processed/market-history/latest.json`. Nas atualizações, o coletor usa o próprio arquivo como base ou recebe uma cópia anterior por `--previous`. Confere uma janela recente em comum para ajustar a escala e continuar a série do mesmo ticker. Se a proporção divergir, a série anterior permanece e a falta de fechamento aparece na cobertura do pregão. Quando a seleção substitui o ticker de uma companhia, o código novo inicia uma série independente após confirmar o fechamento. Guarde uma cópia do histórico inicial em local autorizado.
+
+O arquivo `.github/workflows/market-history.yml` pode rodar na branch padrão do mesmo repositório privado, depois de o coletor estar na `main` do Moat. O horário é 21h07 de Brasília. O workflow restaura o último artefato válido e usa `MOAT_HISTORY_RANGE` para a carga inicial. O lote permanece privado e pode ser carregado em **Simulador e Backtest** ou lido pelo `npm run dev` quando salvo no caminho padrão.
+
 ## Gerar endividamento, reinvestimento e margens
 
 Após gerar o comparativo de ROIC e com o ZIP da mesma DFP na pasta `data/raw/cvm`, execute na raiz do repositório.

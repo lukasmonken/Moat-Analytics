@@ -22,6 +22,7 @@ from .bank_roe import (
 from .comparison_identity import comparison_identities, roe_group
 from .dfp import ORIGIN, SOURCE, CsvRow, amount
 from .fca import SOURCE as SECTOR_SOURCE
+from .sector_dividends import read_annual_dividends
 from .sector_roe_notes import AUDITED_ROE_REVIEWS
 
 METHODOLOGY = "roe-dfp-comparisons.v1"
@@ -346,7 +347,9 @@ def calculate_observation(
     }
 
 
-def year_comparison(path: Path, year: int, identities: dict[str, dict]) -> tuple[dict, dict[str, dict]]:
+def year_comparison(
+    path: Path, year: int, identities: dict[str, dict], *, include_dividends: bool = False,
+) -> tuple[dict, dict[str, dict], dict[str, dict]]:
     with read_archive(path) as (archive, checksum, collected):
         filings, reasons = selected_filings(archive, year, identities, collected)
         rows, statements, periods = accounting_rows(archive, year, filings)
@@ -365,13 +368,14 @@ def year_comparison(path: Path, year: int, identities: dict[str, dict]) -> tuple
             )
             for code in identities
         }
+        dividends = read_annual_dividends(archive, year, filings, reasons) if include_dividends else {}
     return {
         "kind": "dfp",
         "year": year,
         "url": f"{ORIGIN}dfp_cia_aberta_{year}.zip",
         "sha256": checksum,
         "retrievedAt": collected.isoformat(timespec="seconds"),
-    }, observations
+    }, observations, dividends
 
 
 def create_sector_comparison(
@@ -393,10 +397,14 @@ def create_sector_comparison(
         for code, identity in identities.items()
     }
     for year in years:
-        source, observations = year_comparison(dfp_archives[year], year, identities)
+        source, observations, dividends = year_comparison(
+            dfp_archives[year], year, identities, include_dividends=year == years[-1],
+        )
         archives.append(source)
         for code, observation in observations.items():
             companies[code]["observations"].append(observation)
+        for code, distributions in dividends.items():
+            companies[code]["dividends"] = distributions
     return {
         "manifest": {
             "schemaVersion": "1.0.0",

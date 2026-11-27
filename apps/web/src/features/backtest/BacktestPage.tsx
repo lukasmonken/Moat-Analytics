@@ -1,10 +1,19 @@
-import { parseBacktestHistory, type BacktestHistory } from '@moat/data-contracts';
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import {
+  parseBacktestHistory,
+  parseDailyBacktestHistory,
+  type BacktestHistory,
+  type DailyBacktestHistory,
+} from '@moat/data-contracts';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { loadLocalMarketHistory } from '../../shared/data-client/marketHistory';
 import { ExportWorkbookButton } from '../../shared/export/ExportWorkbookButton';
 import { Button, ButtonLink, EmptyState, Input, PageHeader, Panel, Select } from '../../shared/ui';
 import { readSavedPortfolio } from '../portfolio/portfolio';
+import { formatDate } from '../screener/presentation';
 import { BacktestResults } from './BacktestResults';
 import { buildBacktestReport } from './backtestReport';
+import { DailyReturns } from './DailyReturns';
+import { monthlyHistoryFromDaily } from './dailyHistory';
 import { horizons, prepareBacktest, type Horizon } from './history';
 import './backtest.css';
 
@@ -13,7 +22,8 @@ const collectedAt = new Intl.DateTimeFormat('pt-BR', {
   dateStyle: 'short',
   timeStyle: 'short',
 });
-const maxHistorySize = 2 * 1024 * 1024;
+const maxMonthlyHistorySize = 2 * 1024 * 1024;
+const maxDailyHistorySize = 16 * 1024 * 1024;
 
 function FileRequirements() {
   return (
@@ -29,8 +39,10 @@ function FileRequirements() {
         <p>
           Cada entrada em <code>assets</code> requer <code>company</code> com o nome exibido na
           carteira, <code>instrument</code> com o código negociado e <code>observations</code> com
-          os campos <code>date</code> (AAAA-MM-DD) e <code>level</code> (número positivo). Use um
-          nível de retorno total por mês, no mesmo pregão para todas as posições.
+          os campos <code>date</code> (AAAA-MM-DD) e <code>level</code> (número positivo). Em séries
+          mensais, use um nível por mês, no mesmo pregão para todas as posições. Em séries diárias,
+          inclua <code>frequency</code> igual a <code>daily</code>, <code>asOf</code> com a data do
+          último pregão e observações em ordem de data, uma por pregão.
         </p>
         <p>
           Em <code>benchmarks</code>, informe opcionalmente <code>symbol</code> igual a IBOV, IDIV
@@ -44,7 +56,11 @@ function FileRequirements() {
 
 export function BacktestPage() {
   const [portfolio] = useState(readSavedPortfolio);
-  const [history, setHistory] = useState<BacktestHistory | null>(null);
+  const [localHistory, setLocalHistory] = useState<DailyBacktestHistory | null>(null);
+  const [localError, setLocalError] = useState(false);
+  const [importedHistory, setImportedHistory] = useState<
+    BacktestHistory | DailyBacktestHistory | null
+  >(null);
   const [fileName, setFileName] = useState('');
   const [fileError, setFileError] = useState('');
   const [calculationError, setCalculationError] = useState('');
@@ -54,6 +70,32 @@ export function BacktestPage() {
   const [evaluation, setEvaluation] = useState<ReturnType<typeof prepareBacktest>>();
   const [loading, setLoading] = useState(false);
   const revision = useRef(0);
+
+  const inputHistory = importedHistory ?? localHistory;
+  const daily = inputHistory?.frequency === 'daily' ? inputHistory : null;
+  const history = useMemo(
+    () =>
+      inputHistory?.frequency === 'daily' ? monthlyHistoryFromDaily(inputHistory) : inputHistory,
+    [inputHistory],
+  );
+  const hasMonthlyHistory =
+    history !== null &&
+    (!daily || history.assets.some(({ observations }) => observations.length > 1));
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    const controller = new AbortController();
+    const { signal } = controller;
+    void loadLocalMarketHistory(signal).then(
+      (file) => {
+        if (!signal.aborted) setLocalHistory(file);
+      },
+      () => {
+        if (!signal.aborted) setLocalError(true);
+      },
+    );
+    return () => controller.abort();
+  }, []);
 
   function invalidate() {
     setEvaluation(undefined);
@@ -66,16 +108,21 @@ export function BacktestPage() {
     if (!file) return;
     const attempt = ++revision.current;
     invalidate();
-    setHistory(null);
-    setFileName('');
     setFileError('');
     setLoading(true);
     try {
-      if (file.size > maxHistorySize) throw new Error('O arquivo deve ter até 2 MiB.');
+      if (file.size > maxDailyHistorySize) throw new Error('O arquivo deve ter até 16 MiB.');
       const content: unknown = JSON.parse(await file.text());
-      const imported = parseBacktestHistory(content);
+      const isDaily =
+        typeof content === 'object' &&
+        content !== null &&
+        'frequency' in content &&
+        content.frequency === 'daily';
+      if (!isDaily && file.size > maxMonthlyHistorySize)
+        throw new Error('O arquivo de séries mensais deve ter até 2 MiB.');
+      const imported = isDaily ? parseDailyBacktestHistory(content) : parseBacktestHistory(content);
       if (attempt !== revision.current) return;
-      setHistory(imported);
+      setImportedHistory(imported);
       setFileName(file.name);
     } catch (error) {
       if (attempt !== revision.current) return;
@@ -110,6 +157,54 @@ export function BacktestPage() {
         title="Simulador e Backtest"
         description="Avalie hipóteses de alocação e compare desempenho histórico com referências de mercado."
       />
+      <Panel className="backtest-panel" aria-labelledby="backtest-data-heading">
+        <h2 id="backtest-data-heading">Histórico de mercado</h2>
+        <Input
+          id="backtest-file"
+          label="Arquivo de séries diárias ou mensais (JSON)"
+          type="file"
+          accept=".json,application/json"
+          onChange={(event) => void loadFile(event)}
+        />
+        {loading && <p role="status">Validando séries do arquivo…</p>}
+        {fileError && <p role="alert">{fileError}</p>}
+        {localError && !importedHistory && (
+          <p role="alert">Falha ao carregar a base diária privada.</p>
+        )}
+        {!inputHistory && !fileError && !loading && (
+          <p>Importe séries de retorno total em reais para consultar e simular.</p>
+        )}
+        {inputHistory && (
+          <div>
+            <p>
+              <strong>{fileName || 'Base diária privada'}</strong> ·{' '}
+              {inputHistory.source.url ? (
+                <a href={inputHistory.source.url} target="_blank" rel="noreferrer">
+                  {inputHistory.source.name}
+                </a>
+              ) : (
+                inputHistory.source.name
+              )}{' '}
+              · coleta de{' '}
+              <time dateTime={inputHistory.source.retrievedAt}>
+                {collectedAt.format(new Date(inputHistory.source.retrievedAt))}
+              </time>
+              {daily && (
+                <>
+                  {' '}
+                  · até o pregão de <time dateTime={daily.asOf}>
+                    {formatDate(daily.asOf)}
+                  </time> · {daily.assets.length} {daily.assets.length === 1 ? 'ativo' : 'ativos'}{' '}
+                  com histórico
+                </>
+              )}
+            </p>
+            <p>{inputHistory.source.methodology}</p>
+          </div>
+        )}
+        <FileRequirements />
+      </Panel>
+      {daily && <DailyReturns history={daily} portfolio={portfolio} />}
       {!portfolio ? (
         <EmptyState
           icon="portfolio"
@@ -135,39 +230,15 @@ export function BacktestPage() {
               Editar carteira
             </ButtonLink>
           </p>
+          {daily && (
+            <p>
+              A retrospectiva usa o último pregão registrado em cada mês encerrado, com tolerância
+              de sete dias corridos até o fim do mês. Todas as posições precisam ter dados nessas
+              datas.
+            </p>
+          )}
+          {daily && !hasMonthlyHistory && <p role="status">Faltam dois meses fechados na base.</p>}
           <form className="backtest-form" onSubmit={run}>
-            <Input
-              id="backtest-file"
-              label="Arquivo de séries mensais (JSON)"
-              type="file"
-              accept=".json,application/json"
-              onChange={(event) => void loadFile(event)}
-            />
-            {loading && <p role="status">Validando séries do arquivo…</p>}
-            {fileError && <p role="alert">{fileError}</p>}
-            {!history && !fileError && !loading && (
-              <p>Importe séries de retorno total em reais para simular.</p>
-            )}
-            {history && (
-              <div>
-                <p>
-                  <strong>{fileName}</strong> ·{' '}
-                  {history.source.url ? (
-                    <a href={history.source.url} target="_blank" rel="noreferrer">
-                      {history.source.name}
-                    </a>
-                  ) : (
-                    history.source.name
-                  )}{' '}
-                  ·{' '}
-                  <time dateTime={history.source.retrievedAt}>
-                    {collectedAt.format(new Date(history.source.retrievedAt))}
-                  </time>
-                </p>
-                <p>{history.source.methodology}</p>
-              </div>
-            )}
-            <FileRequirements />
             <div className="backtest-fields">
               <Select
                 id="backtest-horizon"
@@ -184,7 +255,9 @@ export function BacktestPage() {
                       ? 'Ano corrente das séries (YTD)'
                       : option === 'custom'
                         ? 'Personalizado'
-                        : `${option} anos`}
+                        : option === '1'
+                          ? '1 ano (12 meses)'
+                          : `${option} anos`}
                   </option>
                 ))}
               </Select>
@@ -214,7 +287,7 @@ export function BacktestPage() {
               )}
             </div>
             <div className="backtest-actions">
-              <Button variant="primary" type="submit" disabled={!history || loading}>
+              <Button variant="primary" type="submit" disabled={!hasMonthlyHistory || loading}>
                 Calcular retrospectiva
               </Button>
             </div>

@@ -100,6 +100,18 @@ Os fechamentos importados localmente exibem a data do pregão, a coleta e a font
 
 ## Valuation e premissas
 
+### Estimativa automática
+
+O modo automático usa o último exercício comum da seleção. Para companhias de ROIC, o fluxo de caixa livre para a firma é `NOPAT + depreciação e amortização − CAPEX − (capital de giro final − capital de giro inicial)`. Os valores vêm de lotes conciliados pela mesma DFP. O valor estimado do patrimônio deduz a dívida líquida da firma e fica indisponível se essa conta estiver ausente. A estimativa é agregada, sem ajuste de minoritários ou divisão por ações.
+
+A cobertura do DCF depende dos insumos dos lotes de alavancagem e reinvestimento. Uma conta ausente ou excluída pelo cálculo de origem também impede seu uso na projeção.
+
+Para companhias de ROE, o DDM usa dividendos e JCP efetivamente pagos pela companhia. A base soma os desembolsos identificados no financiamento da DFC individual da mesma versão da DFP, em reais e com o sinal de saída convertido para magnitude. Um zero declarado é preservado. Sem a conta identificada ou quando o exercício retrata um perímetro societário anterior, a estimativa fica indisponível.
+
+O fluxo nominal do ano `n` é o fluxo-base multiplicado por `(1 + IPCA em 12 meses)ⁿ`. O valor presente divide o fluxo por `(1 + CDI anualizado)ⁿ`. As duas taxas são as últimas publicadas pelo Banco Central. Se o fluxo-base for positivo e o CDI maior que o IPCA, a perpetuidade do ano 10 é o fluxo projetado do ano 11 dividido por `CDI − IPCA` e descontado por dez anos. Nos demais casos, a tela mostra o valor presente dos dez anos, com a perpetuidade e o total indisponíveis. O desconto usa apenas o CDI e o resultado pode superar a estimativa que usaria um prêmio de risco. [IPCA em 12 meses, SGS 13522](https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do?method=consultarSeries&series=13522)
+
+### Cenários manuais
+
 Os cenários usam valores e taxas nominais. O DCF calcula EBIT como receita vezes margem EBIT, aplica a alíquota informada e soma depreciação e amortização ao NOPAT. O CAPEX e o aumento do capital de giro consomem caixa. No DDM, dividendos projetados são o lucro atribuível aos acionistas vezes o payout de cada ano. Previsões de payout e adequação ao capital regulatório ficam a cargo das premissas do usuário.
 
 Os fluxos dos dez anos são descontados a partir do fim de cada ano. A perpetuidade usa o fluxo do último ano multiplicado por (1 + g) e dividido pela diferença entre a taxa de desconto e o crescimento terminal (g). O cálculo exige desconto maior que crescimento, crescimento acima de −100% e fluxo terminal não negativo. O valor do patrimônio no DCF deduz dívida líquida do valor da firma e soma os demais ajustes com o sinal informado. O DDM estima diretamente o patrimônio. A divisão pelo número total de ações produz um valor médio por ação quando existem classes com direitos distintos.
@@ -110,11 +122,17 @@ O desconto parte de WACC ou custo de capital próprio informados. O CDI anualiza
 
 ## Carteiras e retrospectiva mensal
 
-A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. Limites setoriais e seleção por ranking aguardam dados próprios.
+A carteira é montada pelos nomes oficiais do diretório da CVM e salva neste navegador. A seleção começa com 10 posições e permite 15, 20 ou um tamanho personalizado de 1 a 50. Os pesos iguais dividem a carteira em unidades de 0,0001 ponto percentual e distribuem o restante entre as primeiras posições. Os pesos personalizados usam a mesma precisão, devem ser positivos e somar exatamente 100%. O limite opcional por companhia se aplica aos pesos-alvo. O ranking filtrado pode preencher até dez posições com pesos iguais.
 
 Em Carteiras, **Exportar carteira em JSON** cria uma cópia editável da composição, dos pesos e dos parâmetros válidos no formulário. **Importar carteira em JSON** lê o arquivo local e exige os nomes exatos da seleção atual da CVM. Revise os campos importados e use **Salvar carteira** para aplicar a composição ao simulador. As séries de retorno total são carregadas em separado no Simulador.
 
-O simulador retrospectivo aplica a seleção atual a séries mensais de retorno total em reais. O arquivo JSON fornecido pelo usuário é lido no navegador. O aplicativo verifica estrutura e cobertura. A identificação da classe, a origem dos níveis e os ajustes para proventos e eventos societários dependem da fonte declarada. Cada posição exige um nível positivo por mês e as datas de pregão precisam coincidir entre todas as posições. A janela precisa ser contínua. O período desde o início do ano usa dezembro do ano anterior como base. As demais opções cobrem dois a sete anos ou um intervalo personalizado de 1 a 600 meses.
+O simulador retrospectivo aplica a seleção atual a séries mensais de retorno total em reais. O navegador verifica o JSON carregado. Cada posição exige um nível positivo por mês e as datas de pregão precisam coincidir entre todas as posições. A janela precisa ser contínua. O período desde o início do ano usa dezembro do ano anterior como base. As demais opções cobrem de um a sete anos ou um intervalo personalizado de 1 a 600 meses.
+
+### Rentabilidade dos ativos e da carteira
+
+O lote diário guarda o ticker, os níveis ajustados e a data do último pregão. Semana, mês e ano correntes são contados até essa data-base. A tela também calcula o último mês e ano fechados, um mês acumulado, 12 meses e dois a cinco anos. Para cada limite, escolhe o último pregão presente no lote até o dia de referência, dentro de sete dias corridos. Cada ativo precisa ter observações nas duas datas comuns. O retorno acumulado usa `nível final / nível inicial − 1`.
+
+A rentabilidade bruta da carteira soma os retornos ponderados pelos pesos iniciais e depende de dados de todas as posições. A retrospectiva usa o último pregão registrado de cada mês encerrado, até sete dias antes do fim do mês, e exige o mesmo pregão em todas as posições. Se o fim do mês cair no fim de semana, a série até a última sexta-feira já permite incluir esse mês. A simulação aplica os aportes, custos, rebalanceamento e tributo final informados. As lacunas ficam indisponíveis.
 
 ### Formato do arquivo local
 
@@ -125,7 +143,7 @@ O simulador retrospectivo aplica a seleção atual a séries mensais de retorno 
 | `assets`                  | Cada série contém `company` com o nome oficial exato, `instrument` com o código do ativo e `observations` com objetos `{ date, level }`. A data usa `AAAA-MM-DD` e o nível é numérico e positivo. |
 | `benchmarks`              | Lista opcional de séries com `symbol` igual a `IBOV`, `IDIV` ou `SMAL11` e `observations` no mesmo formato.                                                                                       |
 
-O arquivo tem limite de 2 MiB. A série precisa incluir a observação inicial e todas as observações mensais seguintes da janela. O nível de cada mês representa a evolução de uma série com reinvestimento incorporado. O simulador aplica a razão entre dois níveis consecutivos para atualizar a posição.
+O formato mensal tem limite de 2 MiB. O formato diário permite até 16 MiB e usa também `frequency: "daily"` e `asOf` igual ao último pregão do lote. As observações diárias de cada série estão em ordem crescente e são únicas por pregão. Os níveis representam uma série com reinvestimento incorporado. O simulador aplica a razão entre dois níveis consecutivos para atualizar a posição.
 
 ### Fluxos, custos e métricas
 

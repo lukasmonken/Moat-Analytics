@@ -5,8 +5,13 @@
   padding: clamp(1rem, 3vw, 1.5rem);
 }
 
-.backtest-form code {
+.backtest-panel code {
   overflow-wrap: anywhere;
+}
+
+.daily-portfolio-return {
+  display: grid;
+  gap: 0.4rem;
 }
 
 .backtest-panel :is(h2, h3, p) {

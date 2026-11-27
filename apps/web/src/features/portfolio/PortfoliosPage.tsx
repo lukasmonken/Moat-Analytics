@@ -1,5 +1,6 @@
 import type { CompanyDirectorySnapshot } from '@moat/data-contracts';
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useEffectEvent, useRef, useState, type ChangeEvent } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { loadCompanyDirectory } from '../../shared/data-client/companyDirectory';
 import { loadSectorComparison } from '../../shared/data-client/sectorComparison';
 import { loadSectorRoicComparison } from '../../shared/data-client/sectorRoicComparison';
@@ -22,6 +23,7 @@ import {
   buildPortfolioPresets,
   type PortfolioPresetId,
 } from './portfolioPresets';
+import { resolveRankingPortfolioTransfer } from './portfolioRankingDraft';
 import { buildPortfolioReport } from './portfolioReport';
 import './portfolio.css';
 
@@ -301,6 +303,10 @@ const maxBackupSize = 128 * 1024;
 
 export function PortfoliosPage() {
   const { draft, setDraft, save } = useSavedPortfolio();
+  const { pathname, search, hash, state } = useLocation();
+  const navigate = useNavigate();
+  const [rankingTransfer, setRankingTransfer] =
+    useState<ReturnType<typeof resolveRankingPortfolioTransfer>>(null);
   const [attemptedSave, setAttemptedSave] = useState(false);
   const [status, setStatus] = useState('');
   const [fileError, setFileError] = useState('');
@@ -312,12 +318,27 @@ export function PortfoliosPage() {
   const { portfolio, errors, weightUnits } = validatePortfolio(draft);
   const target = portfolioTargetSize(draft);
 
+  const applyRanking = useEffectEvent((snapshot: CompanyDirectorySnapshot) => {
+    const transfer = resolveRankingPortfolioTransfer(state, snapshot);
+    if (transfer === null) return;
+
+    setRankingTransfer(transfer);
+    if (transfer.status === 'ready') {
+      setDraft((current) => applyPortfolioPreset(current, transfer.selection.names));
+      setAttemptedSave(false);
+      setStatus('');
+    }
+    void navigate({ pathname, search, hash }, { replace: true, state: null });
+  });
+
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
     void loadCompanyDirectory(signal).then(
       (snapshot) => {
-        if (!signal.aborted) setDirectory({ status: 'ready', snapshot });
+        if (signal.aborted) return;
+        setDirectory({ status: 'ready', snapshot });
+        applyRanking(snapshot);
       },
       () => {
         if (!signal.aborted) setDirectory({ status: 'error' });
@@ -354,6 +375,7 @@ export function PortfoliosPage() {
         );
       }
       setDraft(imported);
+      setRankingTransfer(null);
       setAttemptedSave(false);
       setStatus('Carteira importada. Confira os parâmetros e salve para usar no simulador.');
     } catch (error) {
@@ -401,11 +423,26 @@ export function PortfoliosPage() {
       />
       <Panel className="portfolio-panel" aria-labelledby="portfolio-builder">
         <h2 id="portfolio-builder">Composição da carteira</h2>
+        {rankingTransfer?.status === 'ready' && (
+          <p role="status">
+            Rascunho iniciado com o ranking {rankingTransfer.selection.label} · seleção de{' '}
+            <time dateTime={rankingTransfer.selection.selectionAsOf}>
+              {formatDate(rankingTransfer.selection.selectionAsOf)}
+            </time>
+            . Confira a composição e os parâmetros antes de salvar.
+          </p>
+        )}
+        {rankingTransfer?.status === 'invalid' && (
+          <p role="alert">
+            {rankingTransfer.message} Volte ao Screener para gerar um novo rascunho.
+          </p>
+        )}
         {directory.status === 'ready' && (
           <PortfolioPresetSelection
             directory={directory.snapshot}
             onApply={(names) => {
               changeDraft(applyPortfolioPreset(draft, names));
+              setRankingTransfer(null);
               setAttemptedSave(false);
               setStatus('Modelo aplicado ao rascunho. Confira os parâmetros e salve a carteira.');
             }}

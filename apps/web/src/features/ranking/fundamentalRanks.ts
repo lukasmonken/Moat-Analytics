@@ -172,7 +172,7 @@ export function buildFundamentalRanks(
     row.score = aggregate(row, row.metric === 'ROIC' ? corporateFactors : financialFactors);
     if (row.metric === 'ROIC') row.accountingScore = aggregate(row, accountingFactors);
   }
-  return { years, rows, marketTradeDate: market?.tradeDate ?? null };
+  return { years, rows, selectionAsOf: data.roic.asOf, marketTradeDate: market?.tradeDate ?? null };
 }
 
 export function orderFundamentalRanks(rows: FundamentalRow[], factor: FundamentalFactor) {
